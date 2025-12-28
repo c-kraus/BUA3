@@ -39,7 +39,7 @@ jobs:
         with:
           # Der Action-Runner findet den Output-Ordner (_site oder _book) 
           # meist automatisch. Falls nicht, müssen wir hier 'path' definieren.
-          path: '.' 
+          path: '_site' 
 
       - name: Deploy to GitHub Pages
         id: deployment
