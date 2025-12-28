@@ -1,0 +1,429 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Simple vs Compound Interest</title>
+    <style>
+        /* --- THWS Design System --- */
+        body {
+            margin: 0;
+            padding: 20px;
+            box-sizing: border-box;
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            color: #333;
+            background-color: transparent;
+        }
+
+        .thws-card {
+            border-left: 5px solid #ff6a00;
+            background: #ffffff;
+            padding: 25px;
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+            border: 1px solid #eee;
+            max-width: 800px;
+            margin: 0 auto;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+        }
+
+        h3 {
+            margin-top: 0;
+            margin-bottom: 8px;
+            font-weight: 700;
+            font-size: 1.25rem;
+            color: #222;
+        }
+
+        .description {
+            font-size: 0.95rem;
+            color: #555;
+            margin-bottom: 20px;
+            line-height: 1.5;
+        }
+
+        /* --- Visualization Area --- */
+        .viz-wrapper {
+            position: relative;
+            background: #fafafa;
+            border: 1px solid #eee;
+            border-radius: 6px;
+            height: 400px;
+            width: 100%;
+            margin-bottom: 20px;
+        }
+
+        svg {
+            width: 100%;
+            height: 100%;
+            overflow: visible;
+        }
+
+        /* Axes & Grid */
+        .axis {
+            stroke: #ccc;
+            stroke-width: 1;
+        }
+
+        .grid-line {
+            stroke: #eee;
+            stroke-width: 1;
+            stroke-dasharray: 4, 4;
+        }
+
+        .axis-label {
+            fill: #888;
+            font-size: 11px;
+            font-weight: 500;
+        }
+
+        .axis-title {
+            fill: #333;
+            font-size: 12px;
+            font-weight: 700;
+        }
+
+        /* Lines */
+        .line-simple {
+            fill: none;
+            stroke: #999;
+            /* Grey/Pale */
+            stroke-width: 2.5;
+            stroke-dasharray: 5, 3;
+            stroke-linecap: round;
+        }
+
+        .line-compound {
+            fill: none;
+            stroke: #ff6a00;
+            /* THWS Orange */
+            stroke-width: 3.5;
+            stroke-linecap: round;
+        }
+
+        /* The Shaded "Difference" Area */
+        .area-difference {
+            fill: #ff6a00;
+            opacity: 0.15;
+            /* Subtle highlighting */
+            stroke: none;
+            transition: d 0.2s ease;
+        }
+
+        /* Indicators (Dots at end of lines) */
+        .dot {
+            r: 5;
+            stroke: #fff;
+            stroke-width: 2;
+            transition: cx 0.2s, cy 0.2s;
+        }
+
+        .dot-simple {
+            fill: #999;
+        }
+
+        .dot-compound {
+            fill: #ff6a00;
+        }
+
+        /* Floating Data Labels */
+        .data-label {
+            font-size: 12px;
+            font-weight: 600;
+            text-anchor: start;
+        }
+
+        .label-bg {
+            fill: rgba(255, 255, 255, 0.9);
+        }
+
+        /* The "Compound Effect" Label */
+        .effect-label {
+            font-size: 11px;
+            fill: #d35400;
+            font-weight: 700;
+            text-anchor: middle;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        /* --- Controls --- */
+        .controls {
+            display: flex;
+            gap: 20px;
+            border-top: 1px solid #eee;
+            padding-top: 15px;
+        }
+
+        .control-group {
+            flex: 1;
+        }
+
+        .control-header {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 8px;
+            font-size: 0.9rem;
+            font-weight: 600;
+        }
+
+        .control-value {
+            color: #ff6a00;
+            font-family: monospace;
+        }
+
+        input[type=range] {
+            width: 100%;
+            accent-color: #ff6a00;
+            cursor: pointer;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="thws-card">
+        <h3>Simple vs. Compound Interest</h3>
+        <p class="description">
+            Observe the "Hockey Stick" curve. In the short term, the difference is negligible.
+            Over time, the <strong>Compound Effect</strong> (Interest on Interest) dominates, creating exponential
+            growth compared to the linear growth of Simple Interest.
+        </p>
+
+        <div class="viz-wrapper">
+            <svg viewBox="0 0 700 400" preserveAspectRatio="xMidYMid meet">
+                <g id="grid-layer"></g>
+
+                <path id="area-diff" class="area-difference" d="" />
+
+                <path id="path-simple" class="line-simple" d="" />
+                <path id="path-compound" class="line-compound" d="" />
+
+                <circle id="dot-simple" class="dot dot-simple" cx="0" cy="0" />
+                <circle id="dot-compound" class="dot dot-compound" cx="0" cy="0" />
+
+                <g id="labels-layer">
+                    <g id="label-simple-group">
+                        <rect x="10" y="-10" width="110" height="20" rx="4" class="label-bg" fill="#eee" />
+                        <text x="15" y="4" class="data-label" fill="#777">Simple Interest</text>
+                    </g>
+                    <g id="label-compound-group">
+                        <rect x="10" y="-10" width="130" height="20" rx="4" class="label-bg" />
+                        <text x="15" y="4" class="data-label" fill="#ff6a00">Compound Interest</text>
+                    </g>
+                    <text id="label-effect" class="effect-label">The Compound Effect</text>
+                </g>
+            </svg>
+        </div>
+
+        <div class="controls">
+            <div class="control-group">
+                <div class="control-header">
+                    <label for="inp-rate">Interest Rate ($r$)</label>
+                    <span id="disp-rate" class="control-value">5.0%</span>
+                </div>
+                <input type="range" id="inp-rate" min="1" max="15" step="0.5" value="8.0">
+            </div>
+            <div class="control-group">
+                <div class="control-header">
+                    <label for="inp-time">Duration ($t$)</label>
+                    <span id="disp-time" class="control-value">30 years</span>
+                </div>
+                <input type="range" id="inp-time" min="5" max="50" step="1" value="30">
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // --- Configuration ---
+        const svgWidth = 700;
+        const svgHeight = 400;
+        const margin = { top: 40, right: 140, bottom: 40, left: 50 };
+        const chartWidth = svgWidth - margin.left - margin.right;
+        const chartHeight = svgHeight - margin.top - margin.bottom;
+
+        const principal = 1000; // Starting capital K
+
+        // --- DOM Elements ---
+        const inpRate = document.getElementById('inp-rate');
+        const inpTime = document.getElementById('inp-time');
+        const dispRate = document.getElementById('disp-rate');
+        const dispTime = document.getElementById('disp-time');
+
+        const pathSimple = document.getElementById('path-simple');
+        const pathCompound = document.getElementById('path-compound');
+        const areaDiff = document.getElementById('area-diff');
+
+        const dotSimple = document.getElementById('dot-simple');
+        const dotCompound = document.getElementById('dot-compound');
+
+        const labelSimpleGroup = document.getElementById('label-simple-group');
+        const labelCompoundGroup = document.getElementById('label-compound-group');
+        const labelEffect = document.getElementById('label-effect');
+
+        const gridLayer = document.getElementById('grid-layer');
+
+        // --- Helper: Generate Axis/Grid ---
+        function drawGrid(maxX, maxY) {
+            gridLayer.innerHTML = '';
+
+            // Y Axis (Capital)
+            const yLine = document.createElementNS("http://www.w3.org/2000/svg", "line");
+            yLine.setAttribute("x1", margin.left);
+            yLine.setAttribute("y1", margin.top);
+            yLine.setAttribute("x2", margin.left);
+            yLine.setAttribute("y2", svgHeight - margin.bottom);
+            yLine.setAttribute("class", "axis");
+            gridLayer.appendChild(yLine);
+
+            // X Axis (Time)
+            const xLine = document.createElementNS("http://www.w3.org/2000/svg", "line");
+            xLine.setAttribute("x1", margin.left);
+            xLine.setAttribute("y1", svgHeight - margin.bottom);
+            xLine.setAttribute("x2", svgWidth - margin.right);
+            xLine.setAttribute("y2", svgHeight - margin.bottom);
+            xLine.setAttribute("class", "axis");
+            gridLayer.appendChild(xLine);
+
+            // Axis Titles
+            const yTitle = document.createElementNS("http://www.w3.org/2000/svg", "text");
+            yTitle.setAttribute("x", margin.left);
+            yTitle.setAttribute("y", margin.top - 15);
+            yTitle.setAttribute("class", "axis-title");
+            yTitle.textContent = "Capital (K)";
+            gridLayer.appendChild(yTitle);
+
+            const xTitle = document.createElementNS("http://www.w3.org/2000/svg", "text");
+            xTitle.setAttribute("x", svgWidth - margin.right);
+            xTitle.setAttribute("y", svgHeight - margin.bottom + 30);
+            xTitle.setAttribute("class", "axis-title");
+            xTitle.setAttribute("text-anchor", "end");
+            xTitle.textContent = "Time (years)";
+            gridLayer.appendChild(xTitle);
+        }
+
+        // --- Core Logic ---
+        function update() {
+            const r = parseFloat(inpRate.value) / 100;
+            const years = parseInt(inpTime.value);
+
+            // Update Text UI
+            dispRate.textContent = (r * 100).toFixed(1) + "%";
+            dispTime.textContent = years + " years";
+
+            // 1. Calculate Data Points
+            // We create points for every 0.5 year for smooth curves
+            const steps = years * 2;
+            const dataSimple = [];
+            const dataCompound = [];
+
+            // Determine Max Y for scaling (Based on Compound at end time)
+            const maxCompoundVal = principal * Math.pow(1 + r, years);
+            // Add 10% padding on top
+            const maxY = maxCompoundVal * 1.1;
+
+            // Coordinate Mapping Functions
+            const getX = (t) => margin.left + (t / years) * chartWidth;
+            const getY = (val) => (svgHeight - margin.bottom) - ((val - principal) / (maxY - principal)) * chartHeight;
+            // Note: We subtract 'principal' in getY to start the chart at 0-relative visual height, 
+            // effectively zooming in on the growth. 
+            // Or strictly: Y axis should start at Principal (1000).
+
+            // Mapping assuming Y-axis starts at Principal (1000)
+            const mapY = (val) => {
+                const range = maxY - principal;
+                if (range <= 0) return svgHeight - margin.bottom; // divide by zero safety
+                const ratio = (val - principal) / range;
+                return (svgHeight - margin.bottom) - (ratio * chartHeight);
+            };
+
+            // Generate Path Strings
+            let pathStrSimple = `M ${getX(0)},${mapY(principal)}`;
+            let pathStrCompound = `M ${getX(0)},${mapY(principal)}`;
+
+            // Arrays to build the area shape later
+            let pointsCompound = [];
+            let pointsSimple = [];
+
+            for (let i = 0; i <= steps; i++) {
+                const t = i * 0.5; // step size 0.5 years
+
+                // Math
+                const valSimple = principal * (1 + (r * t));
+                const valCompound = principal * Math.pow(1 + r, t);
+
+                const px = getX(t);
+                const pyS = mapY(valSimple);
+                const pyC = mapY(valCompound);
+
+                pointsSimple.push({ x: px, y: pyS });
+                pointsCompound.push({ x: px, y: pyC });
+
+                pathStrSimple += ` L ${px},${pyS}`;
+                pathStrCompound += ` L ${px},${pyC}`;
+            }
+
+            // 2. Render Lines
+            pathSimple.setAttribute('d', pathStrSimple);
+            pathCompound.setAttribute('d', pathStrCompound);
+
+            // 3. Render Area (Difference)
+            // Construct path: Start -> Follow Compound -> Line to Simple End -> Follow Simple Back -> Close
+            let areaPath = `M ${pointsCompound[0].x},${pointsCompound[0].y}`;
+            // Forward along compound
+            for (let p of pointsCompound) areaPath += ` L ${p.x},${p.y}`;
+            // Backward along simple
+            for (let i = pointsSimple.length - 1; i >= 0; i--) {
+                areaPath += ` L ${pointsSimple[i].x},${pointsSimple[i].y}`;
+            }
+            areaPath += " Z"; // Close
+            areaDiff.setAttribute('d', areaPath);
+
+            // 4. Update Indicators & Labels
+            const lastSimple = pointsSimple[pointsSimple.length - 1];
+            const lastCompound = pointsCompound[pointsCompound.length - 1];
+
+            dotSimple.setAttribute('cx', lastSimple.x);
+            dotSimple.setAttribute('cy', lastSimple.y);
+
+            dotCompound.setAttribute('cx', lastCompound.x);
+            dotCompound.setAttribute('cy', lastCompound.y);
+
+            labelSimpleGroup.setAttribute('transform', `translate(${lastSimple.x}, ${lastSimple.y})`);
+            labelCompoundGroup.setAttribute('transform', `translate(${lastCompound.x}, ${lastCompound.y})`);
+
+            // 5. Position "Effect" Label
+            // Place it vertically between the two curves at 80% of the timeline
+            const idx = Math.floor(pointsSimple.length * 0.85);
+            const pS = pointsSimple[idx];
+            const pC = pointsCompound[idx];
+
+            const midY = (pS.y + pC.y) / 2;
+            labelEffect.setAttribute('x', pS.x);
+            labelEffect.setAttribute('y', midY + 4); // +4 for vertical centering
+
+            // Show/Hide label if gap is too small
+            if (Math.abs(pS.y - pC.y) < 30) {
+                labelEffect.style.opacity = "0";
+            } else {
+                labelEffect.style.opacity = "1";
+            }
+
+            // Draw static grid once (or update if we wanted dynamic axis labels, but static is cleaner for this demo)
+            drawGrid();
+        }
+
+        // --- Event Listeners ---
+        inpRate.addEventListener('input', update);
+        inpTime.addEventListener('input', update);
+
+        // --- Init ---
+        update();
+
+    </script>
+</body>
+
+</html>

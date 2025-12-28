@@ -1,0 +1,458 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Tax Paradox</title>
+    <style>
+        :root {
+            --thws-orange: #ff6a00;
+            --thws-grey: #333333;
+            --thws-bg: #ffffff;
+            --font-stack: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            --success: #28a745;
+            --danger: #dc3545;
+            --neutral: #6c757d;
+        }
+
+        body {
+            margin: 0;
+            padding: 20px;
+            font-family: var(--font-stack);
+            box-sizing: border-box;
+            background-color: transparent;
+            color: var(--thws-grey);
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .thws-card {
+            border-left: 5px solid var(--thws-orange);
+            background: var(--thws-bg);
+            padding: 25px;
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+            border: 1px solid #eee;
+            width: 100%;
+            max-width: 650px;
+            box-sizing: border-box;
+        }
+
+        header {
+            margin-bottom: 20px;
+            border-bottom: 1px solid #eee;
+            padding-bottom: 10px;
+        }
+
+        h3 {
+            margin: 0 0 5px 0;
+            color: var(--thws-grey);
+            font-weight: 700;
+            font-size: 1.25rem;
+        }
+
+        p.subtitle {
+            margin: 0;
+            color: #666;
+            font-size: 0.9rem;
+            line-height: 1.4;
+        }
+
+        .canvas-container {
+            position: relative;
+            width: 100%;
+            height: 220px;
+            margin-bottom: 20px;
+            background: #fafafa;
+            border: 1px solid #eee;
+            border-radius: 4px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        canvas {
+            width: 100%;
+            height: 100%;
+            display: block;
+        }
+
+        .controls {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            background: #f9f9f9;
+            padding: 15px;
+            border-radius: 6px;
+        }
+
+        .slider-group {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        label {
+            font-size: 0.85rem;
+            font-weight: 600;
+            color: #555;
+            display: flex;
+            justify-content: space-between;
+        }
+
+        input[type=range] {
+            -webkit-appearance: none;
+            width: 100%;
+            background: transparent;
+        }
+
+        input[type=range]:focus {
+            outline: none;
+        }
+
+        input[type=range]::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            height: 18px;
+            width: 18px;
+            border-radius: 50%;
+            background: var(--thws-orange);
+            cursor: pointer;
+            margin-top: -7px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+        }
+
+        input[type=range]::-webkit-slider-runnable-track {
+            width: 100%;
+            height: 4px;
+            cursor: pointer;
+            background: #ddd;
+            border-radius: 2px;
+        }
+
+        .analysis-box {
+            grid-column: 1 / -1;
+            background: #fff;
+            border: 1px solid #eee;
+            padding: 12px;
+            border-radius: 4px;
+            font-size: 0.85rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .effect-indicator {
+            display: flex;
+            flex-direction: column;
+            gap: 2px;
+        }
+
+        .effect-bar {
+            height: 4px;
+            width: 100px;
+            background: #eee;
+            border-radius: 2px;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .effect-fill {
+            height: 100%;
+            transition: width 0.3s;
+        }
+
+        .paradox-badge {
+            background: var(--thws-orange);
+            color: white;
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-weight: 700;
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            visibility: hidden;
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+
+        .paradox-badge.visible {
+            visibility: visible;
+            opacity: 1;
+        }
+
+        /* Math variable styling */
+        .math {
+            font-family: "Times New Roman", serif;
+            font-style: italic;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="thws-card">
+        <header>
+            <h3>The Tax Paradox</h3>
+            <p class="subtitle">Intuition says taxes reduce value. But with high interest rates, the tax shield effect
+                on the discount rate can actually increase Net Present Value.</p>
+        </header>
+
+        <div class="canvas-container">
+            <canvas id="paradoxCanvas"></canvas>
+        </div>
+
+        <div class="controls">
+            <div class="slider-group">
+                <label>
+                    <span>Interest Rate (Pre-Tax <span class="math">i</span>)</span>
+                    <span id="interestLabel">2%</span>
+                </label>
+                <input type="range" id="interestSlider" min="0" max="20" step="0.5" value="2">
+            </div>
+
+            <div class="slider-group">
+                <label>
+                    <span>Tax Rate (<span class="math">t</span>)</span>
+                    <span id="taxLabel">0%</span>
+                </label>
+                <input type="range" id="taxSlider" min="0" max="60" step="5" value="0">
+            </div>
+
+            <div class="analysis-box">
+                <div class="effect-indicator">
+                    <div style="display:flex; justify-content:space-between; width:140px;">
+                        <span style="color:#dc3545; font-weight:600;">Volume Effect</span>
+                        <small>Cashflow ↓</small>
+                    </div>
+                    <div class="effect-bar">
+                        <div id="volEffect" class="effect-fill" style="background:#dc3545; width:0%;"></div>
+                    </div>
+                </div>
+
+                <div id="paradoxBadge" class="paradox-badge">Paradox Active!</div>
+
+                <div class="effect-indicator" style="align-items: flex-end;">
+                    <div style="display:flex; justify-content:space-between; width:140px;">
+                        <small>Discount Rate ↓</small>
+                        <span style="color:#28a745; font-weight:600;">Interest Effect</span>
+                    </div>
+                    <div class="effect-bar">
+                        <div id="intEffect" class="effect-fill" style="background:#28a745; width:0%;"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        /**
+         * CONFIG & STATE
+         */
+        const CONFIG = {
+            investment: 10000,
+            cashFlow: 2000, // Low margin to make paradox visible
+            years: 15,      // Long duration emphasizes interest effect
+            depreciation: 10000 / 15, // Linear
+            padding: { top: 30, bottom: 40, left: 20, right: 20 }
+        };
+
+        let state = {
+            preTaxRate: 2,
+            taxRate: 0,
+            npv: 0,
+            baseNPV: 0, // The NPV if Tax was 0% (comparison baseline)
+            width: 0,
+            height: 0
+        };
+
+        const canvas = document.getElementById('paradoxCanvas');
+        const ctx = canvas.getContext('2d');
+        const interestSlider = document.getElementById('interestSlider');
+        const taxSlider = document.getElementById('taxSlider');
+        const interestLabel = document.getElementById('interestLabel');
+        const taxLabel = document.getElementById('taxLabel');
+        const volEffectBar = document.getElementById('volEffect');
+        const intEffectBar = document.getElementById('intEffect');
+        const paradoxBadge = document.getElementById('paradoxBadge');
+
+        /**
+         * LOGIC
+         */
+        function calculateNPV(i_percent, t_percent) {
+            const i = i_percent / 100;
+            const t = t_percent / 100;
+
+            // Modigliani-Miller: The appropriate discount rate is after-tax cost of debt/capital
+            // r_post = r_pre * (1 - t)
+            const discountRate = i * (1 - t);
+
+            let pvSum = 0;
+
+            for (let year = 1; year <= CONFIG.years; year++) {
+                // Cash Flow After Tax calculation
+                // CF_at = CF_pre * (1-t) + (Depreciation * t)
+                const cfAT = (CONFIG.cashFlow * (1 - t)) + (CONFIG.depreciation * t);
+
+                // Discounting
+                if (discountRate === 0) {
+                    pvSum += cfAT;
+                } else {
+                    pvSum += cfAT / Math.pow(1 + discountRate, year);
+                }
+            }
+
+            return pvSum - CONFIG.investment;
+        }
+
+        /**
+         * VISUALIZATION
+         */
+        function resize() {
+            const dpr = window.devicePixelRatio || 1;
+            const rect = canvas.parentElement.getBoundingClientRect();
+            canvas.width = rect.width * dpr;
+            canvas.height = rect.height * dpr;
+            state.width = rect.width;
+            state.height = rect.height;
+            ctx.scale(dpr, dpr);
+            draw();
+        }
+
+        function draw() {
+            ctx.clearRect(0, 0, state.width, state.height);
+
+            const centerX = state.width / 2;
+            const centerY = state.height / 2;
+
+            // Define Scaling
+            // We need a range that handles both negative (loss) and positive (profit)
+            const maxRange = 12000; // Arbitrary visual cap
+            const scaleFactor = (state.height - CONFIG.padding.top - CONFIG.padding.bottom) / (maxRange * 2);
+
+            // Zero Line
+            ctx.strokeStyle = "#ccc";
+            ctx.lineWidth = 1;
+            ctx.beginPath();
+            ctx.moveTo(CONFIG.padding.left, centerY);
+            ctx.lineTo(state.width - CONFIG.padding.right, centerY);
+            ctx.stroke();
+
+            ctx.fillStyle = "#999";
+            ctx.font = "12px Inter";
+            ctx.fillText("NPV = 0", CONFIG.padding.left, centerY - 5);
+
+            // Draw Bar
+            const barHeight = state.npv * scaleFactor;
+            const barWidth = 80;
+
+            // Color logic
+            let barColor = CONFIG.colors?.orange || '#ff6a00';
+            if (state.npv < 0) barColor = '#6c757d'; // Grey if negative
+
+            // If Paradox is active (NPV with tax > NPV without tax), make it glow or distinct
+            const isParadox = state.npv > state.baseNPV;
+            if (isParadox && state.taxRate > 0) {
+                barColor = '#28a745'; // Green for success/paradox
+                // Add Glow
+                ctx.shadowColor = "rgba(40, 167, 69, 0.5)";
+                ctx.shadowBlur = 20;
+            } else {
+                ctx.shadowBlur = 0;
+            }
+
+            // Draw the main bar
+            ctx.fillStyle = barColor;
+            // NOTE: In canvas, Y grows downwards. 
+            // If NPV positive (barHeight > 0), we draw UP from centerY (y = centerY - barHeight)
+            // If NPV negative, we draw DOWN from centerY
+
+            // Correct geometric calculation:
+            const yPos = state.npv >= 0 ? centerY - Math.abs(barHeight) : centerY;
+
+            ctx.fillRect(centerX - barWidth / 2, yPos, barWidth, Math.abs(barHeight));
+
+            // Draw Comparison Line (Phantom bar for 0% Tax scenario)
+            if (state.taxRate > 0) {
+                const baseHeight = state.baseNPV * scaleFactor;
+                const baseY = state.baseNPV >= 0 ? centerY - Math.abs(baseHeight) : centerY;
+
+                ctx.strokeStyle = "rgba(0,0,0,0.2)";
+                ctx.lineWidth = 2;
+                ctx.setLineDash([5, 5]);
+                ctx.strokeRect(centerX - barWidth / 2 - 10, baseY, barWidth + 20, Math.abs(baseHeight));
+                ctx.setLineDash([]);
+
+                // Label the phantom
+                ctx.fillStyle = "#999";
+                ctx.textAlign = "right";
+                ctx.fillText("at 0% Tax", centerX - barWidth / 2 - 15, centerY + (state.baseNPV > 0 ? -10 : 10));
+            }
+
+            // Value Label
+            ctx.fillStyle = "#333";
+            ctx.font = "bold 20px Inter";
+            ctx.textAlign = "center";
+            ctx.shadowBlur = 0; // Reset shadow for text
+
+            const labelY = state.npv >= 0 ? yPos - 15 : yPos + Math.abs(barHeight) + 25;
+            const formatter = new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD', maximumFractionDigits: 0 });
+            ctx.fillText(formatter.format(state.npv), centerX, labelY);
+        }
+
+        function update() {
+            // Read Sliders
+            state.preTaxRate = parseFloat(interestSlider.value);
+            state.taxRate = parseFloat(taxSlider.value);
+
+            // Update Labels
+            interestLabel.textContent = state.preTaxRate + "%";
+            taxLabel.textContent = state.taxRate + "%";
+
+            // Calculate
+            state.npv = calculateNPV(state.preTaxRate, state.taxRate);
+            state.baseNPV = calculateNPV(state.preTaxRate, 0); // What would NPV be if Tax was 0?
+
+            // Effects Visualization (Progress Bars)
+            // Volume Effect: purely linear with tax rate
+            const volPercent = (state.taxRate / 60) * 100;
+            volEffectBar.style.width = volPercent + "%";
+
+            // Interest Effect: Only significant if Interest Rate is high
+            // We visualize the reduction in discount rate
+            const discountReduction = state.preTaxRate * (state.taxRate / 100);
+            // Normalize for visual (max reduction approx 12% points)
+            const intPercent = Math.min(100, (discountReduction / 5) * 100);
+            intEffectBar.style.width = intPercent + "%";
+
+            // Paradox Check
+            // Usually taxes lower NPV. If NPV(tax) > NPV(0), or if NPV is rising while tax rises
+            // Here we strictly compare to the 0-tax baseline for clarity
+            const delta = state.npv - state.baseNPV;
+
+            if (delta > 50 && state.taxRate > 0) { // Tolerance of 50
+                paradoxBadge.classList.add('visible');
+                paradoxBadge.textContent = "Paradox: Value Increased!";
+                paradoxBadge.style.background = "#28a745";
+            } else if (state.taxRate > 0 && delta < -50) {
+                paradoxBadge.classList.remove('visible'); // Hide if normal behavior
+            } else {
+                paradoxBadge.classList.remove('visible');
+            }
+
+            draw();
+        }
+
+        // Init
+        window.addEventListener('resize', resize);
+        interestSlider.addEventListener('input', update);
+        taxSlider.addEventListener('input', update);
+
+        resize();
+        update();
+
+    </script>
+</body>
+
+</html>

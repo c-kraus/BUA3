@@ -1,0 +1,42 @@
+project:
+  type: book
+  output-dir: _site
+
+number-sections: true
+
+book:
+  title: "Investment Appraisal"
+  subtitle: "Introduciton and Methods"
+  author: "Prof. Dr. Christian Kraus"
+  date: "last-modified"
+  chapters:
+    - index.qmd
+    - part: Interest Calculations
+      chapters:
+        - chapter1.qmd
+        - Chapter2.qmd
+        - Chapter3.qmd  
+        - Chapter4.qmd
+    - part: Investment Appraisal
+      chapters:
+        - Chapter5.qmd
+        - Chapter6.qmd
+        - Chapter7.qmd
+        - Chapter8.qmd
+        - Chapter9.qmd
+    
+  
+  # Navigation & Suche
+  sidebar:
+    style: "docked"
+    background: light # Passt gut zu deinem thws-grey/orange
+    collapse-level: 1
+    search: true
+  
+format:
+  moodle-html
+
+# Globale Optionen für Code-Zellen (Tech-Stack)
+execute:
+  echo: false
+  warning: false

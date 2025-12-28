@@ -1,0 +1,31 @@
+# Preface {.unnumbered}
+
+::: {.callout-note appearance="simple"}
+"The best way to predict the future is to create it." — *Peter Drucker*
+:::
+
+Welcome.
+This digital script serves as the intellectual backbone for our course. It is not a substitute for your own critical thinking, but rather a compass to navigate the mathematical currents of **Interest Theory** and **Capital Budgeting**.
+
+## About This Work
+
+We operate here at the precise intersection of **Time** and **Money**. The goal of this text is not the mindless memorization of formulas, but the deep understanding of the economic *ratio* behind them. Whether we are discounting cash flows or evaluating multi-million Euro projects, the central question remains: *Does this decision create value?*
+
+## A Living Document (Beta)
+
+This "book" is—much like the markets we analyze—dynamic and evolving. It is currently in a **Beta State**.
+
+I invite you to not merely consume this content, but to critically evaluate it.
+* **Read** with a skeptic's eye.
+* **Understand** the logic, not just the math.
+* **Contribute** to its quality. If you encounter logical gaps, typographical errors, or opaque explanations, please provide feedback. Your input is an essential part of the refinement process.
+
+### Technical Hints
+
+This is a modern web application:
+* Use the **Search** (top left) to instantly locate concepts like "NPV" or "Annuity".
+* Engage with the **Interactive Elements**. The calculated examples are designed to be tested, not just viewed.
+
+Good luck on the path to financial literacy.
+
+**Prof. Dr. Christian Kraus**

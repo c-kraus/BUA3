@@ -1,0 +1,391 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reinvestment Reality Check</title>
+    <style>
+        :root {
+            --thws-orange: #ff6a00;
+            --thws-grey: #333333;
+            --thws-bg: #ffffff;
+            --font-stack: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            --success: #28a745;
+            --neutral: #6c757d;
+        }
+
+        body {
+            margin: 0;
+            padding: 20px;
+            font-family: var(--font-stack);
+            box-sizing: border-box;
+            background-color: transparent;
+            color: var(--thws-grey);
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .thws-card {
+            border-left: 5px solid var(--thws-orange);
+            background: var(--thws-bg);
+            padding: 25px;
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+            border: 1px solid #eee;
+            width: 100%;
+            max-width: 650px;
+            box-sizing: border-box;
+        }
+
+        header {
+            margin-bottom: 20px;
+            border-bottom: 1px solid #eee;
+            padding-bottom: 10px;
+        }
+
+        h3 {
+            margin: 0 0 5px 0;
+            color: var(--thws-grey);
+            font-weight: 700;
+            font-size: 1.25rem;
+        }
+
+        p.subtitle {
+            margin: 0;
+            color: #666;
+            font-size: 0.9rem;
+            line-height: 1.4;
+        }
+
+        .canvas-container {
+            position: relative;
+            width: 100%;
+            height: 280px;
+            /* Space for bars */
+            margin-bottom: 20px;
+            background: #fafafa;
+            border: 1px solid #eee;
+            border-radius: 4px;
+        }
+
+        canvas {
+            width: 100%;
+            height: 100%;
+            display: block;
+        }
+
+        .controls {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 20px;
+            background: #f9f9f9;
+            padding: 15px;
+            border-radius: 6px;
+        }
+
+        .slider-group {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        label {
+            font-size: 0.9rem;
+            font-weight: 600;
+            color: #555;
+            display: flex;
+            justify-content: space-between;
+        }
+
+        input[type=range] {
+            -webkit-appearance: none;
+            width: 100%;
+            background: transparent;
+        }
+
+        input[type=range]:focus {
+            outline: none;
+        }
+
+        input[type=range]::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            height: 20px;
+            width: 20px;
+            border-radius: 50%;
+            background: var(--thws-orange);
+            cursor: pointer;
+            margin-top: -8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+            transition: transform 0.1s;
+        }
+
+        input[type=range]::-webkit-slider-thumb:hover {
+            transform: scale(1.1);
+        }
+
+        input[type=range]::-webkit-slider-runnable-track {
+            width: 100%;
+            height: 4px;
+            cursor: pointer;
+            background: #ddd;
+            border-radius: 2px;
+        }
+
+        .insight-box {
+            background-color: #fff3cd;
+            border-left: 3px solid #ffc107;
+            padding: 10px;
+            font-size: 0.85rem;
+            color: #856404;
+            margin-top: 10px;
+            display: none;
+            /* Hidden by default */
+        }
+
+        .comparison-metrics {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 10px;
+            border-top: 1px solid #eee;
+            padding-top: 10px;
+        }
+
+        .metric-item {
+            text-align: center;
+            width: 48%;
+        }
+
+        .metric-value {
+            font-size: 1.1rem;
+            font-weight: 700;
+            display: block;
+        }
+
+        .metric-label {
+            font-size: 0.75rem;
+            color: #777;
+            text-transform: uppercase;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="thws-card">
+        <header>
+            <h3>The Reinvestment Assumption</h3>
+            <p class="subtitle">NPV assumes cash flows don't sit idle. Compare keeping money in a "Vault" (0%) vs.
+                Reinvesting at the Cost of Capital rate.</p>
+        </header>
+
+        <div class="canvas-container">
+            <canvas id="reinvestCanvas"></canvas>
+        </div>
+
+        <div class="controls">
+            <div class="slider-group">
+                <label>
+                    <span>Reinvestment Rate / Cost of Capital ($i$)</span>
+                    <span id="rateLabel" style="color: var(--thws-orange); font-weight:700;">10%</span>
+                </label>
+                <input type="range" id="rateSlider" min="0" max="25" step="0.5" value="10">
+            </div>
+
+            <div class="comparison-metrics">
+                <div class="metric-item">
+                    <span class="metric-value" style="color: #6c757d;">$10,000</span>
+                    <span class="metric-label">Vault Value (0%)</span>
+                </div>
+                <div class="metric-item">
+                    <span class="metric-value" id="reinvestValue" style="color: var(--thws-orange);">$14,641</span>
+                    <span class="metric-label">Reinvested Value</span>
+                </div>
+            </div>
+
+            <div id="insight" class="insight-box">
+                <strong>Hidden Assumption:</strong> The NPV formula mathematically assumes you earn this compound
+                interest. If you can't reinvest at this rate, your actual wealth will be lower than the NPV calculation
+                suggests.
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const CONFIG = {
+            cashFlow: 10000,
+            startYear: 1,
+            endYear: 5,
+            colors: {
+                orange: '#ff6a00',
+                grey: '#6c757d',
+                lightGrey: '#e9ecef',
+                text: '#333333'
+            },
+            padding: { top: 40, right: 30, bottom: 30, left: 60 }
+        };
+
+        const canvas = document.getElementById('reinvestCanvas');
+        const ctx = canvas.getContext('2d');
+        const slider = document.getElementById('rateSlider');
+        const rateLabel = document.getElementById('rateLabel');
+        const reinvestValueDisplay = document.getElementById('reinvestValue');
+        const insightBox = document.getElementById('insight');
+
+        let state = {
+            rate: 10,
+            width: 0,
+            height: 0
+        };
+
+        function calculateFV(ratePercent) {
+            const i = ratePercent / 100;
+            const n = CONFIG.endYear - CONFIG.startYear; // Duration of reinvestment
+            return CONFIG.cashFlow * Math.pow(1 + i, n);
+        }
+
+        function resize() {
+            const dpr = window.devicePixelRatio || 1;
+            const rect = canvas.parentElement.getBoundingClientRect();
+            canvas.width = rect.width * dpr;
+            canvas.height = rect.height * dpr;
+            state.width = rect.width;
+            state.height = rect.height;
+            ctx.scale(dpr, dpr);
+            draw();
+        }
+
+        function draw() {
+            ctx.clearRect(0, 0, state.width, state.height);
+
+            const fv = calculateFV(state.rate);
+
+            // Layout Config
+            const bottomY = state.height - CONFIG.padding.bottom;
+            const workableHeight = state.height - CONFIG.padding.top - CONFIG.padding.bottom;
+
+            // Scale Y axis based on max possible value (25% interest)
+            const maxPossibleFV = CONFIG.cashFlow * Math.pow(1.25, 4);
+            const scaleY = (val) => bottomY - ((val / maxPossibleFV) * workableHeight);
+
+            const barWidth = 80;
+            const centerX = state.width / 2;
+            const offset = 100; // Separation
+
+            // 1. Draw Axis & Grid
+            ctx.strokeStyle = "#eee";
+            ctx.beginPath();
+            // Horizontal lines
+            for (let v = 0; v <= maxPossibleFV; v += 5000) {
+                const y = scaleY(v);
+                ctx.moveTo(CONFIG.padding.left, y);
+                ctx.lineTo(state.width - CONFIG.padding.right, y);
+            }
+            ctx.stroke();
+
+            // 2. Bar 1: The Vault (Static)
+            const vaultX = centerX - offset - (barWidth / 2);
+            const vaultY = scaleY(CONFIG.cashFlow);
+            const vaultHeight = bottomY - vaultY;
+
+            ctx.fillStyle = CONFIG.colors.grey;
+            ctx.fillRect(vaultX, vaultY, barWidth, vaultHeight);
+
+            // Label Bar 1
+            ctx.fillStyle = CONFIG.colors.text;
+            ctx.font = "bold 12px Inter";
+            ctx.textAlign = "center";
+            ctx.fillText("Vault (0%)", vaultX + barWidth / 2, bottomY + 20);
+            ctx.fillStyle = "#fff";
+            ctx.fillText("$10k", vaultX + barWidth / 2, vaultY + 20);
+
+
+            // 3. Bar 2: Reinvested (Dynamic)
+            const investX = centerX + offset - (barWidth / 2);
+            const investY = scaleY(fv);
+            const investHeight = bottomY - investY;
+
+            // Gradient for Bar 2
+            const grad = ctx.createLinearGradient(0, investY, 0, bottomY);
+            grad.addColorStop(0, CONFIG.colors.orange);
+            grad.addColorStop(1, "#ff9e55");
+            ctx.fillStyle = grad;
+
+            ctx.fillRect(investX, investY, barWidth, investHeight);
+
+            // Highlight the "Interest" portion
+            ctx.strokeStyle = "rgba(255,255,255,0.5)";
+            ctx.setLineDash([5, 5]);
+            ctx.beginPath();
+            ctx.moveTo(investX, vaultY); // Start at the principal level
+            ctx.lineTo(investX + barWidth, vaultY);
+            ctx.stroke();
+            ctx.setLineDash([]);
+
+            // Label Bar 2
+            ctx.fillStyle = CONFIG.colors.text;
+            ctx.fillText(`Reinvested (${state.rate}%)`, investX + barWidth / 2, bottomY + 20);
+
+            // Value on Top
+            ctx.fillStyle = CONFIG.colors.orange;
+            ctx.font = "bold 14px Inter";
+            ctx.fillText("$" + Math.round(fv).toLocaleString(), investX + barWidth / 2, investY - 10);
+
+            // 4. "Compound Effect" Bracket/Arrow
+            if (state.rate > 0) {
+                const diff = fv - CONFIG.cashFlow;
+                const midX = (vaultX + barWidth + investX) / 2;
+                const labelY = (vaultY + investY) / 2;
+
+                // Draw Connector
+                ctx.beginPath();
+                ctx.strokeStyle = "#333";
+                ctx.lineWidth = 1;
+                // Line from Vault Top to Invest Top
+                ctx.moveTo(vaultX + barWidth + 5, vaultY);
+                ctx.lineTo(investX - 5, investY);
+                // ctx.stroke(); // Optional line
+
+                // Text for Gain
+                ctx.fillStyle = CONFIG.colors.text;
+                ctx.textAlign = "center";
+                ctx.font = "italic 11px Inter";
+                // ctx.fillText("Compound Effect", midX, labelY);
+                // ctx.fillStyle = "#28a745";
+                // ctx.fillText("+ $" + Math.round(diff).toLocaleString(), midX, labelY + 14);
+            }
+        }
+
+        function updateUI() {
+            const rate = parseFloat(slider.value);
+            state.rate = rate;
+
+            rateLabel.textContent = rate + "%";
+
+            const fv = calculateFV(rate);
+            reinvestValueDisplay.textContent = "$" + Math.round(fv).toLocaleString();
+
+            // Show didactic insight if rate is significant
+            if (rate > 0) {
+                insightBox.style.display = "block";
+            } else {
+                insightBox.style.display = "none";
+            }
+
+            draw();
+        }
+
+        // Interaction
+        slider.addEventListener('input', updateUI);
+        window.addEventListener('resize', resize);
+
+        // Initial
+        resize();
+        updateUI();
+
+    </script>
+</body>
+
+</html>

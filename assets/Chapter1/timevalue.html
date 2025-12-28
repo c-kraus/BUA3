@@ -1,0 +1,364 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Time Value of Money: Transport</title>
+    <style>
+        /* THWS Design System */
+        body {
+            margin: 0;
+            padding: 20px;
+            box-sizing: border-box;
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            color: #333;
+            background: transparent;
+        }
+
+        .thws-card {
+            border-left: 5px solid #ff6a00;
+            background: #ffffff;
+            padding: 25px;
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+            border: 1px solid #eee;
+            max-width: 800px;
+            margin: 0 auto;
+            display: flex;
+            flex-direction: column;
+        }
+
+        h3 {
+            margin-top: 0;
+            margin-bottom: 8px;
+            font-weight: 700;
+            font-size: 1.25rem;
+            color: #222;
+        }
+
+        .description {
+            font-size: 0.95rem;
+            color: #555;
+            margin-bottom: 20px;
+            line-height: 1.5;
+        }
+
+        /* Visualization Area */
+        .viz-wrapper {
+            position: relative;
+            background: #fafafa;
+            border: 1px solid #eee;
+            border-radius: 6px;
+            height: 420px;
+            /* Increased height to allow for more dramatic growth */
+            width: 100%;
+            margin-bottom: 20px;
+        }
+
+        svg {
+            width: 100%;
+            height: 100%;
+            overflow: visible;
+        }
+
+        /* SVG Elements */
+        .axis-line {
+            stroke: #999;
+            stroke-width: 1.5;
+        }
+
+        .tick-line {
+            stroke: #999;
+            stroke-width: 1.5;
+        }
+
+        .axis-label {
+            font-size: 14px;
+            fill: #666;
+            font-weight: 600;
+            text-anchor: middle;
+        }
+
+        .bar-pv {
+            fill: #e0e0e0;
+            stroke: #ccc;
+            stroke-width: 1;
+        }
+
+        .bar-fv {
+            fill: #ff6a00;
+            stroke: #cc5500;
+            stroke-width: 1;
+            transition: all 0.2s ease-out;
+        }
+
+        .label-bar {
+            font-size: 12px;
+            font-weight: bold;
+            text-anchor: middle;
+        }
+
+        .label-pv {
+            fill: #888;
+        }
+
+        .label-fv {
+            fill: #ff6a00;
+        }
+
+        /* Paths */
+        .path-compound {
+            fill: none;
+            stroke: #333333;
+            /* High contrast for main path */
+            stroke-width: 2.5;
+            marker-end: url(#arrow-compound);
+            transition: d 0.2s linear;
+        }
+
+        .path-discount {
+            fill: none;
+            stroke: #999;
+            stroke-width: 2;
+            stroke-dasharray: 5, 5;
+            marker-end: url(#arrow-discount);
+            transition: d 0.2s linear;
+            opacity: 0.6;
+        }
+
+        /* Path Labels */
+        .path-label-bg {
+            fill: rgba(255, 255, 255, 0.9);
+            stroke: #eee;
+            stroke-width: 1px;
+        }
+
+        .path-label-text {
+            font-size: 12px;
+            font-family: 'Inter', sans-serif;
+            font-weight: 600;
+            text-anchor: middle;
+        }
+
+        .sub-formula {
+            font-weight: 400;
+            font-size: 11px;
+            font-style: italic;
+        }
+
+        /* Controls */
+        .controls {
+            display: flex;
+            gap: 20px;
+            border-top: 1px solid #eee;
+            padding-top: 15px;
+        }
+
+        .control-group {
+            flex: 1;
+        }
+
+        .control-header {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 8px;
+            font-size: 0.9rem;
+            font-weight: 600;
+        }
+
+        .control-value {
+            color: #ff6a00;
+            font-family: monospace;
+        }
+
+        input[type=range] {
+            width: 100%;
+            accent-color: #ff6a00;
+            cursor: pointer;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="thws-card">
+        <h3>Time Value of Money</h3>
+        <p class="description">
+            Visualizing the impact of time and interest. <strong>Compounding</strong> moves value to the future
+            (Growth). <strong>Discounting</strong> brings future value back to today.
+        </p>
+
+        <div class="viz-wrapper">
+            <svg viewBox="0 0 600 420" preserveAspectRatio="xMidYMid meet">
+                <defs>
+                    <marker id="arrow-compound" markerWidth="12" markerHeight="12" refX="10" refY="6" orient="auto">
+                        <path d="M2,2 L10,6 L2,10 L4,6 Z" fill="#333333" />
+                    </marker>
+                    <marker id="arrow-discount" markerWidth="10" markerHeight="10" refX="9" refY="5" orient="auto">
+                        <path d="M0,0 L10,5 L0,10 L2,5 Z" fill="#999" />
+                    </marker>
+                </defs>
+
+                <line x1="50" y1="380" x2="550" y2="380" class="axis-line" />
+                <line x1="100" y1="375" x2="100" y2="385" class="tick-line" />
+                <line x1="500" y1="375" x2="500" y2="385" class="tick-line" />
+                <text x="100" y="405" class="axis-label">t₀ (Present)</text>
+                <text x="500" y="405" class="axis-label">tₙ (Future)</text>
+
+                <rect x="80" y="345" width="40" height="35" class="bar-pv" />
+                <text x="100" y="335" class="label-bar label-pv">PV</text>
+
+                <rect id="bar-fv" x="480" y="200" width="40" height="180" class="bar-fv" />
+                <text id="text-fv" x="500" y="190" class="label-bar label-fv">FV</text>
+
+                <path id="path-comp" d="M0,0" class="path-compound" />
+
+                <path id="path-disc" d="M0,0" class="path-discount" />
+
+                <g id="label-group-comp">
+                    <rect x="-70" y="-15" width="140" height="32" rx="4" class="path-label-bg" />
+                    <text class="path-label-text" fill="#333">
+                        Compounding <tspan class="sub-formula" dy="14" x="0">× (1 + i)ⁿ</tspan>
+                    </text>
+                </g>
+
+                <g id="label-group-disc">
+                    <rect x="-70" y="-15" width="140" height="32" rx="4" class="path-label-bg" />
+                    <text class="path-label-text" fill="#777">
+                        Discounting <tspan class="sub-formula" dy="14" x="0">× (1 + i)⁻ⁿ</tspan>
+                    </text>
+                </g>
+            </svg>
+        </div>
+
+        <div class="controls">
+            <div class="control-group">
+                <div class="control-header">
+                    <label for="inp-rate">Interest Rate (i)</label>
+                    <span id="disp-rate" class="control-value">5.0%</span>
+                </div>
+                <input type="range" id="inp-rate" min="1" max="15" step="0.5" value="5.0">
+            </div>
+            <div class="control-group">
+                <div class="control-header">
+                    <label for="inp-years">Years (n)</label>
+                    <span id="disp-years" class="control-value">10</span>
+                </div>
+                <input type="range" id="inp-years" min="1" max="25" step="1" value="10">
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // --- Configuration ---
+        const axisY = 380; // Pushed down to give more vertical space
+        const pvX = 100;
+        const fvX = 500;
+
+        // REDUCED PV Height to make growth look more dramatic relative to start
+        const pvHeight = 35;
+        const pvTopY = axisY - pvHeight;
+
+        // Increased Max Height allowed in the SVG
+        const maxVisualHeight = 340;
+
+        // --- DOM Elements ---
+        const inpRate = document.getElementById('inp-rate');
+        const inpYears = document.getElementById('inp-years');
+        const dispRate = document.getElementById('disp-rate');
+        const dispYears = document.getElementById('disp-years');
+
+        const barFv = document.getElementById('bar-fv');
+        const textFv = document.getElementById('text-fv');
+
+        const pathComp = document.getElementById('path-comp');
+        const pathDisc = document.getElementById('path-disc');
+
+        const labelGroupComp = document.getElementById('label-group-comp');
+        const labelGroupDisc = document.getElementById('label-group-disc');
+
+        // --- Main Logic ---
+        function update() {
+            // 1. Get Values
+            const i = parseFloat(inpRate.value);
+            const n = parseInt(inpYears.value);
+
+            // 2. Update Text
+            dispRate.textContent = i.toFixed(1) + "%";
+            dispYears.textContent = n;
+
+            // 3. Math (Compound Interest)
+            const rate = i / 100;
+            const factor = Math.pow(1 + rate, n);
+
+            // 4. Update Future Value Bar
+            // We scale pixels linearly with the factor
+            // Since PV is small (35px), a factor of 2 makes it 70px, factor of 10 makes it 350px.
+            // We cap it at maxVisualHeight to keep it inside the box.
+            const fvPixelHeight = Math.min(pvHeight * factor, maxVisualHeight);
+            const fvTopY = axisY - fvPixelHeight;
+
+            barFv.setAttribute('height', fvPixelHeight);
+            barFv.setAttribute('y', fvTopY);
+            textFv.setAttribute('y', fvTopY - 10);
+
+            // 5. Calculate Path Trajectories
+
+            // -- Compounding Path (Top Curve) --
+            // Trajectory: Starts at PV, curves up "exponentially" to FV.
+            // We want a "J" curve or "Hockey Stick".
+            // Control Point 1: Pulls Right from PV (keeps line flat initially).
+            // Control Point 2: Pulls Down/Straight from FV (ensures vertical arrival).
+
+            const c1_x = pvX + (fvX - pvX) * 0.7; // Pull 70% across horizontally
+            const c1_y = pvTopY; // Stay flat at PV height
+
+            // Dynamic control point Y based on height difference to smooth the curve
+            const c2_x = fvX;
+            const c2_y = fvTopY + (pvTopY - fvTopY) * 0.3;
+
+            const dComp = `M ${pvX},${pvTopY} C ${c1_x},${c1_y} ${c2_x},${c2_y} ${fvX},${fvTopY}`;
+            pathComp.setAttribute('d', dComp);
+
+            // Position Label: Compounding
+            const labelCompX = pvX + (fvX - pvX) * 0.5;
+            // Place label slightly above the curve's visual midpoint
+            const labelCompY = pvTopY + (fvTopY - pvTopY) * 0.25 - 40;
+            labelGroupComp.setAttribute('transform', `translate(${labelCompX}, ${labelCompY})`);
+
+
+            // -- Discounting Path (Bottom Return Arc) --
+            // Trajectory: Starts at FV, loops UNDER to PV.
+            // This visually separates "Growing Up" vs "Returning Back".
+
+            const startDiscX = fvX - 25; // Start slightly left of FV center
+            const startDiscY = fvTopY + 10;
+            const endDiscX = pvX + 25; // End slightly right of PV center
+            const endDiscY = pvTopY + 10;
+
+            // Control point for return path (Quadratic Bezier)
+            // We push the arc DOWN below the bars
+            const cpDx = (startDiscX + endDiscX) / 2;
+            // The deeper the drop, the more distinct it looks
+            const cpDy = axisY - 10; // Curve near the axis line
+
+            const dDisc = `M ${startDiscX},${startDiscY} Q ${cpDx},${cpDy} ${endDiscX},${endDiscY}`;
+            pathDisc.setAttribute('d', dDisc);
+
+            // Position Label: Discounting
+            // Place it near the bottom of the arc
+            labelGroupDisc.setAttribute('transform', `translate(${cpDx}, ${cpDy - 25})`);
+        }
+
+        // --- Events ---
+        inpRate.addEventListener('input', update);
+        inpYears.addEventListener('input', update);
+
+        // --- Init ---
+        update();
+
+    </script>
+</body>
+
+</html>

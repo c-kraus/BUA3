@@ -1,0 +1,486 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NPV Rate Sensitivity</title>
+    <style>
+        :root {
+            --thws-orange: #ff6a00;
+            --thws-grey: #333333;
+            --thws-bg: #ffffff;
+            --font-stack: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            --font-math: "Times New Roman", Times, serif;
+            --danger: #dc3545;
+            --success: #28a745;
+        }
+
+        body {
+            margin: 0;
+            padding: 20px;
+            font-family: var(--font-stack);
+            box-sizing: border-box;
+            background-color: transparent;
+            color: var(--thws-grey);
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .thws-card {
+            border-left: 5px solid var(--thws-orange);
+            background: var(--thws-bg);
+            padding: 25px;
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+            border: 1px solid #eee;
+            width: 100%;
+            max-width: 650px;
+            box-sizing: border-box;
+        }
+
+        header {
+            margin-bottom: 20px;
+            border-bottom: 1px solid #eee;
+            padding-bottom: 10px;
+        }
+
+        h3 {
+            margin: 0 0 5px 0;
+            color: var(--thws-grey);
+            font-weight: 700;
+            font-size: 1.25rem;
+        }
+
+        p.subtitle {
+            margin: 0;
+            color: #666;
+            font-size: 0.9rem;
+            line-height: 1.4;
+        }
+
+        .math-var {
+            font-family: var(--font-math);
+            font-style: italic;
+        }
+
+        .canvas-container {
+            position: relative;
+            width: 100%;
+            height: 300px;
+            margin-bottom: 20px;
+            background: #fafafa;
+            border: 1px solid #eee;
+            border-radius: 4px;
+        }
+
+        canvas {
+            width: 100%;
+            height: 100%;
+            display: block;
+        }
+
+        .controls {
+            display: grid;
+            grid-template-columns: 1fr 150px;
+            gap: 20px;
+            align-items: center;
+            background: #f9f9f9;
+            padding: 15px;
+            border-radius: 6px;
+        }
+
+        .slider-group {
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
+        }
+
+        label {
+            font-size: 0.85rem;
+            font-weight: 600;
+            color: #555;
+            display: flex;
+            justify-content: space-between;
+        }
+
+        /* Custom Range Slider */
+        input[type=range] {
+            -webkit-appearance: none;
+            width: 100%;
+            background: transparent;
+        }
+
+        input[type=range]:focus {
+            outline: none;
+        }
+
+        input[type=range]::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            height: 20px;
+            width: 20px;
+            border-radius: 50%;
+            background: var(--thws-orange);
+            cursor: pointer;
+            margin-top: -8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+            transition: transform 0.1s;
+        }
+
+        input[type=range]::-webkit-slider-thumb:hover {
+            transform: scale(1.1);
+        }
+
+        input[type=range]::-webkit-slider-runnable-track {
+            width: 100%;
+            height: 4px;
+            cursor: pointer;
+            background: #ddd;
+            border-radius: 2px;
+        }
+
+        .readout {
+            text-align: right;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .npv-value {
+            font-size: 1.5rem;
+            font-weight: 800;
+            font-variant-numeric: tabular-nums;
+        }
+
+        .status-badge {
+            display: inline-block;
+            font-size: 0.75rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-top: 4px;
+        }
+
+        .positive {
+            color: var(--thws-orange);
+        }
+
+        /* THWS Orange used for positive/active */
+        .negative {
+            color: var(--danger);
+        }
+
+        .neutral {
+            color: #666;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="thws-card">
+        <header>
+            <h3>Net Present Value Profile</h3>
+            <p class="subtitle">Observe the "Hockey Stick Effect": How small rate changes drastically impact project
+                value (NPV) over long durations.</p>
+        </header>
+
+        <div class="canvas-container">
+            <canvas id="sensitivityChart"></canvas>
+        </div>
+
+        <div class="controls">
+            <div class="slider-group">
+                <label>
+                    <span>Discount Rate (<span class="math-var">i</span>)</span>
+                    <span id="rateLabel">0.00%</span>
+                </label>
+                <input type="range" id="rateSlider" min="0" max="20" step="0.1" value="2">
+            </div>
+            <div class="readout">
+                <div id="npvDisplay" class="npv-value">--</div>
+                <div id="statusDisplay" class="status-badge">Calculating</div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        /**
+         * Configuration and Physics
+         */
+        const CONFIG = {
+            investment: 100000,
+            cashFlow: 14000,
+            years: 10,
+            maxRate: 20, // Max x-axis value in %
+            colors: {
+                orange: '#ff6a00',
+                grey: '#dddddd',
+                text: '#333333',
+                danger: '#dc3545',
+                grid: '#e0e0e0',
+                axis: '#888888'
+            }
+        };
+
+        // DOM Elements
+        const canvas = document.getElementById('sensitivityChart');
+        const ctx = canvas.getContext('2d');
+        const slider = document.getElementById('rateSlider');
+        const rateLabel = document.getElementById('rateLabel');
+        const npvDisplay = document.getElementById('npvDisplay');
+        const statusDisplay = document.getElementById('statusDisplay');
+
+        // State
+        let state = {
+            rate: 2.0, // Initial percentage
+            width: 0,
+            height: 0,
+            padding: { top: 20, right: 30, bottom: 40, left: 60 },
+            irr: 0
+        };
+
+        /**
+         * Financial Logic
+         */
+        function calculateNPV(ratePercent) {
+            if (ratePercent === 0) {
+                return (CONFIG.cashFlow * CONFIG.years) - CONFIG.investment;
+            }
+            const i = ratePercent / 100;
+            // PV of Annuity Factor: (1 - (1+i)^-n) / i
+            const pvFactor = (1 - Math.pow(1 + i, -CONFIG.years)) / i;
+            const presentValue = CONFIG.cashFlow * pvFactor;
+            return presentValue - CONFIG.investment;
+        }
+
+        // Find Internal Rate of Return (IRR)
+        function calculateIRR() {
+            let low = 0;
+            let high = 20;
+            let guess = 10;
+
+            for (let j = 0; j < 100; j++) {
+                guess = (low + high) / 2;
+                let npv = calculateNPV(guess);
+                if (Math.abs(npv) < 1) break;
+                if (npv > 0) low = guess;
+                else high = guess;
+            }
+            return guess;
+        }
+
+        /**
+         * Visualization Logic
+         */
+        function resize() {
+            const dpr = window.devicePixelRatio || 1;
+            const rect = canvas.parentElement.getBoundingClientRect();
+
+            canvas.width = rect.width * dpr;
+            canvas.height = rect.height * dpr;
+
+            state.width = rect.width;
+            state.height = rect.height;
+
+            ctx.scale(dpr, dpr);
+            draw();
+        }
+
+        function mapX(ratePercent) {
+            const workableWidth = state.width - state.padding.left - state.padding.right;
+            return state.padding.left + (ratePercent / CONFIG.maxRate) * workableWidth;
+        }
+
+        function mapY(npv) {
+            const maxNPV = calculateNPV(0);
+            const minNPV = calculateNPV(CONFIG.maxRate);
+
+            const yMax = maxNPV * 1.1;
+            const yMin = minNPV * 1.1;
+            const range = yMax - yMin;
+
+            const workableHeight = state.height - state.padding.top - state.padding.bottom;
+            const normalized = (npv - yMin) / range;
+            return state.height - state.padding.bottom - (normalized * workableHeight);
+        }
+
+        function drawGrid(yZero) {
+            // Grid styling
+            ctx.strokeStyle = CONFIG.colors.grid;
+            ctx.lineWidth = 1;
+            ctx.font = "12px Inter, sans-serif";
+            ctx.fillStyle = CONFIG.colors.axis;
+            ctx.textAlign = "center";
+
+            // Vertical Lines (Interest Rates)
+            for (let i = 0; i <= CONFIG.maxRate; i += 5) {
+                const x = mapX(i);
+                ctx.beginPath();
+                ctx.moveTo(x, state.padding.top);
+                ctx.lineTo(x, state.height - state.padding.bottom);
+                ctx.stroke();
+
+                ctx.fillText(i + "%", x, state.height - state.padding.bottom + 20);
+            }
+
+            // Horizontal Zero Line
+            ctx.strokeStyle = "#333";
+            ctx.lineWidth = 1;
+            ctx.beginPath();
+            ctx.moveTo(state.padding.left, yZero);
+            ctx.lineTo(state.width - state.padding.right, yZero);
+            ctx.stroke();
+
+            // Zero Label
+            ctx.textAlign = "right";
+            ctx.textBaseline = "middle";
+            ctx.font = "bold 12px Inter, sans-serif";
+            ctx.fillStyle = "#333";
+            ctx.fillText("0", state.padding.left - 10, yZero);
+
+            // Y-Axis Label (Rotated)
+            ctx.save();
+            ctx.translate(20, state.height / 2);
+            ctx.rotate(-Math.PI / 2);
+            ctx.textAlign = "center";
+            ctx.fillStyle = "#666";
+            ctx.font = "italic 14px 'Times New Roman', serif"; // LaTeX style for C0
+            ctx.fillText("NPV (C₀)", 0, 0);
+            ctx.restore();
+        }
+
+        function drawCurve(yZero) {
+            ctx.lineWidth = 3;
+            const irr = state.irr;
+            const irrX = mapX(irr);
+
+            // Positive Path (Orange/Green context)
+            ctx.beginPath();
+            ctx.strokeStyle = CONFIG.colors.orange;
+            for (let r = 0; r <= irr; r += 0.1) {
+                const x = mapX(r);
+                const y = mapY(calculateNPV(r));
+                if (r === 0) ctx.moveTo(x, y);
+                else ctx.lineTo(x, y);
+            }
+            ctx.lineTo(irrX, yZero);
+            ctx.stroke();
+
+            // Negative Path (Red)
+            ctx.beginPath();
+            ctx.strokeStyle = CONFIG.colors.danger;
+            ctx.moveTo(irrX, yZero);
+            for (let r = irr; r <= CONFIG.maxRate; r += 0.1) {
+                const x = mapX(r);
+                const y = mapY(calculateNPV(r));
+                ctx.lineTo(x, y);
+            }
+            ctx.stroke();
+        }
+
+        function drawCurrentState(yZero) {
+            const currentRate = parseFloat(state.rate);
+            const currentNPV = calculateNPV(currentRate);
+            const cx = mapX(currentRate);
+            const cy = mapY(currentNPV);
+
+            // Dotted Drop Line
+            ctx.setLineDash([4, 4]);
+            ctx.strokeStyle = "#999";
+            ctx.lineWidth = 1;
+
+            ctx.beginPath();
+            ctx.moveTo(cx, cy);
+            ctx.lineTo(cx, state.height - state.padding.bottom);
+            ctx.stroke();
+            ctx.setLineDash([]);
+
+            // Draw Point
+            ctx.beginPath();
+            ctx.arc(cx, cy, 6, 0, Math.PI * 2);
+            ctx.fillStyle = "#fff";
+            ctx.fill();
+            ctx.lineWidth = 3;
+            ctx.strokeStyle = currentNPV >= 0 ? CONFIG.colors.orange : CONFIG.colors.danger;
+            ctx.stroke();
+        }
+
+        function draw() {
+            ctx.clearRect(0, 0, state.width, state.height);
+            const yZero = mapY(0);
+            drawGrid(yZero);
+            drawCurve(yZero);
+            drawCurrentState(yZero);
+        }
+
+        function updateUI() {
+            const rate = parseFloat(state.rate);
+            const npv = calculateNPV(rate);
+
+            // Update Slider Label
+            rateLabel.textContent = rate.toFixed(1) + "%";
+
+            // Update NPV Display
+            const formatter = new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD', maximumFractionDigits: 0 });
+            npvDisplay.textContent = formatter.format(npv);
+            npvDisplay.className = 'npv-value ' + (npv >= 0 ? 'positive' : 'negative');
+
+            // Update Status
+            if (npv > 0) {
+                statusDisplay.textContent = "Value Creation";
+                statusDisplay.className = "status-badge positive";
+            } else if (Math.abs(npv) < 100) {
+                statusDisplay.textContent = "Break Even (IRR)";
+                statusDisplay.className = "status-badge neutral";
+            } else {
+                statusDisplay.textContent = "Wealth Destruction";
+                statusDisplay.className = "status-badge negative";
+            }
+        }
+
+        /**
+         * Initialization & Events
+         */
+        state.irr = calculateIRR();
+
+        window.addEventListener('resize', resize);
+
+        slider.addEventListener('input', (e) => {
+            state.rate = e.target.value;
+            draw();
+            updateUI();
+        });
+
+        // Click canvas to jump to rate
+        canvas.addEventListener('click', (e) => {
+            const rect = canvas.getBoundingClientRect();
+            const x = e.clientX - rect.left;
+
+            // Calculate rate based on click position relative to graph area
+            const graphWidth = rect.width - ((state.padding.left + state.padding.right) * (rect.width / state.width));
+            const graphLeft = state.padding.left * (rect.width / state.width);
+
+            const relativeX = x - graphLeft;
+            let newRate = (relativeX / graphWidth) * CONFIG.maxRate;
+
+            // Clamp
+            if (newRate < 0) newRate = 0;
+            if (newRate > CONFIG.maxRate) newRate = CONFIG.maxRate;
+
+            state.rate = Math.round(newRate * 10) / 10;
+            slider.value = state.rate;
+            draw();
+            updateUI();
+        });
+
+        // Init
+        resize();
+        updateUI();
+
+    </script>
+</body>
+
+</html>

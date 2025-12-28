@@ -1,0 +1,120 @@
+# The Master Plan – The Dean Model & Capital Rationing
+
+> "Strategy is the art of sacrifice. The essence of strategy is choosing what not to do."
+> — *Michael Porter*
+
+In the Fisher world (Chapter 4), we lived in a utopia where we could borrow unlimited money at a fixed rate. Welcome to the cold reality of corporate finance.
+In reality, capital is scarce, budgets are frozen, and the CFO says "No." This is **Capital Rationing**.
+
+We need a systematic way to optimize our budget under scarcity. Enter the **Dean Model** (Joel Dean) and its modern executioner, the **Profitability Index**.
+
+---
+
+## The Mechanism: Sorting the World
+
+The logic of Joel Dean is a static program planning tool. Imagine it as constructing two staircases that must meet.
+
+### 1. The Demand Side (The Projects)
+We sort all potential investments by their internal efficiency. In the classic model, we use the **IRR** (Internal Rate of Return) descending.
+* The "Home Run" projects (IRR 30%) come first.
+* The "Okay" projects (IRR 8%) come last.
+
+### 2. The Supply Side (The Finance)
+We sort all financing sources (Bank Loans, Bonds, Equity) by their cost ascending.
+* The cheapest money (e.g., Senior Debt) comes first.
+* The expensive money (e.g., Mezzanine or Equity) comes last.
+
+### The Intersection (The Cut-off)
+You plot both curves in one diagram.
+* **The Logic:** You use the cheapest money for the best project. Then the second cheapest for the second best.
+* **The Stop Signal:** You execute projects as long as **Return of Investment > Cost of Capital**.
+* The intersection point determines your **Optimal Capital Budget** and the **Endogenous Marginal Interest Rate**.
+
+::: {.flip-card}
+#### Endogenous Marginal Interest Rate
+The specific interest rate at the intersection of capital supply and capital demand. It represents the cost of the last dollar borrowed and the return of the last project accepted.
+:::
+
+---
+
+## The Hard Constraint: Capital Rationing
+
+Sometimes, the intersection point doesn't matter because the budget is arbitrarily fixed. The board simply states: **"You have $200 Million. Make the most of it."**
+
+This is where the classic NPV rule fails.
+* **The Trap:** If you simply pick the projects with the highest absolute NPV, you might choose one massive "Elephant" project that eats up your entire budget, blocking three smaller "Gazelle" projects that—combined—would have created more value.
+
+### The Solution: The Profitability Index (PI)
+To solve the allocation puzzle under hard constraints, we need a metric that measures **"Bang for the Buck."** We switch from absolute wealth (NPV) to relative efficiency.
+
+$$PI = \frac{\text{Present Value of Future Cash Flows}}{\text{Initial Investment}}$$
+
+* **PI > 1.0:** The project creates value.
+* **PI = 1.2:** For every $1.00 invested, you get $1.20 worth of value back (NPV is $0.20).
+
+> **Crucial Insight:**
+> Under capital rationing, we do **not** rank by NPV or IRR. We rank by **Profitability Index**. We pack our budget backpack with the most efficient projects until it is full.
+
+---
+
+## Case Study: The Southwest Manufacturing Dilemma
+
+Let’s apply this to a real scenario.
+**The Constraint:** The investment budget is strictly capped at **$200 Million**.
+**The Options:** We have a list of profitable projects (A through G).
+
+| Project | Investment ($M) | NPV ($M) | Profitability Index (PI) | Decision Logic |
+| :--- | :---: | :---: | :---: | :--- |
+| **A** | 150 | 60 | **1.40** | **1. Must do.** High Value, High Efficiency. |
+| **B** | 20 | 5 | 1.25 | Keep on hold. |
+| **C** | ... | ... | ... | ... |
+| **D** | 50 | 15 | **1.30** | Attractive NPV, but expensive. |
+| **E** | 30 | 11 | **1.37** | Very efficient. |
+| **F** | 20 | 7 | **1.35** | Very efficient. |
+
+### The Analysis
+If we looked only at **NPV**, Project D ($15M) looks better than E ($11M) or F ($7M).
+However, Project A takes $150M of our budget. We have **$50M left**.
+
+**Option 1: The "Big NPV" Approach**
+We choose Project D (Cost $50M).
+* Budget used: $150M (A) + $50M (D) = $200M. Full.
+* Total Wealth Created: $60M + $15M = **$75 Million**.
+
+**Option 2: The "Efficiency" Approach (Dean/PI)**
+We look at the Profitability Index. Projects E (1.37) and F (1.35) rank higher than D (1.30).
+We ignore D and pick E and F instead.
+* Budget used: $150M (A) + $30M (E) + $20M (F) = $200M. Full.
+* Total Wealth Created: $60M + $11M + $7M = **$78 Million**.
+
+> **Result:** By selecting a portfolio of smaller, more efficient projects (E+F) instead of one large block (D), we squeezed an extra **$3 Million** of value out of the same budget.
+
+::: {.drag-exercise}
+In a situation of *capital rationing*, simply choosing the project with the highest *Net Present Value* can be misleading. Instead, managers should rank projects by their *Profitability Index* to maximize the total value created per unit of *scarce capital*.
+:::
+
+---
+
+## Chapter Check
+
+Can you navigate the scarcity?
+
+::: {.quick-check}
+**In the Dean Model, why do we sort financing sources ascending?**
+
+- Because banks prefer high interest rates.
+- **To minimize the Weighted Average Cost of Capital (WACC).**
+- To ensure we use the cheapest funds for the best projects first.
+
+> Correct. Rational behavior dictates you drain the cheapest liquidity pools (like retained earnings or senior debt) before tapping into expensive equity.
+:::
+
+::: {.quick-check}
+**You have $100 budget. Project X costs $100 (NPV $20). Project Y costs $50 (NPV $15) and Z costs $50 (NPV $12). What do you do?**
+
+- Choose X because it has the highest NPV ($20).
+- **Choose Y and Z because combined they offer higher NPV ($27).**
+- Reject all because capital is rationed.
+
+> Correct. This is the essence of the Profitability Index logic. $27 > $20.
+:::

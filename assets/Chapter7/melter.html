@@ -1,0 +1,442 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Discount Rate Melter</title>
+    <style>
+        :root {
+            --thws-orange: #ff6a00;
+            --thws-grey: #333333;
+            --thws-bg: #ffffff;
+            --font-stack: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            --font-math: "Times New Roman", Times, serif;
+            --highlight: #e7f5ff;
+        }
+
+        body {
+            margin: 0;
+            padding: 20px;
+            font-family: var(--font-stack);
+            box-sizing: border-box;
+            background-color: transparent;
+            color: var(--thws-grey);
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .thws-card {
+            border-left: 5px solid var(--thws-orange);
+            background: var(--thws-bg);
+            padding: 25px;
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+            border: 1px solid #eee;
+            width: 100%;
+            max-width: 650px;
+            box-sizing: border-box;
+        }
+
+        header {
+            margin-bottom: 20px;
+            border-bottom: 1px solid #eee;
+            padding-bottom: 10px;
+        }
+
+        h3 {
+            margin: 0 0 5px 0;
+            color: var(--thws-grey);
+            font-weight: 700;
+            font-size: 1.25rem;
+        }
+
+        p.subtitle {
+            margin: 0;
+            color: #666;
+            font-size: 0.9rem;
+            line-height: 1.4;
+        }
+
+        .math-display {
+            background: var(--highlight);
+            padding: 10px;
+            border-radius: 4px;
+            text-align: center;
+            font-family: var(--font-math);
+            font-size: 1.1rem;
+            margin-bottom: 20px;
+            color: #0056b3;
+        }
+
+        .canvas-container {
+            position: relative;
+            width: 100%;
+            height: 280px;
+            margin-bottom: 20px;
+            background: #fafafa;
+            border: 1px solid #eee;
+            border-radius: 4px;
+        }
+
+        canvas {
+            width: 100%;
+            height: 100%;
+            display: block;
+        }
+
+        .controls {
+            display: grid;
+            gap: 20px;
+            background: #f9f9f9;
+            padding: 15px;
+            border-radius: 6px;
+        }
+
+        .slider-group {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        label {
+            font-size: 0.9rem;
+            font-weight: 600;
+            color: #555;
+            display: flex;
+            justify-content: space-between;
+        }
+
+        input[type=range] {
+            -webkit-appearance: none;
+            width: 100%;
+            background: transparent;
+        }
+
+        input[type=range]:focus {
+            outline: none;
+        }
+
+        input[type=range]::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            height: 20px;
+            width: 20px;
+            border-radius: 50%;
+            background: var(--thws-orange);
+            cursor: pointer;
+            margin-top: -8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+            transition: transform 0.1s;
+        }
+
+        input[type=range]::-webkit-slider-thumb:hover {
+            transform: scale(1.1);
+        }
+
+        input[type=range]::-webkit-slider-runnable-track {
+            width: 100%;
+            height: 4px;
+            cursor: pointer;
+            background: #ddd;
+            border-radius: 2px;
+        }
+
+        .key-metrics {
+            display: flex;
+            justify-content: space-between;
+            font-size: 0.85rem;
+            color: #666;
+            margin-top: 5px;
+        }
+
+        .legend {
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+            margin-bottom: 10px;
+            font-size: 0.8rem;
+        }
+
+        .legend-item {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .dot {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            display: inline-block;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="thws-card">
+        <header>
+            <h3>The Discount Rate Melter</h3>
+            <p class="subtitle">Visualize the "Tax Shield" on capital costs. As taxes rise, the effective discount rate
+                melts away, preserving the present value of future money.</p>
+        </header>
+
+        <div class="math-display">
+            <span id="formulaDisplay">
+                i<sub>after</sub> = 10% &times; (1 - 0.00) = 10.0%
+            </span>
+        </div>
+
+        <div class="legend">
+            <div class="legend-item">
+                <span class="dot" style="background: #999;"></span>
+                <span>Pre-Tax Curve (Static)</span>
+            </div>
+            <div class="legend-item">
+                <span class="dot" style="background: var(--thws-orange);"></span>
+                <span>Post-Tax Curve (Dynamic)</span>
+            </div>
+        </div>
+
+        <div class="canvas-container">
+            <canvas id="melterCanvas"></canvas>
+        </div>
+
+        <div class="controls">
+            <div class="slider-group">
+                <label>
+                    <span>Tax Rate (<span
+                            style="font-family: 'Times New Roman', serif; font-style: italic;">s</span>)</span>
+                    <span id="taxLabel" style="color: var(--thws-orange); font-weight:700;">0%</span>
+                </label>
+                <input type="range" id="taxSlider" min="0" max="60" step="1" value="0">
+
+                <div class="key-metrics">
+                    <span>Base Interest: <strong>10%</strong></span>
+                    <span id="effectiveRateDisplay">Effective Interest: <strong>10.0%</strong></span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        /**
+         * CONFIG & STATE
+         */
+        const CONFIG = {
+            baseRate: 10, // Fixed high rate to make effect visible
+            years: 10,
+            padding: { top: 20, right: 30, bottom: 30, left: 50 },
+            colors: {
+                orange: '#ff6a00',
+                grey: '#bbbbbb', // Lighter grey for static line
+                fill: 'rgba(255, 106, 0, 0.1)',
+                grid: '#f0f0f0',
+                text: '#666'
+            }
+        };
+
+        let state = {
+            taxRate: 0,
+            width: 0,
+            height: 0
+        };
+
+        // DOM Elements
+        const canvas = document.getElementById('melterCanvas');
+        const ctx = canvas.getContext('2d');
+        const slider = document.getElementById('taxSlider');
+        const taxLabel = document.getElementById('taxLabel');
+        const formulaDisplay = document.getElementById('formulaDisplay');
+        const effectiveRateDisplay = document.getElementById('effectiveRateDisplay');
+
+        /**
+         * MATH HELPER
+         */
+        // Discount Factor = 1 / (1+i)^t
+        function getDiscountFactor(ratePercent, year) {
+            const i = ratePercent / 100;
+            return 1 / Math.pow(1 + i, year);
+        }
+
+        /**
+         * DRAWING LOGIC
+         */
+        function mapX(year) {
+            const activeWidth = state.width - CONFIG.padding.left - CONFIG.padding.right;
+            return CONFIG.padding.left + (year / CONFIG.years) * activeWidth;
+        }
+
+        function mapY(factor) {
+            // Y axis goes from 0.0 to 1.0
+            const activeHeight = state.height - CONFIG.padding.top - CONFIG.padding.bottom;
+            // Invert Y (1.0 is top)
+            return CONFIG.padding.top + (1 - factor) * activeHeight;
+        }
+
+        function drawGrid() {
+            ctx.strokeStyle = CONFIG.colors.grid;
+            ctx.lineWidth = 1;
+            ctx.font = "10px Inter";
+            ctx.fillStyle = "#999";
+            ctx.textAlign = "right";
+
+            // Y Axis Grid (0.0 to 1.0)
+            for (let f = 0; f <= 1.0; f += 0.2) {
+                const y = mapY(f);
+                ctx.beginPath();
+                ctx.moveTo(CONFIG.padding.left, y);
+                ctx.lineTo(state.width - CONFIG.padding.right, y);
+                ctx.stroke();
+
+                // Label
+                ctx.textBaseline = "middle";
+                ctx.fillText(f.toFixed(1), CONFIG.padding.left - 10, y);
+            }
+
+            // X Axis Grid (Years)
+            ctx.textAlign = "center";
+            for (let t = 0; t <= CONFIG.years; t++) {
+                const x = mapX(t);
+                // Tick mark
+                ctx.beginPath();
+                ctx.moveTo(x, state.height - CONFIG.padding.bottom);
+                ctx.lineTo(x, state.height - CONFIG.padding.bottom + 5);
+                ctx.stroke();
+
+                // Label
+                ctx.fillText(t, x, state.height - CONFIG.padding.bottom + 15);
+            }
+
+            // Axis Titles
+            ctx.save();
+            ctx.fillStyle = "#333";
+            ctx.font = "bold 11px Inter";
+
+            // X Title
+            ctx.fillText("Years (t)", state.width / 2 + CONFIG.padding.left / 2, state.height - 5);
+
+            // Y Title
+            ctx.translate(15, state.height / 2);
+            ctx.rotate(-Math.PI / 2);
+            ctx.fillText("Discount Factor", 0, 0);
+            ctx.restore();
+        }
+
+        function drawCurve(ratePercent, color, isFilled = false, fillBaseRatePercent = null) {
+            ctx.beginPath();
+            ctx.strokeStyle = color;
+            ctx.lineWidth = 3;
+
+            // Move to Year 0 (Factor 1.0)
+            ctx.moveTo(mapX(0), mapY(1.0));
+
+            // Plot points
+            for (let t = 0; t <= CONFIG.years; t += 0.1) {
+                const factor = getDiscountFactor(ratePercent, t);
+                ctx.lineTo(mapX(t), mapY(factor));
+            }
+
+            ctx.stroke();
+
+            // Fill Logic (Visualizing the "Gain")
+            if (isFilled && fillBaseRatePercent !== null) {
+                // We want to fill the area between this curve (higher) and the base curve (lower)
+                ctx.lineTo(mapX(CONFIG.years), mapY(getDiscountFactor(fillBaseRatePercent, CONFIG.years)));
+
+                // Trace back along the lower curve
+                for (let t = CONFIG.years; t >= 0; t -= 0.1) {
+                    const baseFactor = getDiscountFactor(fillBaseRatePercent, t);
+                    ctx.lineTo(mapX(t), mapY(baseFactor));
+                }
+
+                ctx.fillStyle = CONFIG.colors.fill;
+                ctx.fill();
+            }
+        }
+
+        function draw() {
+            // Clear
+            ctx.clearRect(0, 0, state.width, state.height);
+
+            drawGrid();
+
+            // 1. Draw Static Base Curve (Pre-Tax)
+            // This is the "Worst Case" (Highest discount rate, lowest factors)
+            drawCurve(CONFIG.baseRate, CONFIG.colors.grey);
+
+            // 2. Draw Dynamic Curve (Post-Tax)
+            // Effective Rate = Base * (1 - Tax)
+            const effectiveRate = CONFIG.baseRate * (1 - (state.taxRate / 100));
+
+            // We fill the gap between current effective rate and the base rate
+            drawCurve(effectiveRate, CONFIG.colors.orange, true, CONFIG.baseRate);
+
+            // 3. Draw arrow indicator at Year 10
+            const yBase = mapY(getDiscountFactor(CONFIG.baseRate, 10));
+            const yEff = mapY(getDiscountFactor(effectiveRate, 10));
+
+            if (state.taxRate > 5) {
+                ctx.beginPath();
+                ctx.moveTo(mapX(10) - 10, yBase - 5);
+                ctx.lineTo(mapX(10) - 10, yEff + 5);
+                // Arrowhead
+                ctx.lineTo(mapX(10) - 13, yEff + 10);
+                ctx.moveTo(mapX(10) - 10, yEff + 5);
+                ctx.lineTo(mapX(10) - 7, yEff + 10);
+
+                ctx.strokeStyle = CONFIG.colors.orange;
+                ctx.lineWidth = 2;
+                ctx.stroke();
+
+                ctx.fillStyle = CONFIG.colors.orange;
+                ctx.font = "bold 11px Inter";
+                ctx.textAlign = "right";
+                ctx.fillText("Value retained", mapX(10) - 15, (yBase + yEff) / 2);
+            }
+        }
+
+        function update() {
+            state.taxRate = parseFloat(slider.value);
+
+            // Math Update
+            const effectiveRate = CONFIG.baseRate * (1 - (state.taxRate / 100));
+
+            // Label Update
+            taxLabel.textContent = state.taxRate + "%";
+            effectiveRateDisplay.innerHTML = `Effective Interest: <strong style="color:var(--thws-orange)">${effectiveRate.toFixed(1)}%</strong>`;
+
+            // Formula Update
+            // HTML formula: i_after = 10 * (1 - 0.xx) = y.y
+            formulaDisplay.innerHTML = `
+            <span style="font-style:italic">i</span><sub>after</sub> = 
+            ${CONFIG.baseRate}% &times; (1 - ${(state.taxRate / 100).toFixed(2)}) = 
+            <strong>${effectiveRate.toFixed(1)}%</strong>
+        `;
+
+            draw();
+        }
+
+        function resize() {
+            const dpr = window.devicePixelRatio || 1;
+            const rect = canvas.parentElement.getBoundingClientRect();
+            canvas.width = rect.width * dpr;
+            canvas.height = rect.height * dpr;
+            state.width = rect.width;
+            state.height = rect.height;
+            ctx.scale(dpr, dpr);
+            draw();
+        }
+
+        // Init
+        window.addEventListener('resize', resize);
+        slider.addEventListener('input', update);
+        resize();
+        update();
+
+    </script>
+</body>
+
+</html>

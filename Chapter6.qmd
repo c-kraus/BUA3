@@ -1,0 +1,202 @@
+# The Percentage Trap – Internal Rate of Return (IRR)
+
+> "Percentages are like bikinis. What they reveal is suggestive, but what they conceal is vital."
+> — *Prof. Burton Malkiel (adapted)*
+
+Managers love percentages. "This project has a 25% return!" sounds much sexier than "This project has an NPV of € 4,200."
+Enter the **Internal Rate of Return (IRR)** (dt. *Interner Zinsfuß*).
+
+While NPV measures the *magnitude* of wealth creation (Absolute Euros), IRR measures the *efficiency* of the capital employed (Relative Yield).
+It answers the question: **"What is the maximum interest rate I could pay to the bank and still break even?"**
+
+---
+
+## The Definition: The Break-Even Rate
+
+Mathematically, the IRR ($r$) is the specific discount rate at which the Net Present Value becomes exactly **zero**.
+It is the x-intercept of the Capital Value Function ($C_0(i)$).
+
+$$C_0 = -I_0 + \sum_{t=1}^{n} \frac{CF_t}{(1+r)^t} \stackrel{!}{=} 0$$
+
+If your calculation results in $NPV = 0$ using a discount rate of 12.5%, then 12.5% is your IRR.
+
+### The Decision Rule (The Hurdle Rate)
+You compare the project's internal power ($r$) against the external cost of capital ($i$, also called the *Hurdle Rate* or *WACC*).
+
+| Scenario | Interpretation | Decision |
+| :--- | :--- | :--- |
+| **$IRR > i$** | The project yields more than it costs. | **INVEST** (Go) |
+| **$IRR = i$** | The project earns exactly the cost of capital. | **INDIFFERENT** |
+| **$IRR < i$** | The project destroys value relative to the market. | **REJECT** (Stop) |
+
+::: {.drag-exercise}
+If the *Internal Rate of Return* is higher than the *market interest rate* (Hurdle Rate), the project creates value, and the Net Present Value is *positive*.
+:::
+
+---
+
+## The Calculation: Trial, Error & Interpolation
+
+For a one-year project, calculating IRR is trivial.
+For a multi-year project ($n > 2$), there is **no algebraic formula** to solve for $r$.
+You face a polynomial equation of degree $n$.
+We must approximate.
+
+### 1. The Method of "Hard Staring" (Iteration)
+You guess.
+* Try 10% $\to$ NPV is positive. (Rate is too low).
+* Try 15% $\to$ NPV is negative. (Rate is too high).
+* The truth lies between 10% and 15%.
+
+### 2. Linear Interpolation (Regula Falsi)
+This is the standard examination method (see *Zimmermann*).
+We assume the curve between two test points is a straight line (which is a lie, but a useful one).
+
+$$r \approx i_1 + \frac{C_0(i_1)}{C_0(i_1) - C_0(i_2)} \cdot (i_2 - i_1)$$
+
+* $i_1$: The lower interest rate (yielding positive NPV).
+* $i_2$: The higher interest rate (yielding negative NPV).
+
+<details>
+<summary>Example: Calculating with Regula Falsi</summary>
+
+**Project:** Invest -100, Return +110 in Year 2.
+* **Trial 1 ($i_1=0\%$):** $NPV = -100 + 110 = +10$
+* **Trial 2 ($i_2=10\%$):** $NPV = -100 + 110/1.1^2 \approx -9.09$
+
+**Interpolation:**
+$$r \approx 0\% + \frac{10}{10 - (-9.09)} \cdot (10\% - 0\%)$$
+$$r \approx \frac{10}{19.09} \cdot 0.10 \approx 0.0523 = \mathbf{5.23\%}$$
+
+*Real Answer:* $\sqrt{110/100} - 1 = 4.88\%$.
+The approximation error exists because the NPV function is convex.
+</details>
+
+---
+
+## The Fatal Flaw: The Reinvestment Reality Check
+
+Here is where the "McKinsey" analysis kicks in. The IRR contains a hidden, technically dangerous assumption: **The Reinvestment Assumption (Wiederanlageprämisse).**
+
+The math of the geometric series implicitly assumes that **all** intermediate cash flows ($CF_1, CF_2...$) are immediately reinvested **at the IRR itself**.
+
+### Interactive Lab: The "Gold Mine" Illusion
+
+Why is this dangerous? Imagine a project with a fantastic IRR of **50%**.
+* **The Math Assumption:** The model assumes you take the cash flow from Year 1 and immediately find *another* project yielding 50% to put it into.
+* **The Reality:** You probably put the cash into a bank account yielding 5% or pay off debt (costing 6%).
+
+> **Crucial Insight:**
+> The **NPV** method is honest: It assumes reinvestment at the market rate ($i$).
+> The **IRR** method is optimistic: It assumes reinvestment at the internal rate ($r$).
+> Therefore, IRR systematically **exaggerates** the wealth creation of highly profitable projects.
+
+::: {.flip-card}
+#### Baldwin Rate (Modified IRR)
+A corrected version of the IRR (MIRR).
+It explicitly calculates the future value of cash flows using the *realistic* Cost of Capital ($i$), not the utopian IRR.
+It gives a lower, but honest percentage.
+:::
+
+---
+
+## Mathematical Anomalies: When Math Breaks
+
+Sometimes, the IRR algorithm simply collapses.
+This happens in "Non-Normal" investments.
+
+### Descartes' Rule of Signs (Vorzeichenwechsel)
+A normal investment has one sign change: Minus (Invest) $\to$ Plus (Returns).
+This guarantees **one** unique IRR.
+But what if you have to pay a huge disposal cost (nuclear plant cleanup) at the end?
+
+**Profile:** $-100 \text{ (Invest)} \to +250 \text{ (Cash)} \to -160 \text{ (Cleanup)}$
+
+Here, the sign changes **twice**.
+**Result:** The NPV curve crosses the x-axis **twice**. You get **two IRRs** (e.g., 5% and 45%).
+Which one is correct?
+**Neither.** The method fails.
+
+::: {.callout-warning}
+### Management Advice
+If your cash flow stream changes signs more than once (e.g., big maintenance costs in the middle), **never** use IRR.
+Use NPV.
+:::
+
+::: {.content-visible when-format="html"}
+<iframe src="assets/Chapter5/multiple.html" 
+        style="width: 100%; height: 750px; border: none;"
+        loading="lazy">
+</iframe>
+:::
+
+---
+
+## The Ultimate Showdown: NPV vs. IRR
+
+Now that we have explored the mechanics, we must address the fundamental philosophical rift in finance.
+**NPV is about Wealth. IRR is about Efficiency.**
+
+### 1. The Fundamental Difference
+* **Net Present Value (NPV):** Measures the *absolute* value added in Dollars/Euros. It is the difference between the present value of inflows and outflows. A positive NPV literally means "The company is now richer."
+* **Internal Rate of Return (IRR):** Measures the *relative* return speed (%). It is the break-even discount rate.
+
+### 2. The Pros & Cons Matrix
+
+| Feature | Net Present Value (NPV) | Internal Rate of Return (IRR) |
+| :--- | :--- | :--- |
+| **Time Value of Money** | **Yes.** Discounts all flows to today. | **Yes.** Discounts all flows to today. |
+| **Logic** | Maximizes *Absolute Wealth*. | Maximizes *Relative Efficiency*. |
+| **Reinvestment** | **Realistic.** Assumes reinvestment at the Market Rate ($i$). | **Optimistic.** Assumes reinvestment at the (often high) IRR itself. |
+| **Communication** | **Hard.** "We add € 4,235 to value." (Requires context). | **Easy.** "We make 25% return." (Managers love this). |
+| **Math Stability** | Always one unique solution. | Can fail (Multiple IRRs) or break. |
+| **Risk Adjustment** | Easy (adjust discount rate $i$). | No calculation adjustment (compared *ex-post* to $i$). |
+
+### 3. The Conflict Zone: Mutually Exclusive Projects
+
+This is the most dangerous trap in capital budgeting.
+If you have to choose between Project A and Project B (you cannot do both), IRR and NPV might give you **contradictory signals**.
+
+**The Scenario:**
+* **Project A (Small & Fast):** Invest € 1, return € 1.50. **IRR = 50%**. NPV = € 0.40.
+* **Project B (Big & Steady):** Invest € 1,000, return € 1,200. **IRR = 20%**. NPV = € 100.
+
+**The Conflict:**
+* IRR says: "Take Project A! 50% is huge!"
+* NPV says: "Take Project B! You make € 100 instead of 40 cents."
+
+> **The Verdict:**
+> In mutually exclusive scenarios, **NPV always wins**.
+> You cannot pay dividends or salaries with percentages. You pay them with absolute Euros. A 50% return on a 1 Euro investment is technically efficient, but economically irrelevant compared to the scale of Project B.
+
+::: {.drag-exercise}
+While the *Internal Rate of Return* is easier to communicate, the *Net Present Value* is theoretically superior because it maximizes absolute *wealth* and assumes a realistic *reinvestment* at market rates. In case of conflict, follow the *NPV*.
+:::
+
+---
+
+## Chapter Check
+
+Can you spot the trap?
+
+::: {.quick-check}
+**Project A has an IRR of 25%, Project B has an IRR of 15%.
+The Cost of Capital is 10%. Can we automatically say Project A is better?**
+
+- Yes, 25% is clearly higher.
+- **No, we must check the NPV (Scale Effect).**
+- No, because Project A might have higher risk.
+
+> Correct.
+If Project A is very small (Invest 1€) and B is huge (Invest 1 Mio €), Project B creates more absolute wealth despite the lower percentage.
+:::
+
+::: {.quick-check}
+**Why do we use the "Regula Falsi" method?**
+
+- To calculate the exact IRR.
+- **To approximate the IRR because an analytical solution is impossible for n > 2.**
+- To correct the reinvestment assumption.
+
+> Correct. It linearizes the curve to find an approximate root.
+:::

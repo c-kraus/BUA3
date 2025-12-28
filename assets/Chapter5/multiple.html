@@ -1,0 +1,450 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Multiple IRR Visualization</title>
+    <style>
+        :root {
+            --thws-orange: #ff6a00;
+            --thws-grey: #333333;
+            --thws-bg: #ffffff;
+            --font-stack: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            --font-math: "Times New Roman", Times, serif;
+            --danger: #dc3545;
+            --warning: #ffc107;
+            --success: #28a745;
+        }
+
+        body {
+            margin: 0;
+            padding: 20px;
+            font-family: var(--font-stack);
+            box-sizing: border-box;
+            background-color: transparent;
+            color: var(--thws-grey);
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .thws-card {
+            border-left: 5px solid var(--thws-orange);
+            background: var(--thws-bg);
+            padding: 25px;
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+            border: 1px solid #eee;
+            width: 100%;
+            max-width: 650px;
+            box-sizing: border-box;
+        }
+
+        header {
+            margin-bottom: 20px;
+            border-bottom: 1px solid #eee;
+            padding-bottom: 10px;
+        }
+
+        h3 {
+            margin: 0 0 5px 0;
+            color: var(--thws-grey);
+            font-weight: 700;
+            font-size: 1.25rem;
+        }
+
+        p.subtitle {
+            margin: 0;
+            color: #666;
+            font-size: 0.9rem;
+            line-height: 1.4;
+        }
+
+        .canvas-wrapper {
+            position: relative;
+            width: 100%;
+            height: 300px;
+            background: #fafafa;
+            border: 1px solid #eee;
+            border-radius: 4px;
+            margin-bottom: 20px;
+        }
+
+        canvas {
+            width: 100%;
+            height: 100%;
+            display: block;
+        }
+
+        .controls {
+            background: #f8f9fa;
+            padding: 15px;
+            border-radius: 6px;
+            display: grid;
+            gap: 15px;
+        }
+
+        .slider-row {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        label {
+            font-weight: 600;
+            font-size: 0.9rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        input[type=range] {
+            width: 100%;
+            -webkit-appearance: none;
+            background: transparent;
+        }
+
+        input[type=range]:focus {
+            outline: none;
+        }
+
+        input[type=range]::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            height: 18px;
+            width: 18px;
+            border-radius: 50%;
+            background: var(--thws-orange);
+            cursor: pointer;
+            margin-top: -7px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+        }
+
+        input[type=range]::-webkit-slider-runnable-track {
+            width: 100%;
+            height: 4px;
+            cursor: pointer;
+            background: #ddd;
+            border-radius: 2px;
+        }
+
+        .info-panel {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: #fff;
+            padding: 10px;
+            border: 1px solid #eee;
+            border-radius: 4px;
+        }
+
+        .metric {
+            text-align: center;
+            flex: 1;
+        }
+
+        .metric small {
+            display: block;
+            color: #888;
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 2px;
+        }
+
+        .metric span {
+            font-weight: 700;
+            font-size: 1.1rem;
+            color: #333;
+        }
+
+        .alert-box {
+            font-size: 0.85rem;
+            color: #856404;
+            background-color: #fff3cd;
+            border: 1px solid #ffeeba;
+            padding: 8px 12px;
+            border-radius: 4px;
+            margin-top: 5px;
+            display: none;
+            text-align: center;
+        }
+
+        .math-symbol {
+            font-family: var(--font-math);
+            font-style: italic;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="thws-card">
+        <header>
+            <h3>Non-Conventional Cash Flows</h3>
+            <p class="subtitle">Why calculators fail: Introducing large final costs (e.g., environmental cleanup)
+                creates a second IRR, making the metric ambiguous.</p>
+        </header>
+
+        <div class="canvas-wrapper">
+            <canvas id="irrCanvas"></canvas>
+        </div>
+
+        <div class="controls">
+            <div class="slider-row">
+                <label>
+                    <span>Final Cleanup Cost (Year 5)</span>
+                    <span id="costDisplay" style="color: var(--danger); font-weight:700;">$ 0</span>
+                </label>
+                <input type="range" id="cleanupSlider" min="0" max="25000" step="500" value="0">
+            </div>
+
+            <div class="info-panel">
+                <div class="metric">
+                    <small>Solution 1</small>
+                    <span id="irr1">--</span>
+                </div>
+                <div style="border-right: 1px solid #eee; height: 30px;"></div>
+                <div class="metric">
+                    <small>Solution 2</small>
+                    <span id="irr2">--</span>
+                </div>
+            </div>
+
+            <div id="alertMessage" class="alert-box">
+                ⚠️ <strong>Ambiguous Result:</strong> Two valid IRRs exist. You must use NPV.
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Configuration
+        const CONFIG = {
+            initialInvestment: -10000,
+            annualInflow: 6500, // Years 1-4
+            projectDuration: 5, // Year 5 is Cleanup
+            maxRate: 60, // Plot up to 60% interest
+            padding: { top: 30, right: 30, bottom: 30, left: 50 },
+            colors: {
+                curve: '#ff6a00',
+                zeroLine: '#333333',
+                grid: '#e0e0e0',
+                text: '#666666'
+            }
+        };
+
+        // DOM Elements
+        const canvas = document.getElementById('irrCanvas');
+        const ctx = canvas.getContext('2d');
+        const slider = document.getElementById('cleanupSlider');
+        const costDisplay = document.getElementById('costDisplay');
+        const irr1Display = document.getElementById('irr1');
+        const irr2Display = document.getElementById('irr2');
+        const alertBox = document.getElementById('alertMessage');
+
+        // State
+        let state = {
+            cleanupCost: 0,
+            width: 0,
+            height: 0,
+            irrs: []
+        };
+
+        // Financial Calculation
+        function calculateNPV(ratePercent, cleanupCost) {
+            const r = ratePercent / 100;
+            let npv = CONFIG.initialInvestment;
+
+            // Add middle years (1 to 4) annuity
+            // Simple loop for clarity
+            for (let t = 1; t < CONFIG.projectDuration; t++) {
+                npv += CONFIG.annualInflow / Math.pow(1 + r, t);
+            }
+
+            // Final Year: Inflow - Cleanup Cost
+            const finalCashFlow = CONFIG.annualInflow - cleanupCost;
+            npv += finalCashFlow / Math.pow(1 + r, CONFIG.projectDuration);
+
+            return npv;
+        }
+
+        // Root finding (scanning method)
+        function findRoots(cleanupCost) {
+            let roots = [];
+            let step = 0.5; // Precision
+            let prevNPV = calculateNPV(0, cleanupCost);
+
+            for (let r = step; r <= CONFIG.maxRate; r += step) {
+                let currentNPV = calculateNPV(r, cleanupCost);
+
+                // Check for sign change
+                if ((prevNPV > 0 && currentNPV < 0) || (prevNPV < 0 && currentNPV > 0)) {
+                    // Linear interpolation for better precision
+                    let diff = Math.abs(currentNPV - prevNPV);
+                    let frac = Math.abs(prevNPV) / diff;
+                    let preciseRoot = (r - step) + (frac * step);
+                    roots.push(preciseRoot);
+                }
+                // Check for near zero
+                else if (Math.abs(currentNPV) < 1) {
+                    roots.push(r);
+                }
+
+                prevNPV = currentNPV;
+            }
+            return roots;
+        }
+
+        // Visualization
+        function mapX(rate) {
+            const activeWidth = state.width - CONFIG.padding.left - CONFIG.padding.right;
+            return CONFIG.padding.left + (rate / CONFIG.maxRate) * activeWidth;
+        }
+
+        function mapY(npv) {
+            // Dynamic scaling
+            const maxNPV = 20000; // Fixed visual range for stability
+            const minNPV = -10000;
+            const range = maxNPV - minNPV;
+            const activeHeight = state.height - CONFIG.padding.top - CONFIG.padding.bottom;
+
+            // Clamp for visuals
+            let visualNPV = Math.max(minNPV, Math.min(maxNPV, npv));
+
+            let normalized = (visualNPV - minNPV) / range;
+            return state.height - CONFIG.padding.bottom - (normalized * activeHeight);
+        }
+
+        function draw() {
+            // Clear
+            ctx.clearRect(0, 0, state.width, state.height);
+
+            const yZero = mapY(0);
+
+            // 1. Grid & Axes
+            ctx.beginPath();
+            ctx.strokeStyle = CONFIG.colors.grid;
+            ctx.lineWidth = 1;
+
+            // Vertical grid lines
+            for (let r = 0; r <= CONFIG.maxRate; r += 10) {
+                let x = mapX(r);
+                ctx.moveTo(x, CONFIG.padding.top);
+                ctx.lineTo(x, state.height - CONFIG.padding.bottom);
+
+                // Label
+                ctx.fillStyle = CONFIG.colors.text;
+                ctx.font = "10px Inter";
+                ctx.textAlign = "center";
+                ctx.fillText(r + "%", x, state.height - CONFIG.padding.bottom + 15);
+            }
+            ctx.stroke();
+
+            // Zero Line (Horizontal)
+            ctx.beginPath();
+            ctx.strokeStyle = CONFIG.colors.zeroLine;
+            ctx.lineWidth = 1.5;
+            ctx.moveTo(CONFIG.padding.left, yZero);
+            ctx.lineTo(state.width - CONFIG.padding.right, yZero);
+            ctx.stroke();
+
+            ctx.fillText("0", CONFIG.padding.left - 10, yZero + 3);
+
+            // Y-Axis Label
+            ctx.save();
+            ctx.translate(15, state.height / 2);
+            ctx.rotate(-Math.PI / 2);
+            ctx.textAlign = "center";
+            ctx.font = "italic 12px 'Times New Roman'";
+            ctx.fillText("NPV ($)", 0, 0);
+            ctx.restore();
+
+            // 2. The Curve
+            ctx.beginPath();
+            ctx.lineWidth = 3;
+            ctx.strokeStyle = CONFIG.colors.curve;
+
+            for (let r = 0; r <= CONFIG.maxRate; r += 0.5) {
+                let x = mapX(r);
+                let y = mapY(calculateNPV(r, state.cleanupCost));
+
+                if (r === 0) ctx.moveTo(x, y);
+                else ctx.lineTo(x, y);
+            }
+            ctx.stroke();
+
+            // 3. IRR Points
+            state.irrs.forEach((root, index) => {
+                let x = mapX(root);
+                let y = yZero;
+
+                // Draw Point
+                ctx.beginPath();
+                ctx.arc(x, y, 6, 0, Math.PI * 2);
+                ctx.fillStyle = "#fff";
+                ctx.fill();
+                ctx.strokeStyle = "#333";
+                ctx.lineWidth = 2;
+                ctx.stroke();
+
+                // Label Point
+                ctx.fillStyle = "#333";
+                ctx.font = "bold 11px Inter";
+                ctx.fillText(root.toFixed(1) + "%", x, y - 12);
+            });
+        }
+
+        function update() {
+            const cost = parseInt(slider.value);
+            state.cleanupCost = cost;
+            state.irrs = findRoots(cost);
+
+            // Update Text
+            costDisplay.textContent = "- $" + cost.toLocaleString();
+
+            if (state.irrs.length === 0) {
+                irr1Display.textContent = "None";
+                irr2Display.textContent = "None";
+                irr1Display.style.color = "#999";
+                alertBox.style.display = "none";
+            } else if (state.irrs.length === 1) {
+                irr1Display.textContent = state.irrs[0].toFixed(1) + "%";
+                irr2Display.textContent = "-";
+                irr1Display.style.color = "#28a745";
+                irr2Display.style.color = "#999";
+                alertBox.style.display = "none";
+            } else {
+                irr1Display.textContent = state.irrs[0].toFixed(1) + "%";
+                irr2Display.textContent = state.irrs[1].toFixed(1) + "%";
+                irr1Display.style.color = "#333";
+                irr2Display.style.color = "#333";
+                alertBox.style.display = "block";
+            }
+
+            draw();
+        }
+
+        function resize() {
+            const dpr = window.devicePixelRatio || 1;
+            const rect = canvas.parentElement.getBoundingClientRect();
+            canvas.width = rect.width * dpr;
+            canvas.height = rect.height * dpr;
+            state.width = rect.width;
+            state.height = rect.height;
+            ctx.scale(dpr, dpr);
+            draw();
+        }
+
+        // Init
+        window.addEventListener('resize', resize);
+        slider.addEventListener('input', update);
+
+        // Initial Render
+        resize();
+        update(); // Draw initial state
+
+    </script>
+</body>
+
+</html>

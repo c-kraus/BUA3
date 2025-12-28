@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Interest Stack</title>
+    <style>
+        /* THWS Design System */
+        body {
+            margin: 0;
+            padding: 20px;
+            box-sizing: border-box;
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            color: #333;
+            background: transparent;
+        }
+
+        .thws-card {
+            border-left: 5px solid #ff6a00;
+            background: #ffffff;
+            padding: 25px;
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+            border: 1px solid #eee;
+            max-width: 800px;
+            margin: 0 auto;
+            position: relative;
+            min-height: 500px;
+            display: flex;
+            flex-direction: column;
+        }
+
+        h3 {
+            margin-top: 0;
+            margin-bottom: 5px;
+            font-weight: 700;
+            font-size: 1.25rem;
+            color: #222;
+        }
+
+        .subtitle {
+            font-size: 0.95rem;
+            color: #666;
+            margin-bottom: 30px;
+        }
+
+        /* Visualization Container */
+        .viz-container {
+            flex-grow: 1;
+            width: 100%;
+            background: #fafafa;
+            border-radius: 8px;
+            border: 1px solid #eee;
+            position: relative;
+            /* Context for tooltip positioning */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+            cursor: crosshair;
+        }
+
+        svg {
+            width: 100%;
+            height: 100%;
+            max-width: 600px;
+            overflow: visible;
+        }
+
+        /* Interactive Layers */
+        .layer-group {
+            transition: opacity 0.3s, transform 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            transform-origin: center;
+            cursor: pointer;
+        }
+
+        /* Hover Effects */
+        .layer-group:hover {
+            filter: brightness(1.05);
+            transform: scale(1.03);
+            z-index: 10;
+        }
+
+        /* Focus Effect: Dim others when hovering container */
+        .viz-container:hover .layer-group {
+            opacity: 0.5;
+        }
+
+        .viz-container:hover .layer-group:hover {
+            opacity: 1;
+        }
+
+        /* Layer Colors */
+        .fill-risk-free {
+            fill: #2c3e50;
+            stroke: #1a252f;
+            stroke-width: 1;
+        }
+
+        .fill-inflation {
+            fill: #c0392b;
+            stroke: #922b21;
+            stroke-width: 1;
+        }
+
+        .fill-risk-prem {
+            fill: #ff6a00;
+            stroke: #e05e00;
+            stroke-width: 1;
+        }
+
+        .text-inner {
+            fill: rgba(255, 255, 255, 0.95);
+            font-family: 'Inter', sans-serif;
+            font-weight: 600;
+            font-size: 13px;
+            text-anchor: middle;
+            pointer-events: none;
+            text-shadow: 0 1px 3px rgba(0, 0, 0, 0.4);
+        }
+
+        /* Brace Styling */
+        .brace-path {
+            fill: none;
+            stroke: #333;
+            stroke-width: 2;
+        }
+
+        .label-market {
+            font-weight: 800;
+            font-size: 14px;
+            fill: #333;
+            text-transform: uppercase;
+        }
+
+        /* --- Tooltip Window --- */
+        #tooltip {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 220px;
+            background: #ffffff;
+            border-radius: 6px;
+            padding: 15px;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+            border: 1px solid #eee;
+            pointer-events: none;
+            /* Ignore mouse events so it doesn't flicker */
+            opacity: 0;
+            transform: translateY(10px);
+            transition: opacity 0.2s ease, transform 0.2s ease;
+            z-index: 100;
+        }
+
+        #tooltip.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .tooltip-header {
+            font-size: 0.9rem;
+            font-weight: 700;
+            margin-bottom: 6px;
+            padding-bottom: 6px;
+            border-bottom: 2px solid #eee;
+            color: #333;
+        }
+
+        .tooltip-body {
+            font-size: 0.8rem;
+            line-height: 1.4;
+            color: #555;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="thws-card">
+        <h3>The Interest Stack</h3>
+        <p class="subtitle">
+            What constitutes the "Price of Money"? <br>
+            <strong>Hover over the layers</strong> to reveal the components of the nominal interest rate.
+        </p>
+
+        <div class="viz-container" id="viz-container">
+            <svg viewBox="0 0 500 400" preserveAspectRatio="xMidYMid meet">
+
+                <g transform="translate(130, 50)">
+
+                    <g class="layer-group" data-key="risk">
+                        <path class="fill-risk-prem" d="M 0,100 
+                             L 0,30 
+                             L 20,15 L 40,35 L 60,10 L 80,30 L 100,5 L 120,25 L 140,10 L 160,35
+                             L 160,100 Z" />
+                        <text x="80" y="70" class="text-inner">Risk Premium</text>
+                    </g>
+
+                    <g class="layer-group" data-key="inflation">
+                        <rect class="fill-inflation" x="0" y="100" width="160" height="80" />
+                        <text x="80" y="145" class="text-inner">Inflation Premium</text>
+                    </g>
+
+                    <g class="layer-group" data-key="base">
+                        <rect class="fill-risk-free" x="0" y="180" width="160" height="100" rx="2" />
+                        <text x="80" y="235" class="text-inner">Risk-Free Rate</text>
+                    </g>
+
+                    <g transform="translate(170, 0)" style="pointer-events: none;">
+                        <path class="brace-path" d="M 0,10 
+                             Q 15,10 15,30 
+                             L 15,135
+                             L 25,145 
+                             L 15,155
+                             L 15,260
+                             Q 15,280 0,280" />
+
+                        <text x="35" y="135" class="label-market">Nominal</text>
+                        <text x="35" y="155" class="label-market" fill="#ff6a00">Market</text>
+                        <text x="35" y="175" class="label-market">Rate</text>
+                    </g>
+
+                </g>
+            </svg>
+
+            <div id="tooltip">
+                <div class="tooltip-header" id="tt-title">Title</div>
+                <div class="tooltip-body" id="tt-body">Description text here.</div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // --- Data ---
+        const tooltipData = {
+            risk: {
+                title: "3. Risk Premium",
+                text: "Compensation for uncertainty. Includes default risk (borrower might not pay back) and liquidity risk. Higher risk = thicker layer.",
+                color: "#ff6a00"
+            },
+            inflation: {
+                title: "2. Inflation Premium",
+                text: "Compensation for expected loss of purchasing power. The lender needs this just to maintain the real value of their money.",
+                color: "#c0392b"
+            },
+            base: {
+                title: "1. Risk-Free Rate",
+                text: "The theoretical 'Price of Time' (Impatience). What you would charge a perfectly safe borrower (e.g., government) in a world with zero inflation.",
+                color: "#2c3e50"
+            }
+        };
+
+        // --- Elements ---
+        const container = document.getElementById('viz-container');
+        const tooltip = document.getElementById('tooltip');
+        const ttTitle = document.getElementById('tt-title');
+        const ttBody = document.getElementById('tt-body');
+        const layers = document.querySelectorAll('.layer-group');
+
+        // --- State ---
+        let isHovering = false;
+
+        // --- Logic ---
+        layers.forEach(layer => {
+            layer.addEventListener('mouseenter', (e) => {
+                const key = layer.getAttribute('data-key');
+                const data = tooltipData[key];
+
+                // Update Content
+                ttTitle.textContent = data.title;
+                ttTitle.style.borderColor = data.color;
+                ttTitle.style.color = data.color;
+                ttBody.textContent = data.text;
+
+                // Show Tooltip
+                tooltip.classList.add('visible');
+                isHovering = true;
+            });
+
+            layer.addEventListener('mouseleave', () => {
+                tooltip.classList.remove('visible');
+                isHovering = false;
+            });
+        });
+
+        // Tooltip Follow Logic
+        container.addEventListener('mousemove', (e) => {
+            if (!isHovering) return;
+
+            // Get container bounds to calculate relative position
+            const rect = container.getBoundingClientRect();
+            const offsetX = e.clientX - rect.left;
+            const offsetY = e.clientY - rect.top;
+
+            // Offset slightly from cursor so mouse doesn't block text
+            const tooltipX = offsetX + 20;
+            const tooltipY = offsetY + 20;
+
+            // Boundary Check (Prevent tooltip from going off right/bottom edge)
+            // Note: simplified for this context, assuming standard iframe size
+            const rightEdge = rect.width - 230; // 220 width + padding
+            const bottomEdge = rect.height - 120; // approx height
+
+            const finalX = Math.min(tooltipX, rightEdge);
+            const finalY = Math.min(tooltipY, bottomEdge);
+
+            tooltip.style.left = finalX + 'px';
+            tooltip.style.top = finalY + 'px';
+        });
+
+    </script>
+
+</body>
+
+</html>
