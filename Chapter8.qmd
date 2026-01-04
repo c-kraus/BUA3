@@ -41,7 +41,7 @@ Therefore, taxes make debt cheaper.
 
 $$i_{after} = i_{before} \cdot (1-s)$$
 
-If your bank charges 10% interest and the tax rate is 30%, your **effective** cost of capital is only 7%. The state pays the other 3%.
+If your bank charges 10% interest and the tax rate is 30%, your **effective** cost of capital is only 7%. The state pays the other 3%. In the standard model, we reflect the tax shield by discounting at the after-tax cost of debt.
 
 ---
 
@@ -70,11 +70,14 @@ In the Standard Model, taxes have two opposing effects: They reduce the *numerat
 Normally, we assume: **Taxes destroy value.** ($NPV_{after} < NPV_{before}$).
 But mathematics has a sense of humor. Under specific conditions, a project that is unprofitable before taxes can become profitable **because** of taxes.
 
+
 $$NPV_{before} < 0 \quad \Rightarrow \quad NPV_{after} > 0$$
 
 This is the **Tax Paradox** (Steuerparadoxon).
 
-### The Tug-of-War (Tauziehen)
+This result holds within the standard tax model and reflects private valuation, not social efficiency.
+
+### The Tug-of-War 
 It is a battle between two forces:
 
 1.  **The Volume Effect (Bad):** Taxes take away money from your cash flows.
@@ -111,7 +114,7 @@ Imagine a marginal project. Move the **Tax Rate Slider** to the right.
 
 ---
 
-## 7.5 Strategic Summary: How to Play the Game
+## Strategic Summary: How to Play the Game
 
 As a manager, you cannot change the tax laws. But you can change your **Depreciation Policy** and your **Financing Structure**.
 

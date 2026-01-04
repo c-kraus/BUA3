@@ -89,7 +89,7 @@ See how a "smaller" NPV can be "better" if the timeframe is shorter.
 
 ---
 
-## 6.5 The Limits: When Math Lies
+## The Limits: When Math Lies
 
 The Annuity Method relies on the **Reinvestment Assumption** (just like NPV) *PLUS* the **Repeatability Assumption**.
 
@@ -109,7 +109,7 @@ It assumes you can repeat the project at identical terms once it finishes.
 ::: {.quick-check}
 **If the Annuity (d) is exactly € 0.00, what is the NPV?**
 
-- € 0.00
+- **€ 0.00**
 - Undefined
 - Negative
 > Correct. $d = NPV \cdot CRF$. Since the CRF is always positive, if $d=0$, then $NPV=0$.
