@@ -1,0 +1,324 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Loan Comparison: Three Ways to Kill Debt</title>
+    <style>
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            background: transparent;
+            padding: 14px;
+            color: #222;
+        }
+        .card {
+            background: #fff;
+            border: 1px solid #e8e8e8;
+            border-left: 5px solid #ff6a00;
+            border-radius: 8px;
+            box-shadow: 0 4px 14px rgba(0,0,0,0.07);
+            padding: 18px 22px;
+            max-width: 920px;
+            margin: 0 auto;
+        }
+        .card-title { font-size: 1.05rem; font-weight: 700; color: #1a1a1a; margin-bottom: 2px; }
+        .card-sub   { font-size: 0.8rem; color: #777; margin-bottom: 14px; }
+        .controls {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 12px;
+            margin-bottom: 14px;
+        }
+        .ctrl label {
+            display: flex; justify-content: space-between; align-items: baseline;
+            font-size: 0.75rem; font-weight: 600; color: #555; margin-bottom: 4px;
+        }
+        .ctrl .val { font-size: 0.9rem; font-weight: 700; color: #ff6a00; }
+        input[type=range] { width: 100%; accent-color: #ff6a00; cursor: pointer; }
+
+        /* Chart rows */
+        .chart-row {
+            margin-bottom: 10px;
+        }
+        .chart-label {
+            font-size: 0.78rem; font-weight: 700; text-transform: uppercase;
+            letter-spacing: 0.05em; margin-bottom: 4px;
+            display: flex; justify-content: space-between; align-items: center;
+        }
+        .chart-label .tag {
+            font-size: 0.7rem; font-weight: 500; border-radius: 10px;
+            padding: 1px 8px; letter-spacing: 0;
+        }
+        .row-annuity  .chart-label { color: #1565c0; }
+        .row-annuity  .tag { background: #e3f0fc; color: #1565c0; }
+        .row-constant .chart-label { color: #bf360c; }
+        .row-constant .tag { background: #fce8e0; color: #bf360c; }
+        .row-bullet   .chart-label { color: #2e7d32; }
+        .row-bullet   .tag { background: #e5f5e5; color: #2e7d32; }
+
+        .chart-wrap {
+            background: #fafafa;
+            border: 1px solid #ebebeb;
+            border-radius: 5px;
+            padding: 4px 6px 2px;
+        }
+        svg.bars { display: block; width: 100%; overflow: visible; }
+
+        /* Legend */
+        .legend {
+            display: flex; gap: 16px; margin-bottom: 10px; font-size: 0.75rem;
+        }
+        .leg { display: flex; align-items: center; gap: 5px; }
+        .leg-box { width: 13px; height: 13px; border-radius: 2px; }
+
+        /* Results */
+        .results {
+            display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin-top: 10px;
+        }
+        .rbox { border-radius: 6px; padding: 10px 14px; }
+        .rbox.ann { background: #edf5fc; border: 1px solid #b8d9f3; }
+        .rbox.con { background: #fef0ea; border: 1px solid #f0b99c; }
+        .rbox.bul { background: #edf7ed; border: 1px solid #a5d6a7; }
+        .rbox .rl { font-size: 0.68rem; font-weight: 700; text-transform: uppercase; letter-spacing: .06em; color: #777; margin-bottom: 2px; }
+        .rbox .rs { font-size: 0.78rem; color: #888; margin-bottom: 2px; }
+        .rbox .ra { font-size: 1.15rem; font-weight: 700; }
+        .rbox.ann .ra { color: #1565c0; }
+        .rbox.con .ra { color: #bf360c; }
+        .rbox.bul .ra { color: #2e7d32; }
+
+        @media (max-width: 520px) {
+            .controls { grid-template-columns: 1fr; }
+            .results  { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+<div class="card">
+    <div class="card-title">Loan Comparison: Three Ways to Kill Debt</div>
+    <div class="card-sub">Each bar shows the annual debt service split into Interest (light) + Principal (dark). Same loan — three completely different cash-flow profiles.</div>
+
+    <div class="controls">
+        <div class="ctrl">
+            <label>Loan Amount (C₀) <span class="val" id="c0d">€ 100,000</span></label>
+            <input type="range" id="c0sl" min="20000" max="200000" step="10000" value="100000">
+        </div>
+        <div class="ctrl">
+            <label>Interest Rate (i) <span class="val" id="iid">5 %</span></label>
+            <input type="range" id="iisl" min="1" max="12" step="0.5" value="5">
+        </div>
+        <div class="ctrl">
+            <label>Periods (n) <span class="val" id="nnd">5</span></label>
+            <input type="range" id="nnsl" min="3" max="8" step="1" value="5">
+        </div>
+    </div>
+
+    <div class="legend">
+        <div class="leg"><div class="leg-box" style="background:#90aed4"></div> Interest (Zinsen)</div>
+        <div class="leg"><div class="leg-box" style="background:#1565c0"></div> Principal — Annuity</div>
+        <div class="leg"><div class="leg-box" style="background:#bf360c"></div> Principal — Constant Amort.</div>
+        <div class="leg"><div class="leg-box" style="background:#2e7d32"></div> Principal — Bullet</div>
+    </div>
+
+    <div class="chart-row row-annuity">
+        <div class="chart-label">
+            Annuity Loan (Annuitätendarlehen)
+            <span class="tag">Constant total payment</span>
+        </div>
+        <div class="chart-wrap"><svg class="bars" id="sv1" height="90"></svg></div>
+    </div>
+
+    <div class="chart-row row-constant">
+        <div class="chart-label">
+            Constant Amortization (Ratentilgung)
+            <span class="tag">Declining total payment</span>
+        </div>
+        <div class="chart-wrap"><svg class="bars" id="sv2" height="90"></svg></div>
+    </div>
+
+    <div class="chart-row row-bullet">
+        <div class="chart-label">
+            Bullet Loan (Endfälliges Darlehen)
+            <span class="tag">Balloon payment at end</span>
+        </div>
+        <div class="chart-wrap"><svg class="bars" id="sv3" height="90"></svg></div>
+    </div>
+
+    <div class="results">
+        <div class="rbox ann">
+            <div class="rl">Annuity — Total Interest</div>
+            <div class="rs" id="annStr">n × Annuity − C₀</div>
+            <div class="ra" id="annInt">€ 15,487</div>
+        </div>
+        <div class="rbox con">
+            <div class="rl">Constant — Total Interest</div>
+            <div class="rs" id="conStr">Sum of all Z_t</div>
+            <div class="ra" id="conInt">€ 15,000</div>
+        </div>
+        <div class="rbox bul">
+            <div class="rl">Bullet — Total Interest</div>
+            <div class="rs" id="bulStr">n × (C₀ × i)</div>
+            <div class="ra" id="bulInt">€ 25,000</div>
+        </div>
+    </div>
+</div>
+
+<script>
+(function(){
+    var c0sl = document.getElementById('c0sl');
+    var iisl = document.getElementById('iisl');
+    var nnsl = document.getElementById('nnsl');
+
+    function fmtK(v) {
+        return '€ ' + Math.round(v).toLocaleString('de-DE');
+    }
+    function fmtKd(v) {
+        return '€ ' + v.toLocaleString('de-DE', {minimumFractionDigits:0, maximumFractionDigits:0});
+    }
+
+    function schedule(C0, i, n, type) {
+        var rows = [], rem = C0;
+        if (type === 'annuity') {
+            var crf = (i * Math.pow(1+i,n)) / (Math.pow(1+i,n) - 1);
+            var pmt = C0 * crf;
+            for (var t=1; t<=n; t++) {
+                var z = rem * i, tk = pmt - z;
+                rem = Math.max(0, rem - tk);
+                rows.push({z:z, tk:tk, total:pmt});
+            }
+        } else if (type === 'constant') {
+            var tkFixed = C0 / n;
+            for (var t=1; t<=n; t++) {
+                var z = rem * i, total = tkFixed + z;
+                rem = Math.max(0, rem - tkFixed);
+                rows.push({z:z, tk:tkFixed, total:total});
+            }
+        } else {
+            for (var t=1; t<=n; t++) {
+                var z = C0 * i, tk = (t===n) ? C0 : 0;
+                rows.push({z:z, tk:tk, total:z+tk});
+            }
+        }
+        return rows;
+    }
+
+    function drawBars(svgId, rows, princColor, maxVal) {
+        var svg = document.getElementById(svgId);
+        var W = svg.getBoundingClientRect().width || 700;
+        var H = 90;
+        svg.setAttribute('viewBox', '0 0 ' + W + ' ' + H);
+        svg.setAttribute('width', W);
+        while (svg.firstChild) svg.removeChild(svg.firstChild);
+
+        var ML = 10, MR = 10, MT = 8, MB = 22;
+        var chartH = H - MT - MB;
+        var n = rows.length;
+        var slotW = (W - ML - MR) / n;
+        var barW = Math.max(8, Math.min(40, slotW * 0.6));
+
+        function mkEl(tag, attrs) {
+            var el = document.createElementNS('http://www.w3.org/2000/svg', tag);
+            for (var k in attrs) el.setAttribute(k, attrs[k]);
+            return el;
+        }
+        function mkTxt(x, y, s, attrs) {
+            var el = mkEl('text', Object.assign({
+                x:x, y:y, 'text-anchor':'middle',
+                'font-family':"'Inter',sans-serif", 'font-size':'9'
+            }, attrs));
+            el.textContent = s;
+            return el;
+        }
+
+        // Baseline
+        svg.appendChild(mkEl('line',{
+            x1:ML, y1:MT+chartH, x2:W-MR, y2:MT+chartH,
+            stroke:'#ccc','stroke-width':'1'
+        }));
+
+        rows.forEach(function(row, idx) {
+            var x = ML + idx * slotW + slotW / 2;
+            var yBase = MT + chartH;
+
+            // Interest bar (light, bottom)
+            var hZ = (row.z / maxVal) * chartH;
+            // Principal bar (dark, above interest)
+            var hT = (row.tk / maxVal) * chartH;
+
+            // Interest
+            svg.appendChild(mkEl('rect',{
+                x: x - barW/2, y: yBase - hZ - hT,
+                width: barW, height: hZ, rx:'2',
+                fill: '#90aed4', opacity:'0.85'
+            }));
+            // Principal
+            if (hT > 0.5) {
+                svg.appendChild(mkEl('rect',{
+                    x: x - barW/2, y: yBase - hT,
+                    width: barW, height: hT, rx:'2',
+                    fill: princColor, opacity:'0.88'
+                }));
+            }
+
+            // t label
+            svg.appendChild(mkTxt(x, yBase + 14, 't='+( idx+1), {fill:'#666','font-size':'9.5'}));
+
+            // total label (above bar)
+            var totalH = hZ + hT;
+            if (totalH > 12) {
+                var kStr = (row.total >= 1000)
+                    ? Math.round(row.total/1000) + 'k'
+                    : Math.round(row.total)+'';
+                svg.appendChild(mkTxt(x, yBase - totalH - 3, kStr, {
+                    fill:'#444','font-size':'8.5','font-weight':'600'
+                }));
+            }
+        });
+
+        window.parent.postMessage({ iframeHeight: document.body.scrollHeight }, '*');
+    }
+
+    function draw() {
+        var C0 = parseFloat(c0sl.value);
+        var i  = parseFloat(iisl.value) / 100;
+        var n  = parseInt(nnsl.value);
+
+        document.getElementById('c0d').textContent = fmtK(C0);
+        document.getElementById('iid').textContent = iisl.value + ' %';
+        document.getElementById('nnd').textContent = n;
+
+        var ann = schedule(C0, i, n, 'annuity');
+        var con = schedule(C0, i, n, 'constant');
+        var bul = schedule(C0, i, n, 'bullet');
+
+        // Total interest
+        var annInt = ann.reduce(function(s,r){return s+r.z;}, 0);
+        var conInt = con.reduce(function(s,r){return s+r.z;}, 0);
+        var bulInt = bul.reduce(function(s,r){return s+r.z;}, 0);
+
+        document.getElementById('annInt').textContent = fmtK(annInt);
+        document.getElementById('conInt').textContent = fmtK(conInt);
+        document.getElementById('bulInt').textContent = fmtK(bulInt);
+        document.getElementById('annStr').textContent = n + ' × annuity − C₀';
+        document.getElementById('conStr').textContent = 'Sum of declining Z_t';
+        document.getElementById('bulStr').textContent = n + ' × (C₀ × ' + iisl.value + '%)';
+
+        // Each chart uses its own max for readability
+        var maxAnn = Math.max.apply(null, ann.map(function(r){return r.total;}));
+        var maxCon = Math.max.apply(null, con.map(function(r){return r.total;}));
+        var maxBul = Math.max.apply(null, bul.map(function(r){return r.total;}));
+
+        drawBars('sv1', ann, '#1565c0', maxAnn * 1.08);
+        drawBars('sv2', con, '#bf360c', maxCon * 1.08);
+        drawBars('sv3', bul, '#2e7d32', maxBul * 1.08);
+    }
+
+    c0sl.addEventListener('input', draw);
+    iisl.addEventListener('input', draw);
+    nnsl.addEventListener('input', draw);
+    window.addEventListener('resize', function(){setTimeout(draw,50);});
+    draw();
+})();
+</script>
+</body>
+</html>

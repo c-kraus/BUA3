@@ -5,40 +5,40 @@
 
 Time is the most brutal constraint in economics.
 A dollar today is not a dollar tomorrow. Why? Because you could have spent it (consumption preference) or invested it (opportunity cost).
-Financial mathematics is nothing more than the architecture of time—a set of tools to transport value from the present to the future (**Compounding**) and from the future back to the present (**Discounting**).
+Financial mathematics is nothing more than the architecture of time — a set of tools to transport value from the present to the future (**Compounding**) and from the future back to the present (**Discounting**).
 In this chapter, we build the engine of finance.
 
 ## The Logic of Time: Why Money Has a Price
 
 Before we calculate, we must understand.
-Why do banks pay you interest? It is not charity. It is the price of time.
-If you lend money to a bank, you defer your ability to buy a Porsche today. This sacrifice requires compensation.
+Why do banks pay you interest? It is not charity. It is the *price of time*.
+If you lend money to a bank, you defer your ability to spend it today. This sacrifice requires compensation.
 Economically, the interest rate ($i$) is composed of three layers:
 
-1. **Risk-free rate:** The pure price of time (consumption deferral).
+1. **Risk-free rate:** The pure price of time (consumption deferral). In the Eurozone, this is anchored to the European Central Bank base rate, reflected in market benchmarks like EURIBOR.
 2. **Inflation premium:** Compensation for the loss of purchasing power.
-3. **Risk premium:** Compensation for the danger that the borrower (even a bank) might default.
+3. **Risk premium:** Compensation for the danger that the borrower might default.
 
 ::: {.content-visible when-format="html"}
-<iframe src="assets/Chapter1/intereststack.html" 
-        style="width: 100%; height: 650px; border: none;" 
+<iframe src="assets/Chapter1/intereststack.html"
+        style="width: 100%; height: 650px; border: none;"
         loading="lazy">
 </iframe>
-
 :::
 
 ### The Trinity of Interest
 
-* **Theory:** Liquidity Preference Theory (Keynes) suggests we prefer cash now over cash later.
-* **Norm:** In legal terms (e.g., BGB in Germany), interest is the "fruit" (Fruchtziehung) of capital.
-* **Practice:** In 2022, inflation in the Eurozone hit 10%.
-If your savings account paid 0.5%, your *real* interest rate was negative.
-You were paying the bank to hold your melting ice cubes.
+* **Theory:** Liquidity Preference Theory (Keynes) suggests we prefer cash now over cash later — and must be compensated to give it up.
+* **Norm:** Central banks set the reference rate (ECB deposit rate, Fed Funds Rate). Commercial rates are built on top, adding premiums for inflation and credit risk.
+* **Practice:** In 2022, inflation in the Eurozone hit 10%. If your savings account paid 0.5%, your *real* interest rate was negative. You were paying the bank to hold your melting ice cubes.
+
+The relationship between the nominal rate ($i_{nom}$), inflation ($\pi$), and the real rate ($r$) is the **Fisher Equation**. The approximation — valid when both rates are small — is:
+
+$$r \approx i_{nom} - \pi$$
 
 ::: {.quick-check}
 **Inflation Check:**
-Your bank offers you a **5%** nominal interest rate per year.
-However, the current inflation rate is **7%**.
+Your bank offers you a **5%** nominal interest rate per year. However, the current inflation rate is **7%**.
 What is your approximate **real interest rate**?
 
 - +2% (I am getting richer)
@@ -46,228 +46,194 @@ What is your approximate **real interest rate**?
 - 12% (Nominal + Inflation)
 
 > **Calculation:**
-> $$r \approx i_{nom} - \pi$$
 > $$r \approx 5\% - 7\% = -2\%$$
 > You are effectively paying the bank to hold your money while it loses value.
 :::
 
 ::: {.flip-card}
 #### Opportunity Cost
-The benefit foregone by choosing one alternative over another.
-In finance, the opportunity cost of holding cash under your mattress is the interest you *could* have earned in a bond.
+The benefit foregone by choosing one alternative over another. In finance, the opportunity cost of holding cash is the interest you *could* have earned — it is the rational foundation for demanding compensation over time.
 :::
 
-<details>
-<summary><strong>Case Study: The Silent Heist – Inflation in Turkey</strong></summary>
+::: {.case-study}
+#### Case: The Silent Heist — Inflation in Turkey (2022)
 
-<br>
-<strong>The Scenario:</strong>
-In 2022, the Turkish Lira was in freefall.
-To stop people from converting Lira to Dollars, banks offered massive interest rates on savings accounts: **30% p.a.**
-Sounds like a dream deal, right?
-In Germany, you were getting 0.5% at the same time.
+In 2022, Turkish banks offered savings rates of **30% p.a.** to stop Lira holders from converting to Dollars. That sounds remarkable — until you check the other number.
 
-<strong>The Trap:</strong>
-While the bank paid you 30% interest ($i$), the inflation rate ($\pi$) in Turkey hit **85%**.
+**The Trap:** Inflation ($\pi$) in Turkey hit **85%** that year.
 
-<strong>The Math (Fisher Equation):</strong>
-The approximate real interest rate ($r$) is calculated as:
-$$r \approx i - \pi$$
+**Approximate (Fisher shortcut):**
 $$r \approx 30\% - 85\% = -55\%$$
 
-<strong>The Verdict:</strong>
-If you kept your money in that "high yield" account, you didn't get rich.
-You lost more than half of your purchasing power in a single year.
+**Exact Fisher Equation** — necessary at extreme rates:
+$$1 + r = \frac{1 + i}{1 + \pi} \quad \Rightarrow \quad r = \frac{1.30}{1.85} - 1 \approx -29.7\%$$
 
-> **Managerial Insight:** Never look at the nominal rate alone. It is a vanity metric.
-Only the *real* rate buys you bread (or Porsches).
-</details>
+The approximation ($-55\%$) overstates the loss because inflation is so large. The shortcut is reliable for rates below roughly 10%; beyond that, use the exact form.
+
+**The Verdict:** Whether approximate or exact, you lost purchasing power — fast. The nominal rate was a vanity metric.
+
+> **Managerial Insight:** Always ask for the *real* rate. Only that buys you bread (or Porsches).
+:::
 
 ## The Engine: Simple vs. Compound Interest
 
-There are two ways to grow money.
-One is linear (boring), the other is exponential (explosive).
+There are two ways to grow money. One is linear (boring), the other is exponential (explosive).
 
 ::: {.content-visible when-format="html"}
-<iframe src="assets/Chapter1/effektzinseszins.html" 
-        style="width: 100%; height: 700px; border: none;" 
+<iframe src="assets/Chapter1/effektzinseszins.html"
+        style="width: 100%; height: 700px; border: none;"
         loading="lazy">
 </iframe>
-
 :::
 
 ### Simple Interest (The Linear Trap)
 
-Simple interest is calculated *only* on the principal amount.
-It ignores the interest you earned in the past. It’s like a tree that grows new branches but never grows leaves on those branches.
+Simple interest is calculated *only* on the original principal — never on accumulated past interest. Each year adds the same fixed amount.
 
-* $FV$: Future Value
-* $PV$: Present Value
-* $i$: Interest rate (decimal, e.g., 0.05)
-* $n$: Number of periods
+**Variables:** $FV$ = Future Value, $PV$ = Present Value (Principal), $i$ = interest rate (decimal), $n$ = number of periods.
+
+$$\boxed{FV = PV \cdot (1 + n \cdot i)}$$
+
+It is like a tree that grows new branches but never grows leaves on those branches — the annual increment is always the same.
+
+> **When to use Simple Interest:** Short-term instruments only (typically $n < 1$ year): treasury bills, overnight deposits, supplier credit. For all multi-year investment decisions in this course, compound interest is the correct model.
 
 ### Compound Interest (The Exponential Beast)
 
-This is where the magic happens.
-You earn interest on your interest. The "leaves" start growing their own branches.
-The difference seems small at first but becomes gigantic over time. This is the **exponential effect**.
+Compound interest earns interest *on interest*. Every period, the accumulated balance becomes the new base.
+
+$$\boxed{FV = PV \cdot (1 + i)^n}$$
+
+The difference from simple interest seems trivial in Year 1 but becomes enormous over time.
 
 ::: {.flip-card}
-#### Calculation Challenge: Simple Interest
-You invest **$100** at **10%** for **3 years** using **Simple Interest**. How much do you have?
-
-**The Math:**
-Interest is calculated only on the principal ($100$).
-$$I = 100 \cdot 0.10 = 10 \text{ per year}$$
-$$FV = 100 + (3 \cdot 10) = 130$$
+#### Simple vs. Compound: $100 at 10 % for 3 Years
+**Simple:** $FV = 100 \cdot (1 + 3 \times 0.10) = \$130$. **Compound:** $FV = 100 \cdot (1.10)^3 = \$133.10$. The \$3.10 gap looks small here — stretched over 30 years or larger sums, the compound engine dominates completely.
 :::
-
-::: {.flip-card}
-#### Calculation Challenge: Compound Interest
-You invest **$100** at **10%** for **3 years** using **Compound Interest**. How much do you have?
-
-**The Math:**
-Interest is calculated on the principal *plus* accumulated interest.
-$$FV = 100 \cdot (1.10)^3$$
-$$FV = 100 \cdot 1.331 = 133.10$$
-*Difference due to compounding: $3.10*
-:::
-
 
 > **The Rule of 72 (Mental Math Hack)**
-> How long does it take to double your money?
-> Divide 72 by the interest rate.
-> * At 6% interest: $72 / 6 = 12$ years.
-> * At 12% interest: $72 / 12 = 6$ years.
+> How long does it take to double your money? Divide 72 by the annual interest rate.
+> * At 6%: $72 / 6 = 12$ years.
+> * At 12%: $72 / 12 = 6$ years.
 
+::: {.case-study}
+#### Case: The $24 Empire — The Manhattan Paradox
 
-<details>
-<summary><strong>Case Study: The $24 Empire – The Manhattan Paradox</strong></summary>
+In 1626, Peter Minuit purchased Manhattan for trade goods worth approximately **$24**. Today, Manhattan real estate is worth trillions. Most people assume Minuit made the deal of the millennium. But did he?
 
-<br>
-<strong>The Legend:</strong>
-In 1626, Peter Minuit purchased the island of Manhattan from the Lenape people for trade goods valued at approximately **$24**.
-Today, Manhattan real estate is worth trillions. Most people think Minuit made the deal of the millennium. But did he?
+**The Counter-Factual:** What if the Lenape had invested that $24 at a standard **6% compound interest**, reinvested annually for ~400 years?
 
-<strong>The Counter-Factual:</strong>
-What if the Lenape had taken that $24 and invested it in a diversified bond portfolio paying a standard **6% interest** (compound), reinvested annually until today (approx. 400 years)?
+$$FV = 24 \cdot (1.06)^{400} \approx 24 \cdot 13{,}200{,}000{,}000 \approx \$316 \text{ billion}$$
 
-<strong>The Calculation:</strong>
-$$K_n = 24 \cdot (1.06)^{400}$$
-$$K_n \approx 24 \cdot 13,200,000,000$$
-$$K_n \approx 316 \text{ Billion Dollars}$$
+**The Verdict:** The exponential function at a *modest* 6% over four centuries creates wealth rivaling the GDP of small nations. Manhattan is valuable — but time is the more powerful force.
 
-<strong>The Verdict:</strong>
-While Manhattan is valuable, the sheer force of a 6% exponential function over 4 centuries creates wealth that rivals the GDP of small nations.
-
-> **Managerial Insight:** Time is the most potent lever in finance. You don't need a high return (6% is modest);
-you need *endurance*.
-</details>
+> **Managerial Insight:** You do not need a high return. You need *endurance*.
+:::
 
 ::: {.drag-exercise}
 In simple interest, capital grows *linearly*, meaning the absolute interest amount remains constant each year.
-In compound interest, capital grows *exponentially*, because the interest is *reinvested* to generate further returns.
+In compound interest, capital grows *exponentially*, because interest is *reinvested* to generate further returns in every subsequent period.
 :::
 
 ## Time Travel: Compounding and Discounting
 
-In dynamic investment appraisal (Investitionsrechnung), we rarely care about how much money we *will* have (Future Value).
-We care about what future money is worth *today* (Present Value).
+We have seen how to move money *forward* in time. But in investment appraisal, we almost always need to move money *backward*.
 
-Why? Because investment decisions are made **now**.
-You pay the machine price today ($t=0$). You get the returns in the future ($t=1, \dots, n$).
-To compare them, you must pull the future back into the present.
+You pay for a machine **today** ($t = 0$). You receive the cash returns **in the future** ($t = 1, \dots, n$). To compare them, you must pull future values back into the present. This operation is called **Discounting** (Abzinsen) — the mathematical inverse of Compounding.
+
+The interactive timeline below shows both directions on a single axis:
+
+::: {.content-visible when-format="html"}
+<iframe src="assets/Chapter1/zeitstrahl.html"
+        style="width: 100%; height: 460px; border: none;"
+        loading="lazy">
+</iframe>
+:::
 
 ### The Operation: Discounting (Abzinsen)
 
-This is the most critical formula in this course.
-We simply rearrange the compound interest formula to solve for $PV$.
+The discounting formula is simply the compound interest formula rearranged.
 
-$$PV = \frac{FV}{(1+i)^n} = FV \cdot (1+i)^{-n}$$
+**Start from:** $FV = PV \cdot (1+i)^n$
 
-The factor $(1+i)^{-n}$ is called the **Discount Factor** (Abzinsungsfaktor).
-It is always smaller than 1 (assuming positive interest). It shrinks the future value down to its present equivalent.
+**Divide both sides** by $(1+i)^n$:
 
-* **Compounding (Aufzinsen):** Moving form $t_0 \to t_n$. Making values *larger*.
-* **Discounting (Abzinsen):** Moving from $t_n \to t_0$. Making values *smaller*.
+$$\boxed{PV = \frac{FV}{(1+i)^n} = FV \cdot (1+i)^{-n}}$$
 
-::: {.content-visible when-format="html"}
-<iframe src="assets/Chapter1/timevalue.html" 
-        style="width: 100%; height: 650px; border: none;" 
-        loading="lazy">
-</iframe>
+The factor $(1+i)^{-n}$ is called the **Discount Factor** (Abzinsungsfaktor). It is always smaller than 1 (assuming $i > 0$) — it shrinks the future value down to its present-day equivalent.
 
-:::
+| Direction | Operation | Formula | Effect on value |
+|-----------|-----------|---------|-----------------|
+| $t_0 \to t_n$ | Compounding (Aufzinsen) | $FV = PV \cdot (1+i)^n$ | Grows |
+| $t_n \to t_0$ | Discounting (Abzinsen) | $PV = FV \cdot (1+i)^{-n}$ | Shrinks |
 
 ::: {.drag-exercise}
-In the discounting formula $PV = \frac{FV}{(1+i)^n}$, the relationship works as follows:
-If the interest rate ($i$) increases, the Present Value *decreases*, because the denominator becomes *larger*.
+In the discounting formula $PV = \frac{FV}{(1+i)^n}$, if the interest rate ($i$) increases, the Present Value *decreases*, because the denominator becomes *larger*.
 This means: High interest rates punish *distant* future cash flows more severely than near ones.
 :::
 
-<details>
-<summary><strong>Case Study: The $700 Million Illusion – Shohei Ohtani</strong></summary>
+::: {.case-study}
+#### Case: The $700 Million Illusion — Shohei Ohtani
 
-<br>
-<strong>The Headline:</strong>
-In December 2023, baseball superstar Shohei Ohtani signed the biggest contract in sports history with the LA Dodgers: **$700 million** for 10 years.
-The media went wild. But financial analysts just smiled.
+In December 2023, Shohei Ohtani signed the largest contract in sports history with the LA Dodgers: **$700 million over 10 years**. The media celebrated. Financial analysts smiled.
 
-<strong>The Structure:</strong>
-Ohtani does not get $70 million a year.
-* He gets **$2 million** per year for 10 years.
-* The remaining **$680 million** are deferred and paid out *after* the 10 years (from 2034 to 2043), without interest.
+**The Structure:** During his playing years (2024–2033), Ohtani receives only $2 million/year. The remaining **$680 million** is deferred to 2034–2043 — paid out at $68 million/year, with no interest.
 
-<strong>The Valuation (Discounting):</strong>
-To find the *true* value of the contract today (Present Value), we must discount those future $680 million.
-Assuming a discount rate of **5%** (inflation + opportunity cost):
-A payment of $68 million in year 15 is worth only:
-$$PV = \frac{68,000,000}{(1.05)^{15}} \approx 32,700,000$$
+**Discounting three of those deferred payments (at $i = 5\%$):**
 
-<strong>The Verdict:</strong>
-The Net Present Value (NPV) of the "700 million" contract was estimated by the MLB players' union to be around **$460 million**.
+| Year | Payment | Discount Factor | Present Value |
+|:----:|--------:|:---------------:|-------------:|
+| 2034 (t = 11) | $68 M | $(1.05)^{-11}$ | ≈ $39.7 M |
+| 2038 (t = 15) | $68 M | $(1.05)^{-15}$ | ≈ $32.7 M |
+| 2043 (t = 20) | $68 M | $(1.05)^{-20}$ | ≈ $25.6 M |
 
-> **Managerial Insight:** Ohtani gave the Dodgers a massive interest-free loan.
-In Finance, the *timing* of the cash flow is just as important as the *amount*.
-</details>
+Every year of delay costs roughly 5 % of the payment's value. Summed across all ten deferred payments, the $680 million shrinks substantially.
+
+**The Verdict:** The MLB Players' Union estimated the contract's Net Present Value at approximately **$460 million** — not $700 million.
+
+> **Managerial Insight:** Ohtani gave the Dodgers a massive interest-free loan. The *timing* of a cash flow is just as important as its *size*.
+:::
 
 ### Practical Example: The Lottery Choice
 
 **Scenario:**
+
 * **Option A:** € 1,000,000 cash today.
 * **Option B:** € 1,100,000 in one year.
 
 ::: {.quick-check}
-**Assume the interest rate is 15%. Which option should a rational "homo oeconomicus" choose?**
+**Assume the interest rate is 15%. Which option should a rational investor choose?**
 
-- Option B (More money is always better)
+- Option B (more money is always better)
 - **Option A (€ 1,000,000 today)**
 
-> **The Calculation (Discounting Option B):**
-> We must compare the values at the same point in time ($t=0$).
-> $$PV_B = \frac{1,100,000}{1.15} \approx 956,521$$
-> Since **€ 1,000,000 (Option A)** > **€ 956,521 (Option B)**, taking the cash today is rational.
-> The high interest rate makes waiting "expensive".
+> **Step-by-step:**
+>
+> **Step 1 — Discount Option B** to $t = 0$:
+> $$PV_B = \frac{1{,}100{,}000}{1.15} \approx 956{,}521$$
+>
+> **Step 2 — Compare** at the same point in time:
+> $$PV_A = 1{,}000{,}000 > PV_B = 956{,}521 \quad \Rightarrow \quad \text{Choose Option A}$$
+>
+> The high interest rate makes waiting expensive. *At 5 % interest, Option B would win.*
 :::
 
-<details>
-<summary>Deep Dive: Day Count Conventions</summary>
-In academic theory, we assume a year has 360 or 365 days seamlessly.
-In banking practice (Norm), it's messy.
-
-* **30/360 (German Method):** Every month has 30 days. Simple, but slightly inaccurate.
-* **act/act (ICMA):** Actual days in the month / Actual days in the year. Used in Euro-government bonds.
-
-For this course, unless specified, we assume $n$ in full years.
-</details>
-
 ::: {.quick-check}
-**You expect € 10,000 in 2 years.
-The interest rate is 10%. What is the Present Value?**
+**You expect € 10,000 in 2 years. The interest rate is 10%. What is the Present Value?**
 
-* € 8,000
-* **€ 8,264.46**
-* € 12,100
+- € 8,000
+- **€ 8,264.46**
+- € 12,100
 
-> Calculation: $PV = 10,000 / (1.10)^2 = 8,264.46$.
+> **Calculation:** $PV = \dfrac{10{,}000}{(1.10)^2} = \dfrac{10{,}000}{1.21} \approx 8{,}264.46$
+:::
+
+::: {.details}
+#### Deep Dive: Day Count Conventions
+In academic theory, $n$ is measured in full years. In banking practice, it gets messier:
+
+* **30/360 (German Method):** Every month is counted as 30 days (12 × 30 = 360). Simple but slightly inaccurate.
+* **act/act (ICMA):** Actual calendar days in the period divided by actual days in the year. Used for Euro-government bonds and interest-rate derivatives.
+
+For this course, unless otherwise stated, assume $n$ is measured in full years.
 :::

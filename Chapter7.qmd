@@ -1,116 +1,137 @@
-# Periodizing Success – The Annuity Method
+# Periodising Success – The Annuity Method
 
 > "Wealth is a snapshot. Income is a movie. The Annuity Method turns the snapshot into a movie."
 
-In Chapter 4, we calculated the **Net Present Value (NPV)**. It told us: *"This project increases your wealth by € 50,000 today."*
-That is great, but abstract. A CEO often asks: *"Okay, but what does that mean for my annual P&L? Can I afford to hire a manager for this project?"*
+Chapter 5 showed us that NPV measures the **absolute increase in wealth** a project creates today. That is powerful — but abstract. A CEO often asks: *"What does € 10,000 of NPV actually mean for my annual budget? How much can I pay a project manager? By how much could my cash flows shrink before this investment stops making sense?"*
 
-The **Annuity Method** (dt. *Annuitätenmethode*) answers this. It transforms the lump sum of wealth ($NPV$) into a constant annual stream of "excess profit".
-
-It is the strategic twin of the **Annuity Loan** (from Chapter 3), just reversed.
-
----
+The **Annuity Method** (*Annuitätenmethode*) answers these questions. It transforms the lump-sum NPV into a constant annual "excess profit" spread evenly over the project's life. It is the strategic twin of the annuity loan from Chapter 3, just running in the opposite direction: there, the bank used the CRF to spread a loan into equal instalments; here, we use the same CRF to spread an investment's NPV into equal annual value slices.
 
 ## The Mirror Principle: Loan vs. Investment
 
-To understand this method, look back at your notes from Chapter 3 (`Systematik der Kreditformen`).
+| Situation | You pay today | Receives equal annual payments |
+|:----------|:-------------:|:------------------------------:|
+| **Annuity Loan** (Ch. 3) | Bank → you | Bank ← you (repayment) |
+| **Investment Annuity** | You → project | You ← project (returns) |
 
-* **In a Loan (Credit):** You get a pile of money today ($C_0$). You pay it back in constant slices ($Ann$). The bank calculates the annuity to get its money back plus interest.
-* **In an Investment (Project):** You pay a pile of money today ($I_0$). The project pays *you* back in constant slices. You calculate the annuity to see if you get your money back plus interest.
+The arithmetic is identical in both directions. We apply the **Capital Recovery Factor (CRF)** once more:
 
-**The Math is identical.** We use the **Capital Recovery Factor (CRF)** again.
+$$\boxed{d = NPV \cdot \underbrace{\frac{i(1+i)^n}{(1+i)^n - 1}}_{CRF(i,\,n)}}$$
 
-$$Annuity = NPV \cdot \underbrace{\frac{i(1+i)^n}{(1+i)^n - 1}}_{CRF}$$
+::: {.details}
+#### Why d = NPV × CRF: The Derivation
+The present value of all future cash flows equals $I_0 + NPV$ (the investment recovers itself plus creates excess value). Spreading this total as an annuity gives:
+$$\text{Annuity of total PV} = (I_0 + NPV) \cdot CRF$$
+But the annuity of the bare investment recovery is just $I_0 \cdot CRF$. Subtract it to isolate the *excess* return:
+$$d = (I_0 + NPV) \cdot CRF - I_0 \cdot CRF = NPV \cdot CRF$$
+This is why the formula reduces to the NPV alone — the investment cost cancels out.
+:::
 
 ::: {.drag-exercise}
-While the *Net Present Value* represents the total value created at time t=0, the *Annuity* distributes this value evenly over the *useful life* of the project. A positive annuity means the project earns *more* than the minimum interest rate.
+While the *Net Present Value* captures the total value created at $t = 0$, the *Annuity* $d$ spreads this value evenly across the project's *useful life*. A positive annuity means the project earns *more* than the minimum required return in every single year.
 :::
 
----
+## From Raw Cash Flows to Annual Value: A Complete Example
 
-## The Calculation: Converting Wealth to Income
+Rather than starting from a pre-calculated NPV, real decisions start with raw cash flows. Here is the full pipeline:
 
-Let's take a standard project.
-* **NPV:** € 20,000
-* **Duration ($n$):** 5 Years
-* **Interest ($i$):** 10%
+**Project:** A delivery vehicle is purchased for **€ 80,000**. It generates net cash savings of **€ 25,000 per year** for **4 years**, then is sold for a residual value of **€ 10,000**. The cost of capital is **8%**.
 
-How much is this worth per year?
-$$d = 20,000 \cdot \text{CRF}(10\%, 5) = 20,000 \cdot 0.2638 = \mathbf{5,276}$$
+**Step 1 — Calculate NPV:**
 
-### Interpretation of "d"
-What does this € 5,276 actually mean? This is vital for the exam.
+$$NPV = -80{,}000 + 25{,}000 \cdot PVIFA(8\%,4) + 10{,}000 \cdot (1.08)^{-4}$$
+$$= -80{,}000 + 25{,}000 \times 3.3121 + 10{,}000 \times 0.7350$$
+$$= -80{,}000 + 82{,}803 + 7{,}350 = \mathbf{+€\,10{,}153}$$
 
-1.  **The "Manager's Salary":** You could hire a project manager for € 5,276 per year. The project would pay her salary, earn the 10% interest for the bank, and break even.
-2.  **The "Buffer":** Your annual cash flows could drop by exactly € 5,276, and the project would still be acceptable ($NPV=0$).
-3.  **The "Super-Dividend":** If you distribute this amount to shareholders every year, the company's value remains constant.
+**Step 2 — Calculate CRF(8%, 4):**
+
+$$CRF(8\%,4) = \frac{0.08 \times (1.08)^4}{(1.08)^4 - 1} = \frac{0.08 \times 1.3605}{0.3605} = \frac{0.1088}{0.3605} = 0.3019$$
+
+**Step 3 — Compute the Annuity:**
+
+$$d = 10{,}153 \times 0.3019 = \mathbf{€\,3{,}065 \text{ per year}}$$
+
+### Three Ways to Read the Annual Value
+
+1. **The Manager's Salary:** You could hire a project manager for € 3,065 per year. After paying that salary, the investment still earns exactly 8% — it breaks even economically.
+2. **The Safety Buffer:** The annual cash flows could fall by € 3,065 — from € 25,000 down to € 21,935 — and the project would still be acceptable ($NPV = 0$). This is the annual margin of safety in cash flow terms.
+3. **The Super-Dividend:** Distributing € 3,065 per year to shareholders leaves the company's value unchanged — the project fully self-finances its capital cost.
 
 ::: {.flip-card}
-#### Periodenerfolg (Annuity)
-Unlike accounting profit (which fluctuates with depreciation), the Annuity is a calculated, constant "economic profit" distributed over the project's life. It includes the return OF capital (depreciation) and the return ON capital (interest).
+#### Annuity vs. Accounting Profit
+Accounting profit fluctuates with depreciation schedules and accruals. The annuity $d$ is a calculated, *constant* economic profit that includes both the return *of* capital (the depreciation equivalent) and the return *on* capital (the interest cost). It is the measure accounting cannot provide without distortion.
 :::
 
----
+## The Strategic Power: Eliminating the Time Bias
 
-## The Strategic Power: Comparing Apples and Oranges
+Here is the decisive problem that only the Annuity Method solves. **NPV is biased towards longer projects** — simply because they run longer and accumulate more discounted cash flows, even if each year is less efficient.
 
-The main reason we use the Annuity Method is **The Problem of Time**.
-NPV is biased towards long projects.
+**The Scenario:** $i = 10\%$.
 
-**The Scenario:**
-* **Project A (Short):** 3 Years. NPV = € 10,000.
-* **Project B (Long):** 6 Years. NPV = € 15,000.
+* **Project A (Short):** $n = 3$ years, $NPV = \text{€}\,10{,}000$.
+* **Project B (Long):** $n = 6$ years, $NPV = \text{€}\,15{,}000$.
 
-Is B better? Not necessarily. B ties up your capital twice as long. You cannot compare total wealth if the timeframes differ.
-**Solution:** Compare the *annual* efficiency (Annuity).
+Is B better? NPV says yes (€ 15k > € 10k). But B also ties up your capital for twice as long — and assumes you can **repeat the project** when it ends. If Project A can be repeated on equivalent terms after 3 years, the annual comparison matters.
 
-* **Annuity A:** $10,000 \cdot \text{CRF}(10\%, 3) \approx 10,000 \cdot 0.402 = \mathbf{4,021\ \text{€}}$
-* **Annuity B:** $15,000 \cdot \text{CRF}(10\%, 6) \approx 15,000 \cdot 0.229 = \mathbf{3,435\ \text{€}}$
+> **The Repeatability Assumption:** The Annuity Method is only valid when the shorter project can be repeated on identical terms once it finishes. Under this assumption, compare annuities — not total NPVs.
 
-**Verdict:** Project A is more efficient per year!
-If you could repeat Project A (chain assumption), it would be the better choice.
+**Annuity comparison:**
 
-> **Decision Rule:**
-> If projects have different useful lives ($n_1 \neq n_2$), do **not** compare NPV. Compare Annuities! (Assuming the project can be repeated).
+$$d_A = 10{,}000 \times CRF(10\%,\,3) = 10{,}000 \times 0.4021 = \mathbf{€\,4{,}021 \text{ / yr}}$$
+$$d_B = 15{,}000 \times CRF(10\%,\,6) = 15{,}000 \times 0.2296 = \mathbf{€\,3{,}444 \text{ / yr}}$$
 
-<details>
-<summary>Deep Dive: The Infinite Chain (Kettenmethode)</summary>
+**Verdict:** Project A generates more value *per year* (€ 4,021 > € 3,444). Choose A — and repeat it.
 
-Comparing annuities is mathematically identical to calculating the "Net Present Value of an Infinite Chain".
-If you repeat Project A forever, and Project B forever, the one with the higher Annuity will generate a higher infinite NPV.
-The Annuity Method is the shortcut for this complex calculation.
-</details>
+::: {.details}
+#### The Infinite Chain Equivalence
+Comparing annuities is mathematically identical to calculating the NPV of infinitely repeating chains. If you repeat A forever and B forever, the chain with the higher annuity produces a higher total present value. Proof: an infinite annuity of $d$ has PV = $d/i$; since $d_A > d_B$, $PV_A^{\infty} > PV_B^{\infty}$. The Annuity Method is the elegant shortcut — it avoids building infinite-horizon models.
+:::
 
----
+> **Decision Rule:** When comparing projects with **different lifespans** ($n_A \neq n_B$), compare annuities — provided the projects can be repeated on equivalent terms.
 
-## Interactive Lab: The Time Distortion
+The interactive tool below lets you adjust both projects and the cost of capital to see when NPV and the Annuity Method give different verdicts:
 
-See how a "smaller" NPV can be "better" if the timeframe is shorter.
+::: {.content-visible when-format="html"}
+<iframe src="assets/Chapter7/annuity_comparison.html"
+        style="width: 100%; height: 460px; border: none;"
+        loading="lazy">
+</iframe>
+:::
 
----
+## The Limits: When Annuity Misleads and NPV Wins
 
-## The Limits: When Math Lies
+The Annuity Method adds the **Repeatability Assumption** on top of NPV's reinvestment assumption. When this assumption fails, revert to NPV.
 
-The Annuity Method relies on the **Reinvestment Assumption** (just like NPV) *PLUS* the **Repeatability Assumption**.
+**Counter-example (non-repeatable project):**
 
-It assumes you can repeat the project at identical terms once it finishes.
-* **Reality:** In 3 years, competitors might have copied your product, and the margins (Cash Flows) for the second round will be lower.
-* **Risk:** If "Project A" was a unique opportunity (e.g., selling masks during a pandemic), the Annuity comparison is misleading. You should take the absolute wealth (NPV) of the longer project B if A cannot be repeated.
+* **Project A:** 3-year unique opportunity (pandemic demand, expiring patent). NPV = € 10,000.
+* **Project B:** 6-year standard investment (repeatable machinery). NPV = € 15,000.
+
+If Project A *cannot* be repeated — once the opportunity is gone, it's gone — the annuity comparison is meaningless for A. You compare one-time outcomes: take Project B (€ 15,000 > € 10,000).
+
+> **Practical rule:**
+> * Projects that can be repeated on equivalent terms → compare **annuities**
+> * One-off strategic opportunities → compare **NPV** directly
+
+## Chapter Check
 
 ::: {.quick-check}
-**You compare two machines. Machine X lasts 4 years, Machine Y lasts 8 years. Why is the Annuity Method better than NPV here?**
+**You compare two machines. Machine X lasts 4 years (NPV = € 8,000), Machine Y lasts 8 years (NPV = € 12,000). Cost of capital = 10%. Which do you choose and why?**
 
-- It calculates the internal interest rate.
-- It ignores the interest rate.
-- **It normalizes the value to a yearly period, making different lifespans comparable.**
-> Correct. It breaks the value down to a "common denominator" (1 Year).
+- Machine Y — it has the higher NPV.
+- **Machine X — it has the higher annual annuity (€ 2,524/yr vs. € 2,249/yr).**
+- Cannot be determined without more information.
+
+> Calculate: $d_X = 8{,}000 \times CRF(10\%,4) = 8{,}000 \times 0.3155 = €\,2{,}524$/yr. $d_Y = 12{,}000 \times CRF(10\%,8) = 12{,}000 \times 0.1874 = €\,2{,}249$/yr. Machine X creates more value per year — assuming it can be replaced on equivalent terms at year 4.
 :::
 
 ::: {.quick-check}
-**If the Annuity (d) is exactly € 0.00, what is the NPV?**
+**If the annuity $d$ is exactly € 0, what is the project's NPV?**
 
-- **€ 0.00**
+- **€ 0**
 - Undefined
 - Negative
-> Correct. $d = NPV \cdot CRF$. Since the CRF is always positive, if $d=0$, then $NPV=0$.
+
+> Correct. $d = NPV \times CRF$. Since $CRF > 0$ always, $d = 0$ implies $NPV = 0$. The project exactly covers its cost of capital — no excess return, no value destroyed.
 :::
+
+Chapter 8 introduces the tax dimension: how corporate income taxes change cash flows and — through a striking paradox — can actually make more expensive financing preferable.

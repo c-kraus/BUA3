@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dean Model: Capital Rationing & Profitability Index</title>
+    <style>
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            background: transparent; padding: 14px; color: #222;
+        }
+        .card {
+            background: #fff; border: 1px solid #e8e8e8;
+            border-left: 5px solid #ff6a00; border-radius: 8px;
+            box-shadow: 0 4px 14px rgba(0,0,0,0.07);
+            padding: 18px 22px; max-width: 920px; margin: 0 auto;
+        }
+        .card-title { font-size: 1.05rem; font-weight: 700; color: #1a1a1a; margin-bottom: 3px; }
+        .card-sub   { font-size: 0.8rem; color: #777; margin-bottom: 14px; }
+
+        .budget-row {
+            background: #fafafa; border: 1px solid #ebebeb; border-radius: 6px;
+            padding: 10px 14px; margin-bottom: 12px;
+            display: flex; align-items: center; gap: 14px;
+        }
+        .budget-row label { font-size: 0.78rem; font-weight: 600; color: #555; white-space: nowrap; }
+        .budget-row .val { font-size: 1rem; font-weight: 700; color: #ff6a00; margin-left: 6px; white-space: nowrap; }
+        .budget-row input { flex: 1; accent-color: #ff6a00; }
+
+        /* Project table */
+        .proj-table { width: 100%; border-collapse: collapse; margin-bottom: 12px; font-size: 0.8rem; }
+        .proj-table th { background: #f5f5f5; font-weight: 700; text-transform: uppercase;
+            font-size: 0.68rem; letter-spacing: .06em; color: #777; padding: 7px 10px; text-align: center; }
+        .proj-table td { padding: 6px 10px; text-align: center; border-bottom: 1px solid #f0f0f0; }
+        .proj-table tr.selected td { background: #e5f5e5; }
+        .proj-table tr.rejected td { background: #fafafa; color: #aaa; }
+        .proj-table tr.partial td { background: #fff8e1; }
+        .proj-table .proj-name { font-weight: 700; text-align: left; }
+        .proj-table .pi-bar { display: flex; align-items: center; gap: 6px; }
+        .pi-fill { height: 10px; border-radius: 3px; background: #1565c0; }
+        .pi-fill.sel { background: #2e7d32; }
+        .pi-fill.rej { background: #ccc; }
+
+        .chart-wrap {
+            background: #fafafa; border: 1px solid #ebebeb;
+            border-radius: 6px; padding: 4px 6px; margin-bottom: 12px;
+        }
+        svg#dsvg { display: block; width: 100%; overflow: visible; }
+
+        .summary-row {
+            display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px;
+        }
+        .sbox { border-radius: 6px; padding: 10px 14px; }
+        .sbox.budget { background: #fff3e6; border: 1px solid #ffc580; }
+        .sbox.npv    { background: #edf5fc; border: 1px solid #b8d9f3; }
+        .sbox.vs     { background: #f0f4ff; border: 1px solid #b0c4f5; }
+        .sbox .rl { font-size: 0.68rem; font-weight: 700; text-transform: uppercase; letter-spacing: .06em; color: #777; margin-bottom: 2px; }
+        .sbox .rf { font-size: 0.77rem; color: #888; font-style: italic; margin-bottom: 3px; }
+        .sbox .rv { font-size: 1.1rem; font-weight: 700; }
+        .sbox.budget .rv { color: #c43d00; }
+        .sbox.npv    .rv { color: #1565c0; }
+        .sbox.vs     .rv { color: #2c3e8c; }
+        .insight { font-size: 0.78rem; margin-top: 8px; padding: 8px 12px;
+            border-radius: 4px; background: #fef9ec; border: 1px solid #ffe082; color: #5a3e00; }
+        @media (max-width:520px) { .summary-row { grid-template-columns:1fr; } }
+    </style>
+</head>
+<body>
+<div class="card">
+    <div class="card-title">Dean Model — Capital Rationing & Profitability Index</div>
+    <div class="card-sub">
+        Projects are ranked by Profitability Index (PI = PV of CFs / I₀). Drag the budget slider to see which
+        projects are selected. Compare the PI selection to a naive "highest NPV first" approach.
+    </div>
+
+    <div class="budget-row">
+        <label>Capital Budget (B) <span class="val" id="bval">$ 200M</span></label>
+        <input type="range" id="bsl" min="20" max="320" step="10" value="200">
+    </div>
+
+    <table class="proj-table" id="projTable">
+        <thead>
+            <tr>
+                <th style="text-align:left">Project</th>
+                <th>Investment ($M)</th>
+                <th>NPV ($M)</th>
+                <th>PI</th>
+                <th style="text-align:left">PI Rank</th>
+                <th>Status</th>
+            </tr>
+        </thead>
+        <tbody id="projBody"></tbody>
+    </table>
+
+    <div class="chart-wrap">
+        <svg id="dsvg" height="220"></svg>
+    </div>
+
+    <div class="summary-row">
+        <div class="sbox budget">
+            <div class="rl">Budget Used</div>
+            <div class="rf" id="rfBudget">of $ 200M</div>
+            <div class="rv" id="rvBudget">$ 0M</div>
+        </div>
+        <div class="sbox npv">
+            <div class="rl">Total NPV (PI method)</div>
+            <div class="rf">PI-ranked selection</div>
+            <div class="rv" id="rvNPV">$ 0M</div>
+        </div>
+        <div class="sbox vs">
+            <div class="rl">NPV gain vs. naive</div>
+            <div class="rf" id="rfVs">vs. highest-NPV-first</div>
+            <div class="rv" id="rvVs">$ 0M</div>
+        </div>
+    </div>
+    <div class="insight" id="insightBox"></div>
+</div>
+
+<script>
+(function(){
+    // Fixed project list (sortable by PI)
+    var PROJECTS = [
+        {name:'A', inv:150, npv:60},
+        {name:'B', inv:20,  npv:5},
+        {name:'C', inv:40,  npv:6},
+        {name:'D', inv:50,  npv:15},
+        {name:'E', inv:30,  npv:11},
+        {name:'F', inv:20,  npv:7},
+        {name:'G', inv:60,  npv:10}
+    ];
+
+    PROJECTS.forEach(function(p){ p.pi = parseFloat(((p.inv+p.npv)/p.inv).toFixed(4)); });
+
+    var byPI  = PROJECTS.slice().sort(function(a,b){return b.pi - a.pi;});
+    var byNPV = PROJECTS.slice().sort(function(a,b){return b.npv - a.npv;});
+
+    function selectByStrategy(budget, sortedList) {
+        var rem = budget, sel = [], totalNPV = 0, totalInv = 0;
+        sortedList.forEach(function(p){
+            if (rem >= p.inv) { sel.push(p.name); rem -= p.inv; totalNPV += p.npv; totalInv += p.inv; }
+        });
+        return {names: sel, npv: totalNPV, inv: totalInv};
+    }
+
+    function mkEl(tag, attrs) {
+        var el = document.createElementNS('http://www.w3.org/2000/svg', tag);
+        for (var k in attrs) el.setAttribute(k, attrs[k]);
+        return el;
+    }
+    function mkTxt(x, y, s, attrs) {
+        var el = mkEl('text', Object.assign({
+            x:x, y:y, 'text-anchor':'middle',
+            'font-family':"'Inter',sans-serif", 'font-size':'10'
+        }, attrs));
+        el.textContent = s;
+        return el;
+    }
+
+    var bsl = document.getElementById('bsl');
+
+    function draw() {
+        var B = parseInt(bsl.value);
+        document.getElementById('bval').textContent = '$ '+B+'M';
+
+        var piResult  = selectByStrategy(B, byPI);
+        var npvResult = selectByStrategy(B, byNPV);
+
+        // Table
+        var tbody = document.getElementById('projBody');
+        tbody.innerHTML = '';
+        var piRankLabels = {};
+        byPI.forEach(function(p,i){ piRankLabels[p.name] = i+1; });
+
+        byPI.forEach(function(p) {
+            var isSel = piResult.names.indexOf(p.name) >= 0;
+            var tr = document.createElement('tr');
+            tr.className = isSel ? 'selected' : 'rejected';
+
+            var piBarPct = ((p.pi - 1) / (byPI[0].pi - 1) * 100).toFixed(0);
+            tr.innerHTML =
+                '<td class="proj-name">'+ p.name +'</td>'+
+                '<td>$'+ p.inv +'M</td>'+
+                '<td>$'+ p.npv +'M</td>'+
+                '<td>'+ p.pi.toFixed(2) +'</td>'+
+                '<td><div class="pi-bar">'+
+                    '<div class="pi-fill '+(isSel?'sel':'rej')+'" style="width:'+Math.max(4,piBarPct*0.6)+'px"></div>'+
+                    '<span style="font-size:0.75rem; color:'+(isSel?'#2e7d32':'#aaa')+'; font-weight:600">#'+ piRankLabels[p.name] +'</span>'+
+                '</div></td>'+
+                '<td><span style="font-size:0.75rem;font-weight:700;color:'+(isSel?'#2e7d32':'#aaa')+'">'+
+                    (isSel ? '✓ SELECT' : '✗ PASS') +'</span></td>';
+            tbody.appendChild(tr);
+        });
+
+        // Summary
+        document.getElementById('rfBudget').textContent = 'of $ '+B+'M';
+        document.getElementById('rvBudget').textContent = '$ '+piResult.inv+'M';
+        document.getElementById('rvNPV').textContent = '$ '+piResult.npv+'M';
+        var gain = piResult.npv - npvResult.npv;
+        document.getElementById('rvVs').textContent = (gain>=0?'+':'')+'$ '+gain+'M';
+        document.getElementById('rfVs').textContent = 'naive selects: ' + npvResult.names.join(', ') +
+            ' (NPV $' + npvResult.npv + 'M)';
+
+        var insight = document.getElementById('insightBox');
+        if (gain > 0) {
+            insight.textContent = 'PI method selects: ' + piResult.names.join(', ') +
+                ' for a total NPV of $' + piResult.npv +
+                'M — $' + gain + 'M better than choosing highest-NPV projects first (' + npvResult.names.join(', ') + ').';
+        } else if (gain < 0) {
+            insight.textContent = 'At this budget level, highest-NPV selection happens to outperform PI ranking by $' + Math.abs(gain) +
+                'M. This is unusual and occurs when projects fit the budget constraint perfectly in NPV order.';
+        } else {
+            insight.textContent = 'At this budget level, both strategies produce the same portfolio and the same total NPV of $' + piResult.npv + 'M.';
+        }
+
+        // ── SVG: staircase chart ──────────────────────────────────────────────
+        var svg  = document.getElementById('dsvg');
+        var W = svg.getBoundingClientRect().width || 800;
+        var H = 220;
+        svg.setAttribute('viewBox','0 0 '+W+' '+H);
+        svg.setAttribute('width', W);
+        while (svg.firstChild) svg.removeChild(svg.firstChild);
+
+        var ML = 50, MR = 20, MT = 25, MB = 40;
+        var cW = W - ML - MR, cH = H - MT - MB;
+
+        // X axis: cumulative investment (0 to total available)
+        var totalAvail = PROJECTS.reduce(function(s,p){return s+p.inv;},0);
+        var maxX = totalAvail * 1.05;
+        // Y axis: PI (range 1.0 to max PI + margin)
+        var minPI = 1.0, maxPI = byPI[0].pi + 0.1;
+        var piSpan = maxPI - minPI;
+
+        function toX(cumInv) { return ML + (cumInv/maxX)*cW; }
+        function toY(pi) { return MT + cH - ((pi-minPI)/piSpan)*cH; }
+
+        // Grid
+        var nGY = 5;
+        for (var g=0; g<=nGY; g++) {
+            var gpi = minPI + (g/nGY)*piSpan, gy = toY(gpi);
+            svg.appendChild(mkEl('line',{x1:ML,y1:gy,x2:ML+cW,y2:gy,stroke:'#ebebeb','stroke-width':'1'}));
+            svg.appendChild(mkTxt(ML-4,gy+3.5,gpi.toFixed(2),{fill:'#888','font-size':'9','text-anchor':'end'}));
+        }
+
+        // Axes
+        var axY = toY(1.0);
+        svg.appendChild(mkEl('line',{x1:ML,y1:axY,x2:ML+cW,y2:axY,stroke:'#bbb','stroke-width':'1.5'}));
+        svg.appendChild(mkEl('line',{x1:ML,y1:MT,x2:ML,y2:MT+cH,stroke:'#999','stroke-width':'1.5'}));
+
+        // Y label
+        var yl=mkEl('text',{x:13,y:MT+cH/2,'text-anchor':'middle','font-size':'9.5',fill:'#666',
+            'font-family':"'Inter',sans-serif",transform:'rotate(-90,13,'+(MT+cH/2)+')'});
+        yl.textContent='Profitability Index (PI)'; svg.appendChild(yl);
+        svg.appendChild(mkTxt(ML+cW/2,MT+cH+30,'Cumulative Investment Volume ($M)',{fill:'#666','font-size':'9.5'}));
+
+        // Project staircase bars
+        var cumInv = 0;
+        byPI.forEach(function(p) {
+            var isSel = piResult.names.indexOf(p.name) >= 0;
+            var x0 = toX(cumInv), x1 = toX(cumInv+p.inv);
+            var yPi = toY(p.pi), yBase = toY(1.0);
+            var col = isSel ? '#2e7d32' : '#ccc';
+            var colBorder = isSel ? '#1b5e20' : '#bbb';
+
+            svg.appendChild(mkEl('rect',{
+                x:x0+1, y:yPi, width:Math.max(1,x1-x0-2), height:yBase-yPi, rx:'2',
+                fill:col, opacity:'0.8', stroke:colBorder,'stroke-width':'0.5'
+            }));
+            // Project label
+            if (x1-x0 > 20) {
+                svg.appendChild(mkTxt((x0+x1)/2, yPi-5, p.name,
+                    {fill:isSel?'#1b5e20':'#888','font-size':'9.5','font-weight':'700'}));
+            }
+            svg.appendChild(mkTxt((x0+x1)/2, axY+15, '$'+p.inv+'M',
+                {fill:'#888','font-size':'8.5'}));
+            cumInv += p.inv;
+        });
+
+        // Budget line
+        if (B <= maxX) {
+            var xB = toX(B);
+            svg.appendChild(mkEl('line',{x1:xB,y1:MT,x2:xB,y2:MT+cH,
+                stroke:'#ff6a00','stroke-width':'2','stroke-dasharray':'6,3'}));
+            svg.appendChild(mkTxt(xB, MT-10, 'Budget $'+B+'M',
+                {fill:'#ff6a00','font-size':'9','font-weight':'700'}));
+        }
+
+        window.parent.postMessage({iframeHeight:document.body.scrollHeight},'*');
+    }
+
+    bsl.addEventListener('input', draw);
+    window.addEventListener('resize',function(){setTimeout(draw,50);});
+    draw();
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bond Valuation: Cash Flows & Price-Yield Relationship</title>
+    <style>
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            background: transparent; padding: 14px; color: #222;
+        }
+        .card {
+            background: #fff; border: 1px solid #e8e8e8;
+            border-left: 5px solid #ff6a00; border-radius: 8px;
+            box-shadow: 0 4px 14px rgba(0,0,0,0.07);
+            padding: 18px 22px; max-width: 920px; margin: 0 auto;
+        }
+        .card-title { font-size: 1.05rem; font-weight: 700; color: #1a1a1a; margin-bottom: 3px; }
+        .card-sub   { font-size: 0.8rem; color: #777; margin-bottom: 14px; }
+
+        .controls {
+            display: grid; grid-template-columns: repeat(3, 1fr);
+            gap: 12px; margin-bottom: 12px;
+        }
+        .ctrl label {
+            display: flex; justify-content: space-between; align-items: baseline;
+            font-size: 0.75rem; font-weight: 600; color: #555; margin-bottom: 4px;
+        }
+        .ctrl .val { font-size: 0.9rem; font-weight: 700; color: #ff6a00; }
+        input[type=range] { width: 100%; accent-color: #ff6a00; cursor: pointer; }
+
+        /* Price badge */
+        .price-badge {
+            display: flex; align-items: center; gap: 12px;
+            background: #f5f5f5; border-radius: 8px;
+            padding: 10px 16px; margin-bottom: 12px;
+        }
+        .price-main { font-size: 1.6rem; font-weight: 700; }
+        .price-pct  { font-size: 0.9rem; color: #666; }
+        .price-tag  {
+            margin-left: auto; border-radius: 20px;
+            padding: 3px 12px; font-size: 0.78rem; font-weight: 700;
+        }
+        .tag-par      { background: #e8e8e8; color: #555; }
+        .tag-premium  { background: #e5f5e5; color: #2e7d32; }
+        .tag-discount { background: #fce8e8; color: #c62828; }
+
+        /* Legend */
+        .legend {
+            display: flex; gap: 16px; margin-bottom: 6px; font-size: 0.75rem;
+        }
+        .leg { display: flex; align-items: center; gap: 5px; }
+        .leg-box { width: 13px; height: 13px; border-radius: 2px; }
+
+        .chart-wrap {
+            background: #fafafa; border: 1px solid #ebebeb;
+            border-radius: 6px; padding: 4px 6px; margin-bottom: 12px;
+        }
+        svg#bsvg { display: block; width: 100%; overflow: visible; }
+
+        /* Results */
+        .results {
+            display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px;
+        }
+        .rbox { border-radius: 6px; padding: 10px 14px; }
+        .rbox.coup { background: #edf5fc; border: 1px solid #b8d9f3; }
+        .rbox.par  { background: #fff3e6; border: 1px solid #ffc580; }
+        .rbox.tot  { background: #f0f4ff; border: 1px solid #b0c4f5; }
+        .rbox .rl  { font-size: 0.68rem; font-weight: 700; text-transform: uppercase; letter-spacing: .06em; color: #777; margin-bottom: 2px; }
+        .rbox .rf  { font-size: 0.77rem; color: #888; font-style: italic; margin-bottom: 3px; }
+        .rbox .ra  { font-size: 1.15rem; font-weight: 700; }
+        .rbox.coup .ra { color: #1565c0; }
+        .rbox.par  .ra { color: #c43d00; }
+        .rbox.tot  .ra { color: #2c3e8c; }
+        @media (max-width:520px) { .controls,.results { grid-template-columns:1fr; } }
+    </style>
+</head>
+<body>
+<div class="card">
+    <div class="card-title">Bond Valuation: Cash Flows &amp; the Price-Yield Relationship</div>
+    <div class="card-sub">Drag the YTM slider. When YTM &gt; Coupon → Discount. When YTM &lt; Coupon → Premium. Par value is fixed at € 1,000.</div>
+
+    <div class="controls">
+        <div class="ctrl">
+            <label>Coupon Rate (c) <span class="val" id="cDisp">5 %</span></label>
+            <input type="range" id="cSl" min="1" max="12" step="0.5" value="5">
+        </div>
+        <div class="ctrl">
+            <label>Market Rate / YTM (r) <span class="val" id="rDisp">7 %</span></label>
+            <input type="range" id="rSl" min="1" max="12" step="0.5" value="7">
+        </div>
+        <div class="ctrl">
+            <label>Maturity (n) <span class="val" id="nDisp">10 yrs</span></label>
+            <input type="range" id="nSl" min="3" max="12" step="1" value="10">
+        </div>
+    </div>
+
+    <div class="price-badge">
+        <div>
+            <div class="price-main" id="priceMain">€ 859.53</div>
+            <div class="price-pct" id="pricePct">85.95 % of par</div>
+        </div>
+        <div class="price-tag tag-discount" id="priceBadge">DISCOUNT</div>
+    </div>
+
+    <div class="legend">
+        <div class="leg"><div class="leg-box" style="background:#1565c0"></div> Annual Coupon (C = F × c)</div>
+        <div class="leg"><div class="leg-box" style="background:#e65100"></div> Par Value repaid at maturity</div>
+        <div class="leg"><div class="leg-box" style="background:#7b7b7b; opacity:.6"></div> Price paid today (P₀)</div>
+    </div>
+
+    <div class="chart-wrap">
+        <svg id="bsvg" height="280"></svg>
+    </div>
+
+    <div class="results">
+        <div class="rbox coup">
+            <div class="rl">PV of Coupons</div>
+            <div class="rf" id="rfCoup">C × PVIFA(r, n)</div>
+            <div class="ra" id="raCoup">€ 351.18</div>
+        </div>
+        <div class="rbox par">
+            <div class="rl">PV of Par Value</div>
+            <div class="rf" id="rfPar">F × (1+r)^−n</div>
+            <div class="ra" id="raPar">€ 508.35</div>
+        </div>
+        <div class="rbox tot">
+            <div class="rl">Bond Price (P₀)</div>
+            <div class="rf" id="rfTot">PV Coupons + PV Par</div>
+            <div class="ra" id="raTot">€ 859.53</div>
+        </div>
+    </div>
+</div>
+
+<script>
+(function(){
+    var cSl = document.getElementById('cSl');
+    var rSl = document.getElementById('rSl');
+    var nSl = document.getElementById('nSl');
+    var svg = document.getElementById('bsvg');
+
+    function fmt(v,d) {
+        d = d===undefined ? 2 : d;
+        return '€ ' + v.toLocaleString('de-DE',{minimumFractionDigits:d, maximumFractionDigits:d});
+    }
+
+    function mkEl(tag,attrs) {
+        var el = document.createElementNS('http://www.w3.org/2000/svg',tag);
+        for(var k in attrs) el.setAttribute(k,attrs[k]);
+        return el;
+    }
+    function mkTxt(x,y,s,attrs) {
+        var el = mkEl('text', Object.assign({
+            x:x, y:y, 'text-anchor':'middle',
+            'font-family':"'Inter',sans-serif", 'font-size':'10'
+        }, attrs));
+        el.textContent = s;
+        return el;
+    }
+
+    function draw() {
+        var c   = parseFloat(cSl.value) / 100;
+        var r   = parseFloat(rSl.value) / 100;
+        var n   = parseInt(nSl.value);
+        var F   = 1000;
+        var C   = F * c;
+
+        var pvifa    = (1 - Math.pow(1+r,-n)) / r;
+        var pvCoup   = C * pvifa;
+        var pvPar    = F * Math.pow(1+r,-n);
+        var price    = pvCoup + pvPar;
+        var pctPar   = price / F * 100;
+
+        // Update labels
+        document.getElementById('cDisp').textContent = cSl.value + ' %';
+        document.getElementById('rDisp').textContent = rSl.value + ' %';
+        document.getElementById('nDisp').textContent = n + ' yrs';
+
+        document.getElementById('priceMain').textContent = fmt(price);
+        document.getElementById('pricePct').textContent  = pctPar.toFixed(2) + ' % of par';
+
+        var badge = document.getElementById('priceBadge');
+        var diff  = (c - r) * 100;
+        if (Math.abs(diff) < 0.05) {
+            badge.textContent = 'AT PAR';
+            badge.className   = 'price-tag tag-par';
+        } else if (price > F) {
+            badge.textContent = 'PREMIUM  (YTM < Coupon)';
+            badge.className   = 'price-tag tag-premium';
+        } else {
+            badge.textContent = 'DISCOUNT  (YTM > Coupon)';
+            badge.className   = 'price-tag tag-discount';
+        }
+
+        document.getElementById('rfCoup').textContent = C.toFixed(0) + ' × PVIFA(' + rSl.value + '%, ' + n + ')';
+        document.getElementById('rfPar').textContent  = '1000 × (1+' + rSl.value + '%)^−' + n;
+        document.getElementById('raCoup').textContent = fmt(pvCoup);
+        document.getElementById('raPar').textContent  = fmt(pvPar);
+        document.getElementById('rfTot').textContent  = fmt(pvCoup,0) + ' + ' + fmt(pvPar,0);
+        document.getElementById('raTot').textContent  = fmt(price);
+
+        // ── SVG ──────────────────────────────────────────────────────────────
+        var W   = svg.getBoundingClientRect().width || 800;
+        var H   = 280;
+        svg.setAttribute('viewBox','0 0 '+W+' '+H);
+        svg.setAttribute('width',W);
+        while(svg.firstChild) svg.removeChild(svg.firstChild);
+
+        var ML  = 20, MR = 20;
+        var axY = 160;          // axis y
+        var COUP_H  = 55;       // fixed coupon bar height (above axis)
+        var PAR_H   = 90;       // par bar height stacked on coupon at t=n
+        var PRICE_H_MAX = 70;   // max price bar height below axis
+        var priceH  = PRICE_H_MAX * (price / F);
+
+        var axW  = W - ML - MR;
+        var step = axW / (n + 0.5);
+        var barW = Math.max(10, Math.min(32, step * 0.45));
+
+        // Defs: arrowheads
+        var defs = mkEl('defs',{});
+        function mkArr(id,col,dir) {
+            var m = mkEl('marker',{id:id,markerWidth:'8',markerHeight:'6',
+                refX: dir==='up'?'4':'4', refY: dir==='up'?'0':'6', orient:'auto'});
+            var d = dir==='up' ? 'M0,6 L4,0 L8,6' : 'M0,0 L4,6 L8,0';
+            var p = mkEl('path',{d:d, fill:col});
+            m.appendChild(p);
+            return m;
+        }
+        defs.appendChild(mkArr('arrUp','#1565c0','up'));
+        defs.appendChild(mkArr('arrDown','#555','down'));
+        svg.appendChild(defs);
+
+        // Axis
+        svg.appendChild(mkEl('line',{
+            x1:ML, y1:axY, x2:W-MR, y2:axY,
+            stroke:'#bbb','stroke-width':'1.5'
+        }));
+
+        // t-labels and ticks
+        for(var t=0; t<=n; t++) {
+            var x = ML + t * step;
+            svg.appendChild(mkEl('line',{x1:x,y1:axY-5,x2:x,y2:axY+5,stroke:'#999','stroke-width':'1.5'}));
+            svg.appendChild(mkTxt(x, axY+18, 't='+t, {fill:'#666','font-size':'10'}));
+        }
+
+        // ── Coupon bars (blue, t=1..n) ──────────────────────────────────────
+        for(var t=1; t<=n; t++) {
+            var x = ML + t * step;
+            // Bar
+            svg.appendChild(mkEl('rect',{
+                x:x-barW/2, y:axY-COUP_H,
+                width:barW, height:COUP_H, rx:'3',
+                fill:'#1565c0', opacity:'0.82'
+            }));
+            // Coupon label
+            if(barW > 14) {
+                svg.appendChild(mkTxt(x, axY-COUP_H-5,
+                    '€'+Math.round(C), {fill:'#1565c0','font-size':'8.5','font-weight':'600'}));
+            }
+        }
+
+        // ── Par value bar at t=n (orange, stacked above coupon) ─────────────
+        var xN = ML + n * step;
+        svg.appendChild(mkEl('rect',{
+            x:xN-barW/2, y:axY-COUP_H-PAR_H,
+            width:barW, height:PAR_H, rx:'3',
+            fill:'#e65100', opacity:'0.85'
+        }));
+        svg.appendChild(mkTxt(xN, axY-COUP_H-PAR_H-6,
+            '€1,000', {fill:'#c43d00','font-size':'8.5','font-weight':'600'}));
+
+        // ── Price indicator (grey, below axis at t=0) ───────────────────────
+        var x0 = ML + 0 * step;
+        svg.appendChild(mkEl('rect',{
+            x:x0-barW/2, y:axY,
+            width:barW, height:priceH, rx:'3',
+            fill:'#777', opacity:'0.55'
+        }));
+        svg.appendChild(mkTxt(x0, axY+priceH+13,
+            fmt(price,0), {fill:'#555','font-size':'8.5','font-weight':'700'}));
+        svg.appendChild(mkTxt(x0, axY+priceH+23,
+            'Pay P₀', {fill:'#888','font-size':'8'}));
+
+        // ── Annotation labels ───────────────────────────────────────────────
+        // "Coupon stream" bracket at top
+        var x1 = ML + step, xn1 = ML + (n-1)*step;
+        svg.appendChild(mkTxt((x1+xn1)/2, 12,
+            'Annual Coupon  C = € '+Math.round(C)+'  (each period t = 1 … '+n+')',
+            {fill:'#1565c0','font-size':'10','font-weight':'600'}));
+
+        // "Par" label
+        svg.appendChild(mkTxt(xN + barW/2 + 28, axY - COUP_H - PAR_H/2,
+            'Par € 1,000', {fill:'#c43d00','font-size':'9','text-anchor':'start'}));
+
+        // Par annotation: if price ≠ F, show gap
+        if(Math.abs(price - F) > 5) {
+            var gapLabel = price > F
+                ? '▲ PREMIUM: +€' + (price-F).toFixed(0)
+                : '▼ DISCOUNT: −€' + (F-price).toFixed(0);
+            svg.appendChild(mkTxt(W/2, axY+priceH+38,
+                gapLabel,
+                {fill: price>F ? '#2e7d32' : '#c62828', 'font-size':'10','font-weight':'700'}));
+        }
+
+        window.parent.postMessage({iframeHeight: document.body.scrollHeight},'*');
+    }
+
+    cSl.addEventListener('input', draw);
+    rSl.addEventListener('input', draw);
+    nSl.addEventListener('input', draw);
+    window.addEventListener('resize', function(){setTimeout(draw,50);});
+    draw();
+})();
+</script>
+</body>
+</html>

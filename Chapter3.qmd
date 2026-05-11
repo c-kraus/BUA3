@@ -1,215 +1,174 @@
-# Chapter 3: Killing the Debt – Amortization & Loans
+# Killing the Debt – Amortization & Loans
 
 > "Debt is like fire. It is a useful servant but a terrible master."
 
-"Amortization" comes from the Latin *ad mortem* — "to death". It is the process of slowly killing a loan. In corporate finance, *how* you structure this death matters as much as the amount you borrow. It defines your liquidity profile for decades.
+In Chapter 2, we used the **Capital Recovery Factor (CRF)** to convert a lump-sum loan into a stream of equal annual payments. Now we go deeper: there is not one way to structure that repayment — there are three, each with profoundly different consequences for liquidity, total cost, and risk.
 
-A loan payment, the **Debt Service** ($K_t$), is a hybrid creature. It consists of two competing forces:
+"Amortization" comes from the Latin *ad mortem* — "to death." It is the process of slowly killing a loan. In corporate finance, *how* you structure this death matters as much as the amount you borrow. It shapes your cash-flow profile for years.
 
-1.  **Interest ($Z_t$):** The rent you pay for using someone else's money. This is an *expense* (P&L effect).
-2.  **Principal Repayment ($T_t$):** The act of reducing the debt itself. This is a *cash flow*, but not an expense (Balance Sheet shift).
+Every loan payment, the **Debt Service** ($K_t$), is a hybrid of two forces:
+
+1. **Interest ($Z_t = R_{t-1} \cdot i$):** The rent you pay for using someone else's money. This is an *expense* (P&L effect).
+2. **Principal Repayment ($T_t$):** The act of reducing the debt itself. This is a *balance sheet shift*, not an expense.
 
 $$K_t = Z_t + T_t$$
 
-We distinguish three archetypes of killing debt. Each serves a different master: the bank, the strategist, or the trader.
-
----
+We distinguish three archetypes — each serves a different strategic master.
 
 ## The Annuity Loan (Annuitätendarlehen)
-*The "Mortgage Classic"*
 
-This is the standard model for real estate financing and long-term investments where planning security is paramount.
+*The "Mortgage Classic" — constant payment, shifting interior.*
 
-### The Mechanics
-* **The Rule:** You pay a constant amount every year ($K_t = \text{constant}$).
-* **The Hydraulic:** Since you owe a lot at the start, the interest portion ($Z_1$) is huge. Consequently, the repayment portion ($T_1$) is tiny.
-* **The Shift:** As time passes, the residual debt ($R_t$) drops $\to$ interest drops $\to$ repayment expands. This is the "Scissors Effect".
+This is the standard model for real estate financing and any long-term investment where planning security is paramount. The key intuition: the total annual payment is fixed by the CRF formula. At the start, most of that fixed amount goes to interest (because the debt is large). Over time, as debt shrinks, interest falls — freeing up the same fixed payment to repay more principal. Think of it as a hydraulic system: the same pressure (payment), but the flow gradually shifts from interest to repayment.
 
-### Calculation
-To find the annual payment (Annuity), we use the **Capital Recovery Factor (CRF)** from Chapter 2:
+* **The Rule:** $K_t = \text{constant} = C_0 \cdot CRF(i, n)$
+* **The Shift:** Interest falls, repayment rises — the "Scissors Effect" (*Scherenwirkung*).
 
-$$Annuity = C_0 \cdot \frac{i(1+i)^n}{(1+i)^n - 1}$$
+**Example:** $C_0 = \text{€}100{,}000$, $i = 5\%$, $n = 5$ years.
 
-### Example Profile
-**Parameters:** Loan $C_0 = 100,000$ €, Interest $i = 5\%$, Term $n = 5$ years.
-*Annuity Calculation:* $100,000 \cdot 0.230975 = 23,097.48$ €
+$$K = 100{,}000 \cdot \frac{0.05 \cdot (1.05)^5}{(1.05)^5 - 1} = \mathbf{23{,}097.48 \text{ € p.a.}}$$
 
-| Year ($t$) | Debt Beginning ($R_{t-1}$) | Interest ($Z_t = R_{t-1} \cdot i$) | Repayment ($T_t = Ann - Z_t$) | Annuity ($K_t$) | Debt End ($R_t$) |
-|:---:|---:|---:|---:|---:|---:|
-| 1 | 100,000.00 | 5,000.00 | 18,097.48 | **23,097.48** | 81,902.52 |
-| 2 | 81,902.52 | 4,095.13 | 19,002.35 | **23,097.48** | 62,900.17 |
-| 3 | 62,900.17 | 3,145.01 | 19,952.47 | **23,097.48** | 42,947.70 |
-| 4 | 42,947.70 | 2,147.39 | 20,950.09 | **23,097.48** | 21,997.61 |
-| 5 | 21,997.61 | 1,099.88 | 21,997.60 | **23,097.48** | 0.00 |
+| Year | Opening Balance (€) | Annuity (€) | Interest (€) | Principal (€) | Closing Balance (€) |
+|:----:|-------------------:|------------:|-------------:|--------------:|--------------------:|
+| 1    | 100,000.00         | 23,097.48   | 5,000.00     | 18,097.48     | 81,902.52           |
+| 2    | 81,902.52          | 23,097.48   | 4,095.13     | 19,002.35     | 62,900.17           |
+| 3    | 62,900.17          | 23,097.48   | 3,145.01     | 19,952.47     | 42,947.70           |
+| 4    | 42,947.70          | 23,097.48   | 2,147.39     | 20,950.09     | 21,997.61           |
+| 5    | 21,997.61          | 23,097.48   | 1,099.88     | 21,997.60     | 0.00                |
 
-### Pros & Cons
-| Pros (Advantages) | Cons (Disadvantages) |
-| :--- | :--- |
-| **Liquidity Planning:** Constant outflows make budgeting easy. | **Slow Start:** Debt reduces very slowly in early years (risk if asset depreciates fast). |
-| **Low Initial Burden:** Compared to constant amortization, the first payments are lower. | **Total Cost:** Higher total interest load than constant amortization because average debt remains high longer. |
-
----
+| Pros | Cons |
+|:-----|:-----|
+| **Planning security:** identical outflow every year | **Slow de-leveraging:** debt falls slowly in early years |
+| **Lower initial burden** than constant amortization | **Higher total interest** than constant amortization |
 
 ## The Constant Amortization Loan (Ratentilgung)
-*The "Strategic Choice"*
 
-Here, you decide to kill the debt in equal slices (Raten), regardless of the interest cost. This is common in corporate bank loans.
+*The "Strategic Choice" — equal principal slices, falling total payment.*
 
-### The Mechanics
-* **The Rule:** The principal repayment is constant ($T_t = \text{constant}$).
-* **The Logic:** $T = C_0 / n$.
-* **The Result:** Because debt falls linearly, interest falls linearly. Therefore, your total liquidity outflow ($K_t$) starts **high** and drops every year.
+Here the borrower decides to repay the principal in equal instalments regardless of the interest burden. Because debt falls linearly, interest falls linearly — so the total annual payment starts high and drops every year.
 
-### Example Profile
-**Parameters:** Loan $C_0 = 100,000$ €, Interest $i = 5\%$, Term $n = 5$ years.
-*Constant Repayment:* $100,000 / 5 = 20,000$ € p.a.
+* **The Rule:** $T_t = T = \frac{C_0}{n} = \text{constant}$; $K_t = T + Z_t$ (declining)
 
-| Year ($t$) | Debt Beginning | Interest ($5\%$) | Repayment ($T$) | **Total Payment ($K_t$)** | Debt End |
-|:---:|---:|---:|---:|---:|---:|
-| 1 | 100,000.00 | 5,000.00 | **20,000.00** | **25,000.00** | 80,000.00 |
-| 2 | 80,000.00 | 4,000.00 | **20,000.00** | **24,000.00** | 60,000.00 |
-| 3 | 60,000.00 | 3,000.00 | **20,000.00** | **23,000.00** | 40,000.00 |
-| 4 | 40,000.00 | 2,000.00 | **20,000.00** | **22,000.00** | 20,000.00 |
-| 5 | 20,000.00 | 1,000.00 | **20,000.00** | **21,000.00** | 0.00 |
+**Example:** $C_0 = \text{€}100{,}000$, $i = 5\%$, $n = 5$ years. $T = 20{,}000$ € p.a.
 
-### Pros & Cons
-| Pros (Advantages) | Cons (Disadvantages) |
-| :--- | :--- |
-| **Cost Efficiency:** Lowest total interest payments of all standard types. | **High Initial Strain:** The first years require the highest liquidity (25k vs 23k in annuity). |
-| **Fast De-Risking:** Debt reduces quickly (linear). Good for assets with short lifecycles. | **Variable Liquidity:** Requires dynamic cash management. |
+| Year | Opening Balance (€) | Total Payment (€) | Interest (€) | Principal (€) | Closing Balance (€) |
+|:----:|-------------------:|------------------:|-------------:|--------------:|--------------------:|
+| 1    | 100,000.00         | **25,000.00**     | 5,000.00     | 20,000.00     | 80,000.00           |
+| 2    | 80,000.00          | 24,000.00         | 4,000.00     | 20,000.00     | 60,000.00           |
+| 3    | 60,000.00          | 23,000.00         | 3,000.00     | 20,000.00     | 40,000.00           |
+| 4    | 40,000.00          | 22,000.00         | 2,000.00     | 20,000.00     | 20,000.00           |
+| 5    | 20,000.00          | **21,000.00**     | 1,000.00     | 20,000.00     | 0.00                |
+
+| Pros | Cons |
+|:-----|:-----|
+| **Lowest total interest** of all three types | **High initial strain:** first payment (€25k) exceeds annuity (€23k) |
+| **Fast de-leveraging:** good for rapidly depreciating assets | **Variable outflows** require dynamic cash management |
 
 ::: {.drag-exercise}
-
-While the *Annuity Loan* keeps the liquidity outflow constant, the *Constant Amortization Loan* minimizes the total *interest* load over the lifetime.
+While the *Annuity Loan* keeps the total liquidity outflow *constant*, the *Constant Amortization Loan* minimizes the total *interest* load over the loan's lifetime.
 :::
 
----
-
 ## The Bullet Loan (Endfälliges Darlehen)
-*The "Trader's Choice"*
 
-Also known as "Interest-Only Loan". This structure is typical for corporate bonds (Anleihen) or bridge financing.
+*The "Trader's Choice" — interest only, then full repayment at maturity.*
 
-### The Mechanics
-* **The Rule:** You pay **zero** principal during the term ($T_{1 \dots n-1} = 0$).
-* **The Climax:** At the very last day ($t=n$), you pay back 100% of the debt in one shot (the "Bullet").
-* **The Flow:** You only pay interest ($Z_t$) annually.
+Also known as the interest-only loan. During the entire term, only interest is paid — the full principal comes back as a single "bullet" at $t = n$. This structure is typical for corporate bonds (*Anleihen*) and bridge financing.
 
-### Example Profile
-**Parameters:** Loan $C_0 = 100,000$ €, Interest $i = 5\%$, Term $n = 5$ years.
+* **The Rule:** $T_{1 \dots n-1} = 0$; $T_n = C_0$. Interest: $Z_t = C_0 \cdot i$ (constant, because debt never falls).
 
-| Year ($t$) | Debt Beginning | Interest ($5\%$) | Repayment ($T$) | Total Payment ($K_t$) | Debt End |
-|:---:|---:|---:|---:|---:|---:|
-| 1 | 100,000.00 | 5,000.00 | 0.00 | 5,000.00 | 100,000.00 |
-| 2 | 100,000.00 | 5,000.00 | 0.00 | 5,000.00 | 100,000.00 |
-| ... | ... | ... | ... | ... | ... |
-| 5 | 100,000.00 | 5,000.00 | **100,000.00** | **105,000.00** | 0.00 |
+**Example:** $C_0 = \text{€}100{,}000$, $i = 5\%$, $n = 5$ years.
 
-### Pros & Cons
-| Pros (Advantages) | Cons (Disadvantages) |
-| :--- | :--- |
-| **Maximum Leverage:** You work with the full capital for the entire time. | **Refinancing Risk:** The "Wall of Debt" at the end. Can you pay 100k in Year 5? |
-| **Liquidity Preservation:** Minimal outflows during the project term (only 5k p.a.). | **Most Expensive:** Highest total interest sum, as you pay interest on the full amount for 5 years. |
+| Year | Opening Balance (€) | Total Payment (€) | Interest (€) | Principal (€) | Closing Balance (€) |
+|:----:|-------------------:|------------------:|-------------:|--------------:|--------------------:|
+| 1–4  | 100,000.00         | 5,000.00          | 5,000.00     | 0.00          | 100,000.00          |
+| 5    | 100,000.00         | **105,000.00**    | 5,000.00     | 100,000.00    | 0.00                |
 
-<details>
-<summary>Deep Dive: The Zero-Bond</summary>
-A special form of the bullet loan is the Zero-Coupon Bond. Here, you don't even pay interest during the term. Instead, the interest accumulates (compounds) and is paid at the end.
-Example: You borrow 100k, and pay back $100k \cdot 1.05^5 = 127,628$ in Year 5. Liquidity drain is zero until the very end.
-</details>
+| Pros | Cons |
+|:-----|:-----|
+| **Maximum capital:** full loan amount works for the entire term | **Refinancing risk:** the "wall of debt" at the end |
+| **Minimal interim outflows:** only €5k p.a. during the project | **Most expensive:** highest total interest of the three types |
 
----
-
+::: {.details}
+#### Deep Dive: The Zero-Coupon Bond
+A variant of the bullet structure is the **Zero-Coupon Bond** (*Nullkuponanleihe*). Unlike a standard bullet loan — which pays interest annually — the zero-coupon bond pays nothing at all until maturity. Instead, interest compounds and is added to the principal throughout the term. Example: borrow €100,000 at 5% for 5 years → repay $100{,}000 \times (1.05)^5 = 127{,}628$ in Year 5. Liquidity drain during the term is *zero*. This is a separate instrument class from the bullet loan; its valuation uses the standard discounting formula, not the annuity framework.
+:::
 
 ## Strategic Summary: The CFO's Decision Matrix
 
-If you are a CFO, you don't choose a loan type based on "feelings". You choose it based on your **Cash Flow Projection** and your risk appetite.
+Now we can see all three payment profiles side by side. The interactive chart below uses the same parameters as the tables above — adjust the sliders and observe how the payment shapes diverge:
 
-The "Golden Rule of Finance" states: **Match the Repayment Profile to the Asset's Cash Flow.**
+::: {.content-visible when-format="html"}
+<iframe src="assets/Chapter3/loan_comparison.html"
+        style="width: 100%; height: 540px; border: none;"
+        loading="lazy">
+</iframe>
+:::
 
-| Criterion | **Constant Amortization** (Ratentilgung) | **Annuity Loan** (Annuität) | **Bullet Loan** (Endfällig) |
-| :--- | :--- | :--- | :--- |
-| **Ideal Asset** | **Machines / Vehicles** (lose value fast, maintenance costs rise later). | **Real Estate / Infrastructure** (stable value, long usage). | **Inventory / Construction** (sold at the end to repay debt). |
-| **Total Interest Cost** | 🏆 **Lowest** (Winner) | ⚖️ Medium | 💸 **Highest** (Loser) |
-| **Liquidity Stress** | ⚠️ **High at Start** (Front-loaded). | ✅ Constant (Smooth). | 😌 **Low during term**, but 💣 **Deadly at end**. |
-| **Accounting Effect** | Interest expense drops fast -> Profit rises over time. | Interest expense drops slowly. | Interest expense stays high -> Profit depressed. |
+**Total interest comparison (€100,000 / 5% / 5 years):**
+
+| Loan Type          | Total Paid (€) | Total Interest (€) | Verdict         |
+|:-------------------|---------------:|-------------------:|:----------------|
+| Constant Amort.    | 115,000.00     | **15,000.00**      | 🏆 Cheapest     |
+| Annuity            | 115,487.40     | 15,487.40          | ⚖️ Middle       |
+| Bullet             | 125,000.00     | **25,000.00**      | 💸 Most expensive |
+
+The bullet loan feels cheap (€5k/year) but costs €10,000 more in total interest than constant amortization — because you pay interest on the *full* principal for the entire term.
+
+**The CFO's matching logic:** Each loan type matches a different asset profile.
+
+| Criterion | Constant Amortization | Annuity Loan | Bullet Loan |
+|:----------|:---------------------:|:------------:|:-----------:|
+| **Ideal asset** | Machines / vehicles (rapid depreciation, rising maintenance) | Real estate / infrastructure (stable long-term cash flows) | Inventory / construction (asset sold at the end to repay) |
+| **Total interest cost** | 🏆 Lowest | ⚖️ Medium | 💸 Highest |
+| **Liquidity stress** | High at start, then easing | Constant and predictable | Low during term, then critical |
+| **Accounting** | Interest expense drops fast → profits improve over time | Interest expense drops slowly | Interest stays constant → profit depressed |
+
+The logic behind the matching: an annuity loan works for real estate because the stable rental income provides a predictable cash flow to cover the constant annual payment. A constant amortization loan suits machines because the asset depreciates quickly — you want the debt to fall just as fast, keeping the LTV ratio (Loan-to-Value) healthy. A bullet loan suits construction because the project generates *no* revenue until completion, when the asset is sold to repay the principal.
 
 ::: {.flip-card}
 #### The Matching Principle (Fristenkongruenz)
-The rule that the duration of financing must match the duration of the asset. Never finance a long-term factory with a short-term bullet loan (refinancing risk!), and never finance seasonal inventory with a 20-year mortgage.
+The rule that the **duration** and **cash-flow profile** of the financing must match the asset being financed. Financing a 20-year factory with a 3-year bullet loan creates catastrophic refinancing risk. Financing short-term inventory with a 20-year mortgage wastes flexibility and overpays interest.
 :::
-
----
 
 ## The "Hidden" Loan: Supplier Credit & Skonto
 
-In the file *Systematik der Kreditformen*, we see a special beast: The **Supplier Credit** (Lieferantenkredit).
-Often, suppliers offer terms like: *"Pay within 10 days and get 3% discount (Skonto), or pay net in 30 days."*
+Not all loans appear on the balance sheet. One of the most common and dangerous forms of implicit borrowing is the **Supplier Credit** (*Lieferantenkredit*).
 
-Many managers think: *"Great, if I am short on cash, I'll just wait 30 days. It's an interest-free loan for 20 days!"*
-**Wrong.** It is the most expensive loan on the planet.
+**What is it?** When a supplier sells you goods on credit terms — for example, "pay in 30 days" — they are effectively giving you a short-term loan for those 30 days. Now add the *Skonto* (early-payment discount): the supplier offers you a 3% price reduction if you pay within 10 days instead. This looks like a discount. But from a finance perspective, it is the **cost of borrowing** for those extra 20 days.
 
-### The Mathematics of "Skonto"
-If you forego the discount ($s$) to gain a few days of credit ($t_{credit} - t_{discount}$), you are effectively borrowing money at a massive rate.
+**The decision:** Pay in 10 days (pay €97,000 for a €100,000 invoice) or pay in 30 days (pay the full €100,000). If you choose to wait, you are borrowing €97,000 for 20 days at a cost of €3,000. That implicit interest rate is shocking.
 
-$$r_{effective} = \left( \frac{Discount \%}{100 - Discount \%} \right) \cdot \left( \frac{360}{\text{Days}_{Net} - \text{Days}_{Discount}} \right) \cdot 100$$
+$$r_{\text{eff}} = \frac{s}{100 - s} \cdot \frac{360}{t_{\text{net}} - t_{\text{discount}}} \cdot 100$$
 
-**Example Case:**
-* Invoice: 100,000 €
-* Terms: **3% Skonto** within 10 days, or **30 days net**.
-* Decision: You pay on day 30 instead of day 10. You "borrow" the 97,000 € you could have paid, for exactly 20 extra days. The cost is the lost discount (3,000 €).
+**Example:** 3% Skonto, pay within 10 days or net 30 days.
 
-$$r_{eff} = \left( \frac{3}{97} \right) \cdot \left( \frac{360}{20} \right) \approx 0.0309 \cdot 18 = 55.6\% \text{ p.a.}$$
+$$r_{\text{eff}} = \frac{3}{97} \cdot \frac{360}{20} \approx 0.031 \times 18 = \mathbf{55.6\% \text{ p.a.}}$$
 
-> **Strategic Insight:**
-> Unless you are facing immediate bankruptcy, **always** take the cash discount. Even borrowing from a bank at 10% interest to pay the supplier is cheaper than ignoring the Skonto (55% effective cost).
-
----
-
-## Market Imperfections: The Dean Model
-
-In a perfect world (Modigliani-Miller), you get infinite money at a fixed rate. In reality, capital is scarce.
-The **Dean Model** (mentioned in *Systematik der Kreditformen*) visualizes this **Capital Rationing**.
-
-1.  **Demand (Investment Projects):** You sort your potential projects by their Return on Investment (ROI).
-2.  **Supply (Financing Sources):** You stack your financing options by cost.
-    * *Layer 1:* Internal Cash (Cheapest / No transaction cost).
-    * *Layer 2:* Senior Bank Debt (Collateralized).
-    * *Layer 3:* Supplier Credit (if Skonto used).
-    * *Layer 4:* High-Yield / Mezzanine.
-    * *Layer 5:* New Equity (Most expensive).
-
-**The Cut-Off:**
-You invest exactly up to the point where the **Marginal Cost of Capital (MCC)** hits the **Marginal Return of Investment (MRI)**.
-
-::: {.column-page}
-> **Visual:** Imagine a staircase going up (Cost of Capital) crossing a staircase going down (Project Returns). The intersection defines your optimal budget.
-:::
-
----
+> **Strategic Insight:** Unless you are facing immediate insolvency, **always** take the cash discount. Even borrowing from a bank at 10% to pay the supplier early is five times cheaper than ignoring the Skonto.
 
 ## Chapter Check
 
-Let's verify your understanding of loan mechanics.
-
-:::{.quick-check}
-**Why is the Annuity Loan the standard for private mortgages?**
+::: {.quick-check}
+**Why is the Annuity Loan the standard choice for private mortgages?**
 
 - Because it has the lowest total interest cost.
-- **Because the monthly payment is constant (Planning Security).**
-- Because it allows you to pay nothing for 10 years.
-> Correct. Households need predictability. The Ratentilgung (Amortization Loan) would require very high payments in the first years, which most families cannot afford.
+- **Because the monthly payment is constant, providing planning security.**
+- Because it allows zero payments for the first 10 years.
+
+> **Reason:** Households need predictability. A constant amortization loan would require much higher payments in the early years — a liquidity burden most families cannot absorb.
 :::
 
-:::{.quick-check}
-**You have an invoice with "2% Skonto / 10 days, net 30". You have no cash, but an overdraft facility (Dispo) at 12% interest. What do you do?**
+::: {.quick-check}
+**You have an invoice with "2% Skonto / 10 days, net 30". You have no cash, but an overdraft facility at 12% p.a. What do you do?**
 
 - Wait 30 days to save the overdraft interest.
-- **Use the overdraft to pay on day 10.**
-> Correct! The effective rate of the Skonto is approx 36% p.a. It is much smarter to borrow at 12% to "earn" a 36% return.
+- **Use the overdraft and pay on day 10.**
+
+> **Calculation:** $r_{\text{Skonto}} = \frac{2}{98} \cdot \frac{360}{20} \approx 36.7\%$ p.a. Borrowing at 12% to avoid a 36.7% implicit cost is clearly optimal.
 :::
 
 ::: {.drag-exercise}
-
-In a *Bullet Loan*, the liquidity outflow during the term is *minimal* (interest only), but the refinancing risk at the end is *maximum*. In contrast, a *Constant Amortization Loan* rapidly reduces the *principal*, lowering the total risk profile over time.
+In a *Bullet Loan*, the liquidity outflow during the term is *minimal* (interest only), but the refinancing risk at maturity is *maximum*. In contrast, a *Constant Amortization Loan* rapidly reduces the outstanding *principal*, steadily lowering the credit risk over time.
 :::
 
+Chapter 4 extends this cash-flow thinking from debt to equity: we will value bonds and stocks by discounting their promised payment streams — a direct application of the annuity and perpetuity tools built in the last two chapters.

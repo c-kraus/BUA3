@@ -3,156 +3,175 @@
 > "Price is what you pay. Value is what you get."
 > — *Warren Buffett*
 
-Welcome to the heart of finance. Until now, we talked about abstract interest rates and decision rules. Now, we put price tags on reality.
-Whether you are buying a German Government Bond (Bund) or a share of Tesla, the fundamental mechanism is identical.
+In Chapter 3, we looked at loans from the **borrower's** perspective: how do you structure repayment? This chapter flips the camera. A bond is essentially the same instrument — but seen from the **investor's** perspective. Instead of asking "how much do I pay back?", we ask "how much should I pay *today* for the right to receive a promised stream of future cash flows?"
 
-**The Universal Law of Valuation:**
-The value of *any* financial asset is simply the **Present Value (PV)** of all future cash flows it is expected to generate.
+The answer is always the same principle:
 
-* **Bonds:** The cash flows are printed on the contract (Certainty).
-* **Stocks:** The cash flows are a mix of hope and strategy (Uncertainty).
+> **The Universal Law of Valuation:** The value of any financial asset equals the **Present Value** of all future cash flows it is expected to generate.
 
----
+* **Bonds:** Cash flows are contractually fixed (certainty).
+* **Stocks:** Cash flows must be estimated (uncertainty).
 
-## Part I: Bond Valuation (The Fixed Income World)
+## Part I: Bond Valuation
 
-A bond is essentially a loan. You (the investor) lend money to an entity (Government or Corporation). In return, they promise you two things:
-1.  **Rent for the money:** Regular interest payments (**Coupons**).
-2.  **Return of the money:** Repayment of the principal at the end (**Par Value**).
+A bond is a standardised loan traded on a market. You (the investor) lend money to a government or corporation. In return, they promise two things:
+
+1. **Regular interest payments — Coupons ($C$):** paid annually (or semi-annually), equal to the par value times the coupon rate.
+2. **Return of the principal — Par Value ($F$):** repaid in full at maturity.
 
 ### The Anatomy of a Bond
-To value a bond, you need four variables. Three are written on the paper, one comes from the market.
 
-1.  **Par Value ($F$):** The face value paid at the end (usually $1,000 or €1,000).
-2.  **Coupon Rate ($c$):** The percentage of Par paid annually as interest.
-3.  **Maturity ($n$):** The lifespan of the loan.
-4.  **Yield to Maturity ($YTM$ or $r$):** The *market* interest rate. This is what you *could* earn elsewhere with similar risk.
+Four variables fully define a bond's cash flows:
+
+| Variable | Symbol | Set by | Typical value |
+|:---------|:------:|:------:|:-------------|
+| Par Value (Nennwert) | $F$ | Issuer | € 1,000 |
+| Coupon Rate (Kuponrate) | $c$ | Issuer | e.g. 5 % |
+| Maturity (Laufzeit) | $n$ | Issuer | e.g. 10 years |
+| Yield to Maturity | $r$ | **Market** | reflects risk & rates |
+
+The first three are printed on the bond certificate and never change. The fourth — the **Yield to Maturity (YTM)** — is determined by the market every day, and it is what drives the price.
 
 ### The Valuation Model
-Mathematically, a bond is a "Frankenstein" of two financial concepts we already know:
-* The Coupons are an **Annuity** (regular payments).
-* The Par Value is a **Lump Sum** (one-time payment).
 
-$$P_0 = \underbrace{\sum_{t=1}^{n} \frac{C}{(1+r)^t}}_{\text{PV of Coupons}} + \underbrace{\frac{F}{(1+r)^n}}_{\text{PV of Par Value}}$$
+A bond is a "Frankenstein" of two instruments we already know:
 
-### The Calculation: A Reality Check
-Let's calculate the fair price of a corporate bond.
+* The **coupons** are an **annuity** — equal payments at equal intervals.
+* The **par value** is a **lump sum** — one payment at $t = n$.
 
-* **Par Value:** $1,000
-* **Coupon:** 5% (Pays $50 per year)
-* **Maturity:** 10 Years
-* **Market Rate (YTM):** 7%
+$$\boxed{P_0 = \underbrace{C \cdot \frac{1-(1+r)^{-n}}{r}}_{\text{PV of Coupons (Annuity)}} + \underbrace{F \cdot (1+r)^{-n}}_{\text{PV of Par Value}}}$$
 
-**The Intuition:**
-The bond pays **5%**. The market demands **7%**.
-Would you pay full price ($1,000) for something that yields *less* than the market? No. You will only buy it if you get a **discount**.
+The interactive timeline below places all cash flows on the time axis — adjust the YTM slider to see the inverse price-yield relationship live:
 
-**The Math:**
-1.  **PV of Coupons (Annuity):** $50 \cdot \frac{1-(1.07)^{-10}}{0.07} \approx \$351.18$
-2.  **PV of Par Value (Lump Sum):** $1,000 \cdot (1.07)^{-10} \approx \$508.35$
-
-**Total Value:**
-$$P_0 = 351.18 + 508.35 = \mathbf{\$859.53}$$
-
-> **Result:** The bond trades at **85.95%** of its face value. It is a **Discount Bond**.
-> The investor pays $859.53 today, receives $50 annually, and gets $1,000 at the end. This capital gain fills the gap between the 5% coupon and the 7% required return.
-
-::: {.drag-exercise}
-There is an *inverse* relationship between market interest rates and bond prices. If the market interest rate *rises*, the price of existing bonds *falls*. If the market rate is higher than the coupon rate, the bond sells at a *discount*.
+::: {.content-visible when-format="html"}
+<iframe src="assets/Chapter4/bond_timeline.html"
+        style="width: 100%; height: 500px; border: none;"
+        loading="lazy">
+</iframe>
 :::
 
----
+### The Calculation: Discount Bond
 
-## Part II: Stock Valuation (The Equity World)
+**Parameters:** $F = \$1{,}000$, $c = 5\%$ ($C = \$50$), $n = 10$ years, $YTM = 7\%$.
 
-Bonds are for sleeping well; stocks are for eating well.
-Stocks represent **ownership**. Unlike bonds, they have:
-1.  **No Maturity:** The company (hopefully) lives forever.
-2.  **No Promises:** Dividends are voluntary.
+**The intuition first:** The bond pays 5 % while the market demands 7 %. Nobody pays full price for an asset that yields less than the market. The price must fall until the total return — coupons plus the capital gain from buying below par — equals exactly 7 %.
 
-Valuing stocks is harder because we have to predict the future.
+$$P_0 = 50 \cdot \frac{1-(1.07)^{-10}}{0.07} + 1{,}000 \cdot (1.07)^{-10} = 351.18 + 508.35 = \mathbf{\$859.53}$$
 
-### 1. Preferred Stock (The Hybrid)
-Preferred stocks are the "zombies" of finance. They have no maturity (like equity) but pay a fixed dividend (like debt).
-Since they pay a fixed amount forever, we treat them as a **Perpetuity**.
+The bond trades at **85.95 % of par** — a **Discount Bond**. The $140.47 discount compensates for the below-market coupon.
+
+::: {.drag-exercise}
+There is an *inverse* relationship between market interest rates and bond prices. When the market rate *rises*, existing bond prices *fall*. When YTM exceeds the coupon rate, the bond sells at a *discount*; when YTM is below the coupon rate, it sells at a *premium*.
+:::
+
+### YTM Back-Calculation: Given Price, Find the Return
+
+In practice, you often know the market price but not the YTM. The equation has no closed-form solution for $r$; it requires **linear interpolation** (Regula Falsi).
+
+**Example:** A bond with $F = \$1{,}000$, $c = 6\%$, $n = 5$ years trades at $P_0 = \$963$.
+
+Try $r_1 = 7\%$: $P(7\%) = 60 \cdot PVIFA(7\%,5) + 1{,}000 \cdot (1.07)^{-5} \approx 959.00$
+
+Try $r_2 = 6.5\%$: $P(6.5\%) = 60 \cdot PVIFA(6.5\%,5) + 1{,}000 \cdot (1.065)^{-5} \approx 979.07$
+
+$$YTM \approx r_1 + (r_2 - r_1) \cdot \frac{P(r_1) - P_0}{P(r_1) - P(r_2)} \approx 7\% - 0.5\% \cdot \frac{959-963}{959-979} \approx 6.9\%$$
+
+::: {.details}
+#### Deep Dive: Why Bonds Trade at a Discount or Premium
+When a bond is issued, its coupon is set to match the prevailing market rate — so it trades at par ($P_0 = F$). But market rates change after issuance. If rates rise, newly issued bonds offer higher coupons; the old bond becomes less attractive and its price falls to compensate. If rates fall, the old bond's higher coupon becomes valuable — its price rises above par. This mechanism ensures that every bond, regardless of its coupon, offers the same YTM as comparable new issues.
+:::
+
+## Part II: Stock Valuation
+
+Bonds are for sleeping well; stocks are for eating well. Stocks represent **ownership** in a company. Unlike bonds, they have:
+
+1. **No maturity:** the company (hopefully) lives forever.
+2. **No guaranteed payments:** dividends are declared at management's discretion.
+
+Since the cash flows must be *estimated* rather than *promised*, valuation requires an assumption about the future.
+
+### Preferred Stock (The Hybrid)
+
+Preferred stock behaves like a hybrid: it pays a **fixed dividend** (like a bond coupon) but has **no maturity** (like equity). It is therefore valued as a **perpetuity**:
 
 $$P_0 = \frac{Div}{r}$$
 
-*Example:* A preferred share pays $2.00 dividend. You require 8% return.
-$$Value = \frac{2.00}{0.08} = \$25.00$$
+**Example:** A preferred share pays $2.00 per year. Required return = 8 %.
+$$P_0 = \frac{2.00}{0.08} = \mathbf{\$25.00}$$
 
-### 2. Common Stock: The Gordon Growth Model
-Most companies grow. Coca-Cola pays a dividend, and next year, they raise prices and pay a higher dividend.
-If we assume dividends grow at a constant rate ($g$) forever, we use the **Constant Growth Dividend Discount Model**.
+### Common Stock: The Gordon Growth Model
 
-$$P_0 = \frac{D_1}{r - g}$$
+Most companies grow. Coca-Cola raises its dividend a little every year. If we assume dividends grow at a **constant rate** $g$ forever (a simplification — but a useful one for stable, mature firms), we use the **Dividend Discount Model (DDM)**:
 
-* **$D_1$:** The dividend *next* year ($D_0 \cdot (1+g)$).
-* **$r$:** The required return (Cost of Equity).
-* **$g$:** The growth rate.
+$$\boxed{P_0 = \frac{D_1}{r - g}}$$
 
-**The "Ex-Post" Trap:**
-Students often fail this because they plug in the *current* dividend ($D_0$). You must value the *future* ($D_1$).
+* $D_1 = D_0 \cdot (1+g)$: next year's dividend (not the current one).
+* $r$: required return (= Cost of Equity).
+* $g$: sustainable long-run growth rate — must be below $r$, and in practice anchored to long-run GDP growth.
 
-**Example:**
-* Current Dividend ($D_0$): $2.00
-* Growth Rate ($g$): 4%
-* Required Return ($r$): 10%
+> **The $D_0$ vs. $D_1$ trap:** Always use *next year's* dividend in the numerator. The model values the stock at $t = 0$ based on what it will pay starting at $t = 1$.
 
-First, find the future cash flow:
-$$D_1 = 2.00 \cdot (1 + 0.04) = \$2.08$$
+**Example:** $D_0 = \$2.00$, $g = 4\%$, $r = 10\%$.
 
-Now, value the stock:
+$$D_1 = 2.00 \times 1.04 = \$2.08$$
 $$P_0 = \frac{2.08}{0.10 - 0.04} = \frac{2.08}{0.06} = \mathbf{\$34.67}$$
 
-### 3. The Price-to-Earnings (P/E) Ratio
-What about Amazon or Google? They pay **zero** dividends. The Gordon Model fails ($D_1 = 0$).
-Here, analysts use relative valuation. They compare the price to the earnings (Profit).
-
-$$P/E \text{ Ratio} = \frac{\text{Stock Price}}{\text{Earnings per Share (EPS)}}$$
-
-* **High P/E:** Investors expect massive growth (Growth Stock).
-* **Low P/E:** The company is stagnant or undervalued (Value Stock).
-
 ::: {.flip-card}
-#### Why does the Gordon Model crash if $g > r$?
-If the growth rate ($g$) is higher than the discount rate ($r$), the denominator becomes negative, and the price becomes mathematically infinite. Economically, this means no company can grow faster than the overall economy forever. Eventually, $g$ must drop below $r$.
+#### Why does the Gordon Model fail when $g \geq r$?
+If $g \geq r$, the denominator becomes zero or negative — the formula returns infinite or negative value. Economically: no single company can grow faster than the entire economy forever without eventually becoming larger than the global GDP. This is impossible. The model is therefore only valid for *stable, mature firms* with a conservative $g$ anchored to long-run economic growth.
 :::
 
----
+### The Price-to-Earnings (P/E) Ratio
+
+For companies that pay **no dividends** — Amazon, many tech firms — the Gordon Model fails. Analysts instead use **relative valuation**, comparing the stock's price to its earnings.
+
+$$P/E = \frac{\text{Stock Price}}{\text{Earnings per Share (EPS)}}$$
+
+**Example:** A technology company has a stock price of **€ 120** and EPS of **€ 6**.
+$$P/E = \frac{120}{6} = 20$$
+
+If the sector average P/E is 15, this stock trades at a **premium** — the market expects above-average growth. If the P/E were 8 (below sector average), it would signal either undervaluation or structural weakness.
+
+| P/E Signal | Interpretation |
+|:----------:|:---------------|
+| High P/E (e.g. 30+) | Market expects strong future growth (*growth stock*) |
+| Moderate P/E (10–20) | Mature, stable earnings (*value stock*) |
+| Very low P/E (\< 8) | Stagnation, distress, or genuine undervaluation |
+
+> **Connection to GGM:** For dividend-paying stocks, $P/E$ is implicitly driven by $r - g$. A lower required return or higher expected growth both compress the denominator and inflate the P/E — making the P/E ratio a window into the market's growth expectations, not just a price comparison.
 
 ## Summary: The Valuation Matrix
 
-Let's compare our two main instruments.
+Both instruments apply the same Universal Law: Value = PV of future cash flows. They differ only in how predictable those cash flows are.
 
 | Feature | Bonds (Debt) | Stocks (Equity) |
-| :--- | :--- | :--- |
-| **Status** | Loan (Liability) | Ownership (Equity) |
-| **Cash Flow** | Fixed Coupons + Par Value | Variable Dividends |
-| **Lifespan** | Finite (Maturity Date) | Infinite (Going Concern) |
-| **Key Risk** | Interest Rate Risk | Business & Market Risk |
-| **Valuation** | Annuity + Lump Sum | Dividend Discount Model (DDM) |
+|:--------|:------------:|:---------------:|
+| Legal status | Creditor (Gläubiger) | Owner (Eigentümer) |
+| Cash flows | Fixed: coupons + par | Variable: dividends (uncertain) |
+| Lifespan | Finite (maturity date) | Infinite (going concern) |
+| Key risk | Interest rate risk | Business & market risk |
+| Valuation formula | Annuity + Lump Sum | DDM / P/E |
 
----
+Chapter 5 takes this exact logic — Value = PV of future cash flows — and applies it to real *investment projects*: machines, factories, acquisitions. The coupon stream becomes an operating cash-flow stream; the required return becomes the cost of capital. The formula is identical. Only the inputs change.
 
 ## Chapter Check
 
 ::: {.quick-check}
-**You are looking at a bond with a 5% coupon. The Federal Reserve just raised interest rates to 6%. What happens to the bond price?**
+**A bond has a 5 % coupon. The central bank raises interest rates to 6 %. What happens to the bond's market price?**
 
-- It stays at $1,000 (Par).
-- It increases (Premium).
-- **It decreases (Discount).**
+- It stays at € 1,000 (par).
+- It rises above € 1,000 (premium).
+- **It falls below € 1,000 (discount).**
 
-> Correct. Since your bond pays less (5%) than the new market standard (6%), nobody wants it at full price. You must lower the price to sell it.
+> **Reason:** The bond now pays less (5 %) than the new market rate (6 %). Investors will only buy it at a lower price, so that the capital gain compensates for the below-market coupon — driving the effective yield up to 6 %.
 :::
 
 ::: {.quick-check}
-**In the Gordon Growth Model ($P_0 = D_1 / (r-g)$), what happens if the risk of the company increases?**
+**In the Gordon Growth Model, a company's perceived risk suddenly increases. What happens to the stock price?**
 
-- The price goes up.
-- **The price goes down.**
-- The dividend growth increases.
+- The price rises — riskier companies need higher compensation.
+- **The price falls.**
+- The dividend growth rate automatically adjusts upward.
 
-> Correct. If risk increases, investors demand a higher return ($r$). Since $r$ is in the denominator, a higher $r$ leads to a lower Price ($P_0$).
+> **Reason:** Higher risk → investors demand a higher return $r$ → denominator $(r - g)$ grows → $P_0 = D_1/(r-g)$ shrinks.
 :::

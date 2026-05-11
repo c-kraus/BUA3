@@ -1,4 +1,4 @@
-title: Tutorial
+title: Reader
 author: Christian Kraus
 version: 1.0.0
 quarto-required: ">=1.8.0"
@@ -8,3 +8,6 @@ contributes:
       template-partials:
         - typst-template.typ
         - typst-show.typ
+
+      filters:            # <--- HIER EINFÜGEN
+        - filter.lua     

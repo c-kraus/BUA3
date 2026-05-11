@@ -2,172 +2,169 @@
 
 > "Compound interest is powerful, but consistency is lethal. A drop of water hollows the stone not by force, but by falling often."
 
-In Chapter 1, we learned how to teleport a single pile of cash through time using the Time Value of Money (TVM). But in reality, business is rarely about single piles. It is about **flows**. Rents, salaries, leasing rates, and bond coupons do not happen once; they happen repeatedly.
+Building on the time-value tools from Chapter 1, we now face a realistic complication: most financial decisions do not involve a single payment, but a *stream* of equal, recurring payments. Rents, salaries, leasing rates, and bond coupons do not happen once — they happen repeatedly.
 
-If you are a CFO, you don't just value one cash flow; you value *streams*. A factory is nothing but a bundle of future cash inflows. A loan is a bundle of future cash outflows.
-
-Mathematically, we *could* discount every single payment individually. But that is tedious and prone to error. Instead, we use the **Geometry of Cash Flows** to value a stream of promises instantly using elegant shortcuts. This chapter transforms you from a calculator of points to an architect of lines.
-
----
+Mathematically, we *could* discount every single payment individually using the $PV = FV \cdot (1+i)^{-n}$ formula from Chapter 1. But for 20, 30, or even infinite payments, that becomes impractical. Instead, we use the **Geometry of Cash Flows**: elegant closed-form expressions that condense an entire payment stream into a single calculation. This chapter transforms you from a calculator of points into an architect of lines.
 
 ## The Concept: Ordinary vs. Due
 
-An **Annuity** (german: *Rente*) is a sequence of **equal payments** ($C$) at **equal intervals** ($n$) with a constant interest rate ($i$). The timing is crucial. The difference of a single day—December 31st vs. January 1st—changes the valuation logic entirely.
+An **Annuity** (*Rente*) is a sequence of **equal payments** ($C$) at **equal time intervals** over $n$ periods at a constant interest rate ($i$). The one thing that changes the valuation logic entirely is *when* within each period the payment occurs.
 
 ### Ordinary Annuity (Nachschüssig)
 
-This is the default setting in finance.
-* **Logic:** You work first, then you get paid. The payment occurs at the **end** of the period ($t=1, 2, ..., n$).
-* **Standard Case:** Loans (mostly), corporate dividends, salaries (usually).
-* **Visual:** The first payment is discounted by one full period $(1+i)^{-1}$.
+* **Logic:** You work first, then you get paid. Payment occurs at the **end** of each period: $t = 1, 2, \dots, n$.
+* **Examples:** Loan repayments, corporate dividends, most salaries.
+* **Key property:** The first payment is discounted by one full period — it arrives at $t = 1$, so it is multiplied by $(1+i)^{-1}$.
 
 ### Annuity Due (Vorschüssig)
 
-* **Logic:** You pay first, then you live. The payment occurs at the **beginning** of the period ($t=0, 1, ..., n-1$).
-* **Standard Case:** Rent (Miete), Insurance premiums, Leasing (often).
-* **Visual:** The first payment is *not* discounted because it happens today. The entire stream is worth more by exactly the factor $(1+i)$ compared to an ordinary annuity because the money is in your pocket one period earlier.
+* **Logic:** You pay first, then you receive the service. Payment occurs at the **start** of each period: $t = 0, 1, \dots, n-1$.
+* **Examples:** Rent (*Miete*), insurance premiums, leasing agreements.
+* **Key property:** The first payment is *not* discounted — it arrives today at $t = 0$. Every payment is exactly one period earlier than its ordinary-annuity counterpart, so every discounted value is multiplied by one extra factor of $(1+i)$. Therefore:
 
-::: {.drag-exercise}
-In an *ordinary* annuity, the first cash flow occurs at t=1. In an annuity *due*, the first cash flow starts at t=0, which is typical for *rental* agreements. Therefore, the Present Value of an annuity due is always *higher* by the factor (1+i).
+$$PV_{\text{due}} = PV_{\text{ordinary}} \times (1+i)$$
+
+The interactive timeline below makes the one-period shift visible:
+
+::: {.content-visible when-format="html"}
+<iframe src="assets/Chapter2/annuity_timeline.html"
+        style="width: 100%; height: 480px; border: none;"
+        loading="lazy">
+</iframe>
 :::
 
----
+::: {.drag-exercise}
+In an *ordinary* annuity, the first cash flow occurs at t = 1. In an annuity *due*, the first cash flow starts at t = 0, which is typical for *rental* agreements. Therefore, the Present Value of an annuity due is always *higher* by the factor (1+i).
+:::
 
 ## The Toolkit: Present Value Factors
 
-We do not sum up geometric series manually. We use **Factors**. These are multipliers that condense the entire geometric series into a single number.
+Discounting $n$ individual payments one by one is tedious and error-prone. Instead, we use **Factors** — multipliers that condense the entire geometric series of discounted payments into a single number.
 
 ### The Present Value Factor for Annuities ($PVIFA$)
 
-Also known as the *Rentenbarwertfaktor (RBF)*. This factor answers the question:
-*"How much capital do I need **today** to ensure I can pay out €1.00 every year for $n$ years?"*
+Also known as the *Rentenbarwertfaktor (RBF)*. Intuitively, it answers: *"How much capital do I need today to fund a payment of €1.00 at the end of each year for $n$ years?"* — which is simply the sum of $n$ individual discount factors, collapsed via the geometric series formula.
 
-$$PV = C \cdot \underbrace{\left[ \frac{(1+i)^n - 1}{i(1+i)^n} \right]}_{PVIFA}$$
+$$PV = C \cdot \underbrace{\left[ \frac{(1+i)^n - 1}{i \cdot (1+i)^n} \right]}_{PVIFA(i,\,n)}$$
 
-<details>
-<summary>Deep Dive: The Mathematical Derivation</summary>
-
-The formula is derived from the sum of a geometric series:
+::: {.details}
+#### Deep Dive: Mathematical Derivation from the Geometric Series
+The $PVIFA$ is derived by summing $n$ individual present values:
 $$PV = \sum_{t=1}^n \frac{C}{(1+i)^t} = C \cdot \left[ \frac{1 - (1+i)^{-n}}{i} \right]$$
 
-This equation assumes an **ordinary annuity**. If you have an annuity due, simply multiply the result by $(1+i)$.
-</details>
+This is a finite geometric series with first term $a = (1+i)^{-1}$ and ratio $r = (1+i)^{-1}$. Applying the formula $S_n = a \cdot \frac{1 - r^n}{1 - r}$ and simplifying yields the closed form above.
+
+**This derivation assumes an ordinary annuity.** For an annuity due, multiply the result by $(1+i)$.
+:::
 
 ### The Capital Recovery Factor ($CRF$)
 
-Also known as the *Annuitätenfaktor* or *Wiedergewinnungsfaktor (WGF)*. This is the **inverse** of the PVIFA. It answers the question:
-*"If I have a pile of capital today (e.g., a loan), how much must I pay annually to pay it off completely in $n$ years?"*
+Also known as the *Annuitätenfaktor* or *Wiedergewinnungsfaktor (WGF)*. This is the **mathematical inverse** of the $PVIFA$. It answers: *"If I borrow a lump sum today, how much must I pay annually to repay it fully in $n$ years?"*
 
-$$C = PV \cdot \underbrace{\left[ \frac{i(1+i)^n}{(1+i)^n - 1} \right]}_{CRF}$$
+$$C = PV \cdot \underbrace{\left[ \frac{i \cdot (1+i)^n}{(1+i)^n - 1} \right]}_{CRF(i,\,n)}$$
 
-This formula calculates the **Annuity** (Annuität), which consists of two parts:
-1.  **Interest Payment** ($Zins$): Paying for the "rent" of money.
-2.  **Principal Repayment** ($Tilgung$): Reducing the debt.
+The resulting annual payment $C$ has two components:
 
-In a standard annuity loan (Annuitätendarlehen), the total payment $C$ is constant. As the debt decreases, the interest portion shrinks, and the repayment portion grows.
+1. **Interest payment** (*Zinsen*): The cost of renting the remaining capital.
+2. **Principal repayment** (*Tilgung*): Reducing the outstanding debt.
 
-> **Pro-Tip for Exams:**
-> Never confuse the *direction*!
-> * Do you want the pile of money NOW? -> **Present Value Factor.**
-> * Do you want to distribute a pile into SLICES? -> **Capital Recovery Factor.**
+As the debt decreases, the interest component shrinks and the repayment component grows — even though the total payment $C$ stays constant throughout.
+
+> **Exam Direction Rule:**
+> * Need the pile of money **now** from a stream? → Use the **Present Value Factor** (PVIFA).
+> * Need to distribute a pile of money into **equal slices**? → Use the **Capital Recovery Factor** (CRF).
 
 ::: {.flip-card}
-#### Capital Recovery Factor (WGF)
-The factor used to calculate the annual payment (annuity) required to amortize a loan of 1.00 over $n$ periods. It is the reciprocal of the Present Value Interest Factor of an Annuity (PVIFA).
+#### Capital Recovery Factor (CRF / WGF)
+The factor that converts a present lump sum into $n$ equal annual payments. It is the exact reciprocal of the PVIFA: $CRF = 1 / PVIFA$. A higher interest rate or a shorter term increases the CRF — meaning each instalment must be larger.
 :::
-
----
 
 ## The "Infinity Glitch": Perpetuities
 
-What if a company lives forever? In valuation (e.g., valuing a stock or a brand), we often assume cash flows never stop. This is a **Perpetuity** (dt. *Ewige Rente*).
+What if cash flows continue forever? In equity valuation and brand valuation, we often assume a company generates cash flows indefinitely. As $n \to \infty$, the $PVIFA$ formula collapses into the most elegant equation in finance:
 
-As $n \to \infty$, the complex annuity formula collapses into the most beautiful equation in finance:
+$$PV_{\infty} = \frac{C}{i}$$
 
-$$PV = \frac{C}{i}$$
+**Example:** A mature infrastructure company generates **€ 100,000** of free cash flow every year. At a discount rate of 5%:
 
-If you expect a company to generate € 100,000 forever and the interest rate is 5%:
-$$PV = \frac{100,000}{0.05} = 2,000,000$$
+$$PV = \frac{100{,}000}{0.05} = 2{,}000{,}000$$
+
+Two million euros — that is what an investor should pay today for this endless stream of €100,000 payments.
 
 ### The Growth Variant (Gordon Growth Model)
 
-In reality, cash flows rarely stay flat; they grow (with inflation or productivity). If the cash flow $C$ grows annually by a rate $g$ (where $g < i$), the denominator shrinks, boosting the value:
+In reality, corporate cash flows typically grow over time (with inflation or productivity gains). If the first payment $C_1$ grows at a constant rate $g$ per year in perpetuity, and provided $g < i$:
 
 $$PV = \frac{C_1}{i - g}$$
 
-<details>
-<summary>Deep Dive: The Tech Stock Paradox</summary>
+**Example:** A company pays a dividend of **€ 5 per share** next year ($C_1$). Dividends are expected to grow at **3% p.a.** ($g$). Investors require a return of **8%** ($i$).
 
-This formula explains why tech stocks with high growth expectations ($g$) have massive valuations, even with low current profits.
-If $g$ approaches $i$, the denominator ($i-g$) approaches zero, and the value approaches infinity.
-**Warning:** If you assume $g > i$ forever, your model breaks (mathematically and economically), implying the company will eventually become larger than the entire global economy.
-</details>
+$$PV = \frac{5}{0.08 - 0.03} = \frac{5}{0.05} = \mathbf{100}$$
 
----
+The fair value per share is **€ 100**.
+
+> **Two critical rules for the GGM:**
+> 1. **$g < i$ is mandatory.** If $g \geq i$, the denominator becomes zero or negative — the model breaks, implying infinite or negative value. No company can grow faster than the economy forever.
+> 2. **Consistency of rates.** $i$ and $g$ must be expressed in the same terms: both nominal or both real. Mixing a real growth rate with a nominal discount rate will systematically overvalue the asset.
+
+::: {.details}
+#### Deep Dive: Why Tech Stocks Have Extreme Valuations
+The Gordon Growth Model explains why high-growth companies trade at enormous multiples even with low current earnings. A company with $i = 8\%$ and $g = 7\%$ has a denominator of only $0.01$ — a small change in $g$ or $i$ swings the valuation dramatically. When $g$ approaches $i$, the Present Value approaches infinity. This is not a modelling error; it reflects a genuine economic truth: a company that genuinely grows faster than the discount rate forever is worth an extraordinary amount. The difficult question is whether the growth assumption is credible.
+:::
 
 ## The Trinity of Practice: Loan Amortization
 
-Let's apply the *Capital Recovery Factor* to a real-world scenario. This is the **standard model** for corporate financing and mortgages.
+The Capital Recovery Factor is the mathematical engine behind every standard bank loan. Here is the complete mechanics.
 
-**Scenario:**
-You borrow **€ 100,000** ($PV$) at **5%** interest ($i$). You want to pay it back over **5 years** ($n$).
-How much do you pay annually?
+**Scenario:** You borrow **€ 100,000** at **5% p.a.** and repay over **5 years**.
 
-$$Annuity = 100,000 \cdot \frac{0.05(1.05)^5}{(1.05)^5 - 1} \approx 23,097.48$$
+$$C = 100{,}000 \cdot \frac{0.05 \cdot (1.05)^5}{(1.05)^5 - 1} \approx \mathbf{23{,}097.48 \text{ per year}}$$
 
-This annual payment of € 23,097.48 is the **Debt Service** (Kapitaldienst).
+Each annual payment of €23,097.48 covers interest on the remaining balance first; the rest reduces the principal. Because the balance falls each year, the interest portion shrinks — and since the total is fixed, the repayment portion rises automatically:
 
+| Year | Opening Balance (€) | Total Payment (€) | Interest 5% (€) | Principal (€) | Closing Balance (€) |
+|:----:|-------------------:|------------------:|----------------:|--------------:|--------------------:|
+| 1    | 100,000.00         | 23,097.48         | 5,000.00        | 18,097.48     | 81,902.52           |
+| 2    | 81,902.52          | 23,097.48         | 4,095.13        | 19,002.35     | 62,900.17           |
+| 3    | 62,900.17          | 23,097.48         | 3,145.01        | 19,952.47     | 42,947.70           |
+| 4    | 42,947.70          | 23,097.48         | 2,147.39        | 20,950.09     | 21,997.61           |
+| 5    | 21,997.61          | 23,097.48*        | 1,099.88        | 21,997.60     | 0.00                |
 
-| Year | Beginning Balance | Total Payment (Annuity) | Interest (5%) | Principal Repayment | Ending Balance |
-|:----:|------------------:|------------------------:|--------------:|--------------------:|---------------:|
-| 1    | 100,000.00        | 23,097.48               | 5,000.00      | 18,097.48           | 81,902.52      |
-| 2    | 81,902.52         | 23,097.48               | 4,095.13      | 19,002.35           | 62,900.17      |
-| 3    | 62,900.17         | 23,097.48               | 3,145.01      | 19,952.47           | 42,947.70      |
-| 4    | 42,947.70         | 23,097.48               | 2,147.39      | 20,950.09           | 21,997.61      |
-| 5    | 21,997.61         | 23,097.48* | 1,099.88      | 21,997.60           | 0.00           |
- 
-*\*Rounding differences adjusted in the final cent.*
+*\*Rounding difference of €0.01 absorbed in final payment.*
 
-**Analysis:**
-1.  **Payment is constant:** The bank takes the same amount from your account every year.
-2.  **Interest declines:** As you pay off debt, you pay less interest ($i \cdot Residual Debt$).
-3.  **Repayment accelerates:** Since the total payment is fixed, a declining interest portion means the repayment portion *must* increase.
+**Three patterns to memorise for the exam:**
+
+1. **Payment is constant:** The bank debits the same amount every year.
+2. **Interest declines:** As you pay off debt, you pay less in interest.
+3. **Repayment accelerates:** Since total payment is fixed and interest shrinks, the principal slice *must* grow.
 
 ::: {.quick-check}
-Why does the repayment portion (Tilgung) increase in an annuity loan?
-- The bank becomes nicer over time.
-- **The interest portion decreases while the total payment remains fixed.**
-- Inflation increases the value of the payment.
-> Correct. Since $Annuity = Interest + Principal$, and Interest drops (because debt drops), Principal must rise to keep the sum constant.
-:::
+**Why does the principal repayment (Tilgung) increase each year in an annuity loan?**
 
+- The bank becomes more generous over time.
+- **The interest portion shrinks as debt falls, so the fixed total payment contains more principal.**
+- Inflation increases the real value of each payment.
+
+> **Reason:** $C = \text{Interest} + \text{Principal}$. Interest $= i \times \text{Remaining debt}$. As debt falls, interest falls. Since $C$ is constant, Principal $= C - \text{Interest}$ must rise.
+:::
 
 ::: {.case-study}
-#### Annuity Factor
+#### Practice: Annuity Loan — € 10,000 at 5 % over 5 Years
 
-You have taken out a loan of 10,000 EUR, which you would like to repay in equal annual installments over the next 5 years. The interest rate is 5% p.a.
+A company borrows **€ 10,000** at **5% p.a.** and repays in equal annual instalments over **5 years**.
 
-What is the annual installment (annuity), and what are the interest burden and principal repayment during the first 3 years?
+**Step 1 — Calculate the annuity:**
+$$C = 10{,}000 \cdot CRF(5\%,\,5) = 10{,}000 \times 0.23097 = \mathbf{2{,}309.70 \text{ EUR p.a.}}$$
 
-::: {.solution}
-**Solution 1.5: Annuity Factor**
+**Step 2 — Build the first three years of the schedule:**
 
-PV = 10,000 EUR ; n = 5 years; i = 5%
+| Year   | Annuity (€) | Interest (€) | Principal (€) | Remaining Balance (€) |
+|:------:|------------:|-------------:|--------------:|----------------------:|
+| Year 1 | 2,309.70    | 500.00       | 1,809.70      | 8,190.30              |
+| Year 2 | 2,309.70    | 409.52       | 1,900.18      | 6,290.12              |
+| Year 3 | 2,309.70    | 314.51       | 1,995.19      | 4,294.93              |
 
-Annuity = PV \* ${AF}_{5\%}^{5\ years}$ = 10,000 EUR \* 0.23097 = 2,309.70 EUR p.a.
-
-[Amortization Schedule:]{.underline}
-
-  -----------------------------------------------------------------------------
-                   **Annuity**       **Interest**     **Principal**   **Remaining Balance**
-  ------------- --------------- -------------- --------------- ----------------
-  **Year 1**      2,309.70 EUR    500.00 EUR   1,809.70 EUR    8,190.30 EUR
-
-  **Year 2**      2,309.70 EUR    409.52 EUR   1,900.18 EUR    6,290.12 EUR
-
-  **Year 3**      2,309.70 EUR    314.51 EUR   1,995.19 EUR    4,294.93 EUR
-  -----------------------------------------------------------------------------
-
-
+**Check Year 1:** Interest = 10,000 × 5% = 500.00 ✓ · Principal = 2,309.70 − 500.00 = 1,809.70 ✓
 :::
-:::
+
+Chapter 3 will examine the full spectrum of loan structures — the constant-amortization loan, the bullet loan, and supplier credit — and show how each is a strategic variant of the annuity mechanics developed here.

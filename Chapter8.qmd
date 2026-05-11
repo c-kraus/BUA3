@@ -1,152 +1,174 @@
 # The Silent Partner – Investment Appraisal with Taxes
 
-> "Logic clearly dictates that if you tax something, you get less of it. In finance, logic sometimes takes a holiday."
+> "The art of taxation consists in so plucking the goose as to obtain the largest amount of feathers with the least possible amount of hissing."
+> — *Jean-Baptiste Colbert*
 
-In the previous chapters, we lived in a paradise called "The Perfect Capital Market." No friction, no transaction costs, and certainly no taxes. In reality, the state is a **silent partner** in every project you undertake. It claims a share of your profits ($s$), but—and this is the twist—it also assumes a share of your costs.
+Chapters 5–7 assumed a perfect capital market — no frictions, no transaction costs, and no taxes. In reality, the state is a **silent partner** in every project: it claims a share of profits through corporate taxation (tax rate $s$), but simultaneously subsidises a share of financing costs through the tax deductibility of interest and depreciation.
 
-This duality changes the game. It can turn bad projects into good ones (**Tax Shield**) and, under rare circumstances, make you wish for *higher* taxes (**Tax Paradox**).
+This duality changes NPV arithmetic in two simultaneous and opposing directions. We use the **Standard Model of Corporate Taxation** (*Standardmodell nach Kruschwitz*) to integrate this partner precisely.
 
-We use the **Standard Model of Corporate Taxation** (Standardmodell nach Kruschwitz) to integrate this partner into our NPV calculation.
+::: {.flip-card}
+#### German Corporate Tax Rate
+Germany's combined corporate tax burden runs approximately 30% — Körperschaftsteuer (15%), solidarity surcharge (0.825%), and Gewerbesteuer (trade tax, roughly 14%). The Standard Model uses a single rate $s$; calibrate it to the jurisdiction: US ~21%, UK ~25%, Ireland ~12.5%.
+:::
 
----
+## The Mechanism: Two Effects, Two Adjustments
 
-## The Mechanism: The Standard Model
+Taxes act on two separate dimensions of the NPV formula simultaneously.
 
-How do we calculate NPV with taxes? We cannot simply subtract 30% from the final result. Taxes distort two dimensions of reality simultaneously:
+### Effect 1 — The Volume Effect: Adjusting Cash Flows
 
-1.  **The Cash Flows (Numerator):** The state takes a cut of the profit.
-2.  **The Cost of Capital (Denominator):** The state subsidizes the debt.
+You pay taxes on **profit**, not on cash flow. Depreciation ($D_t$) reduces taxable profit but is not itself a cash outflow — so it saves you taxes without consuming cash.
 
-### Step 1: Adjusting the Cash Flows
-We must convert *Pre-Tax Cash Flow* into *Post-Tax Cash Flow*.
-Crucial: You do not pay taxes on Cash Flow. You pay taxes on **Profit**.
-Since Depreciation ($D_t$) is an expense but not a cash outflow, it acts as a tax reducer.
+$$\text{Tax payment} = s \cdot (CF_{before} - D_t)$$
 
-$$CF_{after} = CF_{before} - \text{Tax Payment}$$
-$$\text{Tax Payment} = s \cdot (CF_{before} - D_t)$$
+$$\boxed{CF_{after} = CF_{before} \cdot (1-s) + D_t \cdot s}$$
 
-$$CF_{after} = CF_{before} \cdot (1-s) + D_t \cdot s$$
-
-* $s$: Tax Rate (Steuersatz).
-* $D_t$: Depreciation (Abschreibung).
+The term $D_t \cdot s$ is the **Depreciation Tax Shield** — the cash taxes saved through depreciation write-offs. It raises after-tax cash flows and therefore acts on the **numerator** of the NPV formula.
 
 ::: {.flip-card}
 #### Depreciation Tax Shield
-The cash value of the taxes saved due to depreciation. Since depreciation lowers taxable income, every Euro depreciated saves you $s$ Euros in taxes. This is why companies love "accelerated depreciation" (Sonderabschreibung).
+Each euro of depreciation reduces taxable profit by one euro, saving $s$ euros in cash taxes. Firms prefer accelerated depreciation (*Sonderabschreibung*) because writing off assets earlier shifts tax savings forward in time — and earlier savings, discounted less heavily, have a higher present value.
 :::
 
-### Step 2: Adjusting the Discount Rate
-This is where the magic happens. Interest payments on debt are usually **tax-deductible** (operating expense). Dividends to shareholders are not (use of profit).
-Therefore, taxes make debt cheaper.
+Reducing after-tax cash flows is the **Volume Effect**: taxes shrink the numerator of the NPV formula, reducing the project's value. This is the expected, intuitive direction.
 
-$$i_{after} = i_{before} \cdot (1-s)$$
+### Effect 2 — The Interest Effect: Adjusting the Discount Rate
 
-If your bank charges 10% interest and the tax rate is 30%, your **effective** cost of capital is only 7%. The state pays the other 3%. In the standard model, we reflect the tax shield by discounting at the after-tax cost of debt.
+Interest payments on debt are **tax-deductible** (a business expense). Dividends are not (a distribution of after-tax profit). This asymmetry makes debt financing cheaper than its face rate suggests:
 
----
+$$\boxed{i_{after} = i_{before} \cdot (1-s)}$$
 
-## The Lever: The Tax Shield
+If the bank charges 10% and the tax rate is 30%, the **effective** cost of capital is only 7%. The state covers the remaining 3% by forgoing the tax revenue it would otherwise receive on that interest income. This mechanism — the **Interest Tax Shield** — acts on the **denominator** of the NPV formula.
 
-Why do Private Equity firms load companies with debt? Because of the **Tax Shield**.
-In a world with taxes, the value of a levered firm (with debt) is higher than the value of an unlevered firm (only equity), simply because the government subsidizes the interest payments.
+::: {.flip-card}
+#### Interest Tax Shield vs. Depreciation Tax Shield
+Both are "tax shields" but affect different parts of the NPV formula. The **Depreciation Tax Shield** ($D_t \cdot s$) reduces taxable income through asset write-offs, raising after-tax cash flows (numerator effect). The **Interest Tax Shield** ($i_{before} \cdot s$ per euro borrowed) makes debt financing cheaper, lowering the discount rate (denominator effect). The Standard Model captures both simultaneously.
+:::
 
-**The Calculation Effect:**
-By reducing the discount rate $i$ in the denominator, the Present Value of future cash flows **rises**.
-
-   ::: {.content-visible when-format="html"}
-<iframe src="assets/Chapter7/melter.html" 
-        style="width: 100%; height: 750px; border: none;" 
-        loading="lazy">
-</iframe>
+> **Financing assumption:** The formula $i_{after} = i_{before} \cdot (1-s)$ assumes projects are financed **entirely by debt at the margin** — every invested euro is borrowed. For mixed financing, use the Weighted Average Cost of Capital: $WACC = k_E \cdot \frac{E}{V} + k_D \cdot (1-s) \cdot \frac{D}{V}$, where the debt component carries the same $(1-s)$ adjustment.
 
 ::: {.drag-exercise}
-In the Standard Model, taxes have two opposing effects: They reduce the *numerator* (Cash Flows) which lowers value, but they also reduce the *denominator* (Discount Rate) which *increases* value.
+In the Standard Model, taxes create two *opposing* forces: the *Volume Effect* shrinks after-tax *cash flows* (numerator), reducing NPV — while the *Interest Effect* lowers the *discount rate* (denominator), raising NPV.
 :::
 
----
+### A Complete Worked Example
+
+**Project:** $I_0 = \text{€}\,100{,}000$, annual pre-tax CF = €\,30{,}000, straight-line depreciation over 5 years ($D_t = \text{€}\,20{,}000$/yr), $L_5 = 0$, pre-tax discount rate $i = 10\%$, tax rate $s = 30\%$.
+
+**Adjusting the cash flows (Volume Effect):**
+$$CF_{after} = 30{,}000 \times 0.70 + 20{,}000 \times 0.30 = 21{,}000 + 6{,}000 = \mathbf{€\,27{,}000}$$
+
+**Adjusting the discount rate (Interest Effect):**
+$$i_{after} = 10\% \times 0.70 = \mathbf{7\%}$$
+
+**NPV before taxes** (pre-tax CF at $i = 10\%$):
+$$NPV_{before} = -100{,}000 + 30{,}000 \times PVIFA(10\%,5) = -100{,}000 + 30{,}000 \times 3.7908 = \mathbf{+\text{€}\,13{,}724}$$
+
+**NPV after taxes** (after-tax CF at $i_{after} = 7\%$):
+$$NPV_{after} = -100{,}000 + 27{,}000 \times PVIFA(7\%,5) = -100{,}000 + 27{,}000 \times 4.1002 = \mathbf{+\text{€}\,10{,}705}$$
+
+**Decomposing the tax impact of −€ 3,019:**
+
+| Effect | Calculation | Value |
+|:-------|:------------|------:|
+| Volume Effect | $-3{,}000 \times 3.7908$ (lower CF at old rate) | −€ 11,372 |
+| Interest Effect | $27{,}000 \times (4.1002 - 3.7908)$ (same CF at lower rate) | +€ 8,354 |
+| **Net tax impact** | | **−€ 3,018** |
+
+Here the Volume Effect dominates — taxes reduce the NPV by about € 3,000. But the Interest Effect recovers nearly three-quarters of the loss. Whether the Interest Effect can do even more — enough to turn a negative NPV positive — is the topic of the next section.
+
+## The Lever: The Interest Tax Shield in Action
+
+Why do private equity firms load their acquisitions with debt? Because in a world with taxes, a **levered firm** (with debt) is worth more than an otherwise identical **unlevered firm** (pure equity) — the government subsidises every euro of interest paid.
+
+By reducing the denominator $i$, the present value of any given cash flow stream rises. The interactive tool below shows this lever across different tax rates and debt levels:
+
+::: {.content-visible when-format="html"}
+<iframe src="assets/Chapter7/melter.html"
+        style="width: 100%; height: 520px; border: none;"
+        loading="lazy">
+</iframe>
+:::
 
 ## The Anomaly: The Tax Paradox
 
-Normally, we assume: **Taxes destroy value.** ($NPV_{after} < NPV_{before}$).
-But mathematics has a sense of humor. Under specific conditions, a project that is unprofitable before taxes can become profitable **because** of taxes.
+The normal case: taxes destroy value — Volume Effect beats Interest Effect, $NPV_{after} < NPV_{before}$.
 
+But the Standard Model has a mathematical twist. Under specific conditions, a project that is **unprofitable before taxes** becomes **profitable because of taxes**:
 
-$$NPV_{before} < 0 \quad \Rightarrow \quad NPV_{after} > 0$$
+$$NPV_{before} < 0 \quad \Longrightarrow \quad NPV_{after} > 0$$
 
-This is the **Tax Paradox** (Steuerparadoxon).
+This is the **Tax Paradox** (*Steuerparadoxon*).
 
-This result holds within the standard tax model and reflects private valuation, not social efficiency.
+### The Tug-of-War
 
-### The Tug-of-War 
-It is a battle between two forces:
+| Effect | Direction | Strength grows when… |
+|:-------|:---------:|:---------------------|
+| **Volume Effect** | ▼ reduces NPV | Tax rate $s$ is high |
+| **Interest Effect** | ▲ raises NPV | Pre-tax rate $i$ is high; project life $n$ is long |
 
-1.  **The Volume Effect (Bad):** Taxes take away money from your cash flows.
-    * Strength depends on profitability.
-2.  **The Interest Effect (Good):** Taxes lower the discount rate ($i \cdot (1-s)$), making future cash flows more valuable today.
-    * Strength depends on the interest level and timing.
+The paradox occurs when the **Interest Effect dominates** — which requires a sufficiently high pre-tax rate (a large tax shield base) combined with a long project life (many years over which the rate reduction compounds).
 
-**The Condition for the Paradox:**
-The Paradox occurs if the **Interest Effect dominates the Volume Effect**. This happens when:
-* Interest rates are **high** (strong lever on the denominator).
-* Depreciation is **high/early** (shifting tax burdens to the future).
+### A Numerical Example of the Paradox
 
+**Project:** $I_0 = \text{€}\,100{,}000$, pre-tax CF = €\,27{,}000/yr, straight-line depreciation over 10 years ($D_t = \text{€}\,10{,}000$/yr), $n = 10$, pre-tax rate $i = 25\%$, tax rate $s = 40\%$.
 
-   ::: {.content-visible when-format="html"}
-<iframe src="assets/Chapter7/paradoxon.html" 
-        style="width: 100%; height: 750px; border: none;" 
-        loading="lazy">
-</iframe>
+**Before taxes** (at $i = 25\%$):
+$$NPV_{before} = -100{,}000 + 27{,}000 \times PVIFA(25\%,10) = -100{,}000 + 27{,}000 \times 3.5705 = \mathbf{-\text{€}\,3{,}596}$$
 
+The project fails — it destroys value before taxes.
+
+**Adjusting for taxes** ($CF_{after} = 27{,}000 \times 0.60 + 10{,}000 \times 0.40 = \text{€}\,20{,}200$; $i_{after} = 25\% \times 0.60 = 15\%$):
+$$NPV_{after} = -100{,}000 + 20{,}200 \times PVIFA(15\%,10) = -100{,}000 + 20{,}200 \times 5.0188 = \mathbf{+\text{€}\,1{,}380}$$
+
+Taxes turned a loser into a winner. At 25% pre-tax, the Interest Tax Shield is enormous: it cuts the discount rate by 10 percentage points (25% → 15%), inflating the present value of every future cash flow far more than the Volume Effect deflates them.
+
+::: {.details}
+#### The Inflation Connection
+The paradox becomes more likely under high inflation. Nominal interest rates rise with inflation, creating a larger Interest Tax Shield base. Meanwhile, the real value of future tax payments is eroded by inflation. Kruschwitz documented cases from post-war economies with double-digit nominal rates where the paradox surfaced routinely — firms profited from investing in otherwise marginal projects precisely because of their interest tax shields.
 :::
 
-<details>
-<summary>Deep Dive: The Inflation Connector</summary>
-The tax paradox becomes even more likely under high inflation. Why? Because nominal interest rates rise with inflation. High nominal rates create a massive Tax Shield base, while the real value of the future tax payments is eroded by inflation.
-</details>
+::: {.content-visible when-format="html"}
+<iframe src="assets/Chapter7/paradoxon.html"
+        style="width: 100%; height: 520px; border: none;"
+        loading="lazy">
+</iframe>
+:::
 
----
+## Strategic Levers: Playing the Tax Game
 
-## Interactive Lab: Triggering the Paradox
+As a manager, you cannot change the tax laws. But you control two structural variables that determine which effect wins:
 
-Imagine a marginal project. Move the **Tax Rate Slider** to the right.
-* **Normal World:** As taxes rise, the green bar (NPV) shrinks.
-* **Paradox World:** If you set Interest high (e.g., 12%), rising taxes suddenly make the bar grow!
+1. **Maximise debt** — until the bankruptcy risk outweighs the tax advantage. The optimal capital structure balances the Interest Tax Shield against distress costs (the Trade-Off Theory).
+2. **Accelerate depreciation** — write off assets as fast as legally permitted. Depreciation in Year 1 saves taxes now; the same deduction in Year 5 saves taxes later. Earlier savings have a higher present value.
 
----
-
-## Strategic Summary: How to Play the Game
-
-As a manager, you cannot change the tax laws. But you can change your **Depreciation Policy** and your **Financing Structure**.
-
-1.  **Maximize Debt:** Until the risk of bankruptcy outweighs the tax advantage (Trade-Off Theory).
-2.  **Accelerate Depreciation:** Write off assets as fast as possible. This shifts tax payments into the future. Since money today is worth more than money tomorrow (TVM), this creates value.
-
-> **Management Rule:** "A tax deferred is a tax saved." Always postpone tax payments if legal.
-
----
+> **Management Rule:** "A tax deferred is a tax saved." Always postpone tax payments if legally permissible — the time value of the deferral creates real present value.
 
 ## Chapter Check
 
-Do you understand the distortion field?
-
 ::: {.quick-check}
-**How does the Standard Model adjust the discount rate?**
+**How does the Standard Model adjust the discount rate to account for taxes?**
 
 - It adds a risk premium.
-- **It multiplies the market rate by (1 - tax rate).**
+- **It multiplies the pre-tax market rate by $(1 - s)$.**
 - It leaves the rate unchanged.
-> Correct. This reflects the tax deductibility of interest (Tax Shield).
+
+> Correct. Interest on debt is tax-deductible, so the effective cost of debt financing is $i \times (1-s)$. The Standard Model assumes 100% debt financing at the margin; for mixed financing, use WACC with the $(1-s)$ factor applied to the debt component only.
 :::
 
 ::: {.quick-check}
 **When is the Tax Paradox most likely to occur?**
 
-- When interest rates are very low.
-- **When interest rates are high and depreciation is high early on.**
-- When the company makes a loss.
-> Correct. High interest maximizes the leverage on the denominator (Interest Effect).
+- When the discount rate is very low.
+- **When the pre-tax discount rate is high and the project life is long.**
+- When the company is already making a loss.
+
+> Correct. A high pre-tax rate creates a large Interest Tax Shield base, and a long project life allows the rate reduction to compound across many periods. At i = 25% and n = 10, for example, the Interest Effect can easily dominate — converting a negative pre-tax NPV into a positive after-tax NPV.
 :::
 
 ::: {.drag-exercise}
-The *Tax Shield* describes the value increase resulting from the tax deductibility of *debt interest*. This effect can theoretically lead to the *Tax Paradox*, where an increase in tax rates leads to a *higher* Net Present Value.
+The *Tax Paradox* (*Steuerparadoxon*) occurs when the *Interest Effect* — the present-value gain from a lower *discount rate* — dominates the Volume Effect, so that a higher tax rate $s$ leads to a *higher* Net Present Value.
 :::
+
+Chapter 9 takes investment decisions beyond the single-project view: when capital is limited and multiple projects compete for the same budget, how does a firm rank and select the best combination — the Dean Model of capital rationing.

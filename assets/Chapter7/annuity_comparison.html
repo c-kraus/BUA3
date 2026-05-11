@@ -1,0 +1,329 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Annuity Method: Comparing Projects with Different Lifespans</title>
+    <style>
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            background: transparent; padding: 14px; color: #222;
+        }
+        .card {
+            background: #fff; border: 1px solid #e8e8e8;
+            border-left: 5px solid #ff6a00; border-radius: 8px;
+            box-shadow: 0 4px 14px rgba(0,0,0,0.07);
+            padding: 18px 22px; max-width: 920px; margin: 0 auto;
+        }
+        .card-title { font-size: 1.05rem; font-weight: 700; color: #1a1a1a; margin-bottom: 3px; }
+        .card-sub   { font-size: 0.8rem; color: #777; margin-bottom: 14px; }
+
+        .projects-grid {
+            display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-bottom: 12px;
+        }
+        .proj-card {
+            border-radius: 6px; padding: 12px 14px;
+            border: 1.5px solid;
+        }
+        .proj-a { background: #edf5fc; border-color: #b8d9f3; }
+        .proj-b { background: #fff3e6; border-color: #ffc580; }
+        .proj-title { font-size: 0.8rem; font-weight: 700; text-transform: uppercase;
+            letter-spacing: .06em; margin-bottom: 8px; }
+        .proj-a .proj-title { color: #1565c0; }
+        .proj-b .proj-title { color: #c43d00; }
+
+        .ctrl { margin-bottom: 6px; }
+        .ctrl label {
+            display: flex; justify-content: space-between; align-items: baseline;
+            font-size: 0.74rem; font-weight: 600; color: #555; margin-bottom: 3px;
+        }
+        .ctrl .val { font-weight: 700; }
+        .proj-a .val { color: #1565c0; }
+        .proj-b .val { color: #c43d00; }
+        input[type=range] { width: 100%; cursor: pointer; }
+        .proj-a input { accent-color: #1565c0; }
+        .proj-b input { accent-color: #c43d00; }
+
+        .rate-row {
+            background: #fafafa; border: 1px solid #ebebeb; border-radius: 6px;
+            padding: 10px 14px; margin-bottom: 12px;
+        }
+        .rate-row label {
+            display: flex; justify-content: space-between; align-items: baseline;
+            font-size: 0.75rem; font-weight: 600; color: #555; margin-bottom: 4px;
+        }
+        .rate-row .val { font-size: 0.9rem; font-weight: 700; color: #ff6a00; }
+        .rate-row input { accent-color: #ff6a00; width: 100%; }
+
+        /* Comparison chart */
+        .chart-wrap {
+            background: #fafafa; border: 1px solid #ebebeb;
+            border-radius: 6px; padding: 4px 6px; margin-bottom: 12px;
+        }
+        svg#annsvg { display: block; width: 100%; overflow: visible; }
+
+        /* Result cards */
+        .results { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; }
+        .rbox { border-radius: 6px; padding: 10px 14px; }
+        .rbox.ra  { background: #edf5fc; border: 1px solid #b8d9f3; }
+        .rbox.rb  { background: #fff3e6; border: 1px solid #ffc580; }
+        .rbox.vrd { background: #f0f4ff; border: 1px solid #b0c4f5; }
+        .rbox .rl { font-size: 0.68rem; font-weight: 700; text-transform: uppercase; letter-spacing: .06em; color: #777; margin-bottom: 2px; }
+        .rbox .rf { font-size: 0.77rem; color: #888; font-style: italic; margin-bottom: 3px; }
+        .rbox .ra-val { font-size: 1.1rem; font-weight: 700; }
+        .rbox.ra  .ra-val { color: #1565c0; }
+        .rbox.rb  .ra-val { color: #c43d00; }
+        .rbox.vrd .ra-val { color: #2c3e8c; }
+
+        .insight { font-size: 0.78rem; margin-top: 8px; padding: 8px 12px;
+            border-radius: 4px; background: #fef9ec; border: 1px solid #ffe082; color: #5a3e00; }
+        @media (max-width:520px) { .projects-grid,.results { grid-template-columns:1fr; } }
+    </style>
+</head>
+<body>
+<div class="card">
+    <div class="card-title">Annuity Method — Comparing Projects with Different Lifespans</div>
+    <div class="card-sub">
+        Adjust both projects and the cost of capital. The chart shows annual NPV (raw) vs. annual Annuity (normalised).
+        Notice how NPV favours longer projects — the Annuity removes this bias.
+    </div>
+
+    <div class="rate-row">
+        <label>Cost of Capital (i) <span class="val" id="id">10 %</span></label>
+        <input type="range" id="isl" min="1" max="20" step="0.5" value="10">
+    </div>
+
+    <div class="projects-grid">
+        <div class="proj-card proj-a">
+            <div class="proj-title">Project A (Short)</div>
+            <div class="ctrl">
+                <label>Investment I₀ <span class="val" id="a0d">€ 30,000</span></label>
+                <input type="range" id="a0sl" min="5000" max="200000" step="5000" value="30000">
+            </div>
+            <div class="ctrl">
+                <label>Annual CF <span class="val" id="acd">€ 14,000</span></label>
+                <input type="range" id="acsl" min="1000" max="100000" step="1000" value="14000">
+            </div>
+            <div class="ctrl">
+                <label>Life (nₐ) <span class="val" id="and">3 yrs</span></label>
+                <input type="range" id="ansl" min="1" max="10" step="1" value="3">
+            </div>
+        </div>
+        <div class="proj-card proj-b">
+            <div class="proj-title">Project B (Long)</div>
+            <div class="ctrl">
+                <label>Investment I₀ <span class="val" id="b0d">€ 50,000</span></label>
+                <input type="range" id="b0sl" min="5000" max="200000" step="5000" value="50000">
+            </div>
+            <div class="ctrl">
+                <label>Annual CF <span class="val" id="bcd">€ 14,000</span></label>
+                <input type="range" id="bcsl" min="1000" max="100000" step="1000" value="14000">
+            </div>
+            <div class="ctrl">
+                <label>Life (n_b) <span class="val" id="bnd">6 yrs</span></label>
+                <input type="range" id="bnsl" min="1" max="15" step="1" value="6">
+            </div>
+        </div>
+    </div>
+
+    <div class="chart-wrap">
+        <svg id="annsvg" height="220"></svg>
+    </div>
+
+    <div class="results">
+        <div class="rbox ra">
+            <div class="rl">Project A — Annuity</div>
+            <div class="rf" id="rfA">NPV_A × CRF(i, nₐ)</div>
+            <div class="ra-val" id="raA">—</div>
+        </div>
+        <div class="rbox rb">
+            <div class="rl">Project B — Annuity</div>
+            <div class="rf" id="rfB">NPV_B × CRF(i, n_b)</div>
+            <div class="ra-val" id="raB">—</div>
+        </div>
+        <div class="rbox vrd">
+            <div class="rl">Verdict</div>
+            <div class="rf">Choose higher annuity</div>
+            <div class="ra-val" id="raVrd">—</div>
+        </div>
+    </div>
+
+    <div class="insight" id="insightBox"></div>
+</div>
+
+<script>
+(function(){
+    var isl  = document.getElementById('isl');
+    var a0sl = document.getElementById('a0sl');
+    var acsl = document.getElementById('acsl');
+    var ansl = document.getElementById('ansl');
+    var b0sl = document.getElementById('b0sl');
+    var bcsl = document.getElementById('bcsl');
+    var bnsl = document.getElementById('bnsl');
+    var svg  = document.getElementById('annsvg');
+
+    function fmtE(v, d) {
+        d = d===undefined?0:d;
+        var s = Math.abs(v).toLocaleString('de-DE',{minimumFractionDigits:d,maximumFractionDigits:d});
+        return (v<0?'−':'')+'€ '+s;
+    }
+
+    function npvCalc(I0, CF, n, i) {
+        if (Math.abs(i) < 1e-9) return -I0 + CF * n;
+        var pvifa = (1 - Math.pow(1+i,-n)) / i;
+        return -I0 + CF * pvifa;
+    }
+    function crf(i, n) {
+        if (Math.abs(i) < 1e-9) return 1/n;
+        return (i * Math.pow(1+i,n)) / (Math.pow(1+i,n) - 1);
+    }
+
+    function mkEl(tag, attrs) {
+        var el = document.createElementNS('http://www.w3.org/2000/svg', tag);
+        for (var k in attrs) el.setAttribute(k, attrs[k]);
+        return el;
+    }
+    function mkTxt(x, y, s, attrs) {
+        var el = mkEl('text', Object.assign({
+            x:x, y:y, 'text-anchor':'middle',
+            'font-family':"'Inter',sans-serif", 'font-size':'10'
+        }, attrs));
+        el.textContent = s;
+        return el;
+    }
+
+    function draw() {
+        var i  = parseFloat(isl.value) / 100;
+        var A0 = parseFloat(a0sl.value), AC = parseFloat(acsl.value), An = parseInt(ansl.value);
+        var B0 = parseFloat(b0sl.value), BC = parseFloat(bcsl.value), Bn = parseInt(bnsl.value);
+
+        document.getElementById('id').textContent  = isl.value + ' %';
+        document.getElementById('a0d').textContent = fmtE(A0);
+        document.getElementById('acd').textContent = fmtE(AC);
+        document.getElementById('and').textContent = An + ' yrs';
+        document.getElementById('b0d').textContent = fmtE(B0);
+        document.getElementById('bcd').textContent = fmtE(BC);
+        document.getElementById('bnd').textContent = Bn + ' yrs';
+
+        var npvA = npvCalc(A0, AC, An, i);
+        var npvB = npvCalc(B0, BC, Bn, i);
+        var crfA = crf(i, An), crfB = crf(i, Bn);
+        var annA = npvA * crfA, annB = npvB * crfB;
+
+        document.getElementById('rfA').textContent = fmtE(npvA,0)+' × '+crfA.toFixed(4);
+        document.getElementById('rfB').textContent = fmtE(npvB,0)+' × '+crfB.toFixed(4);
+        document.getElementById('raA').textContent = fmtE(annA,0)+' / yr';
+        document.getElementById('raB').textContent = fmtE(annB,0)+' / yr';
+
+        var vrd = document.getElementById('raVrd');
+        var insight = document.getElementById('insightBox');
+
+        if (Math.abs(annA - annB) < 1) {
+            vrd.textContent = 'Tie (≈ equal)';
+            vrd.style.color = '#555';
+            insight.textContent = 'Both projects are economically equivalent on an annualised basis.';
+        } else if (annA > annB) {
+            vrd.textContent = 'Project A wins';
+            vrd.style.color = '#1565c0';
+            var npvWinner = npvA > npvB ? 'A' : 'B';
+            insight.textContent = 'NPV favours Project ' + npvWinner + ' (' + fmtE(Math.max(npvA,npvB),0) + '), but the Annuity correctly picks A (' + fmtE(annA,0) + '/yr > ' + fmtE(annB,0) + '/yr) — Project B ties up capital ' + Bn + ' years vs. ' + An + ' years for A.';
+        } else {
+            vrd.textContent = 'Project B wins';
+            vrd.style.color = '#c43d00';
+            var npvWinner = npvB > npvA ? 'B' : 'A';
+            insight.textContent = 'NPV favours Project ' + npvWinner + ' (' + fmtE(Math.max(npvA,npvB),0) + '), but the Annuity correctly picks B (' + fmtE(annB,0) + '/yr > ' + fmtE(annA,0) + '/yr) — longer commitment earns more per year at this cost of capital.';
+        }
+
+        // ── SVG ──────────────────────────────────────────────────────────────
+        var W = svg.getBoundingClientRect().width || 800;
+        var H = 220;
+        svg.setAttribute('viewBox','0 0 '+W+' '+H);
+        svg.setAttribute('width', W);
+        while (svg.firstChild) svg.removeChild(svg.firstChild);
+
+        // Four bars: NPV/nA, Ann_A, NPV/nB, Ann_B
+        // Show side by side for each project
+        var ML = 20, MR = 20, MT = 30, MB = 40;
+        var cW = W - ML - MR, cH = H - MT - MB;
+
+        // Values to show
+        var bars = [
+            {label:'NPV/nₐ', sub:'(naive A)', v: An>0?npvA/An:0, col:'#90aed4'},
+            {label:'Annuity A', sub: An+' yrs', v: annA, col:'#1565c0'},
+            {label:'NPV/n_b', sub:'(naive B)', v: Bn>0?npvB/Bn:0, col:'#f5c07a'},
+            {label:'Annuity B', sub: Bn+' yrs', v: annB, col:'#c43d00'}
+        ];
+
+        var maxV = Math.max.apply(null, bars.map(function(b){return Math.abs(b.v);}));
+        if (maxV === 0) maxV = 1;
+        var axisY = MT + cH * (maxV / (maxV * 1.15 + maxV * 0.1));
+
+        // Account for negative values
+        var allV = bars.map(function(b){return b.v;});
+        var minV = Math.min.apply(null, allV);
+        var maxVAll = Math.max.apply(null, allV);
+        if (minV > 0) minV = 0;
+        if (maxVAll < 0) maxVAll = 0;
+        var span = (maxVAll - minV) * 1.2 || 1;
+        axisY = MT + cH * (-minV / span + maxVAll/span * 0.1);
+
+        function toY(v) { return MT + cH * (1 - (v - minV)/span); }
+        var ax = toY(0);
+
+        // Zero line
+        svg.appendChild(mkEl('line',{x1:ML,y1:ax,x2:ML+cW,y2:ax,stroke:'#bbb','stroke-width':'1.5'}));
+
+        var nBars = bars.length, gap = cW / (nBars + 1);
+        var barW = Math.min(60, gap * 0.55);
+
+        // Separator line between project pairs
+        svg.appendChild(mkEl('line',{
+            x1: ML + gap*2 + barW/2 + 4, y1: MT-8,
+            x2: ML + gap*2 + barW/2 + 4, y2: MT+cH+2,
+            stroke:'#ddd','stroke-width':'1','stroke-dasharray':'4,3'
+        }));
+        svg.appendChild(mkTxt(ML + gap*1.5, MT-15, 'Project A', {fill:'#1565c0','font-size':'10','font-weight':'700'}));
+        svg.appendChild(mkTxt(ML + gap*3.5, MT-15, 'Project B', {fill:'#c43d00','font-size':'10','font-weight':'700'}));
+
+        bars.forEach(function(bar, idx) {
+            var x = ML + (idx+1)*gap;
+            var y0 = ax, yv = toY(bar.v);
+            var barH = Math.abs(y0 - yv);
+            var barTop = bar.v >= 0 ? yv : y0;
+
+            svg.appendChild(mkEl('rect',{
+                x:x-barW/2, y:barTop, width:barW, height:Math.max(barH,1), rx:'3',
+                fill:bar.col, opacity:'0.88'
+            }));
+
+            // Value label
+            if (barH > 8) {
+                var labelY = bar.v >= 0 ? barTop - 4 : barTop + barH + 13;
+                var kStr = Math.abs(bar.v) >= 1000 ? Math.round(bar.v/1000)+'k' : Math.round(bar.v)+'';
+                if (bar.v < 0) kStr = '−' + Math.abs(Math.round(bar.v/1000))+'k';
+                svg.appendChild(mkTxt(x, labelY, kStr, {fill:bar.col,'font-size':'9.5','font-weight':'700'}));
+            }
+
+            svg.appendChild(mkTxt(x, ax+16, bar.label, {fill:'#555','font-size':'9','font-weight':'600'}));
+            svg.appendChild(mkTxt(x, ax+27, bar.sub, {fill:'#888','font-size':'8.5'}));
+        });
+
+        // Highlight winner
+        var winIdx = annA > annB ? 1 : 3;
+        var wx = ML + (winIdx+1)*gap;
+        svg.appendChild(mkEl('rect',{
+            x:wx-barW/2-3, y:MT-4, width:barW+6, height:cH+8, rx:'4',
+            fill:'none', stroke:'#ff6a00','stroke-width':'2','stroke-dasharray':'4,2'
+        }));
+
+        window.parent.postMessage({iframeHeight:document.body.scrollHeight},'*');
+    }
+
+    [isl,a0sl,acsl,ansl,b0sl,bcsl,bnsl].forEach(function(el){el.addEventListener('input',draw);});
+    window.addEventListener('resize',function(){setTimeout(draw,50);});
+    draw();
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,392 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>IRR Calculator: Regula Falsi Interpolation</title>
+    <style>
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            background: transparent; padding: 14px; color: #222;
+        }
+        .card {
+            background: #fff; border: 1px solid #e8e8e8;
+            border-left: 5px solid #ff6a00; border-radius: 8px;
+            box-shadow: 0 4px 14px rgba(0,0,0,0.07);
+            padding: 18px 22px; max-width: 920px; margin: 0 auto;
+        }
+        .card-title { font-size: 1.05rem; font-weight: 700; color: #1a1a1a; margin-bottom: 3px; }
+        .card-sub   { font-size: 0.8rem; color: #777; margin-bottom: 14px; }
+
+        .controls-top {
+            display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; margin-bottom: 12px;
+        }
+        .controls-trial {
+            display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 10px;
+            padding: 10px 12px; background: #fafafa; border: 1px solid #ebebeb; border-radius: 6px;
+        }
+        .ctrl label {
+            display: flex; justify-content: space-between; align-items: baseline;
+            font-size: 0.75rem; font-weight: 600; color: #555; margin-bottom: 4px;
+        }
+        .ctrl .val { font-size: 0.9rem; font-weight: 700; color: #ff6a00; }
+        .ctrl.i1 .val { color: #2e7d32; }
+        .ctrl.i2 .val { color: #c62828; }
+        input[type=range] { width: 100%; accent-color: #ff6a00; cursor: pointer; }
+        .ctrl.i1 input { accent-color: #2e7d32; }
+        .ctrl.i2 input { accent-color: #c62828; }
+
+        .trial-label { font-size: 0.72rem; font-weight: 700; text-transform: uppercase;
+            letter-spacing: .05em; color: #777; margin-bottom: 6px; }
+
+        .chart-wrap {
+            background: #fafafa; border: 1px solid #ebebeb;
+            border-radius: 6px; padding: 4px 6px; margin-bottom: 10px;
+        }
+        svg#irrsvg { display: block; width: 100%; overflow: visible; }
+
+        /* Formula display */
+        .formula-box {
+            background: #f0f4ff; border: 1px solid #b0c4f5; border-radius: 6px;
+            padding: 10px 16px; margin-bottom: 10px;
+            font-size: 0.82rem; line-height: 1.7;
+        }
+        .formula-box .fline { color: #555; }
+        .formula-box .fline .hi1 { color: #2e7d32; font-weight: 700; }
+        .formula-box .fline .hi2 { color: #c62828; font-weight: 700; }
+        .formula-box .fline .hi3 { color: #1565c0; font-weight: 700; }
+        .formula-box .fline .hio { color: #ff6a00; font-weight: 700; }
+
+        .results {
+            display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px;
+        }
+        .rbox { border-radius: 6px; padding: 10px 14px; }
+        .rbox.i1 { background: #edf7ed; border: 1px solid #a5d6a7; }
+        .rbox.i2 { background: #fce8e8; border: 1px solid #f0b9b9; }
+        .rbox.irr { background: #f0f4ff; border: 1px solid #b0c4f5; }
+        .rbox .rl { font-size: 0.68rem; font-weight: 700; text-transform: uppercase; letter-spacing: .06em; color: #777; margin-bottom: 2px; }
+        .rbox .rf { font-size: 0.77rem; color: #888; font-style: italic; margin-bottom: 3px; }
+        .rbox .ra { font-size: 1.1rem; font-weight: 700; }
+        .rbox.i1  .ra { color: #2e7d32; }
+        .rbox.i2  .ra { color: #c62828; }
+        .rbox.irr .ra { color: #1565c0; }
+        .warn { font-size: 0.75rem; color: #bf360c; margin-top: 6px; font-style: italic; }
+        @media (max-width:520px) { .controls-top,.controls-trial,.results { grid-template-columns:1fr; } }
+    </style>
+</head>
+<body>
+<div class="card">
+    <div class="card-title">IRR Calculator — Regula Falsi Interpolation</div>
+    <div class="card-sub">
+        Set project parameters, then drag the green (i₁) and red (i₂) trial-rate sliders to bracket the IRR.
+        The formula below updates live, showing how linear interpolation finds the IRR approximation.
+    </div>
+
+    <div class="controls-top">
+        <div class="ctrl">
+            <label>Investment (I₀) <span class="val" id="i0d">€ 100,000</span></label>
+            <input type="range" id="i0sl" min="50000" max="500000" step="10000" value="100000">
+        </div>
+        <div class="ctrl">
+            <label>Annual CF <span class="val" id="cfd">€ 28,000</span></label>
+            <input type="range" id="cfsl" min="5000" max="150000" step="1000" value="28000">
+        </div>
+        <div class="ctrl">
+            <label>Periods (n) <span class="val" id="nd">5</span></label>
+            <input type="range" id="nsl" min="2" max="12" step="1" value="5">
+        </div>
+        <div class="ctrl">
+            <label>Liquidation (Lₙ) <span class="val" id="lnd">€ 0</span></label>
+            <input type="range" id="lnsl" min="0" max="100000" step="5000" value="0">
+        </div>
+    </div>
+
+    <div class="controls-trial">
+        <div>
+            <div class="trial-label">Trial Rate i₁ (must give positive NPV)</div>
+            <div class="ctrl i1">
+                <label>i₁ <span class="val" id="i1d">5 %</span></label>
+                <input type="range" id="i1sl" min="0" max="60" step="0.5" value="5">
+            </div>
+        </div>
+        <div>
+            <div class="trial-label">Trial Rate i₂ (must give negative NPV)</div>
+            <div class="ctrl i2">
+                <label>i₂ <span class="val" id="i2d">15 %</span></label>
+                <input type="range" id="i2sl" min="0" max="60" step="0.5" value="15">
+            </div>
+        </div>
+    </div>
+
+    <div class="chart-wrap">
+        <svg id="irrsvg" height="280"></svg>
+    </div>
+
+    <div class="formula-box" id="formulaBox">
+        <div class="fline">Regula Falsi: <span class="hi3">IRR ≈ i₁ + [C₀(i₁) / (C₀(i₁) − C₀(i₂))] × (i₂ − i₁)</span></div>
+        <div class="fline" id="fLine2">— set project parameters above to see live calculation —</div>
+    </div>
+
+    <div class="results">
+        <div class="rbox i1">
+            <div class="rl">NPV at i₁</div>
+            <div class="rf" id="rfi1">C₀(i₁ = 5 %)</div>
+            <div class="ra" id="rai1">—</div>
+        </div>
+        <div class="rbox i2">
+            <div class="rl">NPV at i₂</div>
+            <div class="rf" id="rfi2">C₀(i₂ = 15 %)</div>
+            <div class="ra" id="rai2">—</div>
+        </div>
+        <div class="rbox irr">
+            <div class="rl">IRR</div>
+            <div class="rf" id="rfIRR">Approx. (Regula Falsi)</div>
+            <div class="ra" id="raIRR">—</div>
+            <div class="warn" id="warnIRR"></div>
+        </div>
+    </div>
+</div>
+
+<script>
+(function(){
+    var i0sl = document.getElementById('i0sl');
+    var cfsl = document.getElementById('cfsl');
+    var nsl  = document.getElementById('nsl');
+    var lnsl = document.getElementById('lnsl');
+    var i1sl = document.getElementById('i1sl');
+    var i2sl = document.getElementById('i2sl');
+    var svg  = document.getElementById('irrsvg');
+
+    function fmtE(v) {
+        var s = Math.round(Math.abs(v)).toLocaleString('de-DE');
+        return (v < 0 ? '−' : '+') + '€ ' + s;
+    }
+    function fmtPct(v) { return v.toFixed(2) + ' %'; }
+
+    function npvAt(I0, CF, n, Ln, r) {
+        if (Math.abs(r) < 1e-9) return -I0 + CF * n + Ln;
+        var pvifa = (1 - Math.pow(1+r,-n)) / r;
+        return -I0 + CF * pvifa + Ln * Math.pow(1+r,-n);
+    }
+
+    function findIRR(I0, CF, n, Ln) {
+        if (npvAt(I0, CF, n, Ln, 0) <= 0) return null;
+        var lo = 0, hi = 5, mid;
+        for (var k = 0; k < 80; k++) {
+            mid = (lo + hi) / 2;
+            if (npvAt(I0, CF, n, Ln, mid) > 0) lo = mid; else hi = mid;
+        }
+        return mid * 100;
+    }
+
+    function mkEl(tag, attrs) {
+        var el = document.createElementNS('http://www.w3.org/2000/svg', tag);
+        for (var k in attrs) el.setAttribute(k, attrs[k]);
+        return el;
+    }
+    function mkTxt(x, y, s, attrs) {
+        var el = mkEl('text', Object.assign({
+            x:x, y:y, 'text-anchor':'middle',
+            'font-family':"'Inter',sans-serif", 'font-size':'10'
+        }, attrs));
+        el.textContent = s;
+        return el;
+    }
+
+    function draw() {
+        var I0  = parseFloat(i0sl.value);
+        var CF  = parseFloat(cfsl.value);
+        var n   = parseInt(nsl.value);
+        var Ln  = parseFloat(lnsl.value);
+        var i1  = parseFloat(i1sl.value) / 100;
+        var i2  = parseFloat(i2sl.value) / 100;
+
+        document.getElementById('i0d').textContent = '€ ' + Math.round(I0).toLocaleString('de-DE');
+        document.getElementById('cfd').textContent  = '€ ' + Math.round(CF).toLocaleString('de-DE');
+        document.getElementById('nd').textContent   = n;
+        document.getElementById('lnd').textContent  = '€ ' + Math.round(Ln).toLocaleString('de-DE');
+        document.getElementById('i1d').textContent  = i1sl.value + ' %';
+        document.getElementById('i2d').textContent  = i2sl.value + ' %';
+
+        var v1 = npvAt(I0, CF, n, Ln, i1);
+        var v2 = npvAt(I0, CF, n, Ln, i2);
+        var irrExact = findIRR(I0, CF, n, Ln);
+
+        // Regula Falsi approximation
+        var irrApprox = null;
+        var goodBracket = v1 > 0 && v2 < 0 && i1 < i2;
+        if (goodBracket && (v1 - v2) !== 0) {
+            irrApprox = (i1 + (v1 / (v1 - v2)) * (i2 - i1)) * 100;
+        }
+
+        // Result boxes
+        document.getElementById('rfi1').textContent = 'C₀(i₁ = ' + i1sl.value + ' %)';
+        document.getElementById('rfi2').textContent = 'C₀(i₂ = ' + i2sl.value + ' %)';
+        document.getElementById('rai1').textContent = fmtE(v1);
+        document.getElementById('rai2').textContent = fmtE(v2);
+
+        var warnEl = document.getElementById('warnIRR');
+        var raIRR = document.getElementById('raIRR');
+        var rfIRR = document.getElementById('rfIRR');
+
+        if (!goodBracket) {
+            raIRR.textContent = '—';
+            rfIRR.textContent = 'Adjust i₁ < i₂ so C₀(i₁) > 0 > C₀(i₂)';
+            warnEl.textContent = 'Trial rates do not bracket the IRR.';
+        } else {
+            raIRR.textContent = irrApprox !== null ? fmtPct(irrApprox) : '—';
+            var errTxt = '';
+            if (irrExact !== null && irrApprox !== null) {
+                rfIRR.textContent = 'Exact IRR = ' + fmtPct(irrExact);
+                var err = Math.abs(irrApprox - irrExact);
+                errTxt = err < 0.05 ? 'Excellent approximation (error < 0.05 pp)' :
+                         err < 0.3  ? 'Good approximation (error = ' + err.toFixed(2) + ' pp)' :
+                                      'Wide bracket — narrow i₁/i₂ for better precision (error = ' + err.toFixed(2) + ' pp)';
+            } else {
+                rfIRR.textContent = 'Approx. (Regula Falsi)';
+            }
+            warnEl.textContent = errTxt;
+        }
+
+        // Formula display
+        var fLine2 = document.getElementById('fLine2');
+        if (goodBracket && irrApprox !== null) {
+            fLine2.innerHTML =
+                'IRR ≈ <span class="hi1">' + i1sl.value + '%</span>' +
+                ' + [<span class="hi1">' + fmtE(v1) + '</span>' +
+                ' / (<span class="hi1">' + fmtE(v1) + '</span>' +
+                ' − <span class="hi2">' + fmtE(v2) + '</span>)]' +
+                ' × (<span class="hi2">' + i2sl.value + '%</span>' +
+                ' − <span class="hi1">' + i1sl.value + '%</span>)' +
+                ' ≈ <span class="hio">' + fmtPct(irrApprox) + '</span>';
+        } else {
+            fLine2.innerHTML = 'Adjust trial rates to bracket the IRR (green i₁ gives positive NPV, red i₂ gives negative NPV).';
+        }
+
+        // ── SVG ──────────────────────────────────────────────────────────────
+        var W = svg.getBoundingClientRect().width || 800;
+        var H = 280;
+        svg.setAttribute('viewBox','0 0 '+W+' '+H);
+        svg.setAttribute('width', W);
+        while (svg.firstChild) svg.removeChild(svg.firstChild);
+
+        var ML = 64, MR = 20, MT = 20, MB = 32;
+        var cW = W - ML - MR, cH = H - MT - MB;
+
+        var maxRate = 0.60;
+        if (irrExact !== null) maxRate = Math.min(0.60, Math.max(0.30, (irrExact/100)*2.5));
+        var useMax = Math.max(maxRate, i1, i2) * 1.1;
+        if (useMax > 0.60) useMax = 0.60;
+
+        var steps = 100, pts = [];
+        var minV = Infinity, maxV = -Infinity;
+        for (var k = 0; k <= steps; k++) {
+            var r = (k/steps)*useMax;
+            var v = npvAt(I0, CF, n, Ln, r);
+            pts.push({r:r,v:v});
+            if (v<minV) minV=v; if (v>maxV) maxV=v;
+        }
+        var vR = maxV - minV;
+        var vMax = maxV + vR*0.12, vMin = minV - vR*0.12;
+        if (vMax<0) vMax=0; if (vMin>0) vMin=0;
+        var vSpan = vMax - vMin;
+
+        function toX(r) { return ML + (r/useMax)*cW; }
+        function toY(v) { return MT + (1-(v-vMin)/vSpan)*cH; }
+
+        var axY = toY(0);
+
+        // Grid
+        for (var g=0; g<=5; g++) {
+            var gv = vMin + (g/5)*vSpan, gy = toY(gv);
+            svg.appendChild(mkEl('line',{x1:ML,y1:gy,x2:ML+cW,y2:gy,stroke:'#ebebeb','stroke-width':'1'}));
+            svg.appendChild(mkTxt(ML-4,gy+3.5,(gv>=0?'':'-')+Math.round(Math.abs(gv)/1000)+'k',
+                {fill:'#888','font-size':'9','text-anchor':'end'}));
+        }
+        var nGX = Math.min(8, Math.round(useMax*10));
+        for (var g=0; g<=nGX; g++) {
+            var gr=(g/nGX)*useMax, gx=toX(gr);
+            svg.appendChild(mkEl('line',{x1:gx,y1:MT,x2:gx,y2:MT+cH,stroke:'#ebebeb','stroke-width':'1'}));
+            svg.appendChild(mkTxt(gx,axY+14,Math.round(gr*100)+'%',{fill:'#888','font-size':'9'}));
+        }
+
+        // Axes
+        svg.appendChild(mkEl('line',{x1:ML,y1:axY,x2:ML+cW,y2:axY,stroke:'#999','stroke-width':'1.5'}));
+        svg.appendChild(mkEl('line',{x1:ML,y1:MT,x2:ML,y2:MT+cH,stroke:'#999','stroke-width':'1.5'}));
+
+        // X label
+        svg.appendChild(mkTxt(ML+cW/2,MT+cH+28,'Discount Rate i',{fill:'#666','font-size':'10'}));
+        var yl=mkEl('text',{x:13,y:MT+cH/2,'text-anchor':'middle','font-size':'10',fill:'#666',
+            'font-family':"'Inter',sans-serif",transform:'rotate(-90,13,'+(MT+cH/2)+')'});
+        yl.textContent='NPV'; svg.appendChild(yl);
+
+        // Positive shading
+        var posPts = pts.filter(function(p){return p.v>=0;});
+        if (posPts.length>1) {
+            var pp = 'M'+toX(pts[0].r)+','+axY;
+            pts.forEach(function(p){if(p.v>=0) pp+=' L'+toX(p.r)+','+toY(p.v);});
+            var lastPos = posPts[posPts.length-1];
+            pp+=' L'+toX(lastPos.r)+','+axY+' Z';
+            svg.appendChild(mkEl('path',{d:pp,fill:'#e5f5e5',opacity:'0.7'}));
+        }
+
+        // NPV curve
+        var d='';
+        pts.forEach(function(p,k){d+=(k===0?'M':'L')+toX(p.r)+','+toY(p.v)+' ';});
+        svg.appendChild(mkEl('path',{d:d,fill:'none',stroke:'#1565c0',
+            'stroke-width':'2.5','stroke-linejoin':'round','stroke-linecap':'round'}));
+
+        // Exact IRR marker
+        if (irrExact!==null && irrExact/100<=useMax) {
+            var xIRR=toX(irrExact/100);
+            svg.appendChild(mkEl('circle',{cx:xIRR,cy:axY,r:'5',fill:'#1565c0',stroke:'#fff','stroke-width':'1.5'}));
+            svg.appendChild(mkTxt(xIRR,axY+24,'IRR = '+fmtPct(irrExact),{fill:'#1565c0','font-size':'9.5','font-weight':'700'}));
+        }
+
+        // Trial rate i1 (green)
+        if (i1 <= useMax) {
+            var xi1=toX(i1), yi1=toY(v1);
+            svg.appendChild(mkEl('line',{x1:xi1,y1:MT,x2:xi1,y2:MT+cH,stroke:'#2e7d32','stroke-width':'1.5','stroke-dasharray':'5,3'}));
+            svg.appendChild(mkEl('circle',{cx:xi1,cy:yi1,r:'5',fill:'#2e7d32',stroke:'#fff','stroke-width':'1.5'}));
+            var lbl1 = 'C₀(i₁)='+fmtE(v1);
+            svg.appendChild(mkTxt(xi1>ML+cW*0.6?xi1-6:xi1+6, yi1-7, lbl1,
+                {fill:'#2e7d32','font-size':'8.5','font-weight':'600',
+                 'text-anchor':xi1>ML+cW*0.6?'end':'start'}));
+        }
+
+        // Trial rate i2 (red)
+        if (i2 <= useMax) {
+            var xi2=toX(i2), yi2=toY(v2);
+            svg.appendChild(mkEl('line',{x1:xi2,y1:MT,x2:xi2,y2:MT+cH,stroke:'#c62828','stroke-width':'1.5','stroke-dasharray':'5,3'}));
+            svg.appendChild(mkEl('circle',{cx:xi2,cy:yi2,r:'5',fill:'#c62828',stroke:'#fff','stroke-width':'1.5'}));
+            var lbl2 = 'C₀(i₂)='+fmtE(v2);
+            svg.appendChild(mkTxt(xi2>ML+cW*0.6?xi2-6:xi2+6, yi2-7, lbl2,
+                {fill:'#c62828','font-size':'8.5','font-weight':'600',
+                 'text-anchor':xi2>ML+cW*0.6?'end':'start'}));
+        }
+
+        // Interpolation chord
+        if (goodBracket && i1<=useMax && i2<=useMax) {
+            var xi1_=toX(i1), xi2_=toX(i2);
+            var yi1_=toY(v1), yi2_=toY(v2);
+            svg.appendChild(mkEl('line',{x1:xi1_,y1:yi1_,x2:xi2_,y2:yi2_,
+                stroke:'#ff6a00','stroke-width':'1.5','stroke-dasharray':'6,3'}));
+            if (irrApprox!==null && irrApprox/100<=useMax) {
+                var xApprox=toX(irrApprox/100);
+                svg.appendChild(mkEl('circle',{cx:xApprox,cy:axY,r:'4',fill:'#ff6a00',stroke:'#fff','stroke-width':'1.5'}));
+                svg.appendChild(mkTxt(xApprox, axY-9, '≈'+fmtPct(irrApprox),
+                    {fill:'#ff6a00','font-size':'9','font-weight':'700'}));
+            }
+        }
+
+        window.parent.postMessage({iframeHeight:document.body.scrollHeight},'*');
+    }
+
+    [i0sl,cfsl,nsl,lnsl,i1sl,i2sl].forEach(function(el){el.addEventListener('input',draw);});
+    window.addEventListener('resize',function(){setTimeout(draw,50);});
+    draw();
+})();
+</script>
+</body>
+</html>
