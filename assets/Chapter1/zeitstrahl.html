@@ -135,7 +135,7 @@
     <div class="results">
         <div class="rbox pv">
             <div class="rlabel">Present Value — t = 0</div>
-            <div class="rformula" id="pvFml">PV = FV ÷ (1 + i)ⁿ</div>
+            <div class="rformula" id="pvFml">PV = FV × (1 + i)⁻ⁿ</div>
             <div class="ramount" id="pvAmt">€ 1,000.00</div>
         </div>
         <div class="rbox fv">
@@ -189,7 +189,7 @@
         document.getElementById('pvAmt').textContent  = fmtEur(pv);
         document.getElementById('fvAmt').textContent  = fmtEur(fv);
         document.getElementById('pvFml').textContent  =
-            'PV = ' + fmtShort(fv) + ' ÷ (1 + ' + iSl.value + '%)^' + n;
+            'PV = ' + fmtShort(fv) + ' × (1 + ' + iSl.value + '%)^(−' + n + ')';
         document.getElementById('fvFml').textContent  =
             'FV = ' + fmtShort(pv) + ' × (1 + ' + iSl.value + '%)^' + n;
 
@@ -239,7 +239,7 @@
               'marker-end': 'url(#aL)' });
         svg.appendChild(discLine);
         svg.appendChild(svgText((ML + ML + axW) / 2, discY + 17,
-            '←  DISCOUNTING  –  PV = FV ÷ (1+i)^n',
+            '←  DISCOUNTING  –  PV = FV × (1+i)^(−n)',
             { fill: '#1565c0', 'font-weight': '700', 'font-size': '11.5' }));
 
         // ── Ticks, labels, bubbles ────────────────────────────────────────
