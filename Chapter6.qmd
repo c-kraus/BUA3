@@ -141,7 +141,7 @@ IRR says "take A" (50% > 20%). NPV says "take B" (€ 90.91 > € 0.36). The NPV
 
 **The Differenzinvestition in numbers:** evaluate the *incremental* investment B – A directly. The increment requires an extra € 999 of capital and returns an extra € 1,198.50:
 
-$$NPV_{B-A} = -999 + \frac{1{,}198.50}{1.10} = -999 + 1{,}089.55 = \mathbf{+€\,90.55}$$
+$$NPV_{B-A} = -999 + \frac{1{,}198.50}{1.10} = -999 + 1{,}089.55 = \mathbf{+\text{€}\,90.55}$$
 
 Since the incremental investment creates positive NPV (and its IRR ≈ 20% > 10% hurdle), committing the extra capital to B is worthwhile. Choose B.
 

@@ -115,8 +115,8 @@ Sometimes NPV disagrees with intuitive "Return on Investment" thinking.
 
 With a cost of capital of 10%:
 
-$$NPV_A = -1{,}000 + \frac{1{,}500}{1.10} = \mathbf{€\,363}$$
-$$NPV_B = -1{,}000{,}000 + \frac{1{,}200{,}000}{1.10} = \mathbf{€\,90{,}909}$$
+$$NPV_A = -1{,}000 + \frac{1{,}500}{1.10} = \mathbf{\text{€}\,363}$$
+$$NPV_B = -1{,}000{,}000 + \frac{1{,}200{,}000}{1.10} = \mathbf{\text{€}\,90{,}909}$$
 
 Project A is more *efficient*, but Project B makes you rich. Since you cannot buy anything with percentages, **NPV wins**. It measures the absolute increase in wealth — the only thing that matters for shareholders.
 

@@ -57,7 +57,7 @@ In the Standard Model, taxes create two *opposing* forces: the *Volume Effect* s
 **Project:** $I_0 = \text{€}\,100{,}000$, annual pre-tax CF = €\,30{,}000, straight-line depreciation over 5 years ($D_t = \text{€}\,20{,}000$/yr), $L_5 = 0$, pre-tax discount rate $i = 10\%$, tax rate $s = 30\%$.
 
 **Adjusting the cash flows (Volume Effect):**
-$$CF_{after} = 30{,}000 \times 0.70 + 20{,}000 \times 0.30 = 21{,}000 + 6{,}000 = \mathbf{€\,27{,}000}$$
+$$CF_{after} = 30{,}000 \times 0.70 + 20{,}000 \times 0.30 = 21{,}000 + 6{,}000 = \mathbf{\text{€}\,27{,}000}$$
 
 **Adjusting the discount rate (Interest Effect):**
 $$i_{after} = 10\% \times 0.70 = \mathbf{7\%}$$
