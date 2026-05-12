@@ -1,6 +1,5 @@
 local function inject_header(doc)
-  local ext_dir = pandoc.path.directory(PANDOC_SCRIPT_FILE)
-  local logo_path = pandoc.path.join({ext_dir, "logo_en.svg"})
+  local logo_path = "logo_en.svg"
 
   local header_html = '<div id="custom-header"><img src="' .. logo_path .. '" alt="THWS Logo"></div>\n' ..
     '<script>\n' ..
