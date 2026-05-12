@@ -1,9 +1,6 @@
 project:
   type: book
   output-dir: _site
-  resources:
-    - _extensions/c-kraus/moodle/logo_en.svg
-    - _extensions/c-kraus/moodle/logo.svg
 
 number-sections: true
 

@@ -1,7 +1,16 @@
 local function inject_header(doc)
-  local logo_path = "logo_en.svg"
+  local ext_dir = pandoc.path.directory(PANDOC_SCRIPT_FILE)
+  local logo_path = pandoc.path.join({ext_dir, "logo_en.svg"})
 
-  local header_html = '<div id="custom-header"><img src="' .. logo_path .. '" alt="THWS Logo"></div>\n' ..
+  -- Read and inline the SVG so no external path is needed in the browser
+  local svg_content = ""
+  local f = io.open(logo_path, "r")
+  if f then
+    svg_content = f:read("*all")
+    f:close()
+  end
+
+  local header_html = '<div id="custom-header">' .. svg_content .. '</div>\n' ..
     '<script>\n' ..
     'window.onscroll = function() {\n' ..
     '  var h = document.getElementById("custom-header");\n' ..
