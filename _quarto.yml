@@ -32,6 +32,8 @@ book:
     background: light # Passt gut zu deinem thws-grey/orange
     collapse-level: 1
     search: true
+  repo-url: https://github.com/c-kraus/BUA3
+  repo-actions: [issue]
   
 format:
   moodle-html
