@@ -6,7 +6,7 @@ number-sections: true
 
 book:
   title: "Investment Appraisal"
-  subtitle: "Introduciton and Methods"
+  subtitle: "Introduction and Methods"
   author: "Prof. Dr. Christian Kraus"
   date: "last-modified"
   chapters:
