@@ -1,0 +1,319 @@
+---
+title: "Teaching Note: The Hartmann Legacy"
+subtitle: "Vertraulich — nur für Lehrende"
+author: "BUA3 — Business Finance, THWS"
+date: last-modified
+lang: en
+format:
+  handout-typst
+---
+
+# Learning Objectives
+
+After completing this case session, students will be able to:
+
+1. Apply the compound interest formula to calculate future values and isolate unknown interest rates algebraically.
+2. Use the Fisher equation to distinguish nominal from real returns and identify negative real rates.
+3. Value a finite annuity stream using PVIFA and size a loan using the CRF; interpret the limit case (perpetuity).
+4. Build complete amortization tables for all three standard loan types and compare them on total cost and liquidity profile.
+5. Price a bond as PV(coupons) + PV(par) and explain the discount/premium logic; estimate YTM via linear interpolation.
+6. Apply the Gordon Growth Model to value a dividend-paying stock and assess over/undervaluation.
+
+# Synopsis
+
+The Hartmann Family Office has inherited four unresolved financial questions from the retiring founder. A newly returned daughter, Lena, must work through each in sequence: valuing a matured deposit in real terms, deciding whether a commercial property is worth its asking price and how to finance it, comparing three loan structures for a renovation project, and evaluating two portfolio positions (a bond and a stock). The case integrates Chapters 1–4 of BUA3 in a single coherent narrative.
+
+# Theoretical Framework
+
+| Task | Chapter | Core Concept |
+|:-----|:-------:|:-------------|
+| Aufgabe 1 | 1 | Compound interest, Future Value, Fisher Equation, algebraic rate isolation |
+| Aufgabe 2 | 2 | PVIFA, CRF, perpetuity, Gordon model precursor |
+| Aufgabe 3 | 3 | Three loan types, amortization mechanics, liquidity vs. total cost trade-off |
+| Aufgabe 4 | 4 | Bond valuation (discount/premium), YTM interpolation, DDM/Gordon Growth Model |
+
+---
+
+# Full Model Solutions
+
+## Aufgabe 1 — Time Value & Real Returns
+
+### a) Future Value of the Deposit
+
+$$FV = PV \cdot (1 + i)^n = 500{,}000 \cdot (1.04)^5$$
+
+$(1.04)^5 = 1.21665$
+
+$$\boxed{FV = 500{,}000 \times 1.21665 = \textbf{€608,326.45}}$$
+
+### b) Real Interest Rate
+
+**Approximation (Fisher shortcut):**
+
+$$r \approx i_{nom} - \pi = 4.0\% - 5.5\% = \textbf{-1.5\%}$$
+
+**Exact Fisher Equation:**
+
+$$r = \frac{1 + i_{nom}}{1 + \pi} - 1 = \frac{1.04}{1.055} - 1 = 0.98578 - 1 = \textbf{-1.422\%}$$
+
+**Interpretation:** Despite earning 4% nominally, Georg's purchasing power *fell* by approximately 1.4% per year. The real return was negative — the deposit grew in euros, but those euros bought less each year than the ones he had deposited. This mirrors the 2019–2024 European inflation shock discussed in Chapter 1 (Turkey case analogy).
+
+> **Common error:** Students often compute inflation − nominal rate = +1.5%, reversing the sign. The real rate is what remains *after* deducting inflation from the nominal rate. A negative real rate means you are losing purchasing power even while the account balance grows.
+
+**Time: ~15 min**
+
+---
+
+### c) Required Annual Compound Rate
+
+Solve $FV = PV \cdot (1+i)^n$ for $i$:
+
+$$280{,}000 = 200{,}000 \cdot (1+i)^6$$
+
+$$(1+i)^6 = \frac{280{,}000}{200{,}000} = 1.4$$
+
+$$i = 1.4^{1/6} - 1 = \sqrt[6]{1.4} - 1$$
+
+$$\boxed{i \approx 5.77\% \text{ p.a.}}$$
+
+> **Common error:** Students often forget to subtract 1 at the end, reporting i = 1.0577. Reinforce the algebraic step: the factor (1+i)^n must be isolated *before* taking the root.
+
+**Time: ~15 min**
+
+---
+
+## Aufgabe 2 — Annuities & Perpetuities
+
+### a) Present Value of Rental Stream
+
+$$PVIFA(6\%, 15) = \frac{1 - (1.06)^{-15}}{0.06}$$
+
+$(1.06)^{15} = 2.39656$, so $(1.06)^{-15} = 0.41727$
+
+$$PVIFA = \frac{1 - 0.41727}{0.06} = \frac{0.58273}{0.06} = \mathbf{9.7122}$$
+
+$$PV = 96{,}000 \times 9.7122 = \boxed{\textbf{€932,376}}$$
+
+> **Common error:** Students forget to take the reciprocal when computing the discount factor from the growth factor. Drill: $(1.06)^{-15} = 1 / (1.06)^{15}$ — the minus sign is a reciprocal, not a subtraction.
+
+**Time: ~15 min**
+
+---
+
+### b) Investment Decision
+
+The PV of the rental stream (€932,376) **exceeds** the asking price (€900,000) by approximately **€32,376**. The property is worth more than it costs → **recommend purchase.**
+
+> **Discussion prompt if class is stuck:** "If you were offered a promise to pay you €96,000 per year for 15 years, and you could earn 6% elsewhere, how much would you pay for that promise today?" — This frames it as a pure valuation question, removing the property context.
+
+**Time: ~5 min**
+
+---
+
+### c) Annual Mortgage Payment
+
+$$CRF(6\%, 15) = \frac{0.06 \times (1.06)^{15}}{(1.06)^{15} - 1} = \frac{0.06 \times 2.39656}{2.39656 - 1} = \frac{0.14379}{1.39656} = 0.10296$$
+
+$$\text{Annual payment} = 800{,}000 \times 0.10296 = \boxed{\textbf{€82,370 p.a.}}$$
+
+Note: CRF = 1/PVIFA. Both routes give the same answer — accept either approach.
+
+**Time: ~10 min**
+
+---
+
+### d) Perpetuity Value
+
+$$PV_\infty = \frac{C}{i} = \frac{96{,}000}{0.06} = \boxed{\textbf{€1,600,000}}$$
+
+The perpetuity value (€1.6m) is **€667,624 higher** than the 15-year annuity value (€932,376). This large gap reveals that years 16 to ∞, even though heavily discounted, still contribute significant value when aggregated. Conversely, it illustrates how much value is "front-loaded" into the first 15 years — the annuity already captures 58% of the perpetuity's value.
+
+> **Board note:** Write both values side by side and ask: "Where did the other €668k go?" Students often underestimate how much a finite term cuts value.
+
+**Time: ~10 min**
+
+---
+
+## Aufgabe 3 — Loan Structures & Amortization
+
+### a) Option A — Annuity Loan
+
+$$CRF(5\%, 4) = \frac{0.05 \times (1.05)^4}{(1.05)^4 - 1} = \frac{0.05 \times 1.21551}{0.21551} = \frac{0.060776}{0.21551} = 0.28201$$
+
+$$\text{Annual payment} = 240{,}000 \times 0.28201 = \mathbf{€67,682.84}$$
+
+| Year | Opening Balance (€) | Annuity (€) | Interest (€) | Principal (€) | Closing Balance (€) |
+|:----:|-------------------:|------------:|-------------:|--------------:|--------------------:|
+| 1 | 240,000.00 | 67,682.84 | 12,000.00 | 55,682.84 | 184,317.16 |
+| 2 | 184,317.16 | 67,682.84 | 9,215.86 | 58,466.98 | 125,850.18 |
+| 3 | 125,850.18 | 67,682.84 | 6,292.51 | 61,390.33 | 64,459.85 |
+| 4 | 64,459.85 | 67,682.84 | 3,222.99 | 64,459.85 | 0.00 |
+| **Total** | | **€270,731.36** | **€30,731.36** | **€240,000.00** | |
+
+> **Common error (Scissors Effect):** Students sometimes reverse the direction — they expect interest to *rise* as payments progress. Correct by pointing to Year 1 vs. Year 4: interest falls from €12,000 to €3,223 because the outstanding principal is shrinking.
+
+**Time: ~20 min**
+
+---
+
+### b) Option B — Constant Amortization Loan
+
+$$T = \frac{240{,}000}{4} = \mathbf{€60,000 \text{ per year}}$$
+
+| Year | Opening Balance (€) | Total Payment (€) | Interest (€) | Principal (€) | Closing Balance (€) |
+|:----:|-------------------:|------------------:|-------------:|--------------:|--------------------:|
+| 1 | 240,000.00 | 72,000.00 | 12,000.00 | 60,000.00 | 180,000.00 |
+| 2 | 180,000.00 | 69,000.00 | 9,000.00 | 60,000.00 | 120,000.00 |
+| 3 | 120,000.00 | 66,000.00 | 6,000.00 | 60,000.00 | 60,000.00 |
+| 4 | 60,000.00 | 63,000.00 | 3,000.00 | 60,000.00 | 0.00 |
+| **Total** | | **€270,000.00** | **€30,000.00** | **€240,000.00** | |
+
+**Time: ~15 min**
+
+---
+
+### c) Option C — Bullet Loan
+
+$$\text{Interest (constant)} = 240{,}000 \times 0.05 = \mathbf{€12,000 \text{ per year}}$$
+
+- Years 1–3: **€12,000** (interest only; principal untouched)
+- Year 4: **€12,000 + €240,000 = €252,000** (interest + full principal bullet)
+- **Total paid: €288,000 | Total interest: €48,000**
+
+**Time: ~5 min**
+
+---
+
+### d) Comparison Table & Recommendation
+
+| Loan Type | Total Paid (€) | Total Interest (€) | Year 1 Outflow (€) |
+|:----------|---------------:|-------------------:|-------------------:|
+| Option A — Annuity | **270,731.36** | 30,731.36 | **67,682.84** |
+| Option B — Constant Amortization | 270,000.00 | **30,000.00** | 72,000.00 |
+| Option C — Bullet | 288,000.00 | 48,000.00 | **12,000.00** |
+
+**Recommendation for Lena:** The property will be vacant in Year 1, meaning no rental income to service the debt. The Bullet Loan (Option C) minimises the Year 1 cash outflow at only €12,000, preserving liquidity during the renovation phase — at the cost of €18,000 more in total interest compared to Option B. This is the classic CFO "matching" logic from Chapter 3: match the loan structure to the asset's cash flow profile. The bullet structure matches a temporarily cash-flow-negative investment. Alternative: Option A (annuity) is a reasonable middle ground if the family expects rental income to resume from Year 2.
+
+> **Discussion trap:** Some students will instinctively recommend Option B because it has the lowest total interest cost. Push back: "Can Lena afford €72,000 in Year 1 with zero rental income?" Force the liquidity vs. total cost trade-off.
+
+**Time: ~10 min**
+
+---
+
+## Aufgabe 4 — Bond & Stock Valuation
+
+### a) Bond Valuation
+
+$$P_0 = C \cdot PVIFA(YTM, n) + F \cdot (1 + YTM)^{-n}$$
+
+With $C = 40$, $YTM = 6\%$, $n = 6$, $F = 1{,}000$:
+
+$$PVIFA(6\%, 6) = \frac{1 - (1.06)^{-6}}{0.06} = \frac{1 - 0.70496}{0.06} = \frac{0.29504}{0.06} = 4.9173$$
+
+$$\text{PV of coupons} = 40 \times 4.9173 = \mathbf{€196.69}$$
+$$\text{PV of par value} = 1{,}000 \times (1.06)^{-6} = 1{,}000 \times 0.70496 = \mathbf{€704.96}$$
+
+$$\boxed{P_0 = 196.69 + 704.96 = \textbf{€901.65}}$$
+
+The bond trades at a **discount** (below par). **Why:** The bond pays a coupon of 4%, but the market now demands 6% for comparable risk. No rational investor pays par for an asset yielding 4% when they can earn 6% elsewhere. The price must fall until the combination of below-market coupons *plus* the capital gain from buying below par exactly equals a 6% total return. The €98.35 discount (€1,000 − €901.65) is that compensation mechanism.
+
+> **Common error:** Students confuse coupon rate (fixed, printed on the bond) with YTM (set by the market, varies daily). Reinforce: the coupon rate is the past; the YTM is the present.
+
+**Time: ~20 min**
+
+---
+
+### b) YTM Back-Calculation (Linear Interpolation)
+
+**Given:** F = €1,000, c = 5% (C = €50), n = 5 years, market price = €980.
+
+**Step 1:** Bracket with two trial rates.
+
+At $r_1 = 5\%$: Since coupon = YTM, bond trades at par → $P(5\%) = €1{,}000.00$
+
+At $r_2 = 6\%$:
+$$P(6\%) = 50 \times PVIFA(6\%, 5) + 1{,}000 \times (1.06)^{-5}$$
+$$= 50 \times 4.2124 + 1{,}000 \times 0.74726 = 210.62 + 747.26 = \mathbf{€957.88}$$
+
+**Step 2:** Apply Regula Falsi.
+
+$$YTM \approx r_1 + (r_2 - r_1) \cdot \frac{P(r_1) - P_{\text{target}}}{P(r_1) - P(r_2)}$$
+
+$$YTM \approx 5\% + 1\% \cdot \frac{1{,}000 - 980}{1{,}000 - 957.88} = 5\% + 1\% \cdot \frac{20}{42.12}$$
+
+$$\boxed{YTM \approx 5\% + 0.475\% = \textbf{5.475\%}}$$
+
+Accept answers in the range **5.4% – 5.5%** depending on rounding of P(6%).
+
+> **Common error:** Students sometimes set up the interpolation fraction upside-down. Teach the mnemonic: numerator = how far the *price* has moved from the lower-rate price to the target price; denominator = the total price distance between the two trial prices. The YTM moves proportionally.
+
+**Time: ~20 min**
+
+---
+
+### c) Stock Valuation — Gordon Growth Model
+
+$$D_1 = D_0 \times (1 + g) = 2.50 \times 1.03 = \mathbf{€2.575}$$
+
+$$P_0 = \frac{D_1}{r - g} = \frac{2.575}{0.08 - 0.03} = \frac{2.575}{0.05} = \boxed{\textbf{€51.50 per share}}$$
+
+Current market price: **€55.00** → The stock is **overvalued** by **€3.50 per share** (6.8% above intrinsic value).
+
+For the full holding: 400 shares × €3.50 = **€1,400 overvaluation**.
+
+> **Common error (D₀ trap):** Students frequently use D₀ = €2.50 in the numerator instead of D₁ = €2.575. Emphasise: the model prices the stock at $t = 0$ as the present value of *future* dividends — the first future dividend is $D_1$, which is one period of growth beyond the *last paid* dividend. Using D₀ undervalues the stock by the factor (1+g).
+
+> **Discussion prompt:** "Would you sell the shares?" There is no one right answer — the model assumes constant growth forever, which is a simplification. A student who argues market expectations have revised g upward deserves credit. The point is to interrogate the model's assumptions, not just calculate.
+
+**Time: ~20 min**
+
+---
+
+# Discussion Plan (Time Budget: 180 Minutes)
+
+| Phase | Content | Duration |
+|:------|:--------|:--------:|
+| Opening | Distribute case; students read independently. Brief framing: "Four envelopes, four tools." | 10 min |
+| Aufgabe 1 | FV calculation → Fisher equation (both forms) → algebraic rate isolation | 35 min |
+| Aufgabe 2 | PVIFA derivation + calculation → investment decision → CRF → perpetuity | 40 min |
+| Aufgabe 3 | Three amortization tables → comparison table → recommendation with liquidity argument | 50 min |
+| Aufgabe 4 | Bond price (discount/premium) → YTM interpolation → Gordon Growth Model | 35 min |
+| Synthesis | Instructor closes: all four tools are the same engine (PV/FV), applied to different cash flow shapes | 10 min |
+| **Total** | | **180 min** |
+
+**Buffer note:** Aufgabe 3 is the longest and most mechanical. If time is short, assign Option C (Bullet) as read-only rather than a computed table — students state the cash flows verbally. This saves ~5 minutes.
+
+---
+
+# Board Plan
+
+```
+LEFT PANEL — Formulas                    RIGHT PANEL — Results (built up live)
+─────────────────────────────────────    ────────────────────────────────────
+Ch.1:  FV = PV × (1+i)^n                A1a) FV = €608,326
+       r = i_nom − π (approx)            A1b) r_real ≈ −1.5% / exact −1.42%
+       r = (1+i)/(1+π) − 1 (exact)      A1c) i_req = 5.77%
+
+Ch.2:  PV = C × PVIFA(i,n)              A2a) PV = €932,376
+       PVIFA = [1−(1+i)^−n] / i         A2b) Worth buying ✓ (€32k surplus)
+       C = PV × CRF                      A2c) Mortgage = €82,370/yr
+       PV_∞ = C / i                      A2d) Perpetuity = €1,600,000
+
+Ch.3:  Scissors Effect diagram           A3 Comparison table (fill in live)
+
+Ch.4:  P = C×PVIFA + F×(1+r)^−n        A4a) Bond = €901.65 (discount)
+       YTM via interpolation             A4b) YTM ≈ 5.475%
+       P₀ = D₁ / (r − g)               A4c) Fair = €51.50 → overvalued €3.50
+```
+
+---
+
+# Instructor Alerts
+
+1. **The Fisher sign trap (A1b):** Students almost universally get the sign direction wrong on first attempt. Before they calculate, ask: "Given 10% inflation and 4% nominal — are you getting richer or poorer?" The intuition must precede the formula.
+
+2. **The D₀/D₁ distinction (A4c):** This is the single most common DDM error. Make it visceral: "Georg *already received* €2.50. That's gone. What will he receive *next year*? That's what you're buying." The stock price is the PV of what comes *after* today.
+
+3. **Annuity table rounding errors (A3):** When students compound rounding across 4 rows, the closing balance in Year 4 rarely hits exactly zero — it may be ±€1. Accept ±€2 as correct. More importantly, use this moment to demonstrate why professional models carry more decimal places.
+
+4. **Bullet loan liquidity appeal vs. total cost (A3d):** Students from finance backgrounds will often correctly identify Option C as the right choice for Year 1 liquidity. Students from accounting backgrounds may fixate on the €48k total interest as "expensive" and recommend Option B. Both positions are defensible if argued correctly — the goal is to see the trade-off, not to converge on one answer.

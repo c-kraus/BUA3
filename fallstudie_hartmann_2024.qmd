@@ -1,0 +1,153 @@
+---
+title: "The Hartmann Legacy"
+subtitle: "Investment Appraisal — Integrated Case Study (Chapters 1–4)"
+author: "BUA3 — Business Finance, THWS"
+date: last-modified
+lang: en
+format:
+  tutorial-typst
+---
+
+# The Hartmann Legacy
+
+It was a Tuesday morning in April 2024 when Lena Hartmann sat down at the long oak table in the Munich office of Hartmann Family Capital GmbH and opened the folder her father had left her. On the cover, in his careful handwriting: *"Für Lena — du machst das besser als ich."* She was 28, had just returned from completing her Master's in Finance in London, and was now — officially — responsible for managing the family's financial assets.
+
+The Hartmann family's wealth had come from a single event: in 2019, her father Georg had sold his precision engineering firm, Hartmann Präzisionsteile GmbH, for €3.8 million to a private equity group. After taxes and the settlement of corporate debt, approximately €2.1 million had been placed in the family office. Georg had made some cautious initial decisions before his retirement — a five-year fixed deposit, an offer on a commercial property, and some bond and equity positions — but had never completed the analysis. That work now fell to Lena.
+
+On the table in front of her were four envelopes, labelled in sequence.
+
+---
+
+## Envelope 1 — The Deposit
+
+In January 2019, Georg had invested **€500,000** in a five-year fixed-term deposit at Bayerische Volksbank at a nominal interest rate of **4.0% p.a.**, compounded annually. The deposit had now matured. The bank confirmation sat in Envelope 1, alongside a note Georg had scribbled: *"Check what this is actually worth in real terms — I suspect the inflation years ate most of the gain."*
+
+The German Statistical Office had published average annual CPI inflation of **5.5%** for the 2019–2024 period.
+
+Lena also found a separate handwritten instruction: she should reinvest **€200,000** of the proceeds towards a specific future goal. Georg wanted this sub-portfolio to reach **€280,000** in exactly **6 years** through annual compounding. He had left the rate blank with a question mark.
+
+**Anlage 1: Fixed Deposit — Summary**
+
+| Parameter | Value |
+|:----------|------:|
+| Principal invested (Jan 2019) | €500,000 |
+| Nominal interest rate | 4.0% p.a. |
+| Term | 5 years |
+| Compounding | Annual |
+| Average CPI inflation (2019–2024) | 5.5% p.a. |
+
+## Aufgabe 1 — Time Value & Real Returns
+
+a) Calculate the **future value** of the deposit at maturity (January 2024). Use the compound interest formula.
+
+b) Was Georg right to be suspicious? Calculate the **real interest rate** for the deposit period using both the approximation formula and the exact Fisher equation. Interpret the result.
+
+c) Lena wants to grow a **€200,000** sub-portfolio to **€280,000** over **6 years** through annual compounding. What **minimum annual compound interest rate** does she need? Solve algebraically.
+
+---
+
+## Envelope 2 — The Property
+
+In late 2023, a commercial property broker had approached Georg with an investment opportunity: a warehouse and logistics property in the Munich metropolitan area, fully let to a single tenant under a long-term lease. The annual net rental income — after maintenance costs and management fees — was contractually fixed at **€96,000 per year**, payable in arrears at the end of each year. The lease ran for a further **15 years**, after which the building would revert to the owner. The asking price was **€900,000**.
+
+Georg's question, which he had never answered, was scrawled on a sticky note inside Envelope 2: *"Worth it? And if we need a mortgage — what does it cost us each year?"*
+
+Should Lena decide to purchase, the family office would pay **€100,000** as a down payment and finance the remaining **€800,000** through a 15-year annuity mortgage at **6.0% p.a.**
+
+**Anlage 2: Property — Key Data**
+
+| Parameter | Value |
+|:----------|------:|
+| Asking price | €900,000 |
+| Net annual rental income | €96,000 |
+| Remaining lease term | 15 years |
+| Payment timing | End of year (ordinary annuity) |
+| Required return (discount rate) | 6.0% p.a. |
+| Proposed mortgage | €800,000 at 6.0% p.a., 15 years |
+
+## Aufgabe 2 — Annuities & Perpetuities
+
+a) Calculate the **Present Value of the rental income stream** using the appropriate annuity factor (PVIFA). Show your calculation of PVIFA(6%, 15) step by step.
+
+b) Based on your answer to (a): Is the property worth purchasing at the asking price of **€900,000**? Justify your answer in one sentence.
+
+c) Calculate the **annual mortgage payment** Lena would owe if the €800,000 loan were structured as an annuity mortgage at 6.0% over 15 years. Use the Capital Recovery Factor (CRF).
+
+d) An alternative scenario: suppose the lease had **no expiry date** and the €96,000 cash flow continued **forever**. What would be the present value under this assumption? What does the difference between this value and your answer to (a) reveal about the contribution of the terminal years to total value?
+
+---
+
+## Envelope 3 — The Renovation Loan
+
+Attached to the property papers was a second bank offer. If Lena purchased the property, she planned to invest **€240,000** in a full interior renovation to attract a better-quality tenant after the current lease expired. For this, Bayerische Volksbank had offered three alternative loan structures — all for the same amount, at the same rate, over the same term:
+
+- **Option A** — Annuity Loan (*Annuitätendarlehen*)
+- **Option B** — Constant Amortization Loan (*Ratentilgung*)
+- **Option C** — Bullet Loan (*Endfälliges Darlehen*)
+
+All three options: **€240,000 principal**, **5.0% p.a.**, **4-year term**.
+
+Lena needed to understand not just the mechanics, but the strategic implications: which structure best matched a property that was currently generating income but would be vacant and unrenovated for the first year of ownership?
+
+**Anlage 3: Renovation Loan — Parameters**
+
+| Parameter | Value |
+|:----------|------:|
+| Loan principal | €240,000 |
+| Interest rate | 5.0% p.a. |
+| Term | 4 years |
+| Options | A: Annuity / B: Constant Amortization / C: Bullet |
+
+## Aufgabe 3 — Loan Structures & Amortization
+
+a) **Option A — Annuity Loan:** Calculate the annual payment using the CRF. Then complete the full amortization table showing: opening balance, annuity, interest, principal repayment, and closing balance for each of the 4 years.
+
+b) **Option B — Constant Amortization Loan:** Calculate the fixed annual principal repayment. Then complete the full amortization table.
+
+c) **Option C — Bullet Loan:** Describe the payment structure. State the cash outflow for years 1–3 and year 4 separately.
+
+d) Complete the comparison table below. Which option would you recommend to Lena, given that the property will be vacant (no rental income) in Year 1 of the renovation phase? Justify your recommendation in two sentences.
+
+| Loan Type | Total Paid (€) | Total Interest (€) | Year 1 Outflow (€) |
+|:----------|---------------:|-------------------:|-------------------:|
+| Option A — Annuity | | | |
+| Option B — Constant Amortization | | | |
+| Option C — Bullet | | | |
+
+---
+
+## Envelope 4 — The Portfolio
+
+The final envelope contained the details of two existing financial positions in the family's investment account, both inherited from Georg's post-sale arrangements. Lena needed to decide whether to hold or liquidate each one.
+
+**Position 1 — A Corporate Bond**
+
+In 2021, Georg had purchased a corporate bond issued by a German logistics company. The bond had the following fixed terms: face value **€1,000**, annual coupon rate **4.0%** (paid annually, in arrears), and **6 years remaining to maturity**. Since Georg had purchased it, the market had changed: comparable bonds of similar credit quality now yielded **6.0% per year**.
+
+*"What is it worth today?"* — Georg's sticky note again.
+
+**Position 2 — An Equity Holding**
+
+Georg had also acquired 400 shares in a listed consumer goods company. The company had just paid its annual dividend of **€2.50 per share** (*D₀*). The family office's financial advisor estimated that the company would grow its dividend at a **steady rate of 3.0% per year indefinitely**, and that a fair required return for this type of stock was **8.0% per year**. The current market price was **€55.00 per share**.
+
+**Anlage 4: Portfolio Positions**
+
+| | Corporate Bond | Equity Holding |
+|:--|:--|:--|
+| Face Value / Holdings | €1,000 per bond | 400 shares |
+| Coupon Rate / Last Dividend | 4.0% p.a. | D₀ = €2.50 |
+| Maturity / Growth Assumption | 6 years remaining | g = 3.0% p.a. (perpetuity) |
+| Market Rate / Required Return | YTM = 6.0% | r = 8.0% p.a. |
+| Current Market Price | To be determined | €55.00 per share |
+
+## Aufgabe 4 — Bond & Stock Valuation
+
+a) **Bond Valuation:** Calculate the **fair market price** of the corporate bond. Decompose the price into its two components (PV of coupons + PV of par value). Does the bond trade at a **discount** or **premium**? Explain in one sentence *why* using the relationship between coupon rate and market YTM.
+
+b) **YTM Back-Calculation:** A second bond in Georg's notes has the following terms: face value **€1,000**, coupon rate **5.0%**, **5 years to maturity**, currently trading at a market price of **€980**. The YTM cannot be solved algebraically — use **linear interpolation (Regula Falsi)** with trial rates of **5%** and **6%** to estimate the YTM. Show all steps.
+
+c) **Stock Valuation (Gordon Growth Model):** Calculate the **intrinsic value** of the equity holding per share. Is the stock **overvalued or undervalued** at the current market price of €55.00? By how much (in €)?
+
+---
+
+Lena closed Envelope 4 and looked at the four stacks of paper spread across the oak table. She had the tools. She had the numbers. She had four hours, a calculator, and the quiet certainty that her father's question marks were about to become answers.
