@@ -13,15 +13,19 @@ local function inject_header(doc)
   local header_html = '<div id="custom-header">' .. svg_content .. '</div>\n' ..
     '<script>\n' ..
     '(function() {\n' ..
-    '  var h = document.getElementById("custom-header");\n' ..
-    '  var s = document.getElementById("quarto-margin-sidebar");\n' ..
+    '  var h  = document.getElementById("custom-header");\n' ..
     '  var qh = document.getElementById("quarto-header");\n' ..
+    '  var sL = document.getElementById("quarto-sidebar");\n' ..
+    '  var sR = document.getElementById("quarto-margin-sidebar");\n' ..
     '\n' ..
     '  function updatePositions() {\n' ..
     '    if (!h) return;\n' ..
     '    var thwsH = h.offsetHeight;\n' ..
     '    if (qh) qh.style.top = thwsH + "px";\n' ..
-    '    document.body.style.marginTop = (thwsH + (qh ? qh.offsetHeight : 0)) + "px";\n' ..
+    '    var totalH = thwsH + (qh ? qh.offsetHeight : 0);\n' ..
+    '    document.body.style.marginTop = totalH + "px";\n' ..
+    '    if (sL) sL.style.top = totalH + "px";\n' ..
+    '    if (sR) sR.style.top = totalH + "px";\n' ..
     '  }\n' ..
     '\n' ..
     '  updatePositions();\n' ..
@@ -29,7 +33,6 @@ local function inject_header(doc)
     '  window.onscroll = function() {\n' ..
     '    var scrolled = document.body.scrollTop > 50 || document.documentElement.scrollTop > 50;\n' ..
     '    h.classList.toggle("shrink", scrolled);\n' ..
-    '    if (s) s.classList.toggle("scrollmargin", scrolled);\n' ..
     '    requestAnimationFrame(updatePositions);\n' ..
     '  };\n' ..
     '})();\n' ..
