@@ -12,13 +12,28 @@ local function inject_header(doc)
 
   local header_html = '<div id="custom-header">' .. svg_content .. '</div>\n' ..
     '<script>\n' ..
-    'window.onscroll = function() {\n' ..
+    '(function() {\n' ..
     '  var h = document.getElementById("custom-header");\n' ..
     '  var s = document.getElementById("quarto-margin-sidebar");\n' ..
-    '  var scrolled = document.body.scrollTop > 50 || document.documentElement.scrollTop > 50;\n' ..
-    '  h.classList.toggle("shrink", scrolled);\n' ..
-    '  if (s) s.classList.toggle("scrollmargin", scrolled);\n' ..
-    '};\n' ..
+    '  var qh = document.getElementById("quarto-header");\n' ..
+    '\n' ..
+    '  function updateTop() {\n' ..
+    '    if (!qh || !h) return;\n' ..
+    '    h.style.top = Math.max(0, qh.getBoundingClientRect().bottom) + "px";\n' ..
+    '  }\n' ..
+    '\n' ..
+    '  if (qh) {\n' ..
+    '    updateTop();\n' ..
+    '    window.addEventListener("quarto-hrChanged", updateTop);\n' ..
+    '  }\n' ..
+    '\n' ..
+    '  window.onscroll = function() {\n' ..
+    '    var scrolled = document.body.scrollTop > 50 || document.documentElement.scrollTop > 50;\n' ..
+    '    h.classList.toggle("shrink", scrolled);\n' ..
+    '    if (s) s.classList.toggle("scrollmargin", scrolled);\n' ..
+    '    if (qh) updateTop();\n' ..
+    '  };\n' ..
+    '})();\n' ..
     '</script>\n'
 
   local header_block = pandoc.RawBlock("html", header_html)
