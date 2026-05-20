@@ -17,21 +17,20 @@ local function inject_header(doc)
     '  var s = document.getElementById("quarto-margin-sidebar");\n' ..
     '  var qh = document.getElementById("quarto-header");\n' ..
     '\n' ..
-    '  function updateTop() {\n' ..
-    '    if (!qh || !h) return;\n' ..
-    '    h.style.top = Math.max(0, qh.getBoundingClientRect().bottom) + "px";\n' ..
+    '  function updatePositions() {\n' ..
+    '    if (!h) return;\n' ..
+    '    var thwsH = h.offsetHeight;\n' ..
+    '    if (qh) qh.style.top = thwsH + "px";\n' ..
+    '    document.body.style.marginTop = (thwsH + (qh ? qh.offsetHeight : 0)) + "px";\n' ..
     '  }\n' ..
     '\n' ..
-    '  if (qh) {\n' ..
-    '    updateTop();\n' ..
-    '    window.addEventListener("quarto-hrChanged", updateTop);\n' ..
-    '  }\n' ..
+    '  updatePositions();\n' ..
     '\n' ..
     '  window.onscroll = function() {\n' ..
     '    var scrolled = document.body.scrollTop > 50 || document.documentElement.scrollTop > 50;\n' ..
     '    h.classList.toggle("shrink", scrolled);\n' ..
     '    if (s) s.classList.toggle("scrollmargin", scrolled);\n' ..
-    '    if (qh) updateTop();\n' ..
+    '    requestAnimationFrame(updatePositions);\n' ..
     '  };\n' ..
     '})();\n' ..
     '</script>\n'
@@ -39,7 +38,7 @@ local function inject_header(doc)
   local header_block = pandoc.RawBlock("html", header_html)
   local blocks = pandoc.List{header_block}
   blocks:extend(doc.blocks)
-  return pandoc.Pandoc(blocks, doc.meta)
+  return pandoc.Pandoc(pandoc.Blocks(blocks), doc.meta)
 end
 
 return { { Pandoc = inject_header } }
