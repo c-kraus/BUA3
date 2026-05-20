@@ -36,6 +36,12 @@ $_teal:       #005564;
 $_dark:       #343a40;
 $_light-grey: #e7e7e7;
 
+// Sidebars must sit below the fixed THWS header — set via JS custom property
+#quarto-sidebar,
+#quarto-margin-sidebar {
+  top: var(--sidebar-top, 85px) !important;
+}
+
 // Header Bar
 #custom-header {
   position: fixed;

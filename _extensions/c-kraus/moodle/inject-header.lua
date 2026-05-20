@@ -24,11 +24,15 @@ local function inject_header(doc)
     '    if (qh) qh.style.top = thwsH + "px";\n' ..
     '    var totalH = thwsH + (qh ? qh.offsetHeight : 0);\n' ..
     '    document.body.style.marginTop = totalH + "px";\n' ..
-    '    if (sL) sL.style.top = totalH + "px";\n' ..
-    '    if (sR) sR.style.top = totalH + "px";\n' ..
+    '    document.documentElement.style.setProperty("--sidebar-top", totalH + "px");\n' ..
     '  }\n' ..
     '\n' ..
-    '  updatePositions();\n' ..
+    '  if (document.readyState === "loading") {\n' ..
+    '    document.addEventListener("DOMContentLoaded", updatePositions);\n' ..
+    '  } else {\n' ..
+    '    updatePositions();\n' ..
+    '  }\n' ..
+    '  window.addEventListener("load", updatePositions);\n' ..
     '\n' ..
     '  window.onscroll = function() {\n' ..
     '    var scrolled = document.body.scrollTop > 50 || document.documentElement.scrollTop > 50;\n' ..
