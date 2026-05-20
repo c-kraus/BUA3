@@ -6,3 +6,6 @@
 __pycache__/
 /.luarc.json
 excalidraw.log
+
+**/*.quarto_ipynb
+*.pdf
