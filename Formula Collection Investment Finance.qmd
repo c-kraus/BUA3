@@ -63,6 +63,8 @@ This formula collection supports you during the Investment Finance lecture in th
 
 ## Fisher Equation
 
+> **Symbol note:** In this section only, $r$ denotes the **real interest rate**. Elsewhere in this collection, $r$ is used for IRR and Yield to Maturity.
+
 Approximate relationship between nominal rate, inflation, and real rate:
 
 $$ r \approx i_{nom} - \pi $$
@@ -188,6 +190,8 @@ A bond's price equals the present value of its coupon annuity plus the discounte
 $$ P_0 = C \cdot PVIFA(r,\,n) + F \cdot (1+r)^{-n} $$
 
 **Inverse problem — YTM from price (Linear Interpolation / Regula Falsi):**
+
+Choose $r_1$ and $r_2$ such that they bracket the true YTM: one rate must give $P(r_1) > P_0$ (rate below YTM) and the other $P(r_2) < P_0$ (rate above YTM).
 
 $$ r \approx r_1 + \frac{P(r_1) - P_0}{P(r_1) - P(r_2)} \cdot (r_2 - r_1) $$
 
