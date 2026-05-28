@@ -38,6 +38,10 @@ The case spans four methods presented in Chapters 5–8:
 
 **Part a) — NPV Calculation**
 
+Two solution paths are acceptable and should both be presented to students.
+
+**Method 1 — Individual discounting (year by year)**
+
 $$NPV = -300{,}000 + \frac{85{,}000}{1.10} + \frac{80{,}000}{1.10^2} + \frac{80{,}000}{1.10^3} + \frac{80{,}000}{1.10^4} + \frac{80{,}000}{1.10^5} + \frac{25{,}000}{1.10^5}$$
 
 | Year | Cash Flow (€) | Discount Factor | Present Value (€) |
@@ -51,6 +55,19 @@ $$NPV = -300{,}000 + \frac{85{,}000}{1.10} + \frac{80{,}000}{1.10^2} + \frac{80{
 | | | **Total PV** | **323,332** |
 
 $$NPV = 323{,}332 - 300{,}000 = \mathbf{+€\,23{,}332}$$
+
+**Method 2 — Annuity factor shortcut (PVIFA)**
+
+Years 1–5 share a uniform base payment of €80,000; only Year 1 carries an additional €5,000 above that base. The residual value is discounted separately. This decomposition allows a more compact calculation:
+
+$$NPV = -I_0 + \underbrace{80{,}000 \times PVIFA(10\%,5)}_{\text{uniform base, all 5 years}} + \underbrace{5{,}000 \times (1.10)^{-1}}_{\text{Year 1 premium}} + \underbrace{25{,}000 \times (1.10)^{-5}}_{\text{residual value}}$$
+
+$$PVIFA(10\%,5) = \frac{1-(1.10)^{-5}}{0.10} = \frac{1-0.6209}{0.10} = 3.7908$$
+
+$$NPV = -300{,}000 + 80{,}000 \times 3.7908 + 5{,}000 \times 0.9091 + 25{,}000 \times 0.6209$$
+$$= -300{,}000 + 303{,}264 + 4{,}545 + 15{,}523 = \mathbf{+€\,23{,}332}$$
+
+Both methods yield the same result. Method 2 is the more efficient path in exam conditions whenever the cash flow stream is uniform or near-uniform.
 
 NPV > 0 → The investment is worthwhile. The welding cell generates €23,332 of value above the 10% required return.
 
