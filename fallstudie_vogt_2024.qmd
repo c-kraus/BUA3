@@ -1,0 +1,145 @@
+---
+title: "Five Weeks to Decide"
+subtitle: "Investment Appraisal — Integrated Case Study (Chapters 5–8)"
+author: "BUA3 — Business Finance, THWS"
+date: last-modified
+lang: en
+format:
+  tutorial-typst
+---
+
+# Five Weeks to Decide
+
+It was a grey Monday morning in March 2024 when Clara Voss sat down for the first time at her uncle's desk. The chair was still adjusted for him — he was taller than she was. The factory was running; through the glass partition she could see the familiar machines cycling coupling housings through the assembly station, just as she had watched them as a child. Klaus Vogt had been in hospital for three weeks following a cardiac event. The supervisory board — her father Werner and her mother — had asked her to step in immediately. She had handed in her notice at Bosch the same day.
+
+**Vogt Antriebstechnik GmbH** in Würzburg had been founded by her father in 1986. The company manufactured flexible disc couplings and torque limiters for industrial drive systems — wind turbines, machine tools, automotive test rigs. One hundred and twenty employees, roughly €18 million in annual revenue, profitable for almost four decades. Her father had run it on intuition and handshake relationships; Klaus had continued in the same style. A formal capital budgeting process had never existed at Vogt.
+
+On her second day, a phone call changed everything. Solaris Drive Systems GmbH, a Munich-based supplier to battery assembly lines for three German EV manufacturers, wanted to place a five-year framework contract for 18,000 coupling units per year — roughly €4.2 million in annual revenue. The condition: written confirmation of sufficient production capacity by the end of April. The supervisory board meeting at which the investment programme had to be approved was in five weeks.
+
+In the centre drawer of Klaus's desk she found a dog-eared folder. On the cover, in Klaus's angular handwriting: *"Proposals and Preliminary Studies — please review, KV."* Inside: four investment dossiers in various stages of completion. The numbers were there. The calculations were not.
+
+---
+
+## Dossier 1 — The Welding Robot
+
+Vogt had always processed coupling housings manually and outsourced a substantial share of its welding work to contract manufacturers. In autumn 2023, Klaus had met with a Kuka Robotics sales representative and obtained a quote for an automated welding cell. The system would eliminate all outsourced welding and reduce annual labour costs in the assembly area. The production manager had estimated that the system "would pay for itself in under four years."
+
+The Kuka KR-280 welding cell — including delivery, installation, and commissioning — was quoted at **€300,000**, with a scheduled delivery of 1 January 2025. The useful life was estimated at **five years**. In Year 1, reduced output due to staff training and process adaptation would limit net cash inflows; from Year 2 the cell would operate at full capacity. At the end of its useful life, the cell could be sold for a residual value of **€25,000**. Vogt GmbH applied a cost of capital of **10% p.a.**
+
+**Exhibit 1: Welding Cell KR-280 — Cash Flow Summary**
+
+| Parameter | Value |
+|:----------|------:|
+| Initial investment (t = 0) | €300,000 |
+| Net cash inflow — Year 1 (ramp-up) | €85,000 |
+| Net cash inflow — Years 2–5 | €80,000 p.a. |
+| Residual value (end of Year 5) | €25,000 |
+| Cost of capital | 10% p.a. |
+
+## Task 1 — Net Present Value Analysis
+
+a) Calculate the **Net Present Value (NPV)** of the investment. Set out the calculation in full, discounting each year's cash flow and the residual value separately to t = 0. Is the investment worthwhile?
+
+b) The production manager claims the cell "pays for itself in under four years." Calculate the **exact simple payback period** (in years and months). Is the production manager correct?
+
+c) Why is the payback period, despite its simplicity, **not a reliable decision criterion**? State two conceptual weaknesses compared to the Net Present Value.
+
+---
+
+## Dossier 2 — Two Offers, One Machine
+
+For the precision turning of coupling flanges, Vogt needed a new CNC turn-mill centre. Klaus had obtained two proposals — one from Mazak, one from DMG Mori — and had placed the documents side by side without reaching a decision. Both machines performed the same task; both had a **three-year** useful life with no residual value. The critical difference was scale: Mazak offered a compact standard machine, DMG Mori a high-capacity system sized for the projected Solaris order volume.
+
+**Exhibit 2: CNC Turn-Mill Centres — Comparison**
+
+| Parameter | Mazak HD-200 | DMG Mori HL-800 |
+|:----------|-------------:|----------------:|
+| Initial investment (t = 0) | €150,000 | €900,000 |
+| Annual net cash inflow (Years 1–3) | €75,000 p.a. | €380,000 p.a. |
+| Useful life | 3 years | 3 years |
+| Residual value | €0 | €0 |
+| Cost of capital | 10% p.a. | 10% p.a. |
+
+## Task 2 — Internal Rate of Return and Investment Selection
+
+a) Calculate the **NPV of both machines** at i = 10%. Which machine does the NPV criterion favour?
+
+b) Estimate the **IRR of the Mazak HD-200** using linear interpolation (Regula Falsi) with trial rates of **i₁ = 23%** and **i₂ = 24%**. Show all steps.
+
+c) Estimate the **IRR of the DMG Mori HL-800** using linear interpolation with trial rates of **i₁ = 12%** and **i₂ = 13%**. Show all steps.
+
+d) Is there a conflict between the NPV and the IRR criterion? Explain in one sentence why this conflict arises **systematically** when comparing projects of different **scale**.
+
+e) Resolve the conflict using the **incremental investment approach** (*Differenzinvestitionsmethode*): calculate the NPV of the additional investment (HL-800 minus HD-200). Which machine should Clara recommend, and why?
+
+---
+
+## Dossier 3 — Short Life or Long Life?
+
+The third dossier concerned the hardening of coupling shafts. Vogt had always outsourced induction hardening. There were now two proposals for in-house induction hardening units — a compact entry-level system with a shorter service life, and a full industrial unit with higher capacity and longevity. The key difference: the two machines had **different useful lives**. The purchasing manager's note read: *"The compact unit is cheaper but only lasts three years. The industrial unit runs for six. Do we just take the one with the higher NPV?"*
+
+Clara raised an eyebrow. That was precisely the question where a straight NPV comparison could mislead.
+
+**Exhibit 3: Induction Hardening Units — Comparison**
+
+| Parameter | IH-35 (Compact) | IH-120 (Industrial) |
+|:----------|----------------:|--------------------:|
+| Initial investment | €100,000 | €300,000 |
+| Annual net cash inflow | €65,000 p.a. | €92,000 p.a. |
+| Useful life | 3 years | 6 years |
+| Residual value | €0 | €0 |
+| Cost of capital | 10% p.a. | 10% p.a. |
+
+*Assumption: the IH-35 can be replaced at the end of Year 3 by an identical successor unit on equivalent terms.*
+
+## Task 3 — Annuity Method and Optimal Investment Horizon
+
+a) Calculate the **NPV of both units** at i = 10%. Which unit does a naive NPV comparison favour?
+
+b) Calculate the **Capital Recovery Factor (CRF)** for three and for six years at i = 10%. Then calculate the **annual value (annuity)** *d* for each unit.
+
+c) Which unit does the Annuity Method favour? Why does this result differ from the pure NPV comparison?
+
+d) State in **two sentences** the critical condition under which the Annuity Method is valid. Under what circumstances would a direct NPV comparison be appropriate instead?
+
+---
+
+## Dossier 4 — The Filed-Away Decision
+
+At the very bottom of the folder was a sheet stamped *"On hold — not worthwhile."* In the summer of 2023, Klaus had reviewed a proposal for a plasma cutting system that would allow Vogt to cut steel plates for coupling flanges in-house rather than outsourcing. His note read: *"NPV negative at 25% — do not pursue."*
+
+Clara looked back at the calculation. The 25% discount rate was correct — the Vogt family had access to alternative investments yielding returns at that level. But one line in Klaus's analysis was missing: the tax dimension. Vogt GmbH applied a combined effective tax rate of **s = 40%**, comprising corporate income tax, solidarity surcharge, trade tax, and the proportionate income tax burden at shareholder level. Depreciation and interest were tax-deductible. The **Kruschwitz Standard Tax Model** required two adjustments: one to the cash flows, and one to the discount rate.
+
+Perhaps Klaus had filed away the wrong answer.
+
+**Exhibit 4: Plasma Cutting System ProCut-500**
+
+| Parameter | Value |
+|:----------|------:|
+| Initial investment (t = 0) | €500,000 |
+| Annual pre-tax net cash inflow | €135,000 p.a. |
+| Useful life | 10 years |
+| Residual value | €0 |
+| Annual depreciation (straight-line, full useful life) | €50,000 p.a. |
+| Pre-tax discount rate | 25% p.a. |
+| Effective tax rate | 40% |
+
+## Task 4 — Investment Appraisal with Taxes (Standard Tax Model)
+
+a) Calculate the **pre-tax NPV** at i = 25%. Confirm Klaus's assessment.
+
+b) Apply the **Kruschwitz Standard Tax Model** to adjust the inputs:
+   - Calculate the **after-tax cash flow** ($CF_{after} = CF_{before} \cdot (1-s) + D_t \cdot s$).
+   - Calculate the **after-tax discount rate** ($i_{after} = i_{before} \cdot (1-s)$).
+
+c) Calculate the **after-tax NPV**. Has the investment recommendation changed?
+
+d) Two opposing tax effects act simultaneously on the NPV. Describe each in one sentence and explain why one dominates in this case. What name does the Standard Tax Model give to a situation where a project that fails before taxes passes after taxes?
+
+---
+
+Clara set down her pen and looked at the four stacks of paper spread across the desk. The call from Solaris still echoed: *"Capacity confirmation by end of April — or we go to Schäfer in Schweinfurt."*
+
+Five weeks. Four decisions. All the numbers were there.
+
+She reached for her calculator.

@@ -1,0 +1,303 @@
+---
+title: "Teaching Note: Five Weeks to Decide"
+subtitle: "Confidential — For Instructors Only"
+author: "BUA3 — Business Finance, THWS"
+date: last-modified
+lang: en
+format:
+  handout-typst
+---
+
+# Learning Objectives
+
+After completing this case, students should be able to:
+
+1. Calculate the Net Present Value of an investment with uneven cash flows and a residual value, and articulate why payback period is conceptually inferior.
+2. Estimate the IRR using the Regula Falsi interpolation method, identify a scale-induced NPV/IRR conflict, and resolve it through the incremental investment approach.
+3. Apply the Annuity Method to compare projects of unequal duration and state the repeatability condition that makes the comparison valid.
+4. Apply the Kruschwitz Standard Tax Model to adjust after-tax cash flows and the after-tax discount rate, and recognise the Tax Paradox when it occurs.
+
+# Synopsis
+
+Clara Voss takes over Vogt Antriebstechnik GmbH in Würzburg under time pressure: a lucrative five-year supply contract with an EV manufacturer is contingent on a production capacity commitment within five weeks. Her predecessor left four unfinished investment dossiers. Each dossier introduces one capital budgeting method — NPV, IRR, Annuity Method, and the Standard Tax Model — in a context where the method's specific advantage over simpler alternatives is directly apparent.
+
+# Theoretical Framework
+
+The case spans four methods presented in Chapters 5–8:
+
+- **Chapter 5 (Task 1):** Net Present Value as the primary decision criterion; payback period as a foil.
+- **Chapter 6 (Task 2):** IRR and its Regula Falsi estimation; the scale problem and the incremental investment (*Differenzinvestition*) resolution.
+- **Chapter 7 (Task 3):** The Annuity Method for projects with unequal lifespans; the repeatability assumption.
+- **Chapter 8 (Task 4):** The Kruschwitz Standard Tax Model — Volume Effect and Interest Effect; the Tax Paradox (*Steuerparadoxon*).
+
+---
+
+# Full Model Solutions
+
+## Task 1 — Net Present Value Analysis
+
+**Part a) — NPV Calculation**
+
+$$NPV = -300{,}000 + \frac{85{,}000}{1.10} + \frac{80{,}000}{1.10^2} + \frac{80{,}000}{1.10^3} + \frac{80{,}000}{1.10^4} + \frac{80{,}000}{1.10^5} + \frac{25{,}000}{1.10^5}$$
+
+| Year | Cash Flow (€) | Discount Factor | Present Value (€) |
+|:----:|-------------:|:---------------:|------------------:|
+| 1 | 85,000 | $(1.10)^{-1}$ | 77,273 |
+| 2 | 80,000 | $(1.10)^{-2}$ | 66,116 |
+| 3 | 80,000 | $(1.10)^{-3}$ | 60,105 |
+| 4 | 80,000 | $(1.10)^{-4}$ | 54,641 |
+| 5 | 80,000 | $(1.10)^{-5}$ | 49,674 |
+| 5 | 25,000 (L₅) | $(1.10)^{-5}$ | 15,523 |
+| | | **Total PV** | **323,332** |
+
+$$NPV = 323{,}332 - 300{,}000 = \mathbf{+€\,23{,}332}$$
+
+NPV > 0 → The investment is worthwhile. The welding cell generates €23,332 of value above the 10% required return.
+
+**Part b) — Payback Period**
+
+Cumulative undiscounted cash flows:
+
+| End of Year | Annual CF (€) | Cumulative CF (€) |
+|:-----------:|-------------:|-----------------:|
+| 1 | 85,000 | 85,000 |
+| 2 | 80,000 | 165,000 |
+| 3 | 80,000 | 245,000 |
+| 4 | 80,000 | 325,000 |
+
+After Year 3: €55,000 still unrecovered (300,000 − 245,000). Year 4 CF = €80,000.
+
+$$\text{Payback} = 3 + \frac{55{,}000}{80{,}000} = 3.69 \text{ years} \approx \textbf{3 years and 8 months}$$
+
+The production manager's statement ("under four years") is technically correct as a rough approximation.
+
+**Part c) — Weaknesses of Payback**
+
+1. **Ignores the time value of money**: All cash flows before the cutoff are treated as equivalent regardless of when they occur. A €80,000 cash flow in Year 4 is treated the same as one in Year 1.
+2. **Ignores all cash flows after the cutoff**: The €25,000 residual value and Year 5 operating cash flow contribute nothing to the payback measure, even though they contribute €65,197 in present-value terms. Longer-lived projects are systematically penalised.
+
+**Common errors:** Students sometimes include the residual value in the payback calculation or attempt a discounted payback. Either approach is acceptable if clearly labelled, but the question asks for the simple static version.
+
+**Discussion prompts:** "If two machines both pay back in Year 3, does that mean they're equally good?" (No — size and post-payback cash flows can differ enormously.) "What type of firm might rationally prefer payback to NPV?" (Liquidity-constrained firms or start-ups with high survival uncertainty.)
+
+**Time allocation:** approx. 15 minutes.
+
+---
+
+## Task 2 — Internal Rate of Return and Investment Selection
+
+**Part a) — NPV at 10%**
+
+$$PVIFA(10\%,3) = \frac{1-(1.10)^{-3}}{0.10} = \frac{1-0.7513}{0.10} = 2.4869$$
+
+$$NPV_A = 75{,}000 \times 2.4869 - 150{,}000 = 186{,}517 - 150{,}000 = \mathbf{+€\,36{,}517}$$
+
+$$NPV_B = 380{,}000 \times 2.4869 - 900{,}000 = 945{,}022 - 900{,}000 = \mathbf{+€\,45{,}022}$$
+
+NPV criterion: **choose Machine B** (higher absolute NPV).
+
+**Part b) — IRR of Machine A (Mazak HD-200)**
+
+At $i_1 = 23\%$:
+$$PVIFA(23\%,3) = \frac{1-(1.23)^{-3}}{0.23} = \frac{1-0.5374}{0.23} = 2.0114$$
+$$NPV_A(23\%) = 75{,}000 \times 2.0114 - 150{,}000 = 150{,}855 - 150{,}000 = +€\,855$$
+
+At $i_2 = 24\%$:
+$$PVIFA(24\%,3) = \frac{1-(1.24)^{-3}}{0.24} = \frac{1-0.5245}{0.24} = 1.9815$$
+$$NPV_A(24\%) = 75{,}000 \times 1.9815 - 150{,}000 = 148{,}613 - 150{,}000 = -€\,1{,}387$$
+
+Regula Falsi:
+$$IRR_A \approx 23\% + \frac{855}{855 + 1{,}387} \times 1\% = 23\% + 0.38\% \approx \mathbf{23.4\%}$$
+
+**Part c) — IRR of Machine B (DMG Mori HL-800)**
+
+At $i_1 = 12\%$:
+$$PVIFA(12\%,3) = \frac{1-(1.12)^{-3}}{0.12} = \frac{1-0.7118}{0.12} = 2.4018$$
+$$NPV_B(12\%) = 380{,}000 \times 2.4018 - 900{,}000 = 912{,}684 - 900{,}000 = +€\,12{,}684$$
+
+At $i_2 = 13\%$:
+$$PVIFA(13\%,3) = \frac{1-(1.13)^{-3}}{0.13} = \frac{1-0.6931}{0.13} = 2.3612$$
+$$NPV_B(13\%) = 380{,}000 \times 2.3612 - 900{,}000 = 897{,}256 - 900{,}000 = -€\,2{,}744$$
+
+Regula Falsi:
+$$IRR_B \approx 12\% + \frac{12{,}684}{12{,}684 + 2{,}744} \times 1\% = 12\% + 0.82\% \approx \mathbf{12.8\%}$$
+
+**Part d) — The Conflict**
+
+Summary:
+
+| Machine | NPV at 10% | IRR |
+|:--------|----------:|----:|
+| Mazak HD-200 (A) | +€36,517 | 23.4% |
+| DMG Mori HL-800 (B) | +€45,022 | 12.8% |
+
+**Conflict:** IRR favours A (23.4% > 12.8%); NPV favours B (€45,022 > €36,517).
+
+This conflict arises systematically when project scale differs: IRR measures *efficiency* (return per euro invested) and favours small, lean projects; NPV measures *absolute wealth created* and favours large projects when the incremental capital also clears the hurdle rate.
+
+**Part e) — Incremental Investment**
+
+The question is: is the extra €750,000 committed to Machine B (versus A) a worthwhile investment?
+
+$$\Delta I_0 = 900{,}000 - 150{,}000 = €\,750{,}000$$
+$$\Delta CF = 380{,}000 - 75{,}000 = €\,305{,}000 \text{ p.a.}$$
+
+$$NPV(\Delta) = 305{,}000 \times 2.4869 - 750{,}000 = 758{,}505 - 750{,}000 = \mathbf{+€\,8{,}505}$$
+
+The incremental investment creates positive NPV → the additional capital committed to Machine B is worthwhile. **Recommendation: choose Machine B (DMG Mori HL-800).**
+
+Note for instructor: NPV(B − A) = NPV(B) − NPV(A) = 45,022 − 36,517 = 8,505 ✓ — a useful cross-check to offer the class.
+
+**Common errors:** Students often stop at part (d) and conclude "Machine A wins because its IRR is higher." The incremental analysis step is the critical insight. Also: students sometimes interpret the Regula Falsi result as exact. Emphasise it is an approximation — the true IRR of A is 23.38%, the approximation gives 23.4%.
+
+**Discussion prompts:** "If Machine B's IRR is only 12.8% and our cost of capital is 10%, does that mean B barely earns its keep?" (No — it earns 12.8%, well above 10%, on €900k.) "When would IRR and NPV give the same ranking?" (When both projects have the same scale, or when comparing a project against the hurdle rate in isolation.)
+
+**Time allocation:** approx. 25 minutes.
+
+---
+
+## Task 3 — Annuity Method and Optimal Investment Horizon
+
+**Part a) — NPV Comparison**
+
+$$PVIFA(10\%,3) = 2.4869 \quad;\quad PVIFA(10\%,6) = \frac{1-(1.10)^{-6}}{0.10} = \frac{1-0.5645}{0.10} = 4.3553$$
+
+$$NPV_X = 65{,}000 \times 2.4869 - 100{,}000 = 161{,}649 - 100{,}000 = \mathbf{+€\,61{,}649}$$
+
+$$NPV_Y = 92{,}000 \times 4.3553 - 300{,}000 = 400{,}688 - 300{,}000 = \mathbf{+€\,100{,}688}$$
+
+Raw NPV favours Unit Y (IH-120 Industrial).
+
+**Part b) — CRF and Annual Values**
+
+$$CRF(10\%,3) = \frac{0.10 \times (1.10)^3}{(1.10)^3 - 1} = \frac{0.10 \times 1.3310}{0.3310} = \frac{0.1331}{0.3310} = 0.4021$$
+
+$$CRF(10\%,6) = \frac{0.10 \times (1.10)^6}{(1.10)^6 - 1} = \frac{0.10 \times 1.7716}{0.7716} = \frac{0.17716}{0.7716} = 0.2296$$
+
+$$d_X = NPV_X \times CRF(10\%,3) = 61{,}649 \times 0.4021 = \mathbf{€\,24{,}789 \text{ per year}}$$
+
+$$d_Y = NPV_Y \times CRF(10\%,6) = 100{,}688 \times 0.2296 = \mathbf{€\,23{,}118 \text{ per year}}$$
+
+**Part c) — The Conflict and Resolution**
+
+| Unit | Useful Life | NPV | Annual Value *d* |
+|:-----|:-----------:|----:|-----------------:|
+| IH-35 (X) | 3 years | +€61,649 | **+€24,789/yr** |
+| IH-120 (Y) | 6 years | **+€100,688** | +€23,118/yr |
+
+NPV favours Y; Annuity Method favours X.
+
+The divergence occurs because Unit Y runs for twice as long, naturally accumulating more total present value. However, this does not mean Y creates *more value per year*. The IH-35, replaceable every 3 years, generates €24,789 of excess return annually — more than the €23,118 of the IH-120. Under the repeatability assumption, the IH-35 chain creates more total value over any common horizon. **Recommendation: choose Unit X (IH-35).**
+
+**Part d) — Validity Condition**
+
+The Annuity Method is valid only when the *shorter project can be repeated on identical terms* at the end of its useful life — same investment cost, same cash flows, same useful life (the repeatability assumption). If the IH-35 cannot be replaced on equivalent terms in Year 4 (e.g., the supplier discontinues the model, or input costs rise), the comparison is invalid. In that case, a direct NPV comparison is appropriate — treating each project as a one-time, non-repeatable opportunity.
+
+**Common errors:** Students sometimes calculate $d = CF \times CRF$ instead of $d = NPV \times CRF$. The annuity *d* is the spread of the *excess* NPV, not the total cash flows. Also: students may not state the repeatability assumption explicitly and simply assert that X is better — the condition is an examinable point.
+
+**Discussion prompts:** "What if the IH-35 is discontinued in Year 4? Does that change your answer?" "What if the IH-120 had a useful life of 4 years instead of 6 — would you still need the Annuity Method?"
+
+**Time allocation:** approx. 20 minutes.
+
+---
+
+## Task 4 — Investment Appraisal with Taxes (Standard Tax Model)
+
+**Part a) — Pre-Tax NPV**
+
+$$PVIFA(25\%,10) = \frac{1-(1.25)^{-10}}{0.25} = \frac{1-0.1074}{0.25} = \frac{0.8926}{0.25} = 3.5705$$
+
+$$NPV_{before} = 135{,}000 \times 3.5705 - 500{,}000 = 482{,}018 - 500{,}000 = \mathbf{-€\,17{,}982}$$
+
+Klaus's assessment is confirmed: the investment fails before taxes.
+
+**Part b) — Standard Tax Model Adjustments**
+
+**Volume Effect — adjusting cash flows:**
+$$CF_{after} = 135{,}000 \times (1-0.40) + 50{,}000 \times 0.40 = 81{,}000 + 20{,}000 = \mathbf{€\,101{,}000 \text{ p.a.}}$$
+
+The €50,000 annual depreciation generates a *Depreciation Tax Shield* of €20,000 per year — taxes saved because depreciation reduces taxable profit.
+
+**Interest Effect — adjusting the discount rate:**
+$$i_{after} = 25\% \times (1-0.40) = 25\% \times 0.60 = \mathbf{15\%}$$
+
+The 40% tax rate makes debt financing cheaper: of every €1 of interest paid, the state effectively subsidises €0.40 by forgoing tax revenue on that amount.
+
+**Part c) — After-Tax NPV**
+
+$$PVIFA(15\%,10) = \frac{1-(1.15)^{-10}}{0.15} = \frac{1-0.2472}{0.15} = \frac{0.7528}{0.15} = 5.0188$$
+
+$$NPV_{after} = 101{,}000 \times 5.0188 - 500{,}000 = 506{,}899 - 500{,}000 = \mathbf{+€\,6{,}899}$$
+
+**The investment recommendation has reversed.** A project that failed before taxes passes after taxes.
+
+**Part d) — The Tax Paradox**
+
+Two effects act in opposite directions:
+
+- **Volume Effect**: Taxes reduce after-tax cash flows (from €135,000 to €101,000), shrinking the NPV numerator and pulling NPV *down*.
+- **Interest Effect**: Tax-deductible interest reduces the effective discount rate (from 25% to 15%), inflating the present value of every future cash flow and pushing NPV *up*.
+
+In this case, the pre-tax discount rate is high (25%), creating a large Interest Tax Shield base. The ten-year project life allows this lower discount rate to compound across many periods. The Interest Effect dominates, converting a negative pre-tax NPV into a positive after-tax NPV.
+
+This is the **Tax Paradox** (*Steuerparadoxon*): a project that destroys value before taxes creates value because of them.
+
+**Common errors:** Students frequently forget to add the Depreciation Tax Shield ($D_t \cdot s$) to the after-tax cash flow — they calculate only $CF \times (1-s)$. This is the single most common numerical error in this topic. Also: students sometimes apply the tax adjustment to the NPV itself rather than to the cash flows and discount rate separately.
+
+**Discussion prompts:** "Does this mean Klaus was wrong?" (He applied the correct method but incomplete inputs — a common failure in practice.) "What would a manager do with this result — simply invest because NPV_after > 0?" (Ideally, yes — but they should also verify the 40% effective rate assumption is accurate, since the result is sensitive to it.) "What happens to the Tax Paradox if the tax rate rises?" (The Interest Effect grows, making the paradox more likely — higher s → lower $i_{after}$ → larger denominator effect.)
+
+**Time allocation:** approx. 20 minutes.
+
+---
+
+# Discussion Plan (90-Minute Session)
+
+| Phase | Content | Duration |
+|:------|:--------|--------:|
+| Opening | Cold-start question: "Werner Vogt ran this company for 35 years without a capital budgeting process. What's the cost of that?" Introduce Clara and the Solaris contract. | 10 min |
+| Task 1 | NPV calculation; payback comparison; class votes on "pay back in 4 years — good enough?" | 15 min |
+| Task 2 | IRR calculations; reveal the conflict; vote on which machine; incremental analysis reversal | 25 min |
+| Task 3 | Annuity Method; reveal the NPV/annuity conflict; discuss repeatability assumption | 20 min |
+| Task 4 | Standard Tax Model; reveal the Tax Paradox; discuss Volume vs. Interest Effect | 20 min |
+| Synthesis | Return to opening question: what would Klaus have decided with these tools? What would Werner? | 10 min |
+| **Total** | | **100 min** |
+
+*Note: With a fast cohort, Task 1 can be shortened to 10 minutes, giving a 90-minute total. With a slower cohort, Task 2 is the one to compress — parts b) and c) can be demonstrated rather than discussed.*
+
+---
+
+# Board Plan
+
+```
+LEFT PANEL                    CENTRE PANEL               RIGHT PANEL
+
+Task 1 — NPV                  Task 3 — Annuity            Task 4 — Taxes
+─────────────────             ──────────────────          ─────────────────
+CF₁ = 85,000 / 1.10           NPV_X = +61,649             Before: i=25%
+CF₂ = 80,000 / 1.21           NPV_Y = +100,688            NPV = −17,982
+...                           ─ ─ ─ ─ ─ ─ ─ ─ ─          ↓ two effects
+L₅  = 25,000 / 1.61           d_X = 61,649 × 0.4021       CF_after = 81k+20k
+────────────────              d_Y = 100,688 × 0.2296       i_after = 15%
+Total PV = 323,332            d_X > d_Y → choose X        NPV = +6,899
+NPV = +23,332                                              TAX PARADOX ✓
+
+Task 2 — IRR & Scale
+─────────────────────────────────────────────────────────
+         │    NPV at 10%  │   IRR    │ Verdict
+  Mazak A │   +36,517     │  23.4%   │ IRR: A wins
+  DMG B   │   +45,022     │  12.8%   │ NPV: B wins
+  ─────── │ ─────────── ─ │─ ───── ─ │────────────
+  Δ(B−A)  │   + 8,505     │ ~10.6%   │ → Choose B
+```
+
+---
+
+# Instructor Alerts
+
+1. **Task 2, part e) is the intellectual centrepiece** — many students will answer "Machine A" after computing the IRRs and consider the task done. Resist the urge to correct them immediately; let the class argue it out. The incremental analysis only makes sense if students first feel the pull of the higher-percentage argument.
+
+2. **Task 3 requires the repeatability assumption to be stated, not just assumed** — if a student concludes "choose X" without explicitly noting the condition, push back: "What if Kuka discontinues the IH-35?" Examinable in written assessments.
+
+3. **Task 4's most common numerical trap** — the Depreciation Tax Shield ($D_t \times s = 50,000 \times 0.4 = €20,000$) is additive to the after-tax operating cash flow. Students who only compute $CF \times (1-s) = €81,000$ will obtain a negative after-tax NPV and miss the Tax Paradox entirely. Worth flagging before the exercise.
+
+4. **The 40% effective tax rate** — the case justifies this as a combined rate including shareholder-level income tax. Some students in practice-oriented programmes will challenge this. A clean response: the Standard Tax Model's purpose is to show the *mechanism* and *direction* of tax effects; the exact rate is a calibration choice that does not change the conceptual structure.
