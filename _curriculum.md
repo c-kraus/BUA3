@@ -246,7 +246,7 @@ BUA3/
 ## Open Items (to confirm with author)
 
 - **Ch. 10 vs. Doughnut:** confirm with the colleague where the Doughnut Economics unit sits and what it assumes from Chapter 10 (Ch. 10 ends with a one-sentence bridge only).
-- **Hartmann case:** assumes average CPI inflation of 5.5% for 2019–2024 and a 4% deposit rate in 2019 — both look too high for Germany; check.
+- ~~**Hartmann case:** CPI 5.5% / deposit rate 4% too high~~ → fixed 2026-10-30: Destatis CPI 2019–2023 (avg. 3.5%), deposit rate 1.0%; renovation moved to the empty Freising office building; Task 3e (PV at loan rate) added.
 - **Vogt case:** extended 2026-10-30 — Tasks 5 (risk, Ch. 9) and 6 (debiasing, Ch. 10) on the welding cell, epilogue linking the chapter episodes; teaching note lists which Vogt episodes the chapters already solve. Old tax-shield explanation in Task 4 corrected.
 - **Exam question bank:** 10 questions, Ch. 1–5 only; Ch. 6–10 have none yet.
 - **Reference list:** chapters cite author–year (Fisher 1930, Samuelson 1964, Flyvbjerg …) but the book has no bibliography.

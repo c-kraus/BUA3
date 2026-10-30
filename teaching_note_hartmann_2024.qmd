@@ -1,6 +1,6 @@
 ---
 title: "Teaching Note: The Hartmann Legacy"
-subtitle: "Vertraulich — nur für Lehrende"
+subtitle: "Confidential — For Instructors Only"
 author: "BUA3 — Business Finance, THWS"
 date: last-modified
 lang: en
@@ -15,50 +15,58 @@ After completing this case session, students will be able to:
 1. Apply the compound interest formula to calculate future values and isolate unknown interest rates algebraically.
 2. Use the Fisher equation to distinguish nominal from real returns and identify negative real rates.
 3. Value a finite annuity stream using PVIFA and size a loan using the CRF; interpret the limit case (perpetuity).
-4. Build complete amortization tables for all three standard loan types and compare them on total cost and liquidity profile.
+4. Build complete amortization tables for all three standard loan types, explain why total interest is not a cost measure (all three have the same present value at the loan rate), and choose a structure by its fit with the asset's cash flows.
 5. Price a bond as PV(coupons) + PV(par) and explain the discount/premium logic; estimate YTM via linear interpolation.
 6. Apply the Gordon Growth Model to value a dividend-paying stock and assess over/undervaluation.
 
 # Synopsis
 
-The Hartmann Family Office has inherited four unresolved financial questions from the retiring founder. A newly returned daughter, Lena, must work through each in sequence: valuing a matured deposit in real terms, deciding whether a commercial property is worth its asking price and how to finance it, comparing three loan structures for a renovation project, and evaluating two portfolio positions (a bond and a stock). The case integrates Chapters 1–3 of BUA3 in a single coherent narrative.
+The Hartmann Family Office has inherited four unresolved financial questions from the retiring founder. A newly returned daughter, Lena, must work through each in sequence: valuing a matured deposit in real terms, deciding whether a commercial property is worth its asking price and how to finance it, comparing three loan structures for renovating an empty office building, and evaluating two portfolio positions (a bond and a stock). The case integrates Chapters 1–3 of BUA3 in a single coherent narrative.
 
 # Theoretical Framework
 
 | Task | Chapter | Core Concept |
 |:-----|:-------:|:-------------|
-| Aufgabe 1 | 1 | Compound interest, Future Value, Fisher Equation, algebraic rate isolation |
-| Aufgabe 2 | 2 | PVIFA, CRF, perpetuity, Gordon model precursor |
-| Aufgabe 3 | 3 | Three loan types, amortization mechanics, liquidity vs. total cost trade-off |
-| Aufgabe 4 | 3 | Bond valuation (discount/premium), YTM interpolation, DDM/Gordon Growth Model |
+| Task 1 | 1 | Compound interest, Future Value, Fisher Equation, algebraic rate isolation |
+| Task 2 | 2 | PVIFA, CRF, perpetuity, Gordon model precursor |
+| Task 3 | 3 | Three loan types, amortization mechanics, why total interest is the wrong yardstick, matching principle |
+| Task 4 | 3 | Bond valuation (discount/premium), YTM interpolation, DDM/Gordon Growth Model |
 
 ---
 
 # Full Model Solutions
 
-## Aufgabe 1 — Time Value & Real Returns
+## Task 1 — Time Value & Real Returns
 
 ### a) Future Value of the Deposit
 
-$$FV = PV \cdot (1 + i)^n = 500{,}000 \cdot (1.04)^5$$
+$$FV = PV \cdot (1 + i)^n = 500{,}000 \cdot (1.01)^5$$
 
-$(1.04)^5 = 1.21665$
+$(1.01)^5 = 1.051010$
 
-$$\boxed{FV = 500{,}000 \times 1.21665 = \textbf{€608,326.45}}$$
+$$\boxed{FV = 500{,}000 \times 1.051010 = \textbf{€525,505.03}}$$
+
+Nominal interest earned over five years: €25,505.03.
 
 ### b) Real Interest Rate
 
 **Approximation (Fisher shortcut):**
 
-$$r \approx i_{nom} - \pi = 4.0\% - 5.5\% = \textbf{-1.5\%}$$
+$$r \approx i_{nom} - \pi = 1.0\% - 3.5\% = \textbf{-2.5\%}$$
 
 **Exact Fisher Equation:**
 
-$$r = \frac{1 + i_{nom}}{1 + \pi} - 1 = \frac{1.04}{1.055} - 1 = 0.98578 - 1 = \textbf{-1.422\%}$$
+$$r = \frac{1 + i_{nom}}{1 + \pi} - 1 = \frac{1.01}{1.035} - 1 = 0.97585 - 1 = \textbf{-2.415\%}$$
 
-**Interpretation:** Despite earning 4% nominally, Georg's purchasing power *fell* by approximately 1.4% per year. The real return was negative — the deposit grew in euros, but those euros bought less each year than the ones he had deposited. This mirrors the 2019–2024 European inflation shock discussed in Chapter 1 (Turkey case analogy).
+**Value in January 2019 prices** (deflating with $\pi$, Chapter 1):
 
-> **Common error:** Students often compute inflation − nominal rate = +1.5%, reversing the sign. The real rate is what remains *after* deducting inflation from the nominal rate. A negative real rate means you are losing purchasing power even while the account balance grows.
+$$\frac{FV}{(1+\pi)^5} = \frac{525{,}505.03}{1.035^5} = \frac{525{,}505.03}{1.187686} = \textbf{€442,461}$$
+
+**Interpretation:** Georg was right. Despite earning 1% nominally, his purchasing power *fell* by about 2.4% per year. The account grew by €25,505, but the €525,505 of 2024 buy only what €442,461 bought in 2019 — a real loss of about €57,500, or 11.5% of the original purchasing power. It is the euro-area saver of Chapter 1 in a milder form: a positive nominal rate, a clearly negative real one.
+
+> **Data note:** The 3.5% is the geometric mean of the Destatis annual CPI rates 2019–2023 (1.4%, 0.5%, 3.1%, 6.9%, 5.9%): $(1.014 \cdot 1.005 \cdot 1.031 \cdot 1.069 \cdot 1.059)^{1/5} - 1 = 3.53\%$. Strong groups can be asked to verify this from the case text — the arithmetic mean (3.56%) is close here, but the geometric mean is the correct average for compounding rates.
+
+> **Common error:** Students often compute inflation − nominal rate = +2.5%, reversing the sign. The real rate is what remains *after* deducting inflation from the nominal rate. A negative real rate means you are losing purchasing power even while the account balance grows.
 
 **Time: ~15 min**
 
@@ -76,13 +84,15 @@ $$i = 1.4^{1/6} - 1 = \sqrt[6]{1.4} - 1$$
 
 $$\boxed{i \approx 5.77\% \text{ p.a.}}$$
 
+**Reality check:** In spring 2024, safe five-year deposits in Germany paid roughly 3%. A 5.77% target therefore cannot be reached risk-free — Lena would have to accept risk (bonds of weaker issuers, shares). This links back to Task 1b: the nominal target says nothing about purchasing power either; at 3.5% inflation the €280,000 would be worth only about €228,000 in today's prices.
+
 > **Common error:** Students often forget to subtract 1 at the end, reporting i = 1.0577. Reinforce the algebraic step: the factor (1+i)^n must be isolated *before* taking the root.
 
 **Time: ~15 min**
 
 ---
 
-## Aufgabe 2 — Annuities & Perpetuities
+## Task 2 — Annuities & Perpetuities
 
 ### a) Present Value of Rental Stream
 
@@ -93,6 +103,8 @@ $(1.06)^{15} = 2.39656$, so $(1.06)^{-15} = 0.41727$
 $$PVIFA = \frac{1 - 0.41727}{0.06} = \frac{0.58273}{0.06} = \mathbf{9.7122}$$
 
 $$PV = 96{,}000 \times 9.7122 = \boxed{\textbf{€932,376}}$$
+
+The valuation rests on the case assumption that the building has no residual value after year 15 (land value = demolition costs). Without that assumption, the rent stream alone would understate the property's value.
 
 > **Common error:** Students forget to take the reciprocal when computing the discount factor from the growth factor. Drill: $(1.06)^{-15} = 1 / (1.06)^{15}$ — the minus sign is a reciprocal, not a subtraction.
 
@@ -126,7 +138,7 @@ Note: CRF = 1/PVIFA. Both routes give the same answer — accept either approach
 
 $$PV_\infty = \frac{C}{i} = \frac{96{,}000}{0.06} = \boxed{\textbf{€1,600,000}}$$
 
-The perpetuity value (€1.6m) is **€667,624 higher** than the 15-year annuity value (€932,376). This large gap reveals that years 16 to ∞, even though heavily discounted, still contribute significant value when aggregated. Conversely, it illustrates how much value is "front-loaded" into the first 15 years — the annuity already captures 58% of the perpetuity's value.
+The perpetuity value (€1.6m) is **€667,624 higher** than the 15-year annuity value (€932,376). This large gap reveals that years 16 to ∞, even though heavily discounted, still contribute significant value when aggregated. Conversely, it illustrates how much value is "front-loaded" into the first 15 years — the annuity already captures 58% of the perpetuity's value. (Compare Chapter 2: at 4%, a 25-year annuity captures 62.5% of the perpetuity.)
 
 > **Board note:** Write both values side by side and ask: "Where did the other €668k go?" Students often underestimate how much a finite term cuts value.
 
@@ -134,7 +146,7 @@ The perpetuity value (€1.6m) is **€667,624 higher** than the 15-year annuity
 
 ---
 
-## Aufgabe 3 — Loan Structures & Amortization
+## Task 3 — Loan Structures & Amortization
 
 ### a) Option A — Annuity Loan
 
@@ -184,23 +196,35 @@ $$\text{Interest (constant)} = 240{,}000 \times 0.05 = \mathbf{€12,000 \text{ 
 
 ---
 
-### d) Comparison Table & Recommendation
+### d) Comparison Table
 
-| Loan Type | Total Paid (€) | Total Interest (€) | Year 1 Outflow (€) |
-|:----------|---------------:|-------------------:|-------------------:|
-| Option A — Annuity | **270,731.36** | 30,731.36 | **67,682.84** |
-| Option B — Constant Amortization | 270,000.00 | **30,000.00** | 72,000.00 |
-| Option C — Bullet | 288,000.00 | 48,000.00 | **12,000.00** |
+| Loan Type | Total Paid (€) | Total Interest (€) | Year 1 Outflow (€) | PV of Payments at 5% (€) |
+|:----------|---------------:|-------------------:|-------------------:|-------------------------:|
+| Option A — Annuity | 270,731.36 | 30,731.36 | 67,682.84 | 240,000 |
+| Option B — Constant Amortization | 270,000.00 | **30,000.00** | 72,000.00 | 240,000 |
+| Option C — Bullet | 288,000.00 | 48,000.00 | **12,000.00** | 240,000 |
 
-**Recommendation for Lena:** The property will be vacant in Year 1, meaning no rental income to service the debt. The Bullet Loan (Option C) minimises the Year 1 cash outflow at only €12,000, preserving liquidity during the renovation phase — at the cost of €18,000 more in total interest compared to Option B. This is the classic CFO "matching" logic from Chapter 3: match the loan structure to the asset's cash flow profile. The bullet structure matches a temporarily cash-flow-negative investment. Alternative: Option A (annuity) is a reasonable middle ground if the family expects rental income to resume from Year 2.
-
-> **Discussion trap:** Some students will instinctively recommend Option B because it has the lowest total interest cost. Push back: "Can Lena afford €72,000 in Year 1 with zero rental income?" Force the liquidity vs. total cost trade-off.
+PV check for Option C: $12{,}000 \cdot PVIFA(5\%,\,3) + 252{,}000 \cdot 1.05^{-4} = 32{,}678.98 + 207{,}321.02 = 240{,}000.00$. The same holds for A and B (Chapter 3, "Why Total Interest Is the Wrong Yardstick").
 
 **Time: ~10 min**
 
 ---
 
-## Aufgabe 4 — Bond & Stock Valuation
+### e) The Relationship Manager's Hint and the Recommendation
+
+**The hint is misleading.** Total interest adds up euros paid at different times. Option C pays €18,000 more interest than Option B only because Lena keeps the full €240,000 for four years instead of returning €60,000 each year. Discounted at the loan rate, all three options are worth exactly €240,000 — they are equally fair deals at 5%. The choice is about **fit**, not price.
+
+**Recommendation:** The building earns nothing in Year 1, so the decisive figure is the Year 1 outflow: the bullet loan (Option C) needs only €12,000, against €67,683 (A) and €72,000 (B), and preserves liquidity during the renovation. Its weak point is Year 4: €252,000 fall due at once. Unless three years of rent plus reserves cover that amount, Lena must refinance — the risk the matching principle (Chapter 3) warns about when a long-lived asset is financed with a short bullet loan. A defensible alternative is Option A if the family office can bridge Year 1 from its own liquidity: its constant instalment is then serviced from the rents from Year 2 onwards.
+
+The answer changes if Lena's own money earns more than 5% elsewhere: then the bullet loan is also the cheapest in present-value terms (Chapter 3 Deep Dive), because it keeps the bank's 5% money working at the higher rate for longer.
+
+> **Discussion trap:** Many students recommend Option B "because it is the cheapest". Ask two questions: "Can Lena pay €72,000 in Year 1 with zero rent?" and "Is €30,000 paid early really cheaper than €48,000 paid later?" — then reveal the PV column.
+
+**Time: ~10 min**
+
+---
+
+## Task 4 — Bond & Stock Valuation
 
 ### a) Bond Valuation
 
@@ -274,14 +298,14 @@ For the full holding: 400 shares × €3.50 = **€1,400 overvaluation**.
 | Phase | Content | Duration |
 |:------|:--------|:--------:|
 | Opening | Distribute case; students read independently. Brief framing: "Four envelopes, four tools." | 10 min |
-| Aufgabe 1 | FV calculation → Fisher equation (both forms) → algebraic rate isolation | 35 min |
-| Aufgabe 2 | PVIFA derivation + calculation → investment decision → CRF → perpetuity | 40 min |
-| Aufgabe 3 | Three amortization tables → comparison table → recommendation with liquidity argument | 50 min |
-| Aufgabe 4 | Bond price (discount/premium) → YTM interpolation → Gordon Growth Model | 35 min |
+| Task 1 | FV calculation → Fisher equation (both forms) → value in 2019 prices → algebraic rate isolation | 35 min |
+| Task 2 | PVIFA derivation + calculation → investment decision → CRF → perpetuity | 40 min |
+| Task 3 | Three amortization tables → comparison table with PV column → why total interest misleads → recommendation | 50 min |
+| Task 4 | Bond price (discount/premium) → YTM interpolation → Gordon Growth Model | 35 min |
 | Synthesis | Instructor closes: all four tools are the same engine (PV/FV), applied to different cash flow shapes | 10 min |
 | **Total** | | **180 min** |
 
-**Buffer note:** Aufgabe 3 is the longest and most mechanical. If time is short, assign Option C (Bullet) as read-only rather than a computed table — students state the cash flows verbally. This saves ~5 minutes.
+**Buffer note:** Task 3 is the longest and most mechanical. If time is short, assign Option C (Bullet) as read-only rather than a computed table — students state the cash flows verbally. This saves ~5 minutes.
 
 ---
 
@@ -290,8 +314,8 @@ For the full holding: 400 shares × €3.50 = **€1,400 overvaluation**.
 ```
 LEFT PANEL — Formulas                    RIGHT PANEL — Results (built up live)
 ─────────────────────────────────────    ────────────────────────────────────
-Ch.1:  FV = PV × (1+i)^n                A1a) FV = €608,326
-       r = i_nom − π (approx)            A1b) r_real ≈ −1.5% / exact −1.42%
+Ch.1:  FV = PV × (1+i)^n                A1a) FV = €525,505
+       r = i_nom − π (approx)            A1b) r ≈ −2.5% / exact −2.42%; €442k in 2019 prices
        r = (1+i)/(1+π) − 1 (exact)      A1c) i_req = 5.77%
 
 Ch.2:  PV = C × PVIFA(i,n)              A2a) PV = €932,376
@@ -300,6 +324,7 @@ Ch.2:  PV = C × PVIFA(i,n)              A2a) PV = €932,376
        PV_∞ = C / i                      A2d) Perpetuity = €1,600,000
 
 Ch.3:  Scissors Effect diagram           A3 Comparison table (fill in live)
+       PV at loan rate = principal       A3e) all three PV = €240,000 → choose by fit
 
 Ch.3:  P = C×PVIFA + F×(1+r)^−n        A4a) Bond = €901.65 (discount)
        YTM via interpolation             A4b) YTM ≈ 5.475%
@@ -310,10 +335,12 @@ Ch.3:  P = C×PVIFA + F×(1+r)^−n        A4a) Bond = €901.65 (discount)
 
 # Instructor Alerts
 
-1. **The Fisher sign trap (A1b):** Students almost universally get the sign direction wrong on first attempt. Before they calculate, ask: "Given 10% inflation and 4% nominal — are you getting richer or poorer?" The intuition must precede the formula.
+1. **The Fisher sign trap (A1b):** Students almost universally get the sign direction wrong on first attempt. Before they calculate, ask: "Given 3.5% inflation and 1% nominal — are you getting richer or poorer?" The intuition must precede the formula.
 
 2. **The D₀/D₁ distinction (A4c):** This is the single most common DDM error. Make it visceral: "Georg *already received* €2.50. That's gone. What will he receive *next year*? That's what you're buying." The stock price is the PV of what comes *after* today.
 
 3. **Annuity table rounding errors (A3):** When students compound rounding across 4 rows, the closing balance in Year 4 rarely hits exactly zero — it may be ±€1. Accept ±€2 as correct. More importantly, use this moment to demonstrate why professional models carry more decimal places.
 
-4. **Bullet loan liquidity appeal vs. total cost (A3d):** Students from finance backgrounds will often correctly identify Option C as the right choice for Year 1 liquidity. Students from accounting backgrounds may fixate on the €48k total interest as "expensive" and recommend Option B. Both positions are defensible if argued correctly — the goal is to see the trade-off, not to converge on one answer.
+4. **Total interest vs. present value (A3d/e):** Students from accounting backgrounds often fixate on the €48k total interest of the bullet loan as "expensive". The PV column settles the price question (€240,000 for every option); what remains is a genuine trade-off between Year 1 liquidity (Option C) and refinancing risk in Year 4. Both Option C and Option A are defensible if argued with the building's cash flows — Option B "because it has the lowest interest" is not.
+
+5. **Realistic rates (A1):** The case uses a 1.0% deposit rate for 2019 (a good offer then; most banks paid close to zero) and the Destatis CPI path 2019–2023. If students ask why Georg did not get "normal" interest: the ECB deposit rate was negative from 2014 to 2022 — a good opening to the Chapter 1 discussion of what drives interest rates.
