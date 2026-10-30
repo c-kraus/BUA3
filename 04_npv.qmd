@@ -2,7 +2,7 @@
 
 > "Profit is an opinion. Cash is a fact. Net Present Value is the truth."
 
-Building on the valuation principle from Chapter 4 — **Value = Present Value of future cash flows** — we now apply that logic not to marketable securities but to real investment decisions: machines, factories, product launches. The framework is identical. Only the inputs change.
+Building on the valuation principle from Chapter 3 — **Value = Present Value of future cash flows** — we now apply that logic not to marketable securities but to real investment decisions: machines, factories, product launches. The framework is identical. Only the inputs change.
 
 If you only remember one concept from this entire university course, let it be this one. The **Net Present Value (NPV)** (dt. *Kapitalwert*, symbol $C_0$ or $KW$) is not just a formula; it is the operating system of capitalism. Accounting looks backwards to measure what happened. NPV looks forward to calculate what *value* a decision creates **today**.
 
@@ -75,7 +75,7 @@ Most managers overlook the NPV model's most important hidden assumption. When yo
 **The model assumes:** every euro flowing back is immediately reinvested at exactly the discount rate $i$ (the cost of capital) for the remainder of the project's life.
 
 * **Advantage:** This is a conservative assumption — the market rate $i$ is generally achievable.
-* **Contrast with IRR:** The Internal Rate of Return (introduced in Chapter 6) assumes intermediate cash flows are reinvested at the *project's own IRR* — which is often unrealistically high. This makes NPV the safer metric for decision making.
+* **Contrast with IRR:** The Internal Rate of Return (introduced in Chapter 5) assumes intermediate cash flows are reinvested at the *project's own IRR* — which is often unrealistically high. This makes NPV the safer metric for decision making.
 
 ::: {.details}
 #### Deep Dive: When the Reinvestment Assumption Fails
@@ -98,7 +98,7 @@ $$NPV_{max} = \sum CF_t + L_n - I_0$$
 3. **The X-Intercept ($NPV = 0$):** The specific rate where the curve crosses zero is the **Internal Rate of Return (IRR)** — the project's own internal yield.
 
 ::: {.content-visible when-format="html"}
-<iframe src="assets/Chapter5/npv_function.html"
+<iframe src="assets/ch04/npv_function.html"
         style="width: 100%; height: 520px; border: none;"
         loading="lazy">
 </iframe>
@@ -179,4 +179,4 @@ $$NPV = 538{,}165 - 500{,}000 = \mathbf{+38{,}165 \text{ EUR}}$$
 The Net Present Value assumes that all intermediate cash flows are *reinvested* at the *discount rate i*. This is more *conservative* than the IRR assumption, which requires reinvestment at the project's own internal rate.
 :::
 
-Chapter 6 keeps the same project but asks a different question: instead of "does this project pass a given hurdle rate?", it asks "what *is* the project's own internal yield?" — the Internal Rate of Return, and when it conflicts with NPV.
+Chapter 5 keeps the same project but asks a different question: instead of "does this project pass a given hurdle rate?", it asks "what *is* the project's own internal yield?" — the Internal Rate of Return, and when it conflicts with NPV.

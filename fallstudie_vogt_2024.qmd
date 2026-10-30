@@ -1,6 +1,6 @@
 ---
 title: "Five Weeks to Decide"
-subtitle: "Investment Appraisal — Integrated Case Study (Chapters 5–8)"
+subtitle: "Investment Appraisal — Integrated Case Study (Chapters 4–7)"
 author: "BUA3 — Business Finance, THWS"
 date: last-modified
 lang: en

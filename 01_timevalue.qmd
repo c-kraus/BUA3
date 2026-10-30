@@ -20,7 +20,7 @@ Economically, the interest rate ($i$) is composed of three layers:
 3. **Risk premium:** Compensation for the danger that the borrower might default.
 
 ::: {.content-visible when-format="html"}
-<iframe src="assets/Chapter1/intereststack.html"
+<iframe src="assets/ch01/intereststack.html"
         style="width: 100%; height: 650px; border: none;"
         loading="lazy">
 </iframe>
@@ -80,7 +80,7 @@ The approximation ($-55\%$) overstates the loss because inflation is so large. T
 There are two ways to grow money. One is linear (boring), the other is exponential (explosive).
 
 ::: {.content-visible when-format="html"}
-<iframe src="assets/Chapter1/effektzinseszins.html"
+<iframe src="assets/ch01/effektzinseszins.html"
         style="width: 100%; height: 700px; border: none;"
         loading="lazy">
 </iframe>
@@ -144,7 +144,7 @@ You pay for a machine **today** ($t = 0$). You receive the cash returns **in the
 The interactive timeline below shows both directions on a single axis:
 
 ::: {.content-visible when-format="html"}
-<iframe src="assets/Chapter1/zeitstrahl.html"
+<iframe src="assets/ch01/zeitstrahl.html"
         style="width: 100%; height: 460px; border: none;"
         loading="lazy">
 </iframe>

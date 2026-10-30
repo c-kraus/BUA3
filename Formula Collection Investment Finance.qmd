@@ -18,7 +18,7 @@ This formula collection supports you during the Investment Finance lecture in th
 | Abbreviation | Explanation |
 |--------------|-------------|
 | $C$ | Equal periodic payment (annuity); coupon payment |
-| $C_0$ | Initial loan capital (Chapter 3); Kapitalwert / NPV (Chapters 5–6) |
+| $C_0$ | Initial loan capital (Chapter 3); Kapitalwert / NPV (Chapters 4–5) |
 | $C_1$ | First payment of a growing perpetuity |
 | $c$ | Coupon rate |
 | $CF_t$ | Cash flow / Net inflow in period $t$ |

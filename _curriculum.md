@@ -25,9 +25,9 @@ Building on the Modulhandbuch, students can recall the fundamental concepts of i
 
 | No | Title | File | Status | Source / Reuse | Core Concepts |
 |---|---|---|---|---|---|
-| 01 | The Time Machine | `01_timevalue.qmd` | 🔄 revise | reuse `chapter1.qmd` | Time value of money, opportunity cost, real vs. nominal interest, simple vs. compound interest, compounding and discounting |
-| 02 | The Geometry of Cash Flows | `02_cashflows.qmd` | 🔄 revise | reuse `Chapter2.qmd` | Ordinary annuity and annuity due, PVIFA, Capital Recovery Factor, perpetuities, growing perpetuity |
-| 03 | Debt and Valuation | `03_debt_valuation.qmd` | 📋 build | merge and trim `Chapter3.qmd` (loans) + `Chapter4.qmd` (valuation) | Annuity loan, constant-amortization loan, bullet loan, supplier credit (Skonto), bond price and yield, preferred and common stock, Gordon Growth, P/E ratio |
+| 01 | The Time Machine | `01_timevalue.qmd` | 🔄 revise | from `chapter1.qmd` | Time value of money, opportunity cost, real vs. nominal interest, simple vs. compound interest, compounding and discounting |
+| 02 | The Geometry of Cash Flows | `02_cashflows.qmd` | 🔄 revise | from `Chapter2.qmd` | Ordinary annuity and annuity due, PVIFA, Capital Recovery Factor, perpetuities, growing perpetuity |
+| 03 | Debt and Valuation | `03_debt_valuation.qmd` | 🔄 revise | `Chapter3.qmd` (loans) + `Chapter4.qmd` (valuation) merged 2026-10-30, **not yet trimmed** (≈3,400 words) | Annuity loan, constant-amortization loan, bullet loan, supplier credit (Skonto), bond price and yield, preferred and common stock, Gordon Growth, P/E ratio |
 
 **Legend:** ✅ done · 🔄 revise (reuse existing) · 📋 build (gap) · ⏸ paused
 
@@ -39,9 +39,9 @@ Building on the Modulhandbuch, students can recall the fundamental concepts of i
 
 | No | Title | File | Status | Source / Reuse | Core Concepts |
 |---|---|---|---|---|---|
-| 04 | The North Star: Net Present Value | `04_npv.qmd` | 🔄 revise | reuse `Chapter5.qmd`, **add payback section** (static vs. dynamic methods) | Payback period and its blind spots, Fisher separation, NPV formula and decision rule, reinvestment assumption, NPV function, scale problem |
-| 05 | The Percentage Trap: Internal Rate of Return | `05_irr.qmd` | 🔄 revise | reuse `Chapter6.qmd` | IRR and hurdle rate, interpolation / Regula Falsi, reinvestment critique, Modified IRR, multiple IRRs, NPV vs. IRR |
-| 06 | Periodising Success: The Annuity Method | `06_annuity.qmd` | 🔄 revise | reuse `Chapter7.qmd` | NPV as periodic income, mirror principle (loan vs. investment), projects with unequal lifespans, repeatability assumption |
+| 04 | The North Star: Net Present Value | `04_npv.qmd` | 🔄 revise | from `Chapter5.qmd`, **add payback section** (static vs. dynamic methods) | Payback period and its blind spots, Fisher separation, NPV formula and decision rule, reinvestment assumption, NPV function, scale problem |
+| 05 | The Percentage Trap: Internal Rate of Return | `05_irr.qmd` | 🔄 revise | from `Chapter6.qmd` | IRR and hurdle rate, interpolation / Regula Falsi, reinvestment critique, Modified IRR, multiple IRRs, NPV vs. IRR |
+| 06 | Periodising Success: The Annuity Method | `06_annuity.qmd` | 🔄 revise | from `Chapter7.qmd` | NPV as periodic income, mirror principle (loan vs. investment), projects with unequal lifespans, repeatability assumption |
 
 **Legend:** ✅ done · 🔄 revise (reuse existing) · 📋 build (gap) · ⏸ paused
 
@@ -53,8 +53,8 @@ Building on the Modulhandbuch, students can recall the fundamental concepts of i
 
 | No | Title | File | Status | Source / Reuse | Core Concepts |
 |---|---|---|---|---|---|
-| 07 | The Silent Partner: Taxes | `07_taxes.qmd` | 🔄 revise | reuse `Chapter8.qmd` | Volume effect, interest effect, depreciation tax shield, after-tax discount rate, tax paradox |
-| 08 | The Master Plan: Capital Rationing and the Dean Model | `08_dean.qmd` | 🔄 revise | reuse `Chapter9.qmd` | Investment and financing staircases, endogenous cut-off rate, fixed budget, Profitability Index, limits of the PI |
+| 07 | The Silent Partner: Taxes | `07_taxes.qmd` | 🔄 revise | from `Chapter8.qmd` | Volume effect, interest effect, depreciation tax shield, after-tax discount rate, tax paradox |
+| 08 | The Master Plan: Capital Rationing and the Dean Model | `08_dean.qmd` | 🔄 revise | from `Chapter9.qmd` | Investment and financing staircases, endogenous cut-off rate, fixed budget, Profitability Index, limits of the PI |
 | 09 | Betting on the Future: Risk and Uncertainty | `09_risk.qmd` | 📋 build | new (touches in `Chapter5/6` on sensitivity are folded in) | Risk vs. uncertainty, expected value, sensitivity analysis, scenario analysis, break-even analysis, risk-adjusted discount rate, limits of each tool |
 
 **Legend:** ✅ done · 🔄 revise (reuse existing) · 📋 build (gap) · ⏸ paused
@@ -224,25 +224,25 @@ Enforced course-wide for consistency (lecture-factory & quarto-lecture read thes
 ```
 BUA3/
 ├── _curriculum.md                    ← this file (single source of truth)
-├── _quarto.yml                       [🔄 restructure to 4 parts / 10 chapters]
+├── _quarto.yml                       [🔄 Parts I–III with Ch. 1–8 built; add Ch. 9–10 and Part IV when written]
 ├── index.qmd                         [✅ preface]
-├── 01_timevalue.qmd                  [🔄 reuse chapter1.qmd]
-├── 02_cashflows.qmd                  [🔄 reuse Chapter2.qmd]
-├── 03_debt_valuation.qmd             [📋 merge Chapter3.qmd + Chapter4.qmd]
-├── 04_npv.qmd                        [🔄 reuse Chapter5.qmd, add payback]
-├── 05_irr.qmd                        [🔄 reuse Chapter6.qmd]
-├── 06_annuity.qmd                    [🔄 reuse Chapter7.qmd]
-├── 07_taxes.qmd                      [🔄 reuse Chapter8.qmd]
-├── 08_dean.qmd                       [🔄 reuse Chapter9.qmd]
+├── 01_timevalue.qmd                  [🔄 was chapter1.qmd]
+├── 02_cashflows.qmd                  [🔄 was Chapter2.qmd]
+├── 03_debt_valuation.qmd             [🔄 was Chapter3.qmd + Chapter4.qmd, merged, to be trimmed]
+├── 04_npv.qmd                        [🔄 was Chapter5.qmd, add payback]
+├── 05_irr.qmd                        [🔄 was Chapter6.qmd]
+├── 06_annuity.qmd                    [🔄 was Chapter7.qmd]
+├── 07_taxes.qmd                      [🔄 was Chapter8.qmd]
+├── 08_dean.qmd                       [🔄 was Chapter9.qmd]
 ├── 09_risk.qmd                       [📋 build]
 ├── 10_ethics.qmd                     [📋 build]
-├── assets/                           [widgets in ChapterN/ — renumber to chapter scheme]
-├── fallstudie_hartmann_2024.qmd      [✅ case for Ch. 1–3 (written for old Ch. 1–4)]
-├── fallstudie_vogt_2024.qmd          [✅ case for Ch. 4–7 (written for old Ch. 5–8)]
+├── assets/ch01 … ch08/               [✅ widgets renumbered to the chapter scheme; ch09, ch10 to come]
+├── fallstudie_hartmann_2024.qmd      [✅ case for Ch. 1–3]
+├── fallstudie_vogt_2024.qmd          [✅ case for Ch. 4–7]
 ├── teaching_note_hartmann_2024.qmd   [✅]
 ├── teaching_note_vogt_2024.qmd       [✅]
 ├── Formula Collection Investment Finance.qmd   [✅ handout-typst]
-└── BUA3_Exam_Questions_EvaExam.csv   [references old chapter numbers]
+└── BUA3_Exam_Questions_EvaExam.csv   [✅ chapter labels renumbered; no questions yet for Ch. 9–10]
 ```
 
 (Not yet created, planned after the restructuring: `tutorials/`, `slides/`, `_teaching_notes/`, `moodle/` as in BUA1.)
@@ -251,10 +251,10 @@ BUA3/
 
 ## Open Items (to confirm with author)
 
-- **Ch. 3 merge:** `Chapter3.qmd` (≈1,800 words) and `Chapter4.qmd` (≈1,600 words) must be trimmed to one chapter. Candidates to cut: the CFO decision matrix and parts of the stock-valuation section.
+- **Ch. 3 trimming:** the two old chapters are concatenated into one file but not yet shortened (≈3,400 words vs. ≈1,700 for the others). Candidates to cut: the CFO decision matrix and parts of the stock-valuation section.
 - **Ch. 4 payback:** the payback period is named in the Modulhandbuch learning outcomes but currently appears only in the Vogt case. Add it as an opening section of the NPV chapter (static method as foil).
 - **Ch. 9 length:** expected value is part of the risk chapter, so it will run longer than the others.
 - **Ch. 10 vs. Doughnut:** confirm with the colleague where the Doughnut Economics unit sits and what it assumes from Chapter 10.
-- **Case numbering:** the two cases and the EvaExam question bank reference the old chapter numbers (Hartmann: old 1–4 → new 1–3; Vogt: old 5–8 → new 4–7). Update the references when renaming.
+- **Case numbering:** done 2026-10-30 — Hartmann now Ch. 1–3, Vogt Ch. 4–7, EvaExam labels and the Formula Collection renumbered. The Hartmann case still has four tasks (loans and bonds/stocks are separate tasks inside Ch. 3).
 - **Programme name:** the previous curriculum said "Bachelor International Business"; the Modulhandbuch says BESE (Business & Engineering Science). Confirm which to print on the title page.
 - **Workload check:** the module has 60 h guided + 90 h self-study; the investment half is roughly 30 h + 45 h, i.e. about 7 h per chapter for 10 chapters.

@@ -3,7 +3,7 @@
 > "Strategy is the art of sacrifice. The essence of strategy is choosing what *not* to do."
 > — *Michael Porter*
 
-Chapter 5 assumed we could borrow unlimited capital at a fixed market rate — the Fisher world. In practice, capital is scarce. Boards freeze budgets. The CFO says "No." This is **Capital Rationing** (*Kapitalrationierung*): a binding constraint on total investment spending.
+Chapter 4 assumed we could borrow unlimited capital at a fixed market rate — the Fisher world. In practice, capital is scarce. Boards freeze budgets. The CFO says "No." This is **Capital Rationing** (*Kapitalrationierung*): a binding constraint on total investment spending.
 
 The result: even highly profitable projects get cut not because they fail the hurdle rate, but because the budget runs out. We need a systematic method to allocate scarce capital optimally. The **Dean Model** (Joel Dean, 1951) and its decision tool — the **Profitability Index** — provide the answer.
 
@@ -98,7 +98,7 @@ Step 2: Select D ($ 50M) — it is the highest-remaining-NPV project that fits. 
 The interactive tool below lets you drag the budget constraint and see which projects are selected under PI versus the naive NPV approach:
 
 ::: {.content-visible when-format="html"}
-<iframe src="assets/Chapter9/dean_model.html"
+<iframe src="assets/ch08/dean_model.html"
         style="width: 100%; height: 520px; border: none;"
         loading="lazy">
 </iframe>
@@ -141,4 +141,4 @@ The PI ranking is derived from the Lagrangian relaxation of an integer linear pr
 > Correct. Y (PI 1.30) and Z (PI 1.24) both rank above X (PI 1.20) in efficiency. Together they create $ 27M of value versus $ 20M for X — using the same $ 100M budget. This is precisely the Elephant Trap: a single large-NPV project crowded out by two smaller, more efficient ones.
 :::
 
-This completes the investment appraisal toolkit. From the time value of a single cash flow (Chapter 1) through the management of debt (Chapters 2–3), the valuation of securities (Chapter 4), the NPV decision rule (Chapter 5), the IRR comparison (Chapter 6), the annuity method for multi-period comparison (Chapter 7), the tax impact (Chapter 8) — and now the discipline of choosing the best portfolio when resources are scarce. Every decision reduces to the same question: are we creating more value than we are consuming?
+This completes the investment appraisal toolkit. From the time value of a single cash flow (Chapter 1) through the management of debt and the valuation of securities (Chapters 2–3), the NPV decision rule (Chapter 4), the IRR comparison (Chapter 5), the annuity method for multi-period comparison (Chapter 6), the tax impact (Chapter 7) — and now the discipline of choosing the best portfolio when resources are scarce. Every decision reduces to the same question: are we creating more value than we are consuming?

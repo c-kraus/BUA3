@@ -23,12 +23,12 @@ Clara Voss takes over Vogt Antriebstechnik GmbH in Würzburg under time pressure
 
 # Theoretical Framework
 
-The case spans four methods presented in Chapters 5–8:
+The case spans four methods presented in Chapters 4–7:
 
-- **Chapter 5 (Task 1):** Net Present Value as the primary decision criterion; payback period as a foil.
-- **Chapter 6 (Task 2):** IRR and its Regula Falsi estimation; the scale problem and the incremental investment (*Differenzinvestition*) resolution.
-- **Chapter 7 (Task 3):** The Annuity Method for projects with unequal lifespans; the repeatability assumption.
-- **Chapter 8 (Task 4):** The Kruschwitz Standard Tax Model — Volume Effect and Interest Effect; the Tax Paradox (*Steuerparadoxon*).
+- **Chapter 4 (Task 1):** Net Present Value as the primary decision criterion; payback period as a foil.
+- **Chapter 5 (Task 2):** IRR and its Regula Falsi estimation; the scale problem and the incremental investment (*Differenzinvestition*) resolution.
+- **Chapter 6 (Task 3):** The Annuity Method for projects with unequal lifespans; the repeatability assumption.
+- **Chapter 7 (Task 4):** The Kruschwitz Standard Tax Model — Volume Effect and Interest Effect; the Tax Paradox (*Steuerparadoxon*).
 
 ---
 

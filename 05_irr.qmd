@@ -3,13 +3,13 @@
 > "Percentages are like bikinis. What they reveal is suggestive, but what they conceal is vital."
 > — *Prof. Burton Malkiel (adapted)*
 
-Chapter 5 introduced the NPV as the gold standard of investment appraisal — an absolute euro figure. But managers love percentages. "This project has a 25% return!" sounds far more compelling than "This project has an NPV of € 4,200." Enter the **Internal Rate of Return (IRR)** (dt. *Interner Zinsfuß, r*).
+Chapter 4 introduced the NPV as the gold standard of investment appraisal — an absolute euro figure. But managers love percentages. "This project has a 25% return!" sounds far more compelling than "This project has an NPV of € 4,200." Enter the **Internal Rate of Return (IRR)** (dt. *Interner Zinsfuß, r*).
 
 While NPV measures the *magnitude* of wealth creation in absolute euros, IRR measures the *efficiency* of capital employed as a relative yield. It answers: **"What is the maximum interest rate I could pay to the bank and still break even?"**
 
 ## The Definition: The Break-Even Rate
 
-Mathematically, the IRR is the specific discount rate $r$ at which the Net Present Value equals exactly **zero** — the x-intercept of the NPV function from Chapter 5.
+Mathematically, the IRR is the specific discount rate $r$ at which the Net Present Value equals exactly **zero** — the x-intercept of the NPV function from Chapter 4.
 
 $$C_0 = -I_0 + \sum_{t=1}^{n} \frac{CF_t}{(1+r)^t} = 0 \quad \text{solve for } r$$
 
@@ -68,7 +68,7 @@ $$r \approx 0\% + \frac{10}{10 - (-9.09)} \cdot (10\% - 0\%) = \frac{10}{19.09} 
 The interactive tool below lets you drag both trial rates on the NPV curve and see the Regula Falsi chord converge on the IRR:
 
 ::: {.content-visible when-format="html"}
-<iframe src="assets/Chapter6/irr_interactive.html"
+<iframe src="assets/ch05/irr_interactive.html"
         style="width: 100%; height: 560px; border: none;"
         loading="lazy">
 </iframe>
@@ -183,4 +183,4 @@ While the *Internal Rate of Return* is easier to communicate to management, *Net
 > Correct. The cash flow changes sign twice (−, +, −), producing two IRRs: 10% and 50%. Both exceed the 8% hurdle — yet NPV at 8% = −€0.73k (the project destroys value at this cost of capital). Applying the "r > i" rule to either IRR gives the wrong answer. Use NPV.
 :::
 
-Chapter 7 moves from *which* project to choose to *how long* the project should run — the annuity method and the optimal investment horizon.
+Chapter 6 moves from *which* project to choose to *how long* the project should run — the annuity method and the optimal investment horizon.

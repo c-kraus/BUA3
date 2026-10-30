@@ -6,26 +6,26 @@ number-sections: true
 
 book:
   title: "Investment Appraisal"
-  subtitle: "Introduciton and Methods"
+  subtitle: "Introduction and Methods"
   author: "Prof. Dr. Christian Kraus"
   date: "last-modified"
   chapters:
     - index.qmd
-    - part: Interest Calculations
+    - part: "Part I — The Time-Value Toolkit"
       chapters:
-        - chapter1.qmd
-        - Chapter2.qmd
-        - Chapter3.qmd  
-        - Chapter4.qmd
-    - part: Investment Appraisal
+        - 01_timevalue.qmd
+        - 02_cashflows.qmd
+        - 03_debt_valuation.qmd
+    - part: "Part II — Core Appraisal Methods"
       chapters:
-        - Chapter5.qmd
-        - Chapter6.qmd
-        - Chapter7.qmd
-        - Chapter8.qmd
-        - Chapter9.qmd
-    
-  
+        - 04_npv.qmd
+        - 05_irr.qmd
+        - 06_annuity.qmd
+    - part: "Part III — Real-World Complications"
+      chapters:
+        - 07_taxes.qmd
+        - 08_dean.qmd
+
   # Navigation & Suche
   sidebar:
     style: "docked"

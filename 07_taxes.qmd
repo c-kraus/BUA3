@@ -3,7 +3,7 @@
 > "The art of taxation consists in so plucking the goose as to obtain the largest amount of feathers with the least possible amount of hissing."
 > — *Jean-Baptiste Colbert*
 
-Chapters 5–7 assumed a perfect capital market — no frictions, no transaction costs, and no taxes. In reality, the state is a **silent partner** in every project: it claims a share of profits through corporate taxation (tax rate $s$), but simultaneously subsidises a share of financing costs through the tax deductibility of interest and depreciation.
+Chapters 4–6 assumed a perfect capital market — no frictions, no transaction costs, and no taxes. In reality, the state is a **silent partner** in every project: it claims a share of profits through corporate taxation (tax rate $s$), but simultaneously subsidises a share of financing costs through the tax deductibility of interest and depreciation.
 
 This duality changes NPV arithmetic in two simultaneous and opposing directions. We use the **Standard Model of Corporate Taxation** (*Standardmodell nach Kruschwitz*) to integrate this partner precisely.
 
@@ -85,7 +85,7 @@ Why do private equity firms load their acquisitions with debt? Because in a worl
 By reducing the denominator $i$, the present value of any given cash flow stream rises. The interactive tool below shows this lever across different tax rates and debt levels:
 
 ::: {.content-visible when-format="html"}
-<iframe src="assets/Chapter7/melter.html"
+<iframe src="assets/ch07/melter.html"
         style="width: 100%; height: 520px; border: none;"
         loading="lazy">
 </iframe>
@@ -130,7 +130,7 @@ The paradox becomes more likely under high inflation. Nominal interest rates ris
 :::
 
 ::: {.content-visible when-format="html"}
-<iframe src="assets/Chapter7/paradoxon.html"
+<iframe src="assets/ch07/paradoxon.html"
         style="width: 100%; height: 520px; border: none;"
         loading="lazy">
 </iframe>
@@ -171,4 +171,4 @@ As a manager, you cannot change the tax laws. But you control two structural var
 The *Tax Paradox* (*Steuerparadoxon*) occurs when the *Interest Effect* — the present-value gain from a lower *discount rate* — dominates the Volume Effect, so that a higher tax rate $s$ leads to a *higher* Net Present Value.
 :::
 
-Chapter 9 takes investment decisions beyond the single-project view: when capital is limited and multiple projects compete for the same budget, how does a firm rank and select the best combination — the Dean Model of capital rationing.
+Chapter 8 takes investment decisions beyond the single-project view: when capital is limited and multiple projects compete for the same budget, how does a firm rank and select the best combination — the Dean Model of capital rationing.

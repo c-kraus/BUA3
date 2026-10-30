@@ -1,6 +1,6 @@
 ---
 title: "The Hartmann Legacy"
-subtitle: "Investment Appraisal — Integrated Case Study (Chapters 1–4)"
+subtitle: "Investment Appraisal — Integrated Case Study (Chapters 1–3)"
 author: "BUA3 — Business Finance, THWS"
 date: last-modified
 lang: en

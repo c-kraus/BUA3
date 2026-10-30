@@ -2,7 +2,7 @@
 
 > "Wealth is a snapshot. Income is a movie. The Annuity Method turns the snapshot into a movie."
 
-Chapter 5 showed us that NPV measures the **absolute increase in wealth** a project creates today. That is powerful — but abstract. A CEO often asks: *"What does € 10,000 of NPV actually mean for my annual budget? How much can I pay a project manager? By how much could my cash flows shrink before this investment stops making sense?"*
+Chapter 4 showed us that NPV measures the **absolute increase in wealth** a project creates today. That is powerful — but abstract. A CEO often asks: *"What does € 10,000 of NPV actually mean for my annual budget? How much can I pay a project manager? By how much could my cash flows shrink before this investment stops making sense?"*
 
 The **Annuity Method** (*Annuitätenmethode*) answers these questions. It transforms the lump-sum NPV into a constant annual "excess profit" spread evenly over the project's life. It is the strategic twin of the annuity loan from Chapter 3, just running in the opposite direction: there, the bank used the CRF to spread a loan into equal instalments; here, we use the same CRF to spread an investment's NPV into equal annual value slices.
 
@@ -91,7 +91,7 @@ Comparing annuities is mathematically identical to calculating the NPV of infini
 The interactive tool below lets you adjust both projects and the cost of capital to see when NPV and the Annuity Method give different verdicts:
 
 ::: {.content-visible when-format="html"}
-<iframe src="assets/Chapter7/annuity_comparison.html"
+<iframe src="assets/ch06/annuity_comparison.html"
         style="width: 100%; height: 460px; border: none;"
         loading="lazy">
 </iframe>
@@ -134,4 +134,4 @@ If Project A *cannot* be repeated — once the opportunity is gone, it's gone �
 > Correct. $d = NPV \times CRF$. Since $CRF > 0$ always, $d = 0$ implies $NPV = 0$. The project exactly covers its cost of capital — no excess return, no value destroyed.
 :::
 
-Chapter 8 introduces the tax dimension: how corporate income taxes change cash flows and — through a striking paradox — can actually make more expensive financing preferable.
+Chapter 7 introduces the tax dimension: how corporate income taxes change cash flows and — through a striking paradox — can actually make more expensive financing preferable.

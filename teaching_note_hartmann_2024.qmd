@@ -21,7 +21,7 @@ After completing this case session, students will be able to:
 
 # Synopsis
 
-The Hartmann Family Office has inherited four unresolved financial questions from the retiring founder. A newly returned daughter, Lena, must work through each in sequence: valuing a matured deposit in real terms, deciding whether a commercial property is worth its asking price and how to finance it, comparing three loan structures for a renovation project, and evaluating two portfolio positions (a bond and a stock). The case integrates Chapters 1–4 of BUA3 in a single coherent narrative.
+The Hartmann Family Office has inherited four unresolved financial questions from the retiring founder. A newly returned daughter, Lena, must work through each in sequence: valuing a matured deposit in real terms, deciding whether a commercial property is worth its asking price and how to finance it, comparing three loan structures for a renovation project, and evaluating two portfolio positions (a bond and a stock). The case integrates Chapters 1–3 of BUA3 in a single coherent narrative.
 
 # Theoretical Framework
 
@@ -30,7 +30,7 @@ The Hartmann Family Office has inherited four unresolved financial questions fro
 | Aufgabe 1 | 1 | Compound interest, Future Value, Fisher Equation, algebraic rate isolation |
 | Aufgabe 2 | 2 | PVIFA, CRF, perpetuity, Gordon model precursor |
 | Aufgabe 3 | 3 | Three loan types, amortization mechanics, liquidity vs. total cost trade-off |
-| Aufgabe 4 | 4 | Bond valuation (discount/premium), YTM interpolation, DDM/Gordon Growth Model |
+| Aufgabe 4 | 3 | Bond valuation (discount/premium), YTM interpolation, DDM/Gordon Growth Model |
 
 ---
 
@@ -301,7 +301,7 @@ Ch.2:  PV = C × PVIFA(i,n)              A2a) PV = €932,376
 
 Ch.3:  Scissors Effect diagram           A3 Comparison table (fill in live)
 
-Ch.4:  P = C×PVIFA + F×(1+r)^−n        A4a) Bond = €901.65 (discount)
+Ch.3:  P = C×PVIFA + F×(1+r)^−n        A4a) Bond = €901.65 (discount)
        YTM via interpolation             A4b) YTM ≈ 5.475%
        P₀ = D₁ / (r − g)               A4c) Fair = €51.50 → overvalued €3.50
 ```
