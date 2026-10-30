@@ -1,174 +1,408 @@
-# The Silent Partner – Investment Appraisal with Taxes
+# The Silent Partner: Taxes
 
-> "The art of taxation consists in so plucking the goose as to obtain the largest amount of feathers with the least possible amount of hissing."
-> — *Jean-Baptiste Colbert*
+*How the tax authority changes the right decision without changing the project*
 
-Chapters 4–6 assumed a perfect capital market — no frictions, no transaction costs, and no taxes. In reality, the state is a **silent partner** in every project: it claims a share of profits through corporate taxation (tax rate $s$), but simultaneously subsidises a share of financing costs through the tax deductibility of interest and depreciation.
+## Opening: The Project That Taxes Rescued
 
-This duality changes NPV arithmetic in two simultaneous and opposing directions. We use the **Standard Model of Corporate Taxation** (*Standardmodell nach Kruschwitz*) to integrate this partner precisely.
+::: {.details}
+#### Story: "Not Worthwhile" — Or Is It?
+Miriam Roth, controller at Kessler Präzisionstechnik GmbH, a 140-person supplier of turned parts, had done everything by the book. The proposal on her desk was an automated grinding cell: €200,000 today, €44,000 of extra cash flow per year for eight years, nothing left at the end. The owners expected 15% from any use of their money. Her net present value came out at **−€2,558**. She wrote "not worthwhile" on the cover sheet and moved on.
 
-::: {.flip-card}
-#### German Corporate Tax Rate
-Germany's combined corporate tax burden runs approximately 30% — Körperschaftsteuer (15%), solidarity surcharge (0.825%), and Gewerbesteuer (trade tax, roughly 14%). The Standard Model uses a single rate $s$; calibrate it to the jurisdiction: US ~21%, UK ~25%, Ireland ~12.5%.
+Two weeks later the company's tax advisor ran the same proposal through his own spreadsheet. Same machine, same sales forecast, same eight years. His NPV: **+€661**. "You forgot the silent partner," he said.
+
+At the next management meeting the managing director put down his coffee. "Let me get this straight. The state takes 30% of every euro of profit this machine makes — and *that* turns a bad project into a good one?"
+
+Nobody in the room could explain it. By the end of this chapter, you can.
 :::
 
-## The Mechanism: Two Effects, Two Adjustments
+Chapters 4 to 6 evaluated projects in a perfect capital market without taxes: discount the cash flows at the market rate $i$, accept if the net present value (dt. *Kapitalwert*, symbol $C_0$) is positive, and translate it into an annual value if lifespans differ. That world has no tax office. Real firms share every euro of profit with the state, so the state sits at the table of every investment decision as a **silent partner**: it never signs the purchase order, but it collects a share of the profit and shares part of the cost.
 
-Taxes act on two separate dimensions of the NPV formula simultaneously.
+This chapter adds that partner to the NPV formula with the **standard model of investment appraisal with taxes** (dt. *Standardmodell*), the workhorse model of German investment theory (Kruschwitz & Lorenz, 2019). The model changes two inputs at once: the cash flows and the discount rate. These two changes push the NPV in opposite directions, and the tug-of-war between them explains Miriam's puzzle — the **tax paradox**. The guiding question is the managing director's: *how can the tax authority change the right decision without changing the project?*
 
-### Effect 1 — The Volume Effect: Adjusting Cash Flows
+## Theory: The State as a Silent Partner
 
-You pay taxes on **profit**, not on cash flow. Depreciation ($D_t$) reduces taxable profit but is not itself a cash outflow — so it saves you taxes without consuming cash.
+### Three Things the Partner Does
 
-$$\text{Tax payment} = s \cdot (CF_{before} - D_t)$$
+Picture the state as a partner with a fixed share $s$ — the **tax rate** — in your firm's profits. Three features of this partnership drive everything that follows.
 
-$$\boxed{CF_{after} = CF_{before} \cdot (1-s) + D_t \cdot s}$$
-
-The term $D_t \cdot s$ is the **Depreciation Tax Shield** — the cash taxes saved through depreciation write-offs. It raises after-tax cash flows and therefore acts on the **numerator** of the NPV formula.
+**First, the partner taxes profit, not cash.** The tax office does not tax the cash a machine brings in; it taxes the *profit* the machine earns. The difference is **depreciation** (dt. *Abschreibung*): the purchase price of a machine is not deductible in the year you pay it, but spread over its useful life as an annual expense. Depreciation is an expense on paper only — no cash leaves the firm when the accountant books it — yet it reduces taxable profit and therefore the tax bill. Every euro of depreciation saves $s$ euros of tax.
 
 ::: {.flip-card}
 #### Depreciation Tax Shield
-Each euro of depreciation reduces taxable profit by one euro, saving $s$ euros in cash taxes. Firms prefer accelerated depreciation (*Sonderabschreibung*) because writing off assets earlier shifts tax savings forward in time — and earlier savings, discounted less heavily, have a higher present value.
+The tax saving that depreciation produces: $s \cdot D_t$ per period, where $D_t$ is the depreciation of period $t$. Depreciation costs no cash in the year it is booked, but it lowers taxable profit, so the firm pays $s \cdot D_t$ less tax. Over the life of a machine, total depreciation equals the purchase price, so the shields add up to $s \cdot I_0$ — the partner's share of the investment, paid back to you in instalments.
 :::
 
-Reducing after-tax cash flows is the **Volume Effect**: taxes shrink the numerator of the NPV formula, reducing the project's value. This is the expected, intuitive direction.
+**Second, the partner pays its share of the investment late.** When the firm buys the machine, the full €200,000 leaves the bank account at $t = 0$, and the tax office contributes nothing that day. Its contribution arrives later, year by year, through the depreciation tax shields. *When* those shields arrive depends on the depreciation schedule — and, as we will see, that timing decides whether the tax paradox can occur.
 
-### Effect 2 — The Interest Effect: Adjusting the Discount Rate
+**Third, the partner also taxes your alternative.** Without taxes, the discount rate $i$ measures what the owners could earn elsewhere, for example by lending money on the capital market. But interest income is taxed too. If the firm lends €100,000 at 10%, it receives €10,000 of interest, hands €3,000 to the state at a 30% tax rate, and keeps €7,000. The benchmark the project has to beat is no longer 10%, but 7%. Taxes make the project look worse — and they make the *alternative* look worse as well.
 
-Interest payments on debt are **tax-deductible** (a business expense). Dividends are not (a distribution of after-tax profit). This asymmetry makes debt financing cheaper than its face rate suggests:
+::: {.drag-exercise}
+The state taxes *profit*, not cash flow, so every euro of *depreciation* lowers the tax bill by $s$ euros, while the tax on interest income lowers the *discount rate* at which the after-tax cash flows are evaluated.
+:::
 
-$$\boxed{i_{after} = i_{before} \cdot (1-s)}$$
+### Two Effects Pulling in Opposite Directions
 
-If the bank charges 10% and the tax rate is 30%, the **effective** cost of capital is only 7%. The state covers the remaining 3% by forgoing the tax revenue it would otherwise receive on that interest income. This mechanism — the **Interest Tax Shield** — acts on the **denominator** of the NPV formula.
+The first and third features pull the NPV in opposite directions. Together they explain why taxes can either destroy or create value.
+
+The **volume effect** (dt. *Volumeneffekt*) is the intuitive one: the firm pays taxes on the project's profits, so the cash flows it keeps are smaller. Smaller cash flows mean a smaller NPV. On its own, the volume effect always makes a profitable project less attractive.
 
 ::: {.flip-card}
-#### Interest Tax Shield vs. Depreciation Tax Shield
-Both are "tax shields" but affect different parts of the NPV formula. The **Depreciation Tax Shield** ($D_t \cdot s$) reduces taxable income through asset write-offs, raising after-tax cash flows (numerator effect). The **Interest Tax Shield** ($i_{before} \cdot s$ per euro borrowed) makes debt financing cheaper, lowering the discount rate (denominator effect). The Standard Model captures both simultaneously.
+#### Volume Effect
+The change in NPV caused by the tax payments themselves: the after-tax cash flows (including the depreciation tax shield) are smaller than the pre-tax cash flows. Measured at the unchanged pre-tax discount rate, it equals minus the present value of all tax payments. For a project with positive taxable profits, it lowers the NPV.
 :::
 
-> **Financing assumption:** The formula $i_{after} = i_{before} \cdot (1-s)$ assumes projects are financed **entirely by debt at the margin** — every invested euro is borrowed. For mixed financing, use the Weighted Average Cost of Capital: $WACC = k_E \cdot \frac{E}{V} + k_D \cdot (1-s) \cdot \frac{D}{V}$, where the debt component carries the same $(1-s)$ adjustment.
+The **interest effect** (dt. *Zinseffekt*) is the counter-intuitive one: because the benchmark is taxed as well, the after-tax cash flows are discounted at a lower rate. A lower discount rate raises the present value of every future euro — and it raises distant euros the most, because the rate works through the exponent $t$ in $(1+i)^{-t}$.
 
-::: {.drag-exercise}
-In the Standard Model, taxes create two *opposing* forces: the *Volume Effect* shrinks after-tax *cash flows* (numerator), reducing NPV — while the *Interest Effect* lowers the *discount rate* (denominator), raising NPV.
+::: {.flip-card}
+#### Interest Effect
+The change in NPV caused by discounting the after-tax cash flows at the after-tax rate $i_{after} = i \cdot (1-s)$ instead of $i$. Because the lower rate raises the present value of all future cash flows, the interest effect raises the NPV, and it grows with the level of the pre-tax rate, the tax rate and the length of the project.
 :::
 
-### A Complete Worked Example
+The widget below shows the interest effect in isolation. It plots the discount factors $(1+i)^{-t}$ for a pre-tax rate of 10% over ten years. Move the tax-rate slider to 30% and watch the after-tax rate drop to 7%; then notice where the gap between the two curves is widest. A euro in year 1 is barely affected, a euro in year 10 gains a lot — which is why long projects feel the interest effect most.
 
-**Project:** $I_0 = \text{€}\,100{,}000$, annual pre-tax CF = €\,30{,}000, straight-line depreciation over 5 years ($D_t = \text{€}\,20{,}000$/yr), $L_5 = 0$, pre-tax discount rate $i = 10\%$, tax rate $s = 30\%$.
-
-**Adjusting the cash flows (Volume Effect):**
-$$CF_{after} = 30{,}000 \times 0.70 + 20{,}000 \times 0.30 = 21{,}000 + 6{,}000 = \mathbf{\text{€}\,27{,}000}$$
-
-**Adjusting the discount rate (Interest Effect):**
-$$i_{after} = 10\% \times 0.70 = \mathbf{7\%}$$
-
-**NPV before taxes** (pre-tax CF at $i = 10\%$):
-$$NPV_{before} = -100{,}000 + 30{,}000 \times PVIFA(10\%,5) = -100{,}000 + 30{,}000 \times 3.7908 = \mathbf{+\text{€}\,13{,}724}$$
-
-**NPV after taxes** (after-tax CF at $i_{after} = 7\%$):
-$$NPV_{after} = -100{,}000 + 27{,}000 \times PVIFA(7\%,5) = -100{,}000 + 27{,}000 \times 4.1002 = \mathbf{+\text{€}\,10{,}705}$$
-
-**Decomposing the tax impact of −€ 3,019:**
-
-| Effect | Calculation | Value |
-|:-------|:------------|------:|
-| Volume Effect | $-3{,}000 \times 3.7908$ (lower CF at old rate) | −€ 11,372 |
-| Interest Effect | $27{,}000 \times (4.1002 - 3.7908)$ (same CF at lower rate) | +€ 8,354 |
-| **Net tax impact** | | **−€ 3,018** |
-
-Here the Volume Effect dominates — taxes reduce the NPV by about € 3,000. But the Interest Effect recovers nearly three-quarters of the loss. Whether the Interest Effect can do even more — enough to turn a negative NPV positive — is the topic of the next section.
-
-## The Lever: The Interest Tax Shield in Action
-
-Why do private equity firms load their acquisitions with debt? Because in a world with taxes, a **levered firm** (with debt) is worth more than an otherwise identical **unlevered firm** (pure equity) — the government subsidises every euro of interest paid.
-
-By reducing the denominator $i$, the present value of any given cash flow stream rises. The interactive tool below shows this lever across different tax rates and debt levels:
-
-::: {.content-visible when-format="html"}
+::: {.widget}
 <iframe src="assets/ch07/melter.html"
-        style="width: 100%; height: 520px; border: none;"
-        loading="lazy">
+        width="100%" height="560px" frameborder="0"
+        title="The Discount Rate Melter: discount factors before and after tax as the tax rate rises">
 </iframe>
 :::
 
-## The Anomaly: The Tax Paradox
+Whether taxes destroy or create value therefore depends on which effect wins. For most healthy projects, the volume effect wins and taxes reduce the NPV. But the interest effect is not a rounding error, and for projects close to the break-even point it can win. The next section turns this tug-of-war into formulas.
 
-The normal case: taxes destroy value — Volume Effect beats Interest Effect, $NPV_{after} < NPV_{before}$.
+## Method: The Standard Model
 
-But the Standard Model has a mathematical twist. Under specific conditions, a project that is **unprofitable before taxes** becomes **profitable because of taxes**:
+### Assumptions of the Model
 
-$$NPV_{before} < 0 \quad \Longrightarrow \quad NPV_{after} > 0$$
+The standard model keeps the perfect-market logic of Chapters 4 to 6 and adds a deliberately simple tax system. It rests on five assumptions (Kruschwitz & Lorenz, 2019):
 
-This is the **Tax Paradox** (*Steuerparadoxon*).
+1. **One proportional tax rate.** All profits are taxed at the same rate $s$, which stays constant over the project's life.
+2. **Tax base = cash flow minus depreciation.** The taxable profit of period $t$ is $CF_t - D_t$, with depreciation $D_t$ adding up to the initial investment $I_0$ over the project's life (residual value zero in this chapter).
+3. **Immediate loss offset.** If the taxable profit of a period is negative, the firm receives a tax refund of $s$ times the loss — for example because the loss reduces taxes on the firm's other profits that year.
+4. **Interest is taxed symmetrically.** Interest income is taxable and interest expense is deductible, at the same rate $s$.
+5. **One market rate.** The firm can lend and borrow at the same pre-tax rate $i$, as in the perfect capital market of Chapter 4.
 
-### The Tug-of-War
-
-| Effect | Direction | Strength grows when… |
-|:-------|:---------:|:---------------------|
-| **Volume Effect** | ▼ reduces NPV | Tax rate $s$ is high |
-| **Interest Effect** | ▲ raises NPV | Pre-tax rate $i$ is high; project life $n$ is long |
-
-The paradox occurs when the **Interest Effect dominates** — which requires a sufficiently high pre-tax rate (a large tax shield base) combined with a long project life (many years over which the rate reduction compounds).
-
-### A Numerical Example of the Paradox
-
-**Project:** $I_0 = \text{€}\,100{,}000$, pre-tax CF = €\,27{,}000/yr, straight-line depreciation over 10 years ($D_t = \text{€}\,10{,}000$/yr), $n = 10$, pre-tax rate $i = 25\%$, tax rate $s = 40\%$.
-
-**Before taxes** (at $i = 25\%$):
-$$NPV_{before} = -100{,}000 + 27{,}000 \times PVIFA(25\%,10) = -100{,}000 + 27{,}000 \times 3.5705 = \mathbf{-\text{€}\,3{,}596}$$
-
-The project fails — it destroys value before taxes.
-
-**Adjusting for taxes** ($CF_{after} = 27{,}000 \times 0.60 + 10{,}000 \times 0.40 = \text{€}\,20{,}200$; $i_{after} = 25\% \times 0.60 = 15\%$):
-$$NPV_{after} = -100{,}000 + 20{,}200 \times PVIFA(15\%,10) = -100{,}000 + 20{,}200 \times 5.0188 = \mathbf{+\text{€}\,1{,}380}$$
-
-Taxes turned a loser into a winner. At 25% pre-tax, the Interest Tax Shield is enormous: it cuts the discount rate by 10 percentage points (25% → 15%), inflating the present value of every future cash flow far more than the Volume Effect deflates them.
+None of these assumptions describes real tax law precisely. Together they isolate the two effects of taxation cleanly — and they are close enough to reality to give the right sign to most decisions.
 
 ::: {.details}
-#### The Inflation Connection
-The paradox becomes more likely under high inflation. Nominal interest rates rise with inflation, creating a larger Interest Tax Shield base. Meanwhile, the real value of future tax payments is eroded by inflation. Kruschwitz documented cases from post-war economies with double-digit nominal rates where the paradox surfaced routinely — firms profited from investing in otherwise marginal projects precisely because of their interest tax shields.
+#### Deep Dive: What Rate Is $s$ in Germany?
+A German corporation pays three profit taxes. Corporate income tax (dt. *Körperschaftsteuer*) is 15% of taxable profit; the solidarity surcharge adds 5.5% of that, i.e. 0.825 percentage points; trade tax (dt. *Gewerbesteuer*) is 3.5% of the trade-tax base multiplied by the municipality's multiplier (dt. *Hebesatz*). With a multiplier of 400%, trade tax is 14%, and the combined rate is $15 + 0.825 + 14 = 29.825$ %, roughly 30%. Because multipliers differ between municipalities, so does the combined rate. Under the investment programme Germany adopted in 2025, the corporate income tax rate is to fall by one percentage point per year from 2028 to 10% in 2032, which would bring the same company down to about 24.5%. The 30% used in this chapter's examples is therefore an illustrative assumption close to today's German level, not a legal constant. Real tax law also deviates from the model: trade tax, for instance, adds back part of the interest expense, and losses are often only carried forward rather than refunded.
 :::
 
-::: {.content-visible when-format="html"}
+### Step 1: After-Tax Cash Flows
+
+In each period, the tax payment is the tax rate times the taxable profit:
+
+$$
+\text{Tax}_t = s \cdot (CF_{before,t} - D_t)
+$$ {#eq-tax}
+
+where $CF_{before,t}$ is the pre-tax net cash flow of period $t$ and $D_t$ the depreciation of that period. The cash flow the firm keeps is the pre-tax cash flow minus the tax payment. Rearranging gives the form you will use most often:
+
+$$
+CF_{after,t} = CF_{before,t} - s \cdot (CF_{before,t} - D_t) = CF_{before,t} \cdot (1-s) + s \cdot D_t
+$$ {#eq-cf-after}
+
+The first term is the share of the cash flow the partner leaves you; the second is the depreciation tax shield. The initial investment $I_0$ at $t = 0$ is *not* adjusted: buying the machine is not a tax-deductible expense in the year of purchase; it enters the tax calculation only through the depreciation $D_1, \dots, D_n$.
+
+**Worked example.** A machine costs €100,000, generates a pre-tax cash flow of €30,000 per year for five years and has no residual value. It is depreciated straight-line, i.e. by €100,000 / 5 = €20,000 per year. The tax rate is 30%, the pre-tax market rate 10%. On the timeline:
+
+| | $t = 0$ | $t = 1$ | $t = 2$ | $t = 3$ | $t = 4$ | $t = 5$ |
+|:--|--:|--:|--:|--:|--:|--:|
+| Pre-tax cash flow $CF_{before,t}$ | −100,000 | 30,000 | 30,000 | 30,000 | 30,000 | 30,000 |
+| Depreciation $D_t$ | — | 20,000 | 20,000 | 20,000 | 20,000 | 20,000 |
+| Taxable profit $CF_{before,t} - D_t$ | — | 10,000 | 10,000 | 10,000 | 10,000 | 10,000 |
+| Tax (30%) | — | 3,000 | 3,000 | 3,000 | 3,000 | 3,000 |
+| **After-tax cash flow** $CF_{after,t}$ | **−100,000** | **27,000** | **27,000** | **27,000** | **27,000** | **27,000** |
+
+With @eq-cf-after, in one line:
+
+$$
+CF_{after} = 30{,}000 \cdot 0.70 + 0.30 \cdot 20{,}000 = 21{,}000 + 6{,}000 = 27{,}000
+$$
+
+The partner takes €9,000 of each year's €30,000 but returns €6,000 through the depreciation tax shield, so the net tax is €3,000 — 30% of the €10,000 profit.
+
+### Step 2: The After-Tax Discount Rate
+
+The discount rate expresses the return of the best alternative. In the standard model the alternative is the capital market, and its interest is taxed at the same rate $s$ (assumption 4). The after-tax discount rate is therefore
+
+$$
+i_{after} = i \cdot (1-s)
+$$ {#eq-i-after}
+
+where $i$ is the pre-tax market rate. In the example, $i_{after} = 10\% \cdot 0.70 = 7\%$.
+
+The derivation works from both sides of the market. A firm with spare cash that invests in the machine gives up lending at 10%, which would have yielded 7% after tax. A firm without spare cash that borrows to buy the machine pays 10% interest, but deducts it from taxable profit, so the loan costs only 7% after tax. Either way, the opportunity cost after tax is 7%. This is why the standard model is **financing-neutral**: the after-tax rate does not depend on whether the project is funded with debt or equity. It is the taxation of the *alternative*, not a debt-financing assumption, that lowers the rate.
+
+::: {.details}
+#### Deep Dive: Standard Model vs. WACC
+The Formula Collection also lists the weighted average cost of capital, $r_{WACC} = k_E \cdot \frac{E}{E+D} + k_D \cdot (1-s) \cdot \frac{D}{E+D}$, where only the cost of debt carries the factor $(1-s)$. The WACC belongs to a different model of the world: debt and equity have different costs, only interest on debt is tax-deductible, and dividends are paid out of taxed profit. In that world, the mix of debt and equity changes the discount rate, and borrowing more can lower the cost of capital. The standard model assumes instead one market rate for lending and borrowing, with all interest taxed at $s$; financing is then irrelevant and the after-tax rate is simply $i \cdot (1-s)$. Use one model consistently. Mixing the after-tax cash flows of the standard model with a WACC from a different set of assumptions produces numbers that belong to neither.
+:::
+
+### Step 3: After-Tax NPV and Its Decomposition
+
+The after-tax NPV discounts the after-tax cash flows at the after-tax rate:
+
+$$
+C_0^{after} = -I_0 + \sum_{t=1}^{n} CF_{after,t} \cdot (1+i_{after})^{-t}
+$$ {#eq-npv-after}
+
+The decision rule is unchanged: accept if $C_0^{after} > 0$. For the example, with level cash flows and the factors from the Formula Collection:
+
+$$
+C_0^{before} = -100{,}000 + 30{,}000 \cdot PVIFA(10\%,5) = -100{,}000 + 30{,}000 \cdot 3.7908 = 13{,}724
+$$
+
+$$
+C_0^{after} = -100{,}000 + 27{,}000 \cdot PVIFA(7\%,5) = -100{,}000 + 27{,}000 \cdot 4.1002 = 10{,}705
+$$
+
+Taxes cost this project about €3,000 of value. To see *why*, we change one input at a time. First we replace the pre-tax by the after-tax cash flows but keep the pre-tax rate — that isolates the volume effect. Then we lower the rate — that isolates the interest effect:
+
+$$
+\text{Volume effect} = \sum_{t=1}^{n} (CF_{after,t} - CF_{before,t}) \cdot (1+i)^{-t}
+$$ {#eq-volume}
+
+$$
+\text{Interest effect} = \sum_{t=1}^{n} CF_{after,t} \cdot \left[(1+i_{after})^{-t} - (1+i)^{-t}\right]
+$$ {#eq-interest}
+
+By construction, the two effects add up exactly to the total change $C_0^{after} - C_0^{before}$. Since $CF_{after,t} - CF_{before,t} = -\text{Tax}_t$, the volume effect is simply minus the present value of all tax payments at the pre-tax rate.
+
+| Effect | Calculation | Value (€) |
+|:--|:--|--:|
+| Volume effect | $-3{,}000 \cdot 3.7908$ (lower cash flows, old rate) | −11,372 |
+| Interest effect | $27{,}000 \cdot (4.1002 - 3.7908)$ (new cash flows, lower rate) | +8,354 |
+| **Total tax effect** | $C_0^{after} - C_0^{before}$ | **−3,018** |
+
+(The rounded NPVs above differ by 3,019; the exact difference is −3,018.27. The €1 gap is rounding.)
+
+The volume effect dominates, so taxes reduce the NPV — the normal case. But the interest effect recovers almost three-quarters of the loss. Note that the order of the two steps matters for the split, though not for the total: lowering the rate first and taxing the cash flows second would assign slightly different values to each effect. This book always uses the convention above: volume effect first, at the old rate.
+
+The procedure in one place:
+
+1. Compute the taxable profit $CF_{before,t} - D_t$ and the tax for every period (@eq-tax).
+2. Compute the after-tax cash flows (@eq-cf-after); leave $I_0$ unchanged.
+3. Compute the after-tax rate $i_{after} = i \cdot (1-s)$ (@eq-i-after).
+4. Discount the after-tax cash flows at $i_{after}$ and apply the NPV rule (@eq-npv-after).
+5. If you need to explain the result, split the change into volume and interest effect (@eq-volume, @eq-interest).
+
+### The Tax Paradox
+
+Now lower the machine's pre-tax cash flow from €30,000 to €26,300 and keep everything else. Before taxes:
+
+$$
+C_0^{before} = -100{,}000 + 26{,}300 \cdot 3.7908 = -302
+$$
+
+The project fails. After taxes, the cash flow is $26{,}300 \cdot 0.70 + 6{,}000 = 24{,}410$ per year, and
+
+$$
+C_0^{after} = -100{,}000 + 24{,}410 \cdot 4.1002 = +86
+$$
+
+The project passes. The volume effect is −€7,165, the interest effect +€7,553: this time the interest effect wins. A situation in which the after-tax NPV exceeds the pre-tax NPV, $C_0^{after} > C_0^{before}$, is called the **tax paradox** (dt. *Steuerparadoxon*). In its sharpest form it reverses the decision: $C_0^{before} < 0 < C_0^{after}$. An equivalent way to state it: over some range, *raising* the tax rate *raises* the NPV.
+
+::: {.flip-card}
+#### Tax Paradox
+The situation in which the NPV after taxes is higher than the NPV before taxes, $C_0^{after} > C_0^{before}$ — in the extreme, a project rejected without taxes is accepted with taxes. Arithmetically, the interest effect outweighs the volume effect. Economically, it arises because tax depreciation runs ahead of the project's true loss of value, so the state defers part of the tax bill and effectively grants an interest-free loan.
+:::
+
+"The interest effect outweighs the volume effect" describes the arithmetic, but it does not yet explain *why*. The explanation lies in the timing of depreciation, and it takes three steps.
+
+**Step 1 — the total tax bill is fixed.** Because total depreciation always equals $I_0$, the sum of all tax payments over the project's life is $s \cdot (\sum CF_{before,t} - I_0)$, whatever the depreciation schedule. In the example, $0.30 \cdot (5 \cdot 26{,}300 - 100{,}000) = 9{,}450$. The schedule only decides *when* the partner collects.
+
+**Step 2 — with a "fair" schedule, taxes cannot flip the decision.** Suppose the tax office allowed depreciation exactly equal to the machine's **economic depreciation**: the annual decline in its value, measured as the present value of its remaining cash flows discounted at the project's own IRR (so that the value at $t = 0$ equals the price paid). Then the taxable profit in each year is exactly the project's true return on the capital still tied up in it. The state takes the share $s$ of that return, so a project earning an internal rate of return (IRR) of $r$ before taxes earns $r \cdot (1-s)$ after taxes — and the benchmark falls from $i$ to $i \cdot (1-s)$ in the same proportion. Since $r > i$ exactly when $r(1-s) > i(1-s)$, the decision is the same with and without taxes. The idea that taxing economic income leaves investment decisions undistorted goes back to Samuelson (1964).
+
+::: {.flip-card}
+#### Economic Depreciation
+The decline in an asset's value during a period, where value is the present value of the cash flows the asset will still generate. For a machine with level cash flows it is small at first and grows over time, like the repayment share of an annuity loan in Chapter 3. Only if tax depreciation equals economic depreciation do taxes leave the investment decision unchanged.
+:::
+
+**Step 3 — straight-line depreciation runs ahead of economic depreciation.** A machine with level cash flows behaves like an annuity loan the firm has granted to itself: in the early years most of each cash flow is "interest" (return on the capital tied up), and only a small part is "repayment" (economic depreciation). In the original example, with an IRR of 15.24%, economic depreciation in year 1 is $30{,}000 - 0.15238 \cdot 100{,}000 \approx 14{,}762$, rising to about 26,033 in year 5. Straight-line depreciation charges a flat €20,000 from the start — more than the machine actually loses in the early years. The firm pays too little tax early and too much tax late. The total is the same, but the state has effectively granted an **interest-free loan** of the deferred taxes. That loan is worth something, so the after-tax IRR rises *above* $r \cdot (1-s)$: 10.92% instead of 10.67% in the original example.
+
+For a project whose pre-tax IRR is just below $i$, this bonus can lift the after-tax IRR above $i_{after}$. In the paradox example, $r = 9.88\%$ is below $i = 10\%$, so $r(1-s) = 6.92\%$ would fall short of the after-tax benchmark of 7%; thanks to the tax deferral, the actual after-tax IRR is 7.03% — just enough.
+
+How large is the zone in which the decision flips? The table shows, for a tax rate of 30% and straight-line depreciation on level cash flows, the lowest pre-tax IRR at which a project still passes after taxes.
+
+| Pre-tax rate $i$ | $n = 5$ years | $n = 10$ years | $n = 20$ years |
+|:--:|:--:|:--:|:--:|
+| 5% | 4.96% | 4.91% | 4.83% |
+| 10% | 9.84% | 9.68% | 9.49% |
+| 20% | 19.46% | 19.07% | 18.81% |
+
+At 5% and five years the flip zone is a mere 0.05 percentage points wide; at 20% and twenty years it exceeds one percentage point. The interest-free loan from the state is worth more when interest rates are high and when the deferral lasts long — which is why the paradox is a curiosity in low-rate times and a real decision issue when rates are high. It also follows that anything which accelerates depreciation — declining-balance schedules, special write-offs, immediate expensing — enlarges the zone, while depreciation that is *slower* than economic depreciation (long statutory lives for buildings, for example) works in reverse and can make taxes reject a project that passes before taxes.
+
+Try it in the widget below, which evaluates a project of €10,000 with a cash flow of €2,000 per year for 15 years and straight-line depreciation. Start at a pre-tax rate of 2% and raise the tax rate from 0 to 60%: the NPV falls from about €15,700 to about €6,900 — the normal case. Then set the pre-tax rate to 20%: the project is underwater at a 0% tax rate (about −€650) and turns positive as you push the tax rate towards 60% (about +€270).
+
+::: {.widget}
 <iframe src="assets/ch07/paradoxon.html"
-        style="width: 100%; height: 520px; border: none;"
-        loading="lazy">
+        width="100%" height="560px" frameborder="0"
+        title="The Tax Paradox: NPV of a project as the pre-tax interest rate and the tax rate change">
 </iframe>
 :::
 
-## Strategic Levers: Playing the Tax Game
-
-As a manager, you cannot change the tax laws. But you control two structural variables that determine which effect wins:
-
-1. **Maximise debt** — until the bankruptcy risk outweighs the tax advantage. The optimal capital structure balances the Interest Tax Shield against distress costs (the Trade-Off Theory).
-2. **Accelerate depreciation** — write off assets as fast as legally permitted. Depreciation in Year 1 saves taxes now; the same deduction in Year 5 saves taxes later. Earlier savings have a higher present value.
-
-> **Management Rule:** "A tax deferred is a tax saved." Always postpone tax payments if legally permissible — the time value of the deferral creates real present value.
-
-## Chapter Check
-
-::: {.quick-check}
-**How does the Standard Model adjust the discount rate to account for taxes?**
-
-- It adds a risk premium.
-- **It multiplies the pre-tax market rate by $(1 - s)$.**
-- It leaves the rate unchanged.
-
-> Correct. Interest on debt is tax-deductible, so the effective cost of debt financing is $i \times (1-s)$. The Standard Model assumes 100% debt financing at the margin; for mixed financing, use WACC with the $(1-s)$ factor applied to the debt component only.
-:::
-
-::: {.quick-check}
-**When is the Tax Paradox most likely to occur?**
-
-- When the discount rate is very low.
-- **When the pre-tax discount rate is high and the project life is long.**
-- When the company is already making a loss.
-
-> Correct. A high pre-tax rate creates a large Interest Tax Shield base, and a long project life allows the rate reduction to compound across many periods. At i = 25% and n = 10, for example, the Interest Effect can easily dominate — converting a negative pre-tax NPV into a positive after-tax NPV.
-:::
-
 ::: {.drag-exercise}
-The *Tax Paradox* (*Steuerparadoxon*) occurs when the *Interest Effect* — the present-value gain from a lower *discount rate* — dominates the Volume Effect, so that a higher tax rate $s$ leads to a *higher* Net Present Value.
+The tax paradox occurs when the *interest effect* outweighs the *volume effect*; its economic cause is tax depreciation that runs ahead of *economic depreciation*, so that the state defers part of the tax bill like an *interest-free loan*.
 :::
 
-Chapter 8 takes investment decisions beyond the single-project view: when capital is limited and multiple projects compete for the same budget, how does a firm rank and select the best combination — the Dean Model of capital rationing.
+::: {.details}
+#### Deep Dive: Splitting the After-Tax NPV
+Inserting @eq-cf-after into @eq-npv-after and rearranging gives a revealing identity:
+$$
+C_0^{after} = (1-s) \cdot C_0(i_{after}) \; - \; s \cdot \left[ I_0 - \sum_{t=1}^{n} D_t \cdot (1+i_{after})^{-t} \right]
+$$
+Here $C_0(i_{after})$ is the *pre-tax* NPV evaluated at the lower after-tax rate. The first term is the partner taking its share of a project that is now measured against a cheaper benchmark. The bracket is the penalty for receiving the partner's contribution late: the investment $I_0$ is paid today, but its tax deductions arrive over time and are worth less in present-value terms. The faster the depreciation, the smaller the penalty; under immediate expensing it vanishes, and $C_0^{after} = (1-s) \cdot C_0(i_{after})$. For the original example: $0.70 \cdot 23{,}006 - 0.30 \cdot (100{,}000 - 82{,}004) = 16{,}104 - 5{,}399 = 10{,}705$, exactly the after-tax NPV computed before.
+:::
+
+## Practice: Taxes at Work
+
+Two cases apply the standard model end to end. The first returns to Miriam Roth's grinding cell and solves the puzzle from the opening; the second shows that the depreciation schedule alone — with an identical project and an identical total tax bill — can change the verdict.
+
+::: {.case-study}
+#### Case: Kessler Präzisionstechnik GmbH — The Filed-Away Grinding Cell
+The grinding cell costs €200,000 at $t = 0$, generates a pre-tax cash flow of €44,000 per year for eight years and has no residual value. For tax purposes it is depreciated straight-line over the eight years. Kessler's owners can earn 15% before taxes on the capital market; the combined profit tax rate is assumed to be 30%.
+
+**Tasks:**
+
+1. Confirm Miriam's pre-tax NPV.
+2. Compute the after-tax cash flow and the after-tax discount rate.
+3. Compute the after-tax NPV. Does the decision change?
+4. Decompose the change into volume effect and interest effect.
+5. Explain to the managing director, in three sentences, why the tax "helps" here. Use the IRRs: pre-tax 14.61%, after-tax 10.59%.
+
+::: {.solution}
+**Solution:**
+
+**1. Pre-tax NPV.** With $PVIFA(15\%,8) = 4.48732$:
+
+$$
+C_0^{before} = -200{,}000 + 44{,}000 \cdot 4.48732 = -200{,}000 + 197{,}442 = -2{,}558
+$$
+
+Without taxes the project destroys value; Miriam's "not worthwhile" was correct *in a world without taxes*.
+
+**2. Inputs after tax.** Depreciation is $200{,}000 / 8 = 25{,}000$ per year, so taxable profit is $44{,}000 - 25{,}000 = 19{,}000$ and the tax is $0.30 \cdot 19{,}000 = 5{,}700$ per year. With @eq-cf-after:
+
+$$
+CF_{after} = 44{,}000 \cdot 0.70 + 0.30 \cdot 25{,}000 = 30{,}800 + 7{,}500 = 38{,}300
+$$
+
+$$
+i_{after} = 15\% \cdot 0.70 = 10.5\%
+$$
+
+**3. After-tax NPV.** With $PVIFA(10.5\%,8) = 5.23919$:
+
+$$
+C_0^{after} = -200{,}000 + 38{,}300 \cdot 5.23919 = -200{,}000 + 200{,}661 = +661
+$$
+
+The decision reverses: the project is accepted after taxes. This is the tax paradox in its sharpest form.
+
+**4. Decomposition.**
+
+| Effect | Calculation | Value (€) |
+|:--|:--|--:|
+| Volume effect | $-5{,}700 \cdot 4.48732$ | −25,578 |
+| Interest effect | $38{,}300 \cdot (5.23919 - 4.48732)$ | +28,797 |
+| **Total** | $661 - (-2{,}558)$ | **+3,219** |
+
+The interest effect exceeds the volume effect by about €3,200. Over the eight years the state collects $8 \cdot 5{,}700 = 45{,}600$ in taxes, i.e. 30% of the project's total surplus of $8 \cdot 44{,}000 - 200{,}000 = 152{,}000$; what changes the verdict is not how much it collects, but when.
+
+**5. Explanation.** If the tax office taxed only the machine's true economic profit, the state would simply take 30% of the project's 14.61% return, leaving $14.61\% \cdot 0.70 = 10.23\%$ — below the after-tax benchmark of 10.5%, so taxes would not change the "no". But straight-line depreciation writes off €25,000 per year from the start, while the cell actually loses only about $44{,}000 - 0.1461 \cdot 200{,}000 \approx 14{,}780$ of value in year 1; Kessler therefore pays too little tax early and too much late, and that interest-free deferral lifts the after-tax return to 10.59%. Because 10.59% beats 10.5%, the project now creates value — the state did not change the machine, it changed the timing of its own share.
+:::
+:::
+
+The second case uses a project that fails before taxes at a moderate interest rate. At 8%, the straight-line flip zone is tiny — but the depreciation schedule is not fixed by nature. Germany's 2025 investment programme, for example, allows declining-balance depreciation of up to 30% of the remaining book value per year (at most three times the straight-line rate) for movable assets acquired between July 2025 and the end of 2027, with a later switch to straight-line permitted.
+
+::: {.case-study}
+#### Case: Albrecht Maschinenbau — Three Depreciation Schedules
+Albrecht Maschinenbau GmbH considers a test rig for €100,000 that generates a pre-tax cash flow of €24,500 per year for five years, with no residual value. The pre-tax market rate is 8%, the tax rate 30%. The tax advisor lays out three depreciation schedules:
+
+- **(A) Straight-line:** €20,000 per year.
+- **(B) Declining balance, 30%:** 30% of the remaining book value (purchase price minus depreciation so far), switching to straight-line on the remaining book value as soon as that gives the larger deduction: €30,000, €21,000, then €16,333 in each of years 3–5.
+- **(C) Immediate expensing:** the full €100,000 is deducted at $t = 0$ (a theoretical benchmark here; the model's loss offset turns the deduction into a tax refund of €30,000).
+
+**Tasks:**
+
+1. Compute the pre-tax NPV.
+2. Compute the after-tax cash flows and the after-tax NPV for each schedule.
+3. Show that the total tax paid over the project's life is the same under all three schedules.
+4. Which schedule would you recommend Albrecht to choose, and what does the comparison reveal about the cause of the tax paradox?
+
+::: {.solution}
+**Solution:**
+
+**1. Pre-tax NPV.** With $PVIFA(8\%,5) = 3.9927$:
+
+$$
+C_0^{before} = -100{,}000 + 24{,}500 \cdot 3.9927 = -2{,}179
+$$
+
+**2. After-tax cash flows and NPV.** The after-tax rate is $i_{after} = 8\% \cdot 0.70 = 5.6\%$. Taxes follow from @eq-tax, after-tax cash flows from @eq-cf-after (amounts in €; a negative tax is a refund):
+
+| | $t = 0$ | $t = 1$ | $t = 2$ | $t = 3$ | $t = 4$ | $t = 5$ |
+|:--|--:|--:|--:|--:|--:|--:|
+| Pre-tax cash flow | −100,000 | 24,500 | 24,500 | 24,500 | 24,500 | 24,500 |
+| (A) Tax | — | 1,350 | 1,350 | 1,350 | 1,350 | 1,350 |
+| (A) After-tax cash flow | −100,000 | 23,150 | 23,150 | 23,150 | 23,150 | 23,150 |
+| (B) Depreciation | — | 30,000 | 21,000 | 16,333 | 16,333 | 16,333 |
+| (B) Tax | — | −1,650 | 1,050 | 2,450 | 2,450 | 2,450 |
+| (B) After-tax cash flow | −100,000 | 26,150 | 23,450 | 22,050 | 22,050 | 22,050 |
+| (C) Tax | −30,000 | 7,350 | 7,350 | 7,350 | 7,350 | 7,350 |
+| (C) After-tax cash flow | −70,000 | 17,150 | 17,150 | 17,150 | 17,150 | 17,150 |
+
+Discounting at 5.6% (for the level streams with $PVIFA(5.6\%,5) = 4.2586$; for schedule B year by year):
+
+$$
+C_0^{after,A} = -100{,}000 + 23{,}150 \cdot 4.2586 = -1{,}413
+$$
+
+$$
+C_0^{after,B} = -100{,}000 + \frac{26{,}150}{1.056} + \frac{23{,}450}{1.056^2} + \frac{22{,}050}{1.056^3} + \frac{22{,}050}{1.056^4} + \frac{22{,}050}{1.056^5} = -960
+$$
+
+$$
+C_0^{after,C} = -70{,}000 + 17{,}150 \cdot 4.2586 = +3{,}035
+$$
+
+**3. Total tax.** (A) $5 \cdot 1{,}350 = 6{,}750$; (B) $-1{,}650 + 1{,}050 + 3 \cdot 2{,}450 = 6{,}750$; (C) $-30{,}000 + 5 \cdot 7{,}350 = 6{,}750$. In every case the state collects 30% of the project's total surplus of $5 \cdot 24{,}500 - 100{,}000 = 22{,}500$.
+
+**4. Recommendation and lesson.** All three after-tax NPVs exceed the pre-tax NPV of −€2,179, so the tax paradox in its weak form ($C_0^{after} > C_0^{before}$) appears under every schedule. Under straight-line and declining-balance depreciation the project is still rejected; only immediate expensing reverses the decision. If Albrecht invests at all, it should choose the fastest schedule available, because the same €6,750 tax bill is worth less the later it is paid. But a positive NPV that exists *only* because of the depreciation schedule deserves scrutiny: the test rig is a marginal project, and its value comes from the state's interest-free credit rather than from the rig itself. The comparison isolates the cause of the paradox: same project, same tax rate, same total tax — only the timing of the deductions differs, and the timing alone moves the NPV by more than €4,400.
+:::
+:::
+
+The running Vogt case (Task 4) applies the same model to a plasma cutting system at a 25% hurdle rate and a 40% tax rate. Work through it now; with the tools of this chapter you can not only compute the reversal but explain it.
+
+## Conclusion: The Partner Who Changes the Verdict
+
+The managing director's question has an answer. The state did not change the grinding cell: it changed the benchmark the cell has to beat, and it changed the timing of its own share. Taxes reduce the project's cash flows (volume effect), but they reduce the return on every alternative too (interest effect) — and when depreciation runs ahead of the machine's true loss of value, the partner pays its share of the investment early and collects its share of the profits late. A partner like that is lending you money for free.
+
+This has two practical consequences. For the analyst: never decide a marginal project on pre-tax numbers — the sign of the NPV can flip. For the manager: the choice of depreciation schedule is not bookkeeping, it is value; whenever the law offers a faster write-off, the same tax bill becomes cheaper. And for anyone who designs tax policy, the standard model carries a warning and an instrument at the same time: tax depreciation that differs from economic depreciation steers investment decisions, whether the legislator intends it or not.
+
+::: {.quick-check}
+Why does the standard model discount after-tax cash flows at $i \cdot (1-s)$ instead of $i$?
+
+- Because the model assumes that every project is financed entirely with debt.
+- **Because the interest earned on the alternative investment is taxed as well, so the benchmark falls.**
+- Because taxes make the project riskier, which requires a risk adjustment of the rate.
+:::
+
+::: {.quick-check}
+A project generates a pre-tax cash flow of €50,000 in a year with depreciation of €30,000. At a tax rate of 30%, what is the after-tax cash flow?
+
+- €35,000 — the cash flow times $(1-s)$.
+- **€44,000 — the cash flow minus 30% tax on the profit of €20,000.**
+- €14,000 — the profit of €20,000 after tax.
+:::
+
+::: {.quick-check}
+Which change makes a reversal of the investment decision through the tax paradox more likely?
+
+- Spreading the tax depreciation over a longer period than the useful life.
+- **Switching from straight-line to declining-balance depreciation.**
+- A lower pre-tax market interest rate.
+:::
+
+So far, every project that passed the NPV test could be financed at the market rate. Chapter 8 drops that assumption: when the budget is limited and good projects compete for the same scarce capital, which ones do you fund first?

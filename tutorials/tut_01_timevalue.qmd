@@ -1,0 +1,257 @@
+---
+title: "Tutorial 01: The Time Machine"
+subtitle: "Time-value drivers · nominal vs. real interest · simple, compound and sub-annual compounding · discounting"
+lang: en
+author:
+  - name: Prof. Dr. Christian Kraus
+    email: christian.kraus@thws.de
+    role: Lecturer
+    affiliation: THWS Business & Engineering
+course: "Investment Decisions (BUA3)"
+semester: "WS 2026/27"
+sheet: "01"
+date: last-modified
+show_solutions: false
+format: tutorial-typst
+---
+
+# Tutorial 01: The Time Machine
+
+## Exercise 1: Interest, Inflation and Real Returns
+
+Jonas, a third-semester student, has finally opened a fixed-term deposit. He is proud of the interest rate and slightly less proud of his grasp of what it means. His grandmother, meanwhile, trusts no bank and keeps her savings in a biscuit tin.
+
+#### Task 1: Multiple choice — what drives the price of time?
+
+Which of the following statements are **correct**? (Multiple answers possible.)
+
+a) A nominal interest rate of 4% combined with inflation of 4% leaves the saver's purchasing power roughly unchanged.
+
+b) The risk premium compensates the lender for the expected loss of purchasing power over the term of the loan.
+
+c) The approximation $r \approx i_{nom} - \pi$ works well for small rates but misstates the real rate substantially when inflation is high.
+
+d) All else equal, a borrower with a higher default risk has to pay a higher interest rate.
+
+e) The opportunity cost of receiving money later is the interest you pay on a loan.
+
+f) All statements are false.
+
+::: {.content-visible when-meta="show_solutions"}
+**Solution:** Correct are **a)**, **c)** and **d)**.
+
+- **a) Correct.** The real rate is $1.04 / 1.04 - 1 = 0$: Jonas has more euros, but they buy exactly what his original balance bought.
+- **b) Incorrect.** That is the *inflation* premium. The risk premium compensates for the danger that the borrower defaults or pays late.
+- **c) Correct.** The approximation drops the product $r \cdot \pi$, which becomes large when inflation is high; above roughly 10% use the exact Fisher equation.
+- **d) Correct.** Higher default risk means a thicker risk premium on top of the risk-free rate.
+- **e) Incorrect.** Opportunity cost is the return you *forgo* on the best alternative, i.e. the interest you could have *earned* in the meantime.
+- **f) Incorrect**, since a), c) and d) are correct.
+:::
+
+#### Task 2: Numeric calculation — the real rate
+
+a) Jonas's deposit pays **3.5%** p.a. Inflation is expected to be **2.4%** p.a. Compute the real interest rate with the approximation and with the exact Fisher equation.
+
+b) A saver in a high-inflation economy earns **40%** p.a. on her deposit while inflation runs at **60%** p.a. Compute both versions of the real rate and explain the difference.
+
+::: {.content-visible when-meta="show_solutions"}
+**Solution:**
+
+**a)** Given: $i_{nom} = 0.035$, $\pi = 0.024$.
+
+- Approximation: $r \approx 3.5\% - 2.4\% = 1.10\%$
+- Exact: $r = \dfrac{1.035}{1.024} - 1 \approx 1.07\%$
+
+The two results differ by only 0.03 percentage points: for small rates the shortcut is fine.
+
+**b)** Given: $i_{nom} = 0.40$, $\pi = 0.60$.
+
+- Approximation: $r \approx 40\% - 60\% = -20.0\%$
+- Exact: $r = \dfrac{1.40}{1.60} - 1 = -12.5\%$
+
+The saver loses purchasing power either way, but the approximation overstates the loss by 7.5 percentage points. It ignores the product $r \cdot \pi$ in $i_{nom} = r + \pi + r \cdot \pi$, which is no longer negligible at rates of this size. At high inflation only the exact form is acceptable.
+
+**Grading Notes:** Full marks for b) require the explanation (dropped cross term / high rates), not just the two numbers.
+:::
+
+#### Task 3: Numeric calculation — the biscuit tin
+
+Grandma keeps **€5,000** in cash in her biscuit tin for **10 years**. Inflation averages **2%** p.a.
+
+a) What is the purchasing power of the €5,000 after ten years, expressed in today's prices?
+
+b) Jonas persuades her to put the money into a savings account at **1.5%** p.a., compounded annually, instead. What is the balance after ten years, what is it worth in today's prices, and what is the exact real annual return?
+
+::: {.content-visible when-meta="show_solutions"}
+**Solution:**
+
+**a)** Deflate the nominal amount by ten years of inflation: $(1.02)^{10} \approx 1.21899$.
+
+$$\text{Value in today's prices} = \frac{5{,}000}{1.02^{10}} \approx 4{,}101.74$$
+
+The tin still holds €5,000, but they buy only what **€4,101.74** buys today, a loss of about €898.26 in purchasing power.
+
+**b)** Future value:
+
+$$FV = 5{,}000 \cdot 1.015^{10} \approx 5{,}802.70$$
+
+In today's prices:
+
+$$\frac{5{,}802.70}{1.02^{10}} \approx 4{,}760.24$$
+
+Exact real return:
+
+$$r = \frac{1.015}{1.02} - 1 \approx -0.49\%$$
+
+The account is clearly better than the tin (€4,760 instead of €4,102 in today's prices), but because the nominal rate is below inflation, it still loses purchasing power every year.
+:::
+
+## Exercise 2: Growing Money
+
+The student council has **€8,000** left over from the summer party and wants to park it until the anniversary celebration. The treasurer has collected offers and a strong opinion on each of them.
+
+#### Task 1: Numeric calculation — simple vs. compound interest
+
+Compute the balance after **6 years** at **4.5%** p.a. under (a) simple interest and (b) annual compound interest. How much of the difference is "interest on interest"?
+
+::: {.content-visible when-meta="show_solutions"}
+**Solution:** Given: $PV = 8{,}000$, $i = 0.045$, $n = 6$.
+
+**a)** Simple interest:
+
+$$FV = 8{,}000 \cdot (1 + 6 \cdot 0.045) = 8{,}000 \cdot 1.27 = 10{,}160.00$$
+
+**b)** Compound interest, with $1.045^6 \approx 1.302260$:
+
+$$FV = 8{,}000 \cdot 1.045^6 \approx 10{,}418.08$$
+
+The difference of **€258.08** is interest earned on interest that was credited in earlier years. Simple interest pays €360 every year on the original €8,000; compound interest pays interest on a growing balance.
+:::
+
+#### Task 2: Numeric calculation — sub-annual compounding
+
+A bank offers **6% p.a. nominal, compounded monthly**.
+
+a) Compute the effective annual rate.
+
+b) Compute the balance of the €8,000 after **2 years and 5 months**.
+
+c) A second bank offers 6% p.a. nominal, compounded **quarterly**. Without computing any balance, which offer is better, and why?
+
+::: {.content-visible when-meta="show_solutions"}
+**Solution:**
+
+**a)** $i_{rel} = 0.06 / 12 = 0.005$, $m = 12$:
+
+$$i_{eff} = (1 + 0.005)^{12} - 1 \approx 6.1678\%$$
+
+**b)** $n = 2$ complete years, $k = 5$ additional months, so $n \cdot m + k = 2 \cdot 12 + 5 = 29$ months:
+
+$$FV = 8{,}000 \cdot 1.005^{29} \approx 8{,}000 \cdot 1.155622 \approx 9{,}244.98$$
+
+**c)** The monthly offer is better. Both have the same nominal rate, but monthly compounding credits interest more often, so more interest earns interest within the year. The quarterly offer's effective rate is only $(1 + 0.06/4)^4 - 1 \approx 6.1364\%$.
+:::
+
+#### Task 3: Numeric calculation — solving for rate and time
+
+The treasurer wants the €8,000 to grow to **€10,000**.
+
+a) What annual compound rate is needed to reach the target in exactly **4 years**?
+
+b) How many years does it take at **4.5%** p.a., compounded annually?
+
+c) How long does it take to *double* the money at 4.5%? Compare the Rule of 72 with the exact result.
+
+::: {.content-visible when-meta="show_solutions"}
+**Solution:**
+
+**a)** $$i = \left(\frac{10{,}000}{8{,}000}\right)^{1/4} - 1 = 1.25^{0.25} - 1 \approx 5.74\%$$
+
+**b)** $$n = \frac{\ln(10{,}000 / 8{,}000)}{\ln 1.045} = \frac{\ln 1.25}{\ln 1.045} \approx 5.07 \text{ years}$$
+
+With annual crediting, the target is reached when the interest for year 6 is credited, i.e. after 6 full years.
+
+**c)** Rule of 72: $72 / 4.5 = 16$ years. Exact: $n = \ln 2 / \ln 1.045 \approx 15.75$ years. The rule is off by about a quarter of a year, close enough for a quick estimate.
+
+**Grading Notes:** For b), accept 5.07 years as well as the argument that with annual crediting 6 full years are needed.
+:::
+
+## Exercise 3: Discounting and Decisions
+
+Jonas is selling his old car to a fellow student who is long on enthusiasm and short on cash. Before he signs anything, he wants to know what the various promises are worth today.
+
+#### Task 1: Numeric calculation — present value on a timeline
+
+The buyer's parents offer to pay **€25,000** for a different, larger deal in **4 years**. Jonas's interest rate is **6%** p.a.
+
+a) Draw the timeline and state the direction in which the payment has to be moved.
+
+b) Compute the present value.
+
+::: {.content-visible when-meta="show_solutions"}
+**Solution:**
+
+**a)** The payment sits at $t = 4$; the reference point is $t = 0$. The value is moved from right to left, i.e. **discounted**:
+
+| $t$ | 0 | 1 | 2 | 3 | 4 |
+|:---|:---:|:---:|:---:|:---:|:---:|
+| Payment (€) | $PV$ = ? | – | – | – | 25,000 |
+| Discount factor $1.06^{-t}$ | 1.0000 | 0.9434 | 0.8900 | 0.8396 | 0.7921 |
+
+**b)** $$PV = \frac{25{,}000}{1.06^4} = 25{,}000 \cdot 0.792094 \approx 19{,}802.34$$
+
+€19,802.34 invested today at 6% grows into exactly €25,000 in four years.
+:::
+
+#### Task 2: Numeric calculation — comparing offers at the same point in time
+
+For the car itself, the buyer proposes three alternatives:
+
+| Offer | Payments |
+|:---|:---|
+| A | €9,000 today |
+| B | €4,700 in 1 year and €4,700 in 2 years |
+| C | €10,200 in 3 years |
+
+a) Which offer should Jonas accept at an interest rate of **5%**?
+
+b) Does the decision change at **3%**?
+
+::: {.content-visible when-meta="show_solutions"}
+**Solution:**
+
+**a)** Move every payment to $t = 0$ at $i = 0.05$:
+
+- $PV_A = 9{,}000.00$
+- $PV_B = \dfrac{4{,}700}{1.05} + \dfrac{4{,}700}{1.05^2} \approx 4{,}476.19 + 4{,}263.04 = 8{,}739.23$
+- $PV_C = \dfrac{10{,}200}{1.05^3} = \dfrac{10{,}200}{1.157625} \approx 8{,}811.14$
+
+**Offer A** has the highest present value. Although B and C promise more euros in total (€9,400 and €10,200), waiting is too expensive at 5%.
+
+**b)** At $i = 0.03$:
+
+- $PV_A = 9{,}000.00$
+- $PV_B = \dfrac{4{,}700}{1.03} + \dfrac{4{,}700}{1.03^2} \approx 4{,}563.11 + 4{,}430.20 = 8{,}993.31$
+- $PV_C = \dfrac{10{,}200}{1.03^3} = \dfrac{10{,}200}{1.092727} \approx 9{,}334.44$
+
+Now **Offer C** wins. The lower the interest rate, the less waiting costs, and the more attractive large, late payments become. The ranking of payment streams depends on the rate that links the points in time.
+
+**Grading Notes:** Penalise any answer that compares the undiscounted totals (€9,000 vs. €9,400 vs. €10,200).
+:::
+
+#### Task 3: Transfer — why rising rates hurt distant payments most
+
+Jonas reads that "rising interest rates hit long-term projects much harder than short-term ones." Explain the statement using the discounting formula, and support your explanation by computing what €1,000 due in **2 years** and €1,000 due in **20 years** are worth today at **4%** and at **6%**.
+
+::: {.content-visible when-meta="show_solutions"}
+**Solution:**
+
+| Payment due in | PV at 4% (€) | PV at 6% (€) | Loss of present value |
+|:---:|---:|---:|---:|
+| 2 years | $1{,}000 / 1.04^2 \approx 924.56$ | $1{,}000 / 1.06^2 \approx 890.00$ | about 3.7% |
+| 20 years | $1{,}000 / 1.04^{20} \approx 456.39$ | $1{,}000 / 1.06^{20} \approx 311.80$ | about 31.7% |
+
+In $PV = FV / (1+i)^n$, the interest rate enters the denominator raised to the power $n$. A higher rate enlarges the denominator once for every period the payment lies in the future, so the effect compounds with distance. The same two-percentage-point rise costs the 2-year payment less than 4% of its value but the 20-year payment almost a third. Projects whose cash flows lie far in the future (power plants, infrastructure, research) therefore lose much more value when rates rise than projects that pay back quickly.
+
+**Grading Notes:** Expect the exponent argument plus at least one numerical comparison; the exact percentage losses are secondary.
+:::

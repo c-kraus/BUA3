@@ -1,0 +1,22 @@
+# Tutorials {.unnumbered}
+
+Every chapter comes with a short exercise sheet that reinforces its core learning objectives. Most tasks are calculations — the kind you will meet in the exam — complemented by a multiple-choice block and a transfer question that asks you to explain *why* a method works or fails.
+
+**How to use them:** download the **Questions** sheet, work through it on your own first, then open the **Solutions** version to check your reasoning — the worked solutions show every calculation step and the timeline behind it, not just the final number.
+
+| # | Tutorial | What it drills | Download |
+|---|---|---|---|
+| 1 | The Time Machine | Compounding and discounting, nominal vs. real interest, sub-annual compounding | [Questions](tutorials/tut_01_timevalue_questions.pdf) · [Solutions](tutorials/tut_01_timevalue.pdf) |
+| 2 | The Geometry of Cash Flows | Annuities (ordinary and due), PVIFA, Capital Recovery Factor, perpetuities | [Questions](tutorials/tut_02_cashflows_questions.pdf) · [Solutions](tutorials/tut_02_cashflows.pdf) |
+| 3 | Debt and Valuation | Repayment schedules, Skonto, bond price and yield, dividend discount and Gordon Growth | [Questions](tutorials/tut_03_debt_valuation_questions.pdf) · [Solutions](tutorials/tut_03_debt_valuation.pdf) |
+| 4 | Net Present Value | Payback period, NPV and decision rule, NPV function, scale problem | [Questions](tutorials/tut_04_npv_questions.pdf) · [Solutions](tutorials/tut_04_npv.pdf) |
+| 5 | Internal Rate of Return | IRR by interpolation, MIRR, multiple IRRs, NPV vs. IRR and the incremental investment | [Questions](tutorials/tut_05_irr_questions.pdf) · [Solutions](tutorials/tut_05_irr.pdf) |
+| 6 | The Annuity Method | Equivalent annual value, unequal lifespans, repeatability assumption | [Questions](tutorials/tut_06_annuity_questions.pdf) · [Solutions](tutorials/tut_06_annuity.pdf) |
+| 7 | Taxes | After-tax cash flows, depreciation tax shield, after-tax discount rate, tax paradox | [Questions](tutorials/tut_07_taxes_questions.pdf) · [Solutions](tutorials/tut_07_taxes.pdf) |
+| 8 | Capital Rationing and the Dean Model | Investment and financing staircases, cut-off rate, Profitability Index | [Questions](tutorials/tut_08_dean_questions.pdf) · [Solutions](tutorials/tut_08_dean.pdf) |
+| 9 | Risk and Uncertainty | Expected NPV, sensitivity and scenario analysis, break-even values | [Questions](tutorials/tut_09_risk_questions.pdf) · [Solutions](tutorials/tut_09_risk.pdf) |
+| 10 | Investing Responsibly | Forecast bias, carbon price in the NPV, the discount rate as a value judgement | [Questions](tutorials/tut_10_ethics_questions.pdf) · [Solutions](tutorials/tut_10_ethics.pdf) |
+
+::: {.callout-note}
+The sheets are generated from a single source per chapter: the same file produces both the question sheet and the fully worked solutions. If a link does not resolve yet, the PDF is built on the next site deployment.
+:::

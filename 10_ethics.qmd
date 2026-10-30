@@ -1,0 +1,334 @@
+# Whose Numbers, Whose Costs, Whose Future?
+
+*Investing Responsibly — Ethics Inside the Calculation*
+
+## Opening: The Proposal Nobody Signed
+
+::: {.details}
+#### Story: Three Questions for a Heat Pump
+Autumn 2026, Würzburg. Clara Voss has run Vogt Antriebstechnik GmbH for two and a half years now, and the plant's 30-year-old gas boiler is on its last legs. Two documents lie on her desk. The first is a one-page note from the production manager: a new gas condensing boiler, €150,000, "proven technology, lowest cost, decision recommended". The second is a glossy brochure from a heat-pump supplier: an industrial heat pump for €750,000, energy savings of €60,000 a year for twenty years, "350 tonnes of CO₂ avoided every year", and a payback period printed in bold.
+
+Clara has learned to calculate. She could discount both proposals in ten minutes. What stops her is something else. The brochure's savings forecast was written by the people who want to sell her the machine. The boiler note says nothing about the 350 tonnes of CO₂ that the gas option will keep emitting — they appear in nobody's cash flow. And the boiler will still be running in 2045, when her apprentices will be running the plant.
+
+She writes three questions on a sticky note and attaches it to the folder: *Whose numbers? Whose costs? Whose future?*
+:::
+
+For most of this book the numbers were simply given: a cash flow of €80,000, a discount rate of 10%, a useful life of five years. Chapter 9 treated those forecasts as honest but uncertain and tested them with expected values, sensitivity, scenario and break-even analysis. This chapter takes the next step: forecasts can also be **biased**, and they are always incomplete. Someone wrote them, someone decided what to leave out, and someone chose the rate at which the future is discounted.
+
+None of this makes the net present value (dt. *Kapitalwert*) less useful; it makes it more demanding. The ethical questions of investment are not a philosophy seminar bolted onto a finance course. They sit *inside* the calculation — in the forecast, in the list of costs and in the discount rate — and that is where we will look for them, with tools you already know.
+
+## Theory: Three Questions Behind Every NPV
+
+### Whose Numbers? Forecasts Are Written by People
+
+An NPV is only as good as the cash flows that go into it, and cash flows for the future cannot be observed — they are estimated by people with knowledge, incentives and blind spots. Two very different mechanisms push those estimates in the same direction.
+
+The first is honest error with a systematic tilt. People who plan a project tend to imagine the best plausible course of events and underweight everything that could go wrong. Psychologists call this the **planning fallacy** (Kahneman & Tversky, 1979); the broader tendency to overrate the likelihood of good outcomes is **optimism bias**. Nobody is lying: the engineer who forecasts that a welding cell will run at full capacity in month three genuinely believes it.
+
+::: {.flip-card}
+#### Optimism Bias
+The systematic tendency of planners to overestimate benefits and underestimate costs and durations of their own projects, because they picture the project going to plan and neglect the experience of comparable projects. It is a bias of judgement, not of honesty, and it is the cognitive root of the planning fallacy.
+:::
+
+The second mechanism is not an error at all. When forecasts decide who gets the budget, the promotion or the contract, there is an incentive to make one's own project look good. Bent Flyvbjerg calls this **strategic misrepresentation**. In a study of 258 transport infrastructure projects, actual costs were on average 28% higher than forecast — 45% for rail, 34% for bridges and tunnels, 20% for roads — and the authors concluded that the pattern was best explained not by error but by deliberate underestimation to get projects approved (Flyvbjerg, Holm & Buhl, 2002). Flyvbjerg's later database of more than 16,000 projects tells the same story at scale: only 8.5% came in on budget and on time, and only 0.5% on budget, on time *and* with the promised benefits (Flyvbjerg & Gardner, 2023).
+
+::: {.flip-card}
+#### Strategic Misrepresentation
+The deliberate, incentive-driven distortion of a forecast — understating costs or overstating benefits — so that a project is approved. Unlike optimism bias, it is a matter of honesty, and better forecasting techniques alone do not cure it; only accountability does.
+:::
+
+The difference matters for the cure. Optimism bias responds to better method: compare the project with a *reference class* of similar past projects and adjust the forecast by how far those projects missed their own plans. The UK Treasury's appraisal guidance, the Green Book, requires exactly such optimism-bias adjustments for public projects. Strategic misrepresentation responds to **accountability**: being answerable for one's decisions and their consequences, and having to explain them to others using all the available financial and non-financial information (White et al., 2022). The same open textbook describes accounting itself as "a technical, social and moral practice" (Carnegie, Parker & Tsahuridu, 2021, quoted in White et al., 2022) — a definition that fits investment appraisal just as well.
+
+In practice, accountability for a forecast rests on three disciplines. **Open assumptions**: every key input — prices, volumes, efficiencies, ramp-up times — is written down where others can test it. **A named owner**: someone inside the organisation signs the forecast, rather than adopting a supplier's brochure. And a **post-investment audit**: after the project has run for a while, actual cash flows are compared with the forecast. The audit cannot undo a decision, but the knowledge that it will happen changes how carefully people forecast — and its results feed the reference class for the next project.
+
+### Whose Costs? What the Cash-Flow Forecast Leaves Out
+
+A cash-flow forecast records the payments that reach the company's bank account. Many consequences of an investment never do: the CO₂ from a gas boiler, the noise from a new logistics hub, the health cost of polluted air, the risk carried by the people who use a product. Economists call such effects **externalities** (dt. *externe Effekte*).
+
+::: {.flip-card}
+#### Externality
+A cost (or benefit) of an activity that falls on people outside the transaction and is therefore not reflected in the decision-maker's own cash flows. Greenhouse-gas emissions are the textbook case: the emitter saves money, while the damage is spread across the world and across future generations.
+:::
+
+An NPV built only from the company's own cash flows is a correct answer to a narrow question: *what is this project worth to us?* It says nothing about what the project costs everyone else. The most famous example of that gap — and the most frequently misquoted — is the "Pinto memo".
+
+::: {.details}
+#### Deep Dive: The Pinto Memo — What It Did and Did Not Say
+The popular version: in the early 1970s Ford calculated that paying compensation for people burned in rear-end collisions of its compact Pinto was cheaper than an inexpensive fix to the fuel tank, and chose to let them burn. Many business-ethics texts and classroom cases retell it in this form. The documents are more precise.
+
+The memo is a 1973 report by two Ford engineers, Grush and Saunby, titled *Fatalities Associated with Crash-Induced Fuel Leakage and Fires*. Ford submitted it to the US regulator, the National Highway Traffic Safety Administration (NHTSA), to oppose a proposed tightening of fuel-system rules — specifically the **static rollover test** of safety standard FMVSS 208. It concerned neither the Pinto nor rear-end collisions. It covered **all cars and light trucks** sold in the United States: about 11 million cars and 1.5 million light trucks, each needing a modification estimated at \$11, about \$137 million in total. Against this it set 180 burn deaths valued at \$200,000 each, 180 serious burn injuries at \$67,000 and 2,100 burned vehicles at \$700 — about \$49.5 million. The value per death was based on NHTSA's own 1972 estimate. Costs exceeded benefits, so — the memo argued — the rule was not worth it.
+
+The Pinto's rear fuel tank *was* a real problem: in 1978 NHTSA found the fuel system defective, Ford recalled about 1.5 million Pintos and Mercury Bobcats, and a California jury in *Grimshaw v. Ford* awarded \$125 million in punitive damages (damages meant to punish, not to compensate), which the judge reduced to \$3.5 million. But the often-quoted claim that 500 to 900 people died in Pinto fires came from a 1977 magazine article and was wrong, and a later legal study found that the Pinto's share of fatal fire accidents roughly matched its share of cars on the road (Schwartz, 1991).
+
+Two lessons survive the correction. First, putting a money value on a statistical life is not in itself the scandal — regulators do it routinely, and the \$200,000 came from the regulator. The ethical questions are *whose* costs are counted, *who* sets the values and whether the calculation is open to scrutiny. Second, a vivid story is a forecast about the past; it deserves the same audit as any other number.
+:::
+
+The constructive answer is to bring externalities into the calculation instead of arguing about them in the margins. For greenhouse gases, many companies use an **internal carbon price**: a price per tonne of CO₂ that the company charges itself in its investment appraisals, whether or not the law requires it. Part of that price is already real cash. In Germany, natural gas carries a national CO₂ price of €55 per tonne in 2025 and €55–65 in 2026, and EU emission allowances — permits that power plants and factories must hold for each tonne they emit — averaged roughly €85 per tonne in 2023 and €67 in 2024. The rest is a deliberate choice to count a cost the company imposes on others. Either way, the externality becomes a line in the spreadsheet.
+
+### Whose Future? The Discount Rate as a Value Judgement
+
+Chapter 1 started from a simple claim: a euro today is worth more than a euro tomorrow, because you could invest it, because inflation erodes it and because the future is risky. Discounting at a rate $i$ is the arithmetic of that claim. Over five or ten years, the choice of $i$ is mostly a question of the company's cost of capital. Over fifty or a hundred years it becomes something else: a statement about how much the well-being of people who are not yet born counts compared with our own.
+
+Climate policy forced economists to confront this. The **Stern Review** (2006), commissioned by the UK government, discounted the future at a real rate of about 1.4% a year. Its core ingredient was a *pure rate of time preference* — the discount applied to someone's welfare simply because it comes later — of only 0.1%, on the argument that counting a person less merely for living later is ethically indefensible. William Nordhaus, who later received the Nobel Prize for his climate-economy models, objected that the discount rate must be consistent with what capital actually earns: his model used a pure rate of time preference of 1.5% a year and was calibrated to market interest rates and returns on capital, which he put well above 1.4% (Nordhaus, 2007). The two positions are not separated by climate science. Nordhaus himself located "virtually the entire difference" between the Review and other studies in the treatment of discounting; the social cost of carbon recommended by the Review was almost twenty times the result of his own standard model run.
+
+The same tension now sits inside official numbers. Germany's Federal Environment Agency (Umweltbundesamt) recommends that a tonne of CO₂ emitted in 2026 be valued at **€350** if future damages are discounted with a pure rate of time preference of 1%, and at **€1,000** if present and future generations are weighted equally (0%), both in 2025 prices (Umweltbundesamt, 2026, *Methodenkonvention 4.0*). Same tonne, same climate science, a factor of almost three — and the difference is a value judgement about whose future counts how much.
+
+There is a deeper version of this point. Interest is not a law of nature but a feature of how money is made and lent: most money in circulation is created by commercial banks as interest-bearing loans, so lenders' return expectations shape which projects get financed at all. Some communities have therefore tried to redesign money itself — municipal, citizen-run and crypto-based complementary currencies aimed at green and inclusive economies (Barinaga, 2024). Whatever one thinks of these experiments, they make the point for an investment course: the discount rate is not handed down from above. It is chosen, and whoever chooses it decides how much the future weighs.
+
+::: {.quick-check}
+A project manager whose bonus depends on project approval reports a cost forecast that he privately knows is at the very bottom of the realistic range. Which concept describes this best?
+
+- Optimism bias — planners naturally picture the best case
+- **Strategic misrepresentation — the forecast is distorted deliberately because of incentives**
+- Risk — the cost is uncertain and could turn out either way
+:::
+
+## Method: Ethics as Cash-Flow Lines
+
+The three questions translate into four steps that extend the NPV procedure you know from Chapter 4. None requires a new theory; each makes a hidden judgement visible and testable.
+
+### Step 1 — Debias the Forecast
+
+Before discounting anything, check the forecast against a reference class: how far did comparable past projects miss their plans? The answer is expressed as a **cost uplift** $u$ on the initial investment and a **benefit haircut** $h$ on the cash flows:
+
+$$C_0^{adj} = -I_0 \cdot (1+u) + \sum_{t=1}^{n} \frac{CF_t \cdot (1-h)}{(1+i)^t}$$ {#eq-npv-debiased}
+
+Here $C_0^{adj}$ is the debiased NPV, $u$ the expected cost overrun as a share of $I_0$ and $h$ the expected shortfall of the cash flows as a share of $CF_t$. Both come from evidence — the company's own post-investment audits or published reference classes — not from gut feeling.
+
+**Example:** A project costs €500,000 and promises €90,000 a year for eight years; the discount rate is 8%. With $PVIFA(8\%,\,8) = 5.7466$:
+
+$$C_0 = -500{,}000 + 90{,}000 \cdot 5.7466 = -500{,}000 + 517{,}194 = 17{,}194$$
+
+If comparable projects overran their budgets by 10% and delivered 10% less than promised:
+
+$$C_0^{adj} = -500{,}000 \cdot 1.10 + 90{,}000 \cdot 0.90 \cdot 5.7466 = -550{,}000 + 465{,}475 = -84{,}525$$
+
+A modest correction on both sides turns a "yes" into a clear "no". Thin positive NPVs are exactly where bias does its damage.
+
+### Step 2 — Price the Externality
+
+An internal carbon price $p_{CO_2}$ (euros per tonne) enters the NPV as an additional cash-flow line: the project's emissions in each year, $E_t$ (tonnes of CO₂), multiplied by the price and deducted before discounting. Avoided emissions enter with the opposite sign, as a benefit.
+
+$$C_0 = -I_0 + \sum_{t=1}^{n} \frac{CF_t - p_{CO_2} \cdot E_t}{(1+i)^t}$$ {#eq-npv-carbon}
+
+If the cash flow, the emissions and the price are constant, the familiar annuity shortcut applies: $C_0 = -I_0 + (CF - p_{CO_2} \cdot E) \cdot PVIFA(i,\,n)$.
+
+**Example:** A gas-fired drying oven costs €400,000 and saves €70,000 a year for ten years at $i = 10\%$, but emits 150 tonnes of CO₂ a year. For simplicity, the forecast contains no carbon cost at all. With $PVIFA(10\%,\,10) = 6.1446$:
+
+$$C_0 = -400{,}000 + 70{,}000 \cdot 6.1446 = 30{,}122$$
+
+With an internal carbon price of €100 per tonne, each year carries an extra charge of $100 \cdot 150 = 15{,}000$:
+
+$$C_0 = -400{,}000 + (70{,}000 - 15{,}000) \cdot 6.1446 = -400{,}000 + 337{,}953 = -62{,}047$$
+
+Rather than arguing about the "right" carbon price, ask the decision-relevant question: at what price does the decision flip? Setting @eq-npv-carbon to zero gives the **break-even carbon price**:
+
+$$p_{CO_2}^{*} = \frac{C_0^{\text{without carbon}}}{E \cdot PVIFA(i,\,n)}$$ {#eq-breakeven-carbon}
+
+For the oven, $p_{CO_2}^{*} = 30{,}122 \,/\, (150 \cdot 6.1446) \approx 32.7$ euros per tonne. The oven creates value only if CO₂ is worth less than about €33 per tonne — below the price that German gas users already pay. That is a far more useful statement for a board than "NPV +€30,122".
+
+::: {.drag-exercise}
+An internal carbon price turns an *externality* into a cash-flow line: the project's annual emissions are multiplied by the *carbon price* and deducted before discounting, and the price at which the NPV becomes zero is the *break-even carbon price*.
+:::
+
+### Step 3 — Make the Discount Rate Explicit
+
+For a company project over ten or twenty years, the discount rate is the cost of capital, and the ethical task is modest but real: state the rate, justify it, and show how the result changes when it moves. For effects that reach across generations — climate damage, nuclear waste, a dam built for a century — economists usually decompose the discount rate with the **Ramsey rule**:
+
+$$i = \delta + \eta \cdot g$$ {#eq-ramsey}
+
+Here $\delta$ is the **pure rate of time preference** (how much less we weight someone's welfare simply because it comes later), $g$ is the expected growth rate of consumption per head, and $\eta$ measures how quickly an extra euro loses value as people get richer. Note that $g$ here is the growth of consumption per head in the whole economy, not the growth rate of payments or dividends in the growing perpetuity of Chapters 2 and 3. The second term is an economic argument: if our grandchildren will be richer, a euro of damage costs them less well-being than it would cost us. The first term is a pure value judgement.
+
+The Stern Review's rate follows directly: $\delta = 0.1\%$, $\eta = 1$ and $g = 1.3\%$ give $i = 0.1\% + 1 \cdot 1.3\% = 1.4\%$. Nordhaus started from the other end — the market: in his own illustration, an observed real return on capital of about 5% and consumption growth of 2% imply, with the same $\eta = 1$, a pure rate of time preference of $\delta = 5\% - 1 \cdot 2\% = 3\%$ (Nordhaus, 2007). (His DICE model reaches similar market rates with $\delta = 1.5\%$ and a higher $\eta = 2$.) The disagreement comes down mainly to one symbol: $\delta = 0.1\%$ or $\delta = 3\%$.
+
+Over long horizons, that one symbol dominates everything else. The table shows the present value of a climate damage of €1,000,000 occurring in the future:
+
+| Damage occurs in | PV at $i$ = 1.4% (€) | PV at $i$ = 5% (€) | Ratio |
+|---|---:|---:|---:|
+| 25 years | 706,401 | 295,303 | 2.4 |
+| 50 years | 499,002 | 87,204 | 5.7 |
+| 100 years | 249,003 | 7,604 | 32.7 |
+
+At 5%, a million euros of damage a century from now is worth less today than a small car. At 1.4% it still weighs a quarter of a million. Nothing in the arithmetic tells you which is right; it only tells you how much depends on the choice.
+
+The time-value widget makes the effect tangible. Set the horizon to 25 years and move the interest rate between 1.5% and 5%: watch the future-value bar tower ever higher over the present-value bar as the rate rises — the higher it towers, the smaller the share $(1+i)^{-n}$ of a future amount that is worth anything today — and remember that climate questions run four times longer than the slider.
+
+::: {.widget}
+<iframe src="assets/ch01/timevalue.html"
+        width="100%" height="620px" frameborder="0"
+        title="Time Value of Money — how the discount rate shrinks a future amount over long horizons">
+</iframe>
+:::
+
+### Step 4 — Close the Accountability Loop
+
+The last step is organisational, not mathematical: document the appraisal so that someone else can reproduce and challenge it, and schedule its audit. A compact **transparency checklist** asks six questions before approval. Who prepared the forecast, and who inside the organisation signs it? Are the key assumptions written down and testable? Has the forecast been compared with a reference class? Which externalities exist, and which are priced? Is the discount rate justified and its sensitivity shown? When will a post-investment audit compare forecast and actual figures?
+
+::: {.flip-card}
+#### Post-Investment Audit
+A systematic comparison of an investment's actual cash flows with the cash flows forecast at approval (dt. *Investitionskontrolle*), carried out after the project has run for a defined period. Its purpose is learning, not blame: it reveals biased forecasting habits, feeds the reference class for future projects and gives forecasters a reason to be careful.
+:::
+
+::: {.quick-check}
+In the Ramsey rule $i = \delta + \eta \cdot g$, which change makes a climate damage occurring in 100 years weigh *most* in today's decision?
+
+- A higher expected growth rate $g$, because future generations will be richer
+- **A lower pure rate of time preference $\delta$, because the future is weighted almost like the present**
+- A higher pure rate of time preference $\delta$, because a higher rate makes the future more important
+:::
+
+## Practice: Assessing an Investment Financially and Ethically
+
+The first case brings all four steps together on the decision from the opening story. The second shows what a post-investment audit looks like when a forecast meets reality.
+
+### Case Study 1 — Gas Boiler or Heat Pump?
+
+::: {.case-study}
+#### Case: Vogt Antriebstechnik — The Heat-Pump Decision
+
+Vogt's old gas boiler supplies process heat for the washing and drying lines and must be replaced in 2027. The production manager proposes a new gas condensing boiler for €150,000. The alternative is an industrial heat pump (dt. *Wärmepumpe*) for €750,000. Clara evaluates the heat pump as an **incremental investment** over the boiler, as in Chapter 5: an additional €600,000 today in exchange for lower energy costs.
+
+**The supplier's forecast:** net energy-cost savings (lower gas bill minus higher electricity bill) of **€60,000 a year** for **20 years**, no residual value, and **350 tonnes of CO₂** avoided per year. The energy prices in the forecast exclude any CO₂ costs. Vogt's cost of capital is **10%**; the board has adopted an internal carbon price of **€100 per tonne**.
+
+**The complication:** Vogt's energy consultant has seen comparable installations. On average they delivered **20% less** than the suppliers' forecasts, because real operating temperatures were higher than assumed — which also means roughly 20% fewer avoided emissions.
+
+**Tasks:**
+
+1. Calculate the NPV of the incremental investment on the supplier's forecast, without and with the internal carbon price.
+2. Debias the forecast and recalculate both NPVs. Determine the break-even carbon price.
+3. Show the sensitivity of the debiased NPV to the discount rate (4% to 12%) for carbon prices of €0, €100 and €350 per tonne (the Umweltbundesamt value at 1% time preference). Interpret the pattern.
+4. Apply the transparency checklist to the two proposals on Clara's desk.
+5. Make a justified recommendation.
+
+::: {.solution}
+**Solution:**
+
+All NPVs use the annuity shortcut with $PVIFA(10\%,\,20) = 8.5136$ from the factor table; the timeline is $-600{,}000$ at $t = 0$ followed by twenty equal cash flows at $t = 1, \dots, 20$.
+
+**1. Supplier's forecast**
+
+Without carbon price:
+
+$$C_0 = -600{,}000 + 60{,}000 \cdot 8.5136 = -600{,}000 + 510{,}816 = -89{,}184$$
+
+With carbon price: the avoided emissions are a benefit of $100 \cdot 350 = 35{,}000$ per year.
+
+$$C_0 = -600{,}000 + (60{,}000 + 35{,}000) \cdot 8.5136 = -600{,}000 + 808{,}792 = 208{,}792$$
+
+Even the supplier's own numbers only work once CO₂ is priced.
+
+**2. Debiased forecast**
+
+Haircut $h = 20\%$ on savings and avoided emissions: savings $60{,}000 \cdot 0.8 = 48{,}000$; avoided emissions $350 \cdot 0.8 = 280$ tonnes, worth $100 \cdot 280 = 28{,}000$ a year.
+
+$$C_0^{adj} = -600{,}000 + 48{,}000 \cdot 8.5136 = -600{,}000 + 408{,}653 = -191{,}347$$
+
+$$C_0^{adj} = -600{,}000 + (48{,}000 + 28{,}000) \cdot 8.5136 = -600{,}000 + 647{,}034 = 47{,}034$$
+
+Break-even carbon price (@eq-breakeven-carbon; here the emissions are *avoided*, so the carbon value must cover the negative NPV without carbon):
+
+$$p_{CO_2}^{*} = \frac{-C_0^{adj,\,\text{without carbon}}}{E \cdot PVIFA(10\%,\,20)} = \frac{191{,}347}{280 \cdot 8.5136} = \frac{191{,}347}{2{,}383.8} \approx 80.3$$
+
+The heat pump creates value for Vogt if a tonne of CO₂ is worth at least about **€80**.
+
+**3. Discount-rate sensitivity (debiased forecast, NPV in €)**
+
+| $i$ | $PVIFA(i,\,20)$ | €0 per tonne | €100 per tonne | €350 per tonne |
+|---|---:|---:|---:|---:|
+| 4% | 13.5903 | 52,334 | 432,863 | 1,384,184 |
+| 6% | 11.4699 | −49,445 | 271,712 | 1,074,605 |
+| 8% | 9.8181 | −128,731 | 146,176 | 833,443 |
+| 10% | 8.5136 | −191,347 | 47,034 | 642,986 |
+| 12% | 7.4694 | −241,469 | −32,326 | 490,532 |
+
+Each cell is $(48{,}000 + p_{CO_2} \cdot 280) \cdot PVIFA(i,\,20) - 600{,}000$. All the cost comes today and the benefits are spread over twenty years, so the NPV reacts strongly to the discount rate: without a carbon price the heat pump breaks even at about 5% (its IRR), with €100 per tonne at about 11%. The two judgements interact: a company that discounts heavily *and* ignores carbon will never invest; one that discounts moderately *or* prices carbon will. The €350 column reflects no different science, only a different time preference — the agency's equal-weighting value of €1,000 would raise every cell further.
+
+**4. Transparency checklist**
+
+| Question | Heat-pump brochure | Boiler note | Required before approval |
+|---|---|---|---|
+| Who prepared and who signs the forecast? | Supplier's sales team; nobody at Vogt | Production manager, unsigned | Vogt's production manager signs the debiased forecast |
+| Key assumptions written down? | Operating temperatures and hours missing | None stated | Disclose temperatures, hours, energy prices |
+| Reference-class check? | No | No | 20% haircut from comparable installations |
+| Externalities identified and priced? | CO₂ as a marketing claim only | CO₂ not mentioned | 280 tonnes priced at €100; refrigerant and noise named |
+| Discount rate justified, sensitivity shown? | Payback only | No | Sensitivity table 4–12% |
+| Post-investment audit scheduled? | No | No | Audit after 24 months: metered savings vs. forecast |
+
+Neither proposal passes. The boiler note fails *more* quietly: by not mentioning CO₂, it makes a value judgement — that the emissions cost nothing — without anyone having taken it.
+
+**5. Recommendation**
+
+Clara should recommend the heat pump, with conditions. On a debiased forecast and at Vogt's 10% cost of capital, it creates value if CO₂ is worth at least about €80 per tonne — close to what EU allowances traded at in 2023 and above the German fuel CO₂ price of €55–65. For an asset running into the 2040s, the board's €100 per tonne is a defensible, not an extreme, assumption. The presentation states the trade-off openly: at a carbon price of zero the heat pump destroys about €191,000 of value for Vogt's owners; at €100 per tonne it creates about €47,000. The decision rests on a judgement the board has made explicitly. Conditions: a contractual savings guarantee from the supplier, a debiased forecast signed by Vogt's production manager, and a post-investment audit after 24 months comparing metered energy use with the forecast.
+
+Remember what the €100 is: a *shadow price* — a value used for deciding, not a payment. The NPV with carbon is a decision NPV that includes costs borne by others; the NPV without carbon remains the cash NPV for Vogt's owners. Showing both side by side *is* the transparency.
+:::
+:::
+
+### Case Study 2 — The Welding Cell, Two Years Later
+
+::: {.case-study}
+#### Case: Vogt Antriebstechnik — Auditing the Welding-Cell Forecast
+
+In 2024 Clara approved the automated welding cell from the Vogt case on the basis of the production manager's forecast: €300,000 investment, €85,000 net cash inflow in Year 1, €80,000 in Years 2–5, €25,000 residual value, cost of capital 10% — an NPV of +€23,331. In January 2027, two years after the cell went live, the post-investment audit shows: integration with the existing line pushed the investment to **€336,000**; actual net cash inflows were **€61,000** in Year 1 and **€66,000** in Year 2; based on current performance, the controller re-forecasts **€72,000** for each of Years 3–5. The residual value is unchanged.
+
+**Tasks:**
+
+1. Recalculate the NPV with the actual and re-forecast figures.
+2. Split the change in NPV into the part caused by the cost overrun and the part caused by lower cash flows.
+3. What should Clara do with the result — and what should she not do?
+
+::: {.solution}
+**Solution:**
+
+**1. Revised NPV** (exact discount factors $1.1^{-t}$, present values rounded to the euro)
+
+| $t$ | 0 | 1 | 2 | 3 | 4 | 5 |
+|---|---:|---:|---:|---:|---:|---:|
+| Cash flow (€) | −336,000 | 61,000 | 66,000 | 72,000 | 72,000 | 72,000 + 25,000 |
+| Present value (€) | −336,000 | 55,455 | 54,545 | 54,095 | 49,177 | 60,229 |
+
+$$C_0 = -336{,}000 + 55{,}455 + 54{,}545 + 54{,}095 + 49{,}177 + 60{,}229 = -62{,}499$$
+
+(The last column combines the Year-5 cash flow of €44,706 and the residual value of €15,523 in present-value terms.)
+
+**2. Decomposition of the change from +23,331 to −62,499 (−85,830 in total)**
+
+The cost overrun of €36,000 occurs at $t = 0$ and reduces the NPV one-to-one by **€36,000**. Keeping the original €300,000, the actual cash flows would give an NPV of $-26{,}499$, so lower cash flows account for $23{,}331 - (-26{,}499) =$ **€49,830**. Check: $36{,}000 + 49{,}830 = 85{,}830$. The largest single gap is the ramp-up: Year 1 came in 28% below forecast.
+
+**3. Using the audit**
+
+The money is spent; the audit cannot undo the decision, and using it to find a scapegoat would only teach people to forecast defensively or to avoid audits. Its value lies in the next decision. Vogt now has its own reference class for automation projects: a 12% cost overrun on integration and a ramp-up year far below plan. The next forecast should carry an explicit cost uplift and a lower first-year cash flow, the forecaster should sign it, and the audit should be announced at approval — the haircut logic of the heat-pump case, learned from Vogt's own data rather than a consultant's.
+:::
+:::
+
+::: {.quick-check}
+The heat-pump supplier offers to guarantee in the contract that Vogt's savings will be at least 90% of the forecast, with penalty payments otherwise. Which part of Clara's analysis changes most directly?
+
+- **The benefit haircut, because part of the forecast risk shifts to the supplier**
+- The internal carbon price, because a guarantee makes CO₂ less harmful
+- The discount rate, which should now be lowered to the Stern Review's 1.4%
+:::
+
+## Conclusion: The Numbers Are Never Neutral
+
+An NPV looks like a fact: one number, a clear sign, an unambiguous rule. It is closer to a signed statement. Somebody wrote the forecast and had reasons to like it. Somebody drew the boundary of the costs, and everything outside it became someone else's problem. Somebody chose the rate at which a tonne of CO₂ emitted in 2045 fades into insignificance. None of these judgements can be removed from the calculation. Each of them can be written down, priced, tested and audited — and an NPV whose judgements are visible is a basis for a decision rather than a disguise for one.
+
+::: {.quick-check}
+Why does the Umweltbundesamt publish two climate-cost values (€350 and €1,000 per tonne of CO₂) for the same emission?
+
+- Because scientists disagree about how much warming a tonne of CO₂ causes
+- **Because the values rest on different pure rates of time preference — a value judgement about future generations**
+- Because one value applies to companies and the other to private households
+:::
+
+::: {.quick-check}
+Which statement about the Pinto memo of 1973 is accurate?
+
+- It calculated whether Ford should fix the Pinto's rear fuel tank or pay compensation to victims
+- **It was an industry-wide cost-benefit analysis of a proposed rollover fuel-leakage rule, submitted to the regulator**
+- It proved that the Pinto was far more fire-prone than any other car of its time
+:::
+
+Chapter 1 asked why anyone would accept less than a euro today for a euro tomorrow, and the answer was the price of time. The question this book leaves you with is harder: what is the price of *someone else's* time — the time of people downstream of the factory, or not yet born when the investment pays back? No formula answers it. But every investment decision you sign will answer it anyway, explicitly or by silence. Make it explicit.
+
+How such limits can be built into the economy as a whole, rather than into one spreadsheet at a time, is the subject of the module's separate unit on Doughnut Economics.

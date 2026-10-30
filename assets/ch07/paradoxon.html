@@ -195,8 +195,9 @@
     <div class="thws-card">
         <header>
             <h3>The Tax Paradox</h3>
-            <p class="subtitle">Intuition says taxes reduce value. But with high interest rates, the tax shield effect
-                on the discount rate can actually increase Net Present Value.</p>
+            <p class="subtitle">Intuition says taxes reduce value. But interest on the alternative is taxed too, so the
+                discount rate falls to <span class="math">i</span>&middot;(1 &minus; <span class="math">s</span>). With high
+                interest rates, this interest effect can outweigh the volume effect and increase the Net Present Value.</p>
         </header>
 
         <div class="canvas-container">
@@ -214,7 +215,7 @@
 
             <div class="slider-group">
                 <label>
-                    <span>Tax Rate (<span class="math">t</span>)</span>
+                    <span>Tax Rate (<span class="math">s</span>)</span>
                     <span id="taxLabel">0%</span>
                 </label>
                 <input type="range" id="taxSlider" min="0" max="60" step="5" value="0">
@@ -280,20 +281,19 @@
         /**
          * LOGIC
          */
-        function calculateNPV(i_percent, t_percent) {
+        function calculateNPV(i_percent, s_percent) {
             const i = i_percent / 100;
-            const t = t_percent / 100;
+            const s = s_percent / 100;
 
-            // Modigliani-Miller: The appropriate discount rate is after-tax cost of debt/capital
-            // r_post = r_pre * (1 - t)
-            const discountRate = i * (1 - t);
+            // Standard model: interest on the alternative investment is taxed at s,
+            // so the after-tax discount rate is i_after = i * (1 - s), independent of financing
+            const discountRate = i * (1 - s);
 
             let pvSum = 0;
 
             for (let year = 1; year <= CONFIG.years; year++) {
-                // Cash Flow After Tax calculation
-                // CF_at = CF_pre * (1-t) + (Depreciation * t)
-                const cfAT = (CONFIG.cashFlow * (1 - t)) + (CONFIG.depreciation * t);
+                // After-tax cash flow: CF_after = CF_before * (1 - s) + s * D_t
+                const cfAT = (CONFIG.cashFlow * (1 - s)) + (CONFIG.depreciation * s);
 
                 // Discounting
                 if (discountRate === 0) {
@@ -397,7 +397,7 @@
             ctx.shadowBlur = 0; // Reset shadow for text
 
             const labelY = state.npv >= 0 ? yPos - 15 : yPos + Math.abs(barHeight) + 25;
-            const formatter = new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD', maximumFractionDigits: 0 });
+            const formatter = new Intl.NumberFormat('en-US', { style: 'currency', currency: 'EUR', maximumFractionDigits: 0 });
             ctx.fillText(formatter.format(state.npv), centerX, labelY);
         }
 

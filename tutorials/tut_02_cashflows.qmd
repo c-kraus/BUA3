@@ -1,0 +1,267 @@
+---
+title: "Tutorial 02: The Geometry of Cash Flows"
+subtitle: "Ordinary annuity and annuity due · PVIFA and future value · Capital Recovery Factor · perpetuities and growing perpetuities"
+lang: en
+author:
+  - name: Prof. Dr. Christian Kraus
+    email: christian.kraus@thws.de
+    role: Lecturer
+    affiliation: THWS Business & Engineering
+course: "Investment Decisions (BUA3)"
+semester: "WS 2026/27"
+sheet: "02"
+date: last-modified
+show_solutions: false
+format: tutorial-typst
+---
+
+# Tutorial 02: The Geometry of Cash Flows
+
+## Exercise 1: Grandma's Study Grant
+
+Max's grandmother wants to support his four-year bachelor's programme with **€2,400 per year**. Being a woman of principle, she lets Max choose only the *timing*: either at the **end** of each study year or at the **start** of each study year (first payment today). Max could invest any money he receives at **3% p.a.**
+
+#### Task 1: Present value of both options
+
+a) Place both payment streams on a timeline ($t = 0$ to $t = 4$).
+
+b) Calculate the present value of both options. Which one should Max choose, and by how much is it worth more?
+
+::: {.content-visible when-meta="show_solutions"}
+**Solution:**
+
+Given: $C = 2{,}400$; $i = 3\%$; $n = 4$.
+
+**a)** Timeline (payments in €):
+
+| $t$ | 0 | 1 | 2 | 3 | 4 |
+|:----|:-:|:-:|:-:|:-:|:-:|
+| End of year (ordinary annuity) | — | 2,400 | 2,400 | 2,400 | 2,400 |
+| Start of year (annuity due) | 2,400 | 2,400 | 2,400 | 2,400 | — |
+
+**b)** Ordinary annuity:
+
+$$PVIFA(3\%,\,4) = \frac{1.03^4 - 1}{0.03 \cdot 1.03^4} = 3.7171 \qquad PV_{\text{ord}} = 2{,}400 \cdot 3.7171 = 8{,}921.04$$
+
+Annuity due:
+
+$$PV_{\text{due}} = 8{,}921.04 \cdot 1.03 = 9{,}188.67$$
+
+Max should choose the **start-of-year payments**; they are worth **€267.63 more** today (exactly 3% of €8,921.04). Same four payments, same total of €9,600 — only the timing differs.
+
+**Grading Notes:** The table value 3.7171 gives the same result, €8,921.04. Full marks for b) require the factor $(1+i)$ or an equivalent argument (one undiscounted payment today plus three discounted ones).
+:::
+
+#### Task 2: Future value at graduation
+
+Instead of paying Max directly, grandmother deposits each instalment in a savings account at 3% and hands Max the balance at the end of year 4. How much will he receive under each timing option? How much of it is interest?
+
+::: {.content-visible when-meta="show_solutions"}
+**Solution:**
+
+Ordinary annuity — value at $t = 4$, immediately after the last deposit:
+
+$$FV_{\text{ord}} = 2{,}400 \cdot \frac{1.03^4 - 1}{0.03} = 2{,}400 \cdot 4.183627 = 10{,}040.70$$
+
+Annuity due — every deposit earns one more year of interest:
+
+$$FV_{\text{due}} = 10{,}040.70 \cdot 1.03 = 10{,}341.93$$
+
+Interest: $10{,}040.70 - 9{,}600 = 440.70$ (ordinary) and $10{,}341.93 - 9{,}600 = 741.93$ (annuity due).
+
+Alternative route: compound the present values from Task 1 forward, $8{,}921.04 \cdot 1.03^4 \approx 10{,}040.71$ (one cent rounding difference) and $9{,}188.67 \cdot 1.03^4 = 10{,}341.93$. The future value of an annuity is its present value moved to the right on the timeline.
+:::
+
+## Exercise 2: From Lump Sum to Instalment
+
+Three small decisions, one tool: the Capital Recovery Factor. All payments are made at the **end** of each year unless stated otherwise.
+
+#### Task 1: The café loan
+
+Defne opens a specialty café and borrows **€35,000** at **7% p.a.**, repayable in **six equal annual instalments**.
+
+a) Calculate the annual instalment.
+
+b) How much of the first instalment is interest, and how much repays the loan?
+
+::: {.content-visible when-meta="show_solutions"}
+**Solution:**
+
+Given: $PV = 35{,}000$; $i = 7\%$; $n = 6$.
+
+**a)**
+
+$$C = 35{,}000 \cdot CRF(7\%,\,6) = 35{,}000 \cdot \frac{0.07 \cdot 1.07^6}{1.07^6 - 1} = 35{,}000 \cdot 0.209796 = 7{,}342.85$$
+
+(With the table value 0.2098: €7,343.00.)
+
+**b)** Interest in year 1 is charged on the full loan: $35{,}000 \cdot 0.07 = 2{,}450.00$. The rest repays the loan: $7{,}342.85 - 2{,}450.00 = 4{,}892.85$. (The full repayment schedule follows in Chapter 3.)
+:::
+
+#### Task 2: Saving for a down payment
+
+Paul wants to have **€25,000** for the down payment on a flat in **five years**. He saves an equal amount at the end of each year in an account paying **4% p.a.** How much must he save per year, and how much of the €25,000 will be interest?
+
+::: {.content-visible when-meta="show_solutions"}
+**Solution:**
+
+Given: $FV = 25{,}000$; $i = 4\%$; $n = 5$.
+
+**Route 1 — future value of an annuity set equal to the target:**
+
+$$25{,}000 = C \cdot \frac{1.04^5 - 1}{0.04} = C \cdot 5.416323 \quad \Longrightarrow \quad C = 4{,}615.68$$
+
+**Route 2 — discount the target, then apply the CRF:**
+
+$$PV = 25{,}000 \cdot 1.04^{-5} = 20{,}548.18 \qquad C = 20{,}548.18 \cdot CRF(4\%,\,5) = 20{,}548.18 \cdot 0.224627 = 4{,}615.68$$
+
+(With the table value 0.2246: €4,615.12.) Paul saves $5 \cdot 4{,}615.68 = 23{,}078.39$ himself; interest contributes $25{,}000 - 23{,}078.39 = 1{,}921.61$.
+
+**Grading Notes:** Either route earns full marks. A common error is $25{,}000 \cdot CRF(4\%,\,5)$ without discounting — this treats the target as a value *today* and gives €5,615.68.
+:::
+
+#### Task 3: How much loan can I afford?
+
+Lukas can spend at most **€9,000 per year** on loan instalments. His bank offers **5% p.a.** over **8 years**.
+
+a) What is the largest loan he can take out?
+
+b) The bank offers to stretch the term to **10 years** at the same rate. How much more could he borrow?
+
+::: {.content-visible when-meta="show_solutions"}
+**Solution:**
+
+Here the instalment is given and the lump sum is sought — the PVIFA direction.
+
+**a)**
+
+$$PV = 9{,}000 \cdot PVIFA(5\%,\,8) = 9{,}000 \cdot 6.463213 = 58{,}168.91$$
+
+(With the table value 6.4632: €58,168.80.)
+
+**b)**
+
+$$PV = 9{,}000 \cdot PVIFA(5\%,\,10) = 9{,}000 \cdot 7.721735 = 69{,}495.61$$
+
+Lukas could borrow $69{,}495.61 - 58{,}168.91 = 11{,}326.70$ more — at the price of two additional years of payments.
+:::
+
+## Exercise 3: Forever and Ever
+
+The Erlenbach parish owns a plot of land and has granted a company a ground lease (dt. *Erbbaurecht*) that, for the purpose of this exercise, runs **forever**. The ground rent is **€18,000 per year**; the parish values the income at **4.5% p.a.**
+
+#### Task 1: Constant perpetuity
+
+a) What is the ground lease worth to the parish if the rent is paid at the end of each year (first payment in one year)?
+
+b) What is it worth if the rent is paid in advance, with the first payment today?
+
+::: {.content-visible when-meta="show_solutions"}
+**Solution:**
+
+**a)**
+
+$$PV = \frac{C}{i} = \frac{18{,}000}{0.045} = 400{,}000$$
+
+**b)** One payment today plus the perpetuity from a):
+
+$$PV = 18{,}000 + 400{,}000 = 418{,}000 \qquad \text{(equivalently } 400{,}000 \cdot 1.045 = 418{,}000\text{)}$$
+:::
+
+#### Task 2: Indexed rent
+
+The lease contract contains an index clause: the ground rent rises by **1.5% p.a.** forever.
+
+a) Value the lease if the **next** payment (in one year) is €18,000.
+
+b) Value the lease if the rent paid **this year** was €18,000, so that the next payment is already indexed.
+
+c) A board member proposes to assume a growth rate of 4.5%, "to be on the safe side". What happens?
+
+::: {.content-visible when-meta="show_solutions"}
+**Solution:**
+
+**a)** Growing perpetuity with $C_1 = 18{,}000$, $g = 1.5\% < i = 4.5\%$:
+
+$$PV = \frac{18{,}000}{0.045 - 0.015} = \frac{18{,}000}{0.03} = 600{,}000$$
+
+**b)** Now the first future payment is $C_1 = 18{,}000 \cdot 1.015 = 18{,}270$:
+
+$$PV = \frac{18{,}270}{0.03} = 609{,}000$$
+
+**c)** With $g = i = 4.5\%$ the denominator is zero. Every payment then has the same present value, and infinitely many of them add up to infinity — the growing-perpetuity formula does not apply. "Safe side" is the wrong label: a higher growth rate makes the valuation *more* optimistic, and at $g \geq i$ no finite value exists.
+
+**Grading Notes:** b) tests the definition of $C_1$ as the payment one period from now. Using €18,000 in b) is the classic error.
+:::
+
+#### Task 3: A perpetuity that starts later
+
+The municipality promises the local sports club a grant of **€5,000 per year forever**, but the first payment will only be made at the end of **year 5**. What is the promise worth today at **4% p.a.**?
+
+::: {.content-visible when-meta="show_solutions"}
+**Solution:**
+
+**Step 1 — perpetuity formula.** $C/i$ delivers the value one period *before* the first payment, i.e. at $t = 4$:
+
+$$PV_4 = \frac{5{,}000}{0.04} = 125{,}000$$
+
+**Step 2 — discount to today** (Chapter 1):
+
+$$PV_0 = 125{,}000 \cdot 1.04^{-4} = 125{,}000 \cdot 0.854804 = 106{,}850.52$$
+
+**Grading Notes:** Discounting over five instead of four periods (result €102,740.89) is the typical timeline error; award partial credit for the correct Step 1.
+:::
+
+## Exercise 4: Concepts and Transfer
+
+#### Task 1: Multiple choice — factors and formulas
+
+Which of the following statements are **correct**? (Multiple answers possible.)
+
+a) The Capital Recovery Factor is the reciprocal of the PVIFA.
+
+b) For $i > 0$, $PVIFA(i,\,n)$ is always smaller than $n$.
+
+c) The present value of an annuity due is lower than that of an ordinary annuity with the same payments, because it ends one period earlier.
+
+d) The perpetuity formula $C/i$ gives the value one period before the first payment.
+
+e) A growing perpetuity with $g = i$ is worth $C_1/(1+i)$.
+
+f) $CRF(5\%,\,10) = 0.10$, because the loan is repaid in ten equal parts.
+
+g) All statements are false.
+
+::: {.content-visible when-meta="show_solutions"}
+**Solution:** Correct are **a)**, **b)** and **d)**.
+
+- **a) Correct.** $CRF(i,\,n) = 1/PVIFA(i,\,n)$.
+- **b) Correct.** Each of the $n$ discount factors is below 1, so their sum is below $n$ (e.g. $PVIFA(5\%,\,10) = 7.7217 < 10$).
+- **c) Incorrect.** Every payment of an annuity due arrives one period *earlier*, so its present value is *higher* by the factor $(1+i)$.
+- **d) Correct.** That is why a perpetuity starting later must be discounted from one period before its first payment (Exercise 3, Task 3).
+- **e) Incorrect.** $C_1/(1+i)$ is the present value of *each* payment; infinitely many of them sum to infinity — no finite value exists.
+- **f) Incorrect.** $CRF(5\%,\,10) = 0.1295$. The instalment must cover interest as well as repayment, so the CRF always exceeds $1/n$.
+- **g) Incorrect**, since a), b) and d) are correct.
+:::
+
+#### Task 2: Transfer — how much is "forever" worth?
+
+A municipal utility values its district-heating network as a growing perpetuity: expected cash flow next year **€2 million**, discount rate **6%**, growth rate **5%**. A sceptical council member argues that 4% growth is more realistic.
+
+a) Calculate the value under both growth assumptions.
+
+b) Explain in three to four sentences why such a small change in $g$ has such a large effect, and what this means for how much trust the council should place in the valuation.
+
+::: {.content-visible when-meta="show_solutions"}
+**Solution:**
+
+**a)**
+
+$$PV_{g = 5\%} = \frac{2{,}000{,}000}{0.06 - 0.05} = 200{,}000{,}000 \qquad PV_{g = 4\%} = \frac{2{,}000{,}000}{0.06 - 0.04} = 100{,}000{,}000$$
+
+Lowering growth by one percentage point **halves** the value from €200 million to €100 million.
+
+**b)** The value depends on the *difference* $i - g$, not on $i$ and $g$ separately. When $g$ is close to $i$, that difference is tiny, so a change of one percentage point in $g$ changes the denominator by 50% or 100% — and the value by the same proportion. The growth rate is also the hardest input to verify, because it is assumed to hold forever. The council should therefore treat a growing-perpetuity value with $g$ close to $i$ as a range rather than a number, test several growth rates, and ask whether a growth rate this close to the discount rate is plausible for an asset that grows with the local economy.
+
+**Grading Notes:** Full marks require the link between $i - g$ and sensitivity, plus a judgement on reliability. Accept the observation that at $g = 5.5\%$ the value would double again to €400 million.
+:::

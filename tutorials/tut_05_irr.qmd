@@ -1,0 +1,267 @@
+---
+title: "Tutorial 05: Internal Rate of Return"
+subtitle: "IRR by interpolation · Modified IRR · NPV vs. IRR and the incremental investment · multiple IRRs"
+lang: en
+author:
+  - name: Prof. Dr. Christian Kraus
+    email: christian.kraus@thws.de
+    role: Lecturer
+    affiliation: THWS Business & Engineering
+course: "Investment Decisions (BUA3)"
+semester: "WS 2026/27"
+sheet: "05"
+date: last-modified
+show_solutions: false
+format: tutorial-typst
+---
+
+# Tutorial 05: Internal Rate of Return
+
+## Exercise 1: The Espresso Machine
+
+Café Kurbel, a bicycle repair shop that discovered it earns more from coffee than from inner tubes, wants to buy a commercial espresso machine for **€12,000**. The owners expect net cash inflows of **€3,000 per year** for five years and a resale value of **€2,000** at the end of year 5. Their cost of capital is **8%**.
+
+| $t$ | 0 | 1 | 2 | 3 | 4 | 5 |
+|:---|---:|---:|---:|---:|---:|---:|
+| $CF_t$ (€) | −12,000 | 3,000 | 3,000 | 3,000 | 3,000 | 3,000 + 2,000 |
+
+#### Task 1: NPV at the cost of capital
+
+Compute the NPV of the machine at 8%. Should Café Kurbel invest?
+
+::: {.content-visible when-meta="show_solutions"}
+**Solution:**
+
+Given: $I_0 = 12{,}000$; $CF_t = 3{,}000$ for $t = 1, \dots, 5$; $L_5 = 2{,}000$; $i = 8\%$.
+
+The inflows form an ordinary annuity, so use the PVIFA and discount the resale value separately:
+
+$$
+C_0(8\%) = -12{,}000 + 3{,}000 \cdot PVIFA(8\%, 5) + \frac{2{,}000}{1.08^5} = -12{,}000 + 3{,}000 \cdot 3.99271 + 1{,}361.17
+$$
+
+$$
+= -12{,}000 + 11{,}978.13 + 1{,}361.17 = 1{,}339.30
+$$
+
+The NPV is positive: **invest**. The machine creates €1,339.30 of value beyond the 8% alternative.
+:::
+
+#### Task 2: IRR by iteration and linear interpolation
+
+Find the IRR of the machine. Compute the NPV at 10%, 11% and 12%, bracket the IRR between two neighbouring rates and interpolate linearly (Regula Falsi). Compare the result with the hurdle rate.
+
+::: {.content-visible when-meta="show_solutions"}
+**Solution:**
+
+$C_0(i) = -12{,}000 + 3{,}000 \cdot PVIFA(i, 5) + 2{,}000 \cdot (1+i)^{-5}$
+
+| Trial rate $i$ | $PVIFA(i, 5)$ | PV of annuity (€) | PV of resale (€) | $C_0(i)$ (€) |
+|:---:|:---:|---:|---:|---:|
+| 10% | 3.7908 | 11,372.36 | 1,241.84 | +614.20 |
+| 11% | 3.6959 | 11,087.69 | 1,186.90 | +274.59 |
+| 12% | 3.6048 | 10,814.33 | 1,134.85 | −50.82 |
+
+The sign changes between 11% and 12%, so $i_1 = 11\%$, $i_2 = 12\%$:
+
+$$
+r \approx 0.11 + \frac{274.59}{274.59 - (-50.82)} \cdot (0.12 - 0.11) = 0.11 + \frac{274.59}{325.41} \cdot 0.01 = 0.1184
+$$
+
+$r \approx 11.84\%$ (exact: 11.84%). Since $r = 11.84\% > i = 8\%$, the IRR rule also says **invest** — as it must for a conventional investment with a positive NPV.
+
+**Grading Notes:** Accept any bracket of width 1 percentage point that contains the IRR; interpolation over a wider bracket (e.g. 10% to 12%) gives a slightly higher estimate (about 11.85%) and is acceptable if the direction of the error is explained.
+:::
+
+#### Task 3: Modified IRR
+
+The owners will park every euro the machine earns in the café's investment account at 8%. Compute the MIRR at 8% and explain in one or two sentences why it is lower than the IRR.
+
+::: {.content-visible when-meta="show_solutions"}
+**Solution:**
+
+Compound every inflow to $t = 5$ at 8%:
+
+| $t$ | Inflow (€) | Factor $1.08^{5-t}$ | Value at $t = 5$ (€) |
+|:---:|---:|:---:|---:|
+| 1 | 3,000 | 1.3605 | 4,081.47 |
+| 2 | 3,000 | 1.2597 | 3,779.14 |
+| 3 | 3,000 | 1.1664 | 3,499.20 |
+| 4 | 3,000 | 1.0800 | 3,240.00 |
+| 5 | 5,000 | 1.0000 | 5,000.00 |
+| | | $TV_5$ | **19,599.80** |
+
+The only outflow is $I_0$, so $PV_{out} = 12{,}000$:
+
+$$
+MIRR = \left(\frac{19{,}599.80}{12{,}000}\right)^{1/5} - 1 = 1.6333^{0.2} - 1 = 10.31\%
+$$
+
+The MIRR (10.31%) lies between the cost of capital (8%) and the IRR (11.84%). Reading the IRR as the growth rate of the €12,000 over five years would require every €3,000 released by the machine to earn 11.84% as well; in the investment account it earns only 8%, so the realised return on the whole investment is lower.
+:::
+
+## Exercise 2: Two Mowers, One Lawn
+
+Grünschnitt GbR, a two-person landscaping business, needs one new mower — not two. The compact model (A) is cheap and pays back quickly; the ride-on model (B) costs more but lets the team take on larger contracts. Both last two years and have no resale value. The partners borrow at **6%**.
+
+| $t$ | 0 | 1 | 2 |
+|:---|---:|---:|---:|
+| A: Compact mower (€) | −20,000 | 15,000 | 10,000 |
+| B: Ride-on mower (€) | −50,000 | 24,000 | 38,000 |
+
+#### Task 1: NPV of both mowers
+
+Compute the NPV of A and B at 6%. Which mower does the NPV rule favour?
+
+::: {.content-visible when-meta="show_solutions"}
+**Solution:**
+
+Discount factors: $1.06^{-1} = 0.9434$, $1.06^{-2} = 0.8900$.
+
+$$
+C_0^{A} = -20{,}000 + \frac{15{,}000}{1.06} + \frac{10{,}000}{1.06^2} = -20{,}000 + 14{,}150.94 + 8{,}899.96 = 3{,}050.91
+$$
+
+$$
+C_0^{B} = -50{,}000 + \frac{24{,}000}{1.06} + \frac{38{,}000}{1.06^2} = -50{,}000 + 22{,}641.51 + 33{,}819.86 = 6{,}461.37
+$$
+
+Both are acceptable on their own; the NPV rule favours **B** (€6,461.37 > €3,050.91).
+:::
+
+#### Task 2: Exact IRRs with the quadratic formula
+
+For a two-year project the IRR equation is a quadratic equation in $q = 1 + r$. Multiply $C_0(r) = 0$ by $q^2$ and solve for $q$ with the quadratic formula. Compute the IRRs of A and B. Which mower does the IRR comparison favour?
+
+::: {.content-visible when-meta="show_solutions"}
+**Solution:**
+
+Multiplying $-I_0 + CF_1/q + CF_2/q^2 = 0$ by $q^2$ gives $I_0 q^2 - CF_1 q - CF_2 = 0$, with the positive root
+
+$$
+q = \frac{CF_1 + \sqrt{CF_1^2 + 4 \cdot I_0 \cdot CF_2}}{2 \cdot I_0}
+$$
+
+Project A: $20{,}000 q^2 - 15{,}000 q - 10{,}000 = 0$
+
+$$
+q_A = \frac{15{,}000 + \sqrt{15{,}000^2 + 4 \cdot 20{,}000 \cdot 10{,}000}}{40{,}000} = \frac{15{,}000 + 32{,}015.62}{40{,}000} = 1.1754 \;\Rightarrow\; r_A = 17.54\%
+$$
+
+Project B: $50{,}000 q^2 - 24{,}000 q - 38{,}000 = 0$
+
+$$
+q_B = \frac{24{,}000 + \sqrt{24{,}000^2 + 4 \cdot 50{,}000 \cdot 38{,}000}}{100{,}000} = \frac{24{,}000 + 90{,}421.24}{100{,}000} = 1.1442 \;\Rightarrow\; r_B = 14.42\%
+$$
+
+The IRR comparison favours **A** (17.54% > 14.42%) — the opposite of the NPV ranking. (The second root of each equation is negative in $q$ and has no economic meaning; one sign change means exactly one positive root.)
+:::
+
+#### Task 3: Incremental investment and crossover rate
+
+Form the incremental investment B − A. Compute its NPV at 6% and its IRR (quadratic formula again). Which mower should Grünschnitt buy?
+
+::: {.content-visible when-meta="show_solutions"}
+**Solution:**
+
+| $t$ | 0 | 1 | 2 |
+|:---|---:|---:|---:|
+| $\Delta CF_t$ = B − A (€) | −30,000 | 9,000 | 28,000 |
+
+$$
+C_0^{\Delta}(6\%) = -30{,}000 + \frac{9{,}000}{1.06} + \frac{28{,}000}{1.06^2} = -30{,}000 + 8{,}490.57 + 24{,}919.90 = 3{,}410.47
+$$
+
+Check: $C_0^{B} - C_0^{A} = 6{,}461.37 - 3{,}050.91 = 3{,}410.46$ (difference of 0.01 from rounding).
+
+IRR of the increment: $30{,}000 q^2 - 9{,}000 q - 28{,}000 = 0$
+
+$$
+q_\Delta = \frac{9{,}000 + \sqrt{9{,}000^2 + 4 \cdot 30{,}000 \cdot 28{,}000}}{60{,}000} = \frac{9{,}000 + 58{,}660.04}{60{,}000} = 1.1277 \;\Rightarrow\; r_\Delta = 12.77\%
+$$
+
+The extra €30,000 for the ride-on mower earns 12.77%, more than the 6% it costs. **Buy B.** The crossover rate of the two NPV functions is 12.77%: below it B has the higher NPV, above it A.
+:::
+
+#### Task 4: When the bank gets greedy
+
+The bank raises the partners' borrowing rate to **15%**. Without changing the cash flows, decide again — first using the crossover rate, then confirm with both NPVs.
+
+::: {.content-visible when-meta="show_solutions"}
+**Solution:**
+
+At 15% the cost of capital lies above the crossover rate of 12.77%, so the increment B − A no longer pays and **A becomes the better choice**.
+
+$$
+C_0^{A}(15\%) = -20{,}000 + \frac{15{,}000}{1.15} + \frac{10{,}000}{1.15^2} = 604.91, \qquad
+C_0^{B}(15\%) = -50{,}000 + \frac{24{,}000}{1.15} + \frac{38{,}000}{1.15^2} = -396.98
+$$
+
+B is now not even acceptable on its own ($r_B = 14.42\% < 15\%$), while A still is. The IRRs are the same as in Task 2; only the hurdle moved — which is exactly why the IRRs alone could not decide.
+:::
+
+## Exercise 3: Sign Patterns and Traps
+
+#### Task 1: Multiple choice — IRR, MIRR and sign changes
+
+Which of the following statements are **correct**? (Multiple answers possible.)
+
+a) A conventional investment (one outflow at $t = 0$, inflows thereafter) has exactly one IRR greater than −100%.
+
+b) A project whose cash flows change sign twice always has two IRRs.
+
+c) If two mutually exclusive projects are ranked differently by IRR and by NPV, the NPV ranking at the cost of capital is the one to follow.
+
+d) Computing the MIRR at the cost of capital removes the scale problem when ranking projects of different size.
+
+e) Linear interpolation between two trial rates that bracket the IRR slightly overestimates the IRR of a conventional investment.
+
+f) For a financing profile (inflow first, outflows later), the deal is attractive when its IRR exceeds the cost of capital.
+
+g) All statements are false.
+
+::: {.content-visible when-meta="show_solutions"}
+**Solution:** Correct are **a)**, **c)** and **e)**.
+
+- **a) Correct.** One sign change means exactly one positive root $q = 1 + r$ (Descartes' rule of signs), i.e. one IRR above −100%. It is positive only if the undiscounted cash flows exceed the investment.
+- **b) Incorrect.** Two sign changes allow two IRRs *or none*; Descartes gives a ceiling, not a count (e.g. −100, +250, −165 has no IRR).
+- **c) Correct.** The NPV measures the value created in euros; the incremental investment reproduces the NPV ranking.
+- **d) Incorrect.** The MIRR repairs the reinvestment distortion, not the scale problem — 15% on €100,000 is still less wealth than 12% on €300,000.
+- **e) Correct.** The NPV function of a conventional investment is convex, so the straight chord crosses zero slightly to the right of the true IRR.
+- **f) Incorrect.** For a financing profile the IRR is the cost of the borrowing; it is attractive when $r < i$.
+- **g) Incorrect**, since a), c) and e) are correct.
+:::
+
+#### Task 2: Transfer — the bigger pump
+
+An oil producer considers replacing its pump with a bigger one that empties the same field faster. Compared with keeping the old pump, the bigger pump costs €1,600 extra today, brings €10,000 of oil forward into year 1 and therefore means €10,000 *less* oil revenue in year 2. The cost of capital is 10%.
+
+| $t$ | 0 | 1 | 2 |
+|:---|---:|---:|---:|
+| Incremental $CF_t$ (€) | −1,600 | 10,000 | −10,000 |
+
+a) Show that both 25% and 400% are IRRs of this incremental project.
+
+b) Compute the NPV at 10% and decide.
+
+c) Explain in two or three sentences why the IRR rule cannot make this decision and what you would report instead if management insists on a percentage.
+
+::: {.content-visible when-meta="show_solutions"}
+**Solution:**
+
+**a)** At $r = 25\%$: $-1{,}600 + \frac{10{,}000}{1.25} - \frac{10{,}000}{1.25^2} = -1{,}600 + 8{,}000 - 6{,}400 = 0$.
+At $r = 400\%$: $-1{,}600 + \frac{10{,}000}{5} - \frac{10{,}000}{25} = -1{,}600 + 2{,}000 - 400 = 0$.
+Both rates set the NPV to zero. The sequence $-, +, -$ has two sign changes, so Descartes' rule allows exactly this: two IRRs.
+
+**b)**
+
+$$
+C_0(10\%) = -1{,}600 + \frac{10{,}000}{1.10} - \frac{10{,}000}{1.10^2} = -1{,}600 + 9{,}090.91 - 8{,}264.46 = -773.55
+$$
+
+The NPV is negative: **keep the old pump**. Bringing the oil forward by one year is worth only €826.45 at 10% — less than the €1,600 the bigger pump costs.
+
+**c)** Both IRRs lie above the 10% hurdle, so a mechanical "IRR above hurdle" rule would accept the pump — wrongly. The NPV is positive only for discount rates between 25% and 400% and negative at the firm's actual cost of capital; with two sign changes, no single IRR describes the project's return. If management wants a percentage, report the MIRR at 10% (outflows discounted to $t = 0$, inflows compounded to $t = 2$): $\left(\frac{10{,}000 \cdot 1.10}{1{,}600 + 10{,}000/1.10^2}\right)^{1/2} - 1 = \left(\frac{11{,}000}{9{,}864.46}\right)^{1/2} - 1 = 5.60\%$, which is unique and below 10%, consistent with the negative NPV.
+
+**Grading Notes:** Full marks for c) require (1) the observation that both IRRs exceed the hurdle yet the NPV is negative and (2) a sensible alternative (NPV decision, or MIRR as the communicable percentage).
+:::

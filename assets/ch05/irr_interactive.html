@@ -85,11 +85,11 @@
 
     <div class="controls-top">
         <div class="ctrl">
-            <label>Investment (I₀) <span class="val" id="i0d">€ 100,000</span></label>
+            <label>Investment (I₀) <span class="val" id="i0d">€100,000</span></label>
             <input type="range" id="i0sl" min="50000" max="500000" step="10000" value="100000">
         </div>
         <div class="ctrl">
-            <label>Annual CF <span class="val" id="cfd">€ 28,000</span></label>
+            <label>Annual CF <span class="val" id="cfd">€28,000</span></label>
             <input type="range" id="cfsl" min="5000" max="150000" step="1000" value="28000">
         </div>
         <div class="ctrl">
@@ -97,7 +97,7 @@
             <input type="range" id="nsl" min="2" max="12" step="1" value="5">
         </div>
         <div class="ctrl">
-            <label>Liquidation (Lₙ) <span class="val" id="lnd">€ 0</span></label>
+            <label>Liquidation (Lₙ) <span class="val" id="lnd">€0</span></label>
             <input type="range" id="lnsl" min="0" max="100000" step="5000" value="0">
         </div>
     </div>
@@ -159,8 +159,8 @@
     var svg  = document.getElementById('irrsvg');
 
     function fmtE(v) {
-        var s = Math.round(Math.abs(v)).toLocaleString('de-DE');
-        return (v < 0 ? '−' : '+') + '€ ' + s;
+        var s = Math.round(Math.abs(v)).toLocaleString('en-GB');
+        return (v < 0 ? '−' : '+') + '€' + s;
     }
     function fmtPct(v) { return v.toFixed(2) + ' %'; }
 
@@ -202,10 +202,10 @@
         var i1  = parseFloat(i1sl.value) / 100;
         var i2  = parseFloat(i2sl.value) / 100;
 
-        document.getElementById('i0d').textContent = '€ ' + Math.round(I0).toLocaleString('de-DE');
-        document.getElementById('cfd').textContent  = '€ ' + Math.round(CF).toLocaleString('de-DE');
+        document.getElementById('i0d').textContent = '€' + Math.round(I0).toLocaleString('en-GB');
+        document.getElementById('cfd').textContent  = '€' + Math.round(CF).toLocaleString('en-GB');
         document.getElementById('nd').textContent   = n;
-        document.getElementById('lnd').textContent  = '€ ' + Math.round(Ln).toLocaleString('de-DE');
+        document.getElementById('lnd').textContent  = '€' + Math.round(Ln).toLocaleString('en-GB');
         document.getElementById('i1d').textContent  = i1sl.value + ' %';
         document.getElementById('i2d').textContent  = i2sl.value + ' %';
 

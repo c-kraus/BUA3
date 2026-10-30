@@ -1,0 +1,216 @@
+---
+title: "Tutorial 10: Whose Numbers, Whose Costs, Whose Future?"
+subtitle: "Optimistic forecasts · internal carbon price · discount rate as value judgement · accountability"
+lang: en
+author:
+  - name: Prof. Dr. Christian Kraus
+    email: christian.kraus@thws.de
+    role: Lecturer
+    affiliation: THWS Business & Engineering
+course: "Investment Decisions (BUA3)"
+semester: "WS 2026/27"
+sheet: "10"
+date: last-modified
+show_solutions: false
+format: tutorial-typst
+---
+
+# Tutorial 10: Whose Numbers, Whose Costs, Whose Future?
+
+## Exercise 1: The Forecast That Wanted to Be Approved
+
+The sales director of Mensa Deluxe GmbH, a canteen operator, proposes an automated pizza line. His annual bonus depends on the number of projects the board approves — a detail he does not mention in his forecast.
+
+| Parameter | Value |
+|:----------|------:|
+| Initial investment ($t = 0$) | €240,000 |
+| Net cash inflow, Years 1–6 (sales director's forecast) | €55,000 p.a. |
+| Residual value | €0 |
+| Cost of capital | 8% p.a. |
+
+#### Task 1: NPV on the sales director's forecast
+
+Calculate the NPV of the pizza line on the basis of the forecast. Use $PVIFA(8\%,\,6) = 4.6229$.
+
+::: {.content-visible when-meta="show_solutions"}
+**Solution:**
+
+Given: $I_0 = 240{,}000$; $CF = 55{,}000$; $n = 6$; $i = 8\%$.
+
+$$C_0 = -240{,}000 + 55{,}000 \cdot 4.6229 = -240{,}000 + 254{,}259.50 = 14{,}259.50$$
+
+The NPV is about **+€14,260** — on this forecast, the line would be approved.
+:::
+
+#### Task 2: Debias the forecast
+
+The controller checks the company's last eight automation projects (its reference class): on average they cost 15% more than planned and delivered 10% less cash flow than forecast. Recalculate the NPV with a cost uplift of $u = 15\%$ and a benefit haircut of $h = 10\%$.
+
+::: {.content-visible when-meta="show_solutions"}
+**Solution:**
+
+Adjusted investment: $240{,}000 \cdot 1.15 = 276{,}000$. Adjusted cash flow: $55{,}000 \cdot 0.90 = 49{,}500$.
+
+$$C_0^{adj} = -276{,}000 + 49{,}500 \cdot 4.6229 = -276{,}000 + 228{,}833.55 = -47{,}166.45$$
+
+The debiased NPV is about **−€47,166**: the project destroys value once the company's own track record is taken into account.
+
+**Grading Notes:** the uplift applies to $I_0$, the haircut to every $CF_t$; mixing them up (e.g. haircut on $I_0$) is the typical error.
+:::
+
+#### Task 3: How optimistic may the forecast be?
+
+Ignore the cost uplift. By what percentage $h$ may the sales director's cash-flow forecast be too high before the NPV turns negative? What does the result tell the board?
+
+::: {.content-visible when-meta="show_solutions"}
+**Solution:**
+
+Set $C_0 = 0$: $-240{,}000 + 55{,}000 \cdot (1-h) \cdot 4.6229 = 0$.
+
+$$1 - h = \frac{240{,}000}{254{,}259.50} = 0.9439 \quad \Longrightarrow \quad h \approx 5.6\%$$
+
+A forecast that is only **5.6%** too optimistic is enough to wipe out the entire NPV. Since the reference class shows 10% shortfalls and the forecaster has a personal incentive to be optimistic (strategic misrepresentation), the board should not approve on the basis of this forecast. Better: ask a person without a bonus at stake to prepare or sign the forecast, and schedule a post-investment audit.
+:::
+
+## Exercise 2: Pricing the Exhaust
+
+Main-Spedition GmbH considers replacing five diesel trucks with electric trucks. The table shows the **incremental** cash flows (electric minus diesel). For simplicity, the operating-cost savings are calculated at energy prices excluding any CO₂ cost.
+
+| $t$ | 0 | 1 | 2 | … | 8 |
+|---|---:|---:|---:|:---:|---:|
+| Cash flow (€) | −450,000 | 62,000 | 62,000 | … | 62,000 |
+| Avoided CO₂ (tonnes) | — | 250 | 250 | … | 250 |
+
+The cost of capital is 7%; $PVIFA(7\%,\,8) = 5.9713$.
+
+#### Task 1: NPV without a carbon price
+
+Calculate the NPV of switching to electric trucks without any value for the avoided emissions.
+
+::: {.content-visible when-meta="show_solutions"}
+**Solution:**
+
+$$C_0 = -450{,}000 + 62{,}000 \cdot 5.9713 = -450{,}000 + 370{,}220.60 = -79{,}779.40$$
+
+Without a carbon price the switch destroys about **€79,779** of value.
+:::
+
+#### Task 2: NPV with an internal carbon price
+
+The board introduces an internal carbon price of €80 per tonne of CO₂. Recalculate the NPV.
+
+::: {.content-visible when-meta="show_solutions"}
+**Solution:**
+
+Value of avoided emissions per year: $80 \cdot 250 = 20{,}000$. The decision-relevant cash flow rises to $62{,}000 + 20{,}000 = 82{,}000$.
+
+$$C_0 = -450{,}000 + 82{,}000 \cdot 5.9713 = -450{,}000 + 489{,}646.60 = 39{,}646.60$$
+
+With the carbon price, the NPV is about **+€39,647**. Note: this is a decision NPV; the €20,000 per year is a shadow price, not a payment that reaches the company's account.
+:::
+
+#### Task 3: Break-even carbon price
+
+At which carbon price is the board indifferent? Compare the result with the German national CO₂ price on fuels of €55 per tonne (2025).
+
+::: {.content-visible when-meta="show_solutions"}
+**Solution:**
+
+$$p_{CO_2}^{*} = \frac{79{,}779.40}{250 \cdot 5.9713} = \frac{79{,}779.40}{1{,}492.83} \approx 53.4$$
+
+The switch pays off if a tonne of CO₂ is worth at least about **€53**. That is just below the national CO₂ price of €55 per tonne that diesel already carries in Germany — so even a board that wants to count only cash should ask whether the forecast's fuel prices really exclude CO₂ costs, and how they are likely to develop over eight years.
+:::
+
+## Exercise 3: A Dike for Fifty Years
+
+A river town considers a dike that costs €3,000,000 today and is expected to avoid flood damage of €150,000 per year for 50 years. Two advisers derive the discount rate with the Ramsey rule $i = \delta + \eta \cdot g$:
+
+| | Adviser A | Adviser B |
+|---|---:|---:|
+| Pure rate of time preference $\delta$ | 0.1% | 3.0% |
+| Elasticity $\eta$ | 1.0 | 1.0 |
+| Growth of consumption per head $g$ | 1.3% | 2.0% |
+
+Use $PVIFA(1.4\%,\,50) = 35.7856$ and $PVIFA(5\%,\,50) = 18.2559$.
+
+#### Task 1: Two discount rates
+
+Calculate each adviser's discount rate.
+
+::: {.content-visible when-meta="show_solutions"}
+**Solution:**
+
+Adviser A: $i = 0.1\% + 1.0 \cdot 1.3\% = 1.4\%$ (the Stern Review's rate).
+
+Adviser B: $i = 3.0\% + 1.0 \cdot 2.0\% = 5.0\%$ (the market-based logic of Nordhaus's illustration).
+
+Of the 3.6 percentage-point gap, 2.9 points come from $\delta$ and only 0.7 points from the different growth assumption.
+:::
+
+#### Task 2: Build the dike?
+
+a) Calculate the NPV of the dike under both discount rates.
+
+b) How much is €1 of flood damage avoided in Year 50 worth today under each rate? Explain in one sentence where the two advisers really disagree.
+
+::: {.content-visible when-meta="show_solutions"}
+**Solution:**
+
+a) Adviser A:
+
+$$C_0 = -3{,}000{,}000 + 150{,}000 \cdot 35.7856 = -3{,}000{,}000 + 5{,}367{,}840 = 2{,}367{,}840$$
+
+Adviser B:
+
+$$C_0 = -3{,}000{,}000 + 150{,}000 \cdot 18.2559 = -3{,}000{,}000 + 2{,}738{,}385 = -261{,}615$$
+
+Adviser A recommends the dike (NPV ≈ **+€2.37 million**), Adviser B rejects it (NPV ≈ **−€0.26 million**).
+
+b) $1.014^{-50} \approx 0.499$ versus $1.05^{-50} \approx 0.087$: under A, a euro of damage avoided in Year 50 still counts about half a euro today; under B, less than nine cents — almost six times less. The advisers do not disagree about floods or about arithmetic; they disagree mainly about $\delta$, i.e. how much less the welfare of people living in 50 years should count simply because they live later — a value judgement (B's higher growth assumption adds a smaller, empirical disagreement on top).
+
+**Grading Notes:** full marks require naming the pure rate of time preference as the value-laden parameter.
+:::
+
+## Exercise 4: Concepts and Transfer
+
+#### Task 1: Multiple choice — ethics inside the calculation
+
+Which of the following statements are **correct**? (Multiple answers possible.)
+
+a) Optimism bias is the deliberate distortion of a forecast so that a project gets approved.
+
+b) A post-investment audit compares the actual cash flows with the forecast made at approval and feeds the reference class for future projects.
+
+c) The 1973 Grush–Saunby memo was an industry-wide cost-benefit analysis of a proposed rollover fuel-leakage rule, not a calculation about the Pinto's rear fuel tank.
+
+d) Adding an internal carbon price to the cash flows of a project that *emits* CO₂ raises its NPV.
+
+e) In the Ramsey rule, the pure rate of time preference $\delta$ is an empirical fact that can be read off bond markets.
+
+f) A higher discount rate reduces the present value of distant benefits proportionally more than that of near ones.
+
+g) All statements are false.
+
+::: {.content-visible when-meta="show_solutions"}
+**Solution:** Correct are **b)**, **c)** and **f)**.
+
+- **a) Incorrect.** That is strategic misrepresentation; optimism bias is an honest error of judgement.
+- **b) Correct.** Its purpose is learning and better future forecasts, not blame.
+- **c) Correct.** It covered about 12.5 million cars and light trucks and was submitted to the regulator (NHTSA) against a proposed rule.
+- **d) Incorrect.** For an emitting project the carbon charge is an additional outflow and *lowers* the NPV; only avoided emissions raise it.
+- **e) Incorrect.** $\delta$ is a value judgement about how to weight future generations; markets reveal interest rates, not ethics.
+- **f) Correct.** The discount factor $(1+i)^{-t}$ falls exponentially in $t$, so distant cash flows are hit hardest.
+- **g) Incorrect**, since b), c) and f) are correct.
+:::
+
+#### Task 2: Transfer — "The NPV is objective"
+
+A colleague argues: *"Ethics has no place in investment appraisal. The NPV at our cost of capital is objective — everything else is politics."* Evaluate this statement in a short paragraph, using the chapter's three questions.
+
+::: {.content-visible when-meta="show_solutions"}
+**Solution:**
+
+The statement confuses a precise calculation with an objective one. The arithmetic of the NPV is indeed objective, but each of its inputs rests on judgements. *Whose numbers?* Forecasts are written by people with incentives and blind spots; without a reference-class check, a named owner and a post-investment audit, the "objective" NPV may simply reproduce optimism bias or strategic misrepresentation (Exercise 1: a 5.6% error wipes out the NPV). *Whose costs?* A cash-flow forecast counts only the company's own payments; leaving externalities such as CO₂ out is itself a decision — that they cost nothing — which an internal carbon price makes explicit (Exercise 2). *Whose future?* For long-lived projects the discount rate dominates the result, and its pure-time-preference component is a value judgement (Exercise 3). The appropriate response is not to replace the NPV with opinions but to make its judgements transparent: show the NPV with and without carbon price, the debiased forecast and the discount-rate sensitivity side by side.
+
+**Grading Notes:** a good answer accepts the value of the NPV, identifies at least two of the three hidden judgements with an example, and proposes transparency rather than abandoning the calculation.
+:::

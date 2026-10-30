@@ -9,3 +9,5 @@ excalidraw.log
 
 **/*.quarto_ipynb
 *.pdf
+# Quarto caches in subfolders (e.g. tutorials/.quarto/)
+.quarto/

@@ -80,11 +80,11 @@
 
     <div class="controls">
         <div class="ctrl">
-            <label>Initial Investment (I₀) <span class="val" id="i0d">€ 100,000</span></label>
+            <label>Initial Investment (I₀) <span class="val" id="i0d">€100,000</span></label>
             <input type="range" id="i0sl" min="50000" max="500000" step="10000" value="100000">
         </div>
         <div class="ctrl">
-            <label>Annual Cash Flow (CF) <span class="val" id="cfd">€ 25,000</span></label>
+            <label>Annual Cash Flow (CF) <span class="val" id="cfd">€25,000</span></label>
             <input type="range" id="cfsl" min="5000" max="150000" step="5000" value="25000">
         </div>
         <div class="ctrl">
@@ -92,18 +92,18 @@
             <input type="range" id="nsl" min="2" max="15" step="1" value="5">
         </div>
         <div class="ctrl">
-            <label>Liquidation Value (Lₙ) <span class="val" id="lnd">€ 0</span></label>
+            <label>Liquidation Value (Lₙ) <span class="val" id="lnd">€0</span></label>
             <input type="range" id="lnsl" min="0" max="100000" step="5000" value="0">
         </div>
         <div class="ctrl ctrl-rate" style="grid-column:span 2">
-            <label>Current Discount Rate (i) <span class="val" id="ird" style="color:#c62828">8 %</span></label>
+            <label>Current Discount Rate (i) <span class="val" id="ird" style="color:#c62828">8%</span></label>
             <input type="range" id="irsl" min="0" max="40" step="0.5" value="8">
         </div>
     </div>
 
     <div class="npv-badge">
         <div>
-            <div class="npv-main" id="npvMain">€ 0</div>
+            <div class="npv-main" id="npvMain">€0</div>
             <div class="npv-label">NPV at current rate</div>
         </div>
         <div class="npv-tag tag-pos" id="npvBadge">CREATE VALUE ▲</div>
@@ -115,19 +115,19 @@
 
     <div class="results">
         <div class="rbox y0">
-            <div class="rl">Y-Intercept (i = 0 %)</div>
+            <div class="rl">Y-Intercept (i = 0%)</div>
             <div class="rf">Σ CF – I₀ (undiscounted)</div>
-            <div class="ra" id="raY0">€ 25,000</div>
+            <div class="ra" id="raY0">€25,000</div>
         </div>
         <div class="rbox irr">
             <div class="rl">IRR (NPV = 0)</div>
             <div class="rf">Internal Rate of Return</div>
-            <div class="ra" id="raIRR">— %</div>
+            <div class="ra" id="raIRR">—</div>
         </div>
         <div class="rbox cur">
             <div class="rl">NPV at current i</div>
-            <div class="rf" id="rfCur">i = 8 %</div>
-            <div class="ra" id="raCur">€ 0</div>
+            <div class="rf" id="rfCur">i = 8%</div>
+            <div class="ra" id="raCur">€0</div>
         </div>
     </div>
 </div>
@@ -142,10 +142,10 @@
     var svg  = document.getElementById('cvsv');
 
     function fmtE(v) {
-        var s = Math.round(Math.abs(v)).toLocaleString('de-DE');
-        return (v < 0 ? '−' : '') + '€ ' + s;
+        var s = Math.round(Math.abs(v)).toLocaleString('en-US');
+        return (v < 0 ? '−' : '') + '€' + s;
     }
-    function fmtPct(v) { return v.toFixed(1) + ' %'; }
+    function fmtPct(v) { return v.toFixed(1) + '%'; }
 
     function npvAt(I0, CF, n, Ln, r) {
         if (r === 0) return -I0 + CF * n + Ln;
@@ -187,11 +187,11 @@
         var iCur = parseFloat(irsl.value) / 100;
 
         // Labels
-        document.getElementById('i0d').textContent = '€ ' + Math.round(I0).toLocaleString('de-DE');
-        document.getElementById('cfd').textContent  = '€ ' + Math.round(CF).toLocaleString('de-DE');
+        document.getElementById('i0d').textContent = '€' + Math.round(I0).toLocaleString('en-US');
+        document.getElementById('cfd').textContent  = '€' + Math.round(CF).toLocaleString('en-US');
         document.getElementById('nd').textContent   = n;
-        document.getElementById('lnd').textContent  = '€ ' + Math.round(Ln).toLocaleString('de-DE');
-        document.getElementById('ird').textContent  = irsl.value + ' %';
+        document.getElementById('lnd').textContent  = '€' + Math.round(Ln).toLocaleString('en-US');
+        document.getElementById('ird').textContent  = irsl.value + '%';
 
         var irrPct = findIRR(I0, CF, n, Ln);
         var npvCur = npvAt(I0, CF, n, Ln, iCur);
@@ -199,7 +199,7 @@
 
         document.getElementById('raY0').textContent = fmtE(npv0);
         document.getElementById('raIRR').textContent = irrPct !== null ? fmtPct(irrPct) : 'No real IRR';
-        document.getElementById('rfCur').textContent = 'i = ' + irsl.value + ' %';
+        document.getElementById('rfCur').textContent = 'i = ' + irsl.value + '%';
         document.getElementById('raCur').textContent = fmtE(npvCur);
         document.getElementById('npvMain').textContent = fmtE(npvCur);
 

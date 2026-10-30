@@ -1,144 +1,362 @@
-# The Master Plan – The Dean Model & Capital Rationing
+# The Master Plan: Capital Rationing and the Dean Model
 
-> "Strategy is the art of sacrifice. The essence of strategy is choosing what *not* to do."
-> — *Michael Porter*
+*When the budget is limited, which projects do you fund first?*
 
-Chapter 4 assumed we could borrow unlimited capital at a fixed market rate — the Fisher world. In practice, capital is scarce. Boards freeze budgets. The CFO says "No." This is **Capital Rationing** (*Kapitalrationierung*): a binding constraint on total investment spending.
+## Opening: Seven Good Ideas, One Budget
 
-The result: even highly profitable projects get cut not because they fail the hurdle rate, but because the budget runs out. We need a systematic method to allocate scarce capital optimally. The **Dean Model** (Joel Dean, 1951) and its decision tool — the **Profitability Index** — provide the answer.
+::: {.details}
+#### Story: The Board Says "€200 Million, Not a Cent More"
 
-::: {.flip-card}
-#### Soft vs. Hard Capital Rationing
-**Hard rationing** is externally imposed: the capital market is closed or constrained (credit crunch, covenant restriction, no equity access). The firm genuinely cannot raise more funds. **Soft rationing** is self-imposed by management: the board decrees a budget ceiling for internal reasons — divisional control, signalling discipline, or management bandwidth. The Dean Model addresses both, but the policy response differs: soft rationing is negotiable if a sufficiently attractive project appears; hard rationing is not.
+It is late November at Southwest Manufacturing, and the investment committee has a problem that few finance textbooks mention: too many good projects. Seven proposals lie on the table. Every one has a positive net present value (NPV) at the group's 10% cost of capital. Together they would cost €370 million and add €114 million of value.
+
+The supervisory board has just ended the discussion before it started. After a difficult year and tense talks with the banks, it caps next year's capital budget at €200 million. No exceptions, no supplementary budget in spring.
+
+Daniel Reuter, the CFO, reaches for the obvious solution: "We start with the biggest value creator — the new assembly plant, €60 million NPV — and then take the next-largest NPV that still fits." His head of controlling, Aylin Demir, has run the numbers a second way and found a portfolio worth €3 million more for the same €200 million. Reuter is sceptical: "How can you add more value by picking projects with *smaller* NPVs?"
 :::
 
-## The Mechanism: Building Two Staircases
+Chapter 7 showed how taxes change the cash flows and the discount rate of a *single* project. Every decision rule so far, however, has quietly relied on the Fisher world of Chapter 4: a perfect capital market in which the firm can borrow any amount at one market rate $i$. In that world, projects never compete. If two projects both have a positive NPV, you do both, and the capital market supplies the money.
 
-Joel Dean's insight is visual. Draw two staircase curves in one diagram (X-axis: cumulative investment volume; Y-axis: rate of return / cost of capital):
+Southwest's board has abolished that world with one sentence. Once capital is limited, every euro spent on one project is a euro another project cannot have, and the real opportunity cost of a project is no longer the market rate — it is the *next-best project you had to give up*. This chapter builds the tools for that situation: the **Dean model**, which shows how much to invest when money gets more expensive the more you raise, and the **Profitability Index**, which shows how to fill a budget that has been frozen. It ends where these tools break down — because a seemingly sensible ranking can still leave money on the table.
 
-**Demand staircase (projects):** Sort all candidate projects by their IRR or Profitability Index, *descending*. The best project (highest return) comes first; the marginal project (lowest return) comes last. The curve steps down from left to right.
+## Theory: When Money Has a Price Tag and a Ceiling
 
-**Supply staircase (financing):** Sort all available financing sources by their cost, *ascending*. The cheapest money (retained earnings, senior debt) comes first; the most expensive (mezzanine, equity) comes last. The curve steps up from left to right.
+### Beyond the Fisher World
 
-**The optimal budget:** Invest where the two staircases intersect. Up to that point, every project earns more than its financing costs. Beyond it, the next project earns less than the cheapest remaining financing.
+In the Fisher world, the capital market is a bottomless well. The firm can draw any amount at the market rate $i$, so the investment budget is not a decision of its own: it is simply the sum of all projects with a positive NPV. In a diagram with the investment volume on the horizontal axis and the cost of capital on the vertical axis, this market is a flat line at height $i$.
 
-The intersection also determines the **endogenous marginal interest rate** — the internal cost of capital generated by the budget constraint itself, not imposed from outside.
+Real firms meet two departures from this picture. The first is a **price** effect. The first euros a firm uses are its retained earnings — profits kept in the firm instead of being paid out — whose cost is the return the owners could earn elsewhere. Beyond that, it borrows from its house bank (its main bank), then from lenders who charge more because the firm is already indebted, and finally it may have to issue new equity, the most expensive money of all because of issuing costs and investors' suspicion that a firm selling shares knows something they do not. The more capital the firm raises, the higher the cost of the next euro: the flat line turns into a rising staircase.
+
+The second departure is a **quantity** effect. Sometimes no one will lend more at any reasonable price, or management decides not to spend more. Up to the limit capital is available; beyond it there is none. This is **capital rationing** (dt. *Kapitalrationierung*).
 
 ::: {.flip-card}
-#### Endogenous Marginal Interest Rate
-The rate of return of the last project accepted equals the cost of the last dollar of financing drawn. Unlike an externally given WACC, this rate emerges from the budget optimisation itself — it is "endogenous" because the model generates it rather than taking it as a parameter.
+#### Capital Rationing
+A binding upper limit on the total amount a firm can invest in a period, so that some projects with a positive NPV cannot be carried out. **Hard rationing** is imposed from outside: banks refuse further credit, covenants (conditions in existing loan contracts) cap new debt, or a young firm has no access to the stock market. **Soft rationing** is imposed by management itself: divisional budgets, limited managerial capacity, or a deliberate brake on optimistic forecasts. Hard rationing is a fact to optimise around; soft rationing is a policy that should be renegotiated when an exceptional project appears.
 :::
 
-## The Fixed Budget: When the Board Says No
+### Two Staircases: A Market Inside the Firm
 
-Sometimes the intersection point is irrelevant because the board has simply decreed: *"You have $ 200M. Make the most of it."* No negotiation.
+Joel Dean turned the price effect into a simple picture that still structures capital budgeting: treat the firm's projects as *demand* for capital and its financing sources as *supply*, and let the two meet like buyers and sellers in a market (Dean, 1951).
 
-Here the classic NPV rule fails in a subtle way:
+The **investment staircase** (dt. *Kapitalnachfragekurve*) lists all candidate projects, sorted by their internal rate of return (IRR, Chapter 5) from highest to lowest. Each project is a step whose width is its outlay and whose height is its IRR, so the staircase falls from left to right. The **financing staircase** (dt. *Kapitalangebotskurve*) lists all financing sources, sorted by cost from lowest to highest. Each source is a step whose width is the amount available and whose height is its interest rate, so the staircase rises from left to right.
 
-> **The Elephant Trap:** Ranking by absolute NPV may cause you to select one massive project that consumes the entire budget — blocking several smaller projects that, combined, would have created *more* total value with the same money.
+The logic of the optimum is the logic of every market. As long as the next project earns more than the next euro of financing costs, investing one more euro makes the owners richer. Where the falling staircase meets the rising one, the next project would earn less than its money costs, and the firm stops. The intersection delivers three answers at once: the **optimal capital budget** (how much to invest), the **optimal investment programme** (which projects) and the **cut-off rate** at which the firm's internal market for capital clears.
 
-### The Solution: Profitability Index (PI)
-
-To allocate a fixed budget optimally, we need a metric that measures **value per dollar invested** — not total value created. Since the present value of future cash flows equals $NPV + I_0$ (the investment recovers its cost *and* creates additional value), we define:
-
-$$\boxed{PI = \frac{\text{PV of Future Cash Flows}}{I_0} = \frac{NPV + I_0}{I_0} = 1 + \frac{NPV}{I_0}}$$
-
-A quick example: if a project requires $ 150M and creates an NPV of $ 60M, then $PI = (60+150)/150 = 210/150 = 1.40$. For every dollar invested, shareholders receive $ 1.40 in present value — a 40-cent excess return per dollar.
-
-| PI Value | Interpretation |
-|:--------:|:---------------|
-| **PI > 1** | Project creates value above cost of capital — accept |
-| **PI = 1** | Project exactly covers cost of capital (NPV = 0) — indifferent |
-| **PI < 1** | Project destroys value — reject |
-
-**Under capital rationing:** rank all projects by PI (descending), and fill the budget from the top. Stop when the budget is exhausted.
+That last answer is the real intellectual payoff. In Chapter 4, the discount rate $i$ was an *input* taken from the capital market. In the Dean model, the relevant rate is an *output*, determined inside the firm by its own opportunities and financing conditions — which is why it is called **endogenous**. The Fisher world is the special case of a flat financing staircase at $i$: the cut-off rate is then $i$, and the Dean model reduces to the familiar rule "accept every project whose IRR exceeds $i$".
 
 ::: {.drag-exercise}
-Under *capital rationing*, ranking by absolute *Net Present Value* can be misleading. The *Profitability Index* measures value created per unit of *scarce capital* — the correct metric when the budget constraint is binding.
+In the Dean model, projects form the *investment staircase*, sorted by IRR from highest to lowest, while financing sources form the *financing staircase*, sorted by cost from lowest to highest. Their intersection determines the optimal capital budget and the *endogenous* cut-off rate.
 :::
 
-## Case Study: The Southwest Manufacturing Dilemma
+Dean's staircases compare a rate with a rate — a project's IRR against the cost of the money that funds it — which fits scarcity in the *price* sense. Southwest's board, by contrast, has not said that more money would be expensive; it has said there is none. The financing staircase becomes a vertical wall at the budget, the scarce resource is the euro of budget, and the natural yardstick is the value a project creates *per euro of budget it consumes*: the Profitability Index.
 
-**Budget constraint:** $ 200M (hard cap, no exceptions).
-**Available projects** (all have positive NPV — all beat the hurdle rate individually):
+::: {.quick-check}
+**In the Fisher world of a perfect capital market, how large is a firm's optimal capital budget?**
 
-| Project | Investment ($M) | NPV ($M) | PI = (NPV+I₀)/I₀ | PI Rank |
-|:-------:|---------------:|--------:|:-----------------:|:-------:|
-| A | 150 | 60 | 1.40 | 1st |
-| E | 30 | 11 | 1.37 | 2nd |
-| F | 20 | 7 | 1.35 | 3rd |
-| D | 50 | 15 | 1.30 | 4th |
-| B | 20 | 5 | 1.25 | 5th |
-| G | 60 | 10 | 1.17 | 6th |
-| C | 40 | 6 | 1.15 | 7th |
+- It is set by the supervisory board before the projects are evaluated.
+- **It is the sum of the outlays of all projects with a positive NPV — the budget is a result, not a constraint.**
+- It ends where the IRR of the last project equals the cost of the most expensive financing source.
 
-PI values are calculated as: $PI_A = 210/150 = 1.40$; $PI_E = 41/30 = 1.37$; $PI_G = 70/60 = 1.167$; $PI_C = 46/40 = 1.15$.
+> With unlimited funds at one market rate, no project crowds out another, so every positive-NPV project is accepted. A board-imposed limit is capital rationing, and a rising financing staircase is the Dean model — both are exactly what the Fisher world excludes.
+:::
 
-**PI Selection — step by step:**
+## Method: Staircases, Cut-off Rates and the Profitability Index
 
-**Step 1 (PI rank 1):** Select A ($ 150M, PI 1.40). Remaining budget: $ 50M.
+### The Dean Model Step by Step
 
-**Step 2 (PI rank 2):** E costs $ 30M — fits within $ 50M. Select. Remaining: $ 20M.
+The Dean model rests on simplifying assumptions that will matter later. It is a **single-period** model: projects and financing sources share one horizon, so a project's IRR can be set directly against a loan's interest rate. Projects are **independent** (none changes the cash flows of another or excludes it) and **divisible** (a project can be carried out in part, with proportional cash flows); the same holds for the financing sources. All cash flows and rates are known with certainty. The procedure then takes five steps:
 
-**Step 3 (PI rank 3):** F costs $ 20M — fits exactly. Select. Remaining: $ 0M. Budget exhausted.
+1. Determine the IRR $r_j$ and the outlay $I_{0,j}$ of every candidate project $j$.
+2. Sort the projects by $r_j$ in descending order and cumulate their outlays: the investment staircase.
+3. Sort the financing sources by their cost $k_f$ in ascending order and cumulate the amounts: the financing staircase.
+4. Compare, interval by interval along the volume axis, the IRR of the project being funded with the cost of the money funding it. Invest as long as the project return exceeds the financing cost.
+5. Where this stops, read off the capital budget, the programme, the financing mix and the cut-off rate $i^*$.
 
-**PI Portfolio:** A + E + F → Total NPV = $ 60M + $ 11M + $ 7M = **$ 78M**.
+The cut-off rate condenses the result into one decision rule:
 
-**Naive NPV Selection** (sort by absolute NPV, fill greedily):
+$$
+\text{accept project } j \text{ if } r_j > i^*, \qquad \text{use financing source } f \text{ if } k_f < i^*
+$$ {#eq-dean-rule}
 
-Projects ranked by NPV: A ($ 60M), D ($ 15M), E ($ 11M), G ($ 10M), F ($ 7M), …
+Here $r_j$ is the IRR of project $j$, $k_f$ the cost of financing source $f$, and $i^*$ the endogenous cut-off rate at the intersection of the two staircases.
 
-Step 1: Select A ($ 150M). Remaining: $ 50M.
-Step 2: Select D ($ 50M) — it is the highest-remaining-NPV project that fits. Remaining: $ 0M.
+**Worked example.** Lindner Fördertechnik GmbH, a builder of conveyor systems, collects five independent, divisible project proposals for 2027 and four financing offers:
 
-**Naive NPV Portfolio:** A + D → Total NPV = $ 60M + $ 15M = **$ 75M**.
+| Project | Description | $I_0$ (€ million) | IRR $r$ | Cumulative (€ million) |
+|:--|:--|--:|--:|:--:|
+| P1 | Automated sorting line | 2.0 | 18% | 0.0–2.0 |
+| P2 | Modular conveyor product line | 3.0 | 14% | 2.0–5.0 |
+| P3 | Energy retrofit of the paint shop | 1.5 | 11% | 5.0–6.5 |
+| P4 | Warehouse extension | 2.5 | 8% | 6.5–9.0 |
+| P5 | Office IT renewal | 1.0 | 5% | 9.0–10.0 |
 
-> **Result:** The PI method generates **$ 3M more NPV** from the identical budget — by replacing the single large block D with the two smaller but more efficient projects E and F (PI 1.37 and 1.35 vs. D's PI 1.30).
+| Source | Description | Amount (€ million) | Cost $k$ | Cumulative (€ million) |
+|:--|:--|--:|--:|:--:|
+| F1 | Retained earnings | 2.5 | 6% | 0.0–2.5 |
+| F2 | House-bank loan | 4.5 | 9% | 2.5–7.0 |
+| F3 | Second-tier loan | 2.0 | 12% | 7.0–9.0 |
+| F4 | New equity from a private investor | 3.0 | 15% | 9.0–12.0 |
 
-The interactive tool below lets you drag the budget constraint and see which projects are selected under PI versus the naive NPV approach:
+To find the intersection, merge the breakpoints of both staircases into one table. The spread is the project IRR minus the financing cost, in percentage points (pp):
 
-::: {.content-visible when-format="html"}
+| Volume (€ million) | Project | IRR | Source | Cost | Spread | Decision |
+|:--:|:--:|--:|:--:|--:|--:|:--|
+| 0.0–2.0 | P1 | 18% | F1 | 6% | +12 pp | invest |
+| 2.0–2.5 | P2 | 14% | F1 | 6% | +8 pp | invest |
+| 2.5–5.0 | P2 | 14% | F2 | 9% | +5 pp | invest |
+| 5.0–6.5 | P3 | 11% | F2 | 9% | +2 pp | invest |
+| 6.5–7.0 | P4 | 8% | F2 | 9% | −1 pp | stop |
+| 7.0–9.0 | P4 | 8% | F3 | 12% | −4 pp | stop |
+| 9.0–10.0 | P5 | 5% | F4 | 15% | −10 pp | stop |
+
+The spread turns negative at €6.5 million. Lindner's optimal programme is P1, P2 and P3, the capital budget is €6.5 million, financed by all €2.5 million of retained earnings and €4.0 million of the €4.5 million bank line. The warehouse extension P4 is rejected: its 8% cannot cover the 9% the next euro of bank money costs.
+
+Where exactly is the cut-off rate? At €6.5 million, the investment staircase drops vertically from 11% (P3) to 8% (P4), while the financing staircase still runs flat at 9% (F2). The curves cross on the *vertical* step of the investment staircase, at the height of the financing staircase: $i^* = 9\%$. With @eq-dean-rule: P1, P2 and P3 lie above 9% and are accepted, P4 and P5 below; F1 is used fully, F2 is the marginal source, F3 and F4 are not needed.
+
+In a one-period view, the programme earns $2.0 \cdot 0.18 + 3.0 \cdot 0.14 + 1.5 \cdot 0.11 = 0.945$ (€945,000) and costs $2.5 \cdot 0.06 + 4.0 \cdot 0.09 = 0.51$ (€510,000) in interest — a surplus of €435,000. Adding P4 would bring €200,000 of extra return but €285,000 of extra interest (€0.5 million at 9%, €2.0 million at 12%), cutting the surplus by €85,000. The intersection really is the optimum.
+
+The curves can also cross the other way round: on a vertical step of the *financing* staircase, in the middle of a project. The cut-off rate then equals the IRR of this marginal project. With divisible projects, you carry out the part that the cheaper money covers; with indivisible ones, you must check whether the whole project still pays off once its last euros are financed at the higher rate. Case 1 in the Practice section works through exactly this situation.
+
+::: {.flip-card}
+#### Endogenous Cut-off Rate
+The interest rate at which the investment and financing staircases intersect (dt. *endogener Kalkulationszinsfuß*). It equals the cost of the marginal financing source when the curves meet on a vertical step of the investment staircase, and the IRR of the marginal project when they meet on a vertical step of the financing staircase. "Endogenous" means that the firm's own projects and financing options produce the rate instead of the capital market. Discounted at this rate, every project in the optimal programme has a non-negative NPV (zero for a marginal project whose IRR equals the cut-off rate) and every rejected project a negative one.
+:::
+
+The flip-card's last sentence contains both the strength and the catch of the model. Once you know $i^*$, you can return to the NPV rule: discount every project at $i^*$ and accept those with a positive NPV. But you only know $i^*$ after you have found the optimal programme. Under capital constraints, the "right" discount rate is the result of the planning, not its starting point.
+
+<!-- Widget idea: Dean staircase builder — sliders for project IRRs/outlays and financing costs/amounts; draws both staircases, marks the intersection, shows the cut-off rate and which of the two intersection cases applies. -->
+
+### The Fixed Budget and the Profitability Index
+
+Now return to Southwest's board. With a fixed budget $B$, the question is no longer how much to invest but how to fill a given amount. Southwest's projects are multi-year investments, already appraised at the group's cost of capital $i = 10\%$. The goal is the combination of projects with the highest *total* NPV whose outlays fit into $B$.
+
+Ranking by absolute NPV looks natural but is a trap. Large projects tend to have large NPVs simply because they are large, so an NPV ranking fills the budget with a few big blocks and crowds out smaller projects that, together, would have created more value with the same money — the **elephant trap**. A fixed budget calls for a measure of *efficiency*: value per euro of the scarce resource.
+
+That measure is the **Profitability Index** (PI; dt. *Rentabilitätsindex*). It divides the present value of a project's future cash flows by the initial outlay that uses up the budget:
+
+$$
+PI = \frac{PV}{I_0} = \frac{NPV + I_0}{I_0} = 1 + \frac{NPV}{I_0}
+\quad \text{with} \quad PV = \sum_{t=1}^{n} CF_t \cdot (1+i)^{-t} + L_n \cdot (1+i)^{-n}
+$$ {#eq-pi}
+
+$PV$ is the present value of all cash flows from $t = 1$ onward, including the liquidation value $L_n$, discounted at the cost of capital $i$; $I_0$ is the outlay at $t = 0$, and $NPV = PV - I_0$ (symbol $C_0$ in the Formula Collection). A project that needs €150 million and creates an NPV of €60 million has
+
+$$
+PI = \frac{60 + 150}{150} = \frac{210}{150} = 1.40
+$$
+
+Each euro of budget buys €1.40 of present value: the euro back plus 40 cents of value.
+
+| $PI$ | Equivalent NPV statement | Decision without a budget limit |
+|:--:|:--:|:--|
+| $> 1$ | $NPV > 0$ | **Accept** — the project creates value at cost of capital $i$ |
+| $= 1$ | $NPV = 0$ | Indifferent — the project exactly earns $i$ |
+| $< 1$ | $NPV < 0$ | **Reject** — the project destroys value |
+
+Without a budget limit, the PI accepts exactly the projects the NPV rule accepts. Its value lies in *ranking* projects once the budget binds. Some textbooks define the index as $NPV / I_0$ (the German *Kapitalwertrate*); that version has the threshold 0 instead of 1 but produces the same ranking. This book uses @eq-pi, as does the Formula Collection.
+
+The link to the Dean model shows in a one-period project with outlay $I_0$ and a single cash flow $CF_1 = I_0 \cdot (1+r)$ at $t = 1$:
+
+$$
+PI = \frac{CF_1 \cdot (1+i)^{-1}}{I_0} = \frac{1+r}{1+i}
+$$ {#eq-pi-oneperiod}
+
+For one-period projects, the PI rises whenever the IRR rises, so both rank identically, and $PI > 1$ means $r > i$. For multi-year projects with different lifetimes, the rankings can diverge because the IRR carries the reinvestment problem of Chapter 5; under a fixed budget and with divisible projects, the PI ranking is the one that maximises total NPV.
+
+**The PI selection procedure.** Under a binding budget $B$:
+
+1. Compute the NPV and PI of every project; drop all projects with $PI < 1$.
+2. Rank the remaining projects by PI in descending order.
+3. Go down the list. Accept a project if its outlay fits into the remaining budget; if not, skip it and continue with the next.
+4. Stop when no remaining project fits.
+5. Check the margin: if part of the budget is left idle, test whether swapping a project for a larger, lower-ranked one adds NPV.
+
+### Where the Profitability Index Breaks Down
+
+The PI ranking is exactly optimal under the same conditions as the Dean model: one budget constraint in one period, divisible and independent projects. Each condition can fail.
+
+**Indivisibility.** You cannot build 80% of a factory. Take a budget of €100 million and three indivisible projects: X costs €60 million with an NPV of €21 million ($PI = 1.35$), Y costs €50 million with an NPV of €15 million ($PI = 1.30$), Z costs €50 million with an NPV of €14 million ($PI = 1.28$). The PI procedure accepts X first; the remaining €40 million are too little for Y or Z, so they stay idle and the portfolio is worth €21 million. The two *lower*-ranked projects Y + Z use the full budget and are worth €29 million. The ranking was right about efficiency — X is the best use of a euro — but wrong about the portfolio, because X left a gap no other project could fill. Were the projects divisible, X plus 80% of Y would be worth $21 + 0.8 \cdot 15 = 33$ (€33 million), and the PI ranking would be exactly right again.
+
+**Multi-period budgets.** The PI divides by the outlay at $t = 0$ only, so a project's claim on *next year's* budget is invisible to it. Suppose a division receives €10 million at $t = 0$ and another €4 million at $t = 1$, and four projects compete for it (€ thousand, $i = 10\%$; none returns cash at $t = 1$):
+
+| Project | $t = 0$ | $t = 1$ | $t = 2$ | NPV at 10% | PI |
+|:--:|--:|--:|--:|--:|--:|
+| A | −5,000 | −4,000 | +14,080 | 3,000 | 1.60 |
+| B | −5,000 | 0 | +8,470 | 2,000 | 1.40 |
+| C | −5,000 | 0 | +8,280 | 1,843 | 1.37 |
+| D | 0 | −4,000 | +6,820 | 2,000 | — |
+
+The PI ranking picks A and B: €10 million at $t = 0$, €4 million at $t = 1$, total NPV €5,000,000. But A's high PI hides that it also swallows the entire budget of $t = 1$, and project D, which needs no money today, cannot even be ranked because its $I_0$ is zero. The portfolio B + C + D also respects both budgets and is worth $2{,}000 + 1{,}843 + 2{,}000 = 5{,}843$ (€5,843,000), €843,000 more than the PI choice.
+
+**Dependent projects.** If projects are mutually exclusive (two layouts for one hall) or complementary (a product line that needs a new warehouse), individual ratios miss the interaction; rank packages instead, or optimise explicitly. And without a budget limit, never use the PI to choose between mutually exclusive projects: like the IRR, it would prefer the small, efficient project to the large one with the higher NPV — the scale problem of Chapter 4.
+
+::: {.details}
+#### Deep Dive: Capital Budgeting as a Mathematical Programme
+Behind the PI ranking lies an optimisation problem. With $x_j$ as the share of project $j$ carried out, the firm maximises $\sum_j NPV_j \cdot x_j$ subject to $\sum_j I_{0,j} \cdot x_j \le B$. If projects are divisible ($0 \le x_j \le 1$), this is a linear programme with a single constraint, and its solution is exactly the PI ranking, with the marginal project taken in part. If projects are indivisible ($x_j \in \{0, 1\}$), it becomes an integer programme — the "knapsack problem" of operations research — and the ratio ranking is only a heuristic. Budgets in several periods add one constraint per period; dependencies add logical constraints such as $x_A + x_B \le 1$ for mutually exclusive projects. This formulation goes back to Lorie and Savage (1955) and was developed systematically by Weingartner (1963). For a handful of projects, enumerate all feasible combinations; for more, any spreadsheet solver does the job.
+:::
+
+None of this makes the PI useless. With many projects that are small relative to the budget, the idle remainder is small and the PI ranking comes very close to the optimum. It is a superb first cut and a poor last word: rank by PI, then examine the margin.
+
+::: {.quick-check}
+**Which of the following situations does *not* undermine the Profitability Index ranking under a fixed one-period budget?**
+
+- The projects are indivisible, and the top-ranked ones leave a large part of the budget unused.
+- The budget also binds next year, and some projects need a second instalment then.
+- **The projects differ widely in size.**
+
+> Differences in size are exactly what the PI handles — it measures value per euro, so small and large projects compete on equal terms. Indivisibility and budgets in several periods are the two classic reasons why the PI ranking misses the optimal portfolio.
+:::
+
+## Practice: Ranking, Cutting and Checking the Margin
+
+The two cases cover both kinds of scarcity: Lindner Fördertechnik faces rising financing costs, so the Dean model sets its budget; Southwest Manufacturing faces a frozen budget, so the PI has to fill it.
+
+### Case 1: Where the Staircases Meet
+
+::: {.case-study}
+#### Case: Lindner Fördertechnik — The 2028 Programme
+
+A year later, managing director Petra Lindner presents a new set of independent proposals and financing offers to the shareholders:
+
+| Project | Description | $I_0$ (€ million) | IRR $r$ |
+|:--|:--|--:|--:|
+| P1 | Laser-cutting cell | 1.2 | 16% |
+| P2 | Remote-service platform | 0.8 | 13% |
+| P3 | Hall extension | 2.0 | 10% |
+| P4 | Rooftop solar plant | 1.0 | 7% |
+
+| Source | Description | Amount (€ million) | Cost $k$ |
+|:--|:--|--:|--:|
+| F1 | Retained earnings | 1.5 | 5% |
+| F2 | House-bank loan | 1.5 | 8% |
+| F3 | Second bank loan | 1.0 | 11% |
+| F4 | New equity | 2.0 | 14% |
+
+**Tasks:**
+
+1. Construct both staircases and merge them into one interval table.
+2. Assuming divisible projects, determine the optimal programme, the capital budget, the financing mix and the endogenous cut-off rate.
+3. The hall extension P3 turns out to be indivisible: Lindner builds the whole hall or none of it. Should P3 be carried out in full? Compare the one-period surplus of the alternatives.
+
+::: {.solution}
+**Solution:**
+
+**1. Staircases.** Projects sorted by IRR (16%, 13%, 10%, 7%) occupy the volumes 0–1.2, 1.2–2.0, 2.0–4.0 and 4.0–5.0; financing sources sorted by cost (5%, 8%, 11%, 14%) occupy 0–1.5, 1.5–3.0, 3.0–4.0 and 4.0–6.0. Merged:
+
+| Volume (€ million) | Project | IRR | Source | Cost | Spread |
+|:--:|:--:|--:|:--:|--:|--:|
+| 0.0–1.2 | P1 | 16% | F1 | 5% | +11 pp |
+| 1.2–1.5 | P2 | 13% | F1 | 5% | +8 pp |
+| 1.5–2.0 | P2 | 13% | F2 | 8% | +5 pp |
+| 2.0–3.0 | P3 | 10% | F2 | 8% | +2 pp |
+| 3.0–4.0 | P3 | 10% | F3 | 11% | −1 pp |
+| 4.0–5.0 | P4 | 7% | F4 | 14% | −7 pp |
+
+**2. Divisible projects.** The spread turns negative at €3.0 million, in the middle of P3. There the financing staircase jumps vertically from 8% (F2 exhausted) to 11% (F3), while the investment staircase runs flat at 10%. The curves cross on a vertical step of the *financing* staircase, so the cut-off rate is the IRR of the marginal project: $i^* = 10\%$. The optimal programme is P1 and P2 in full plus half of P3 (€1.0 million of €2.0 million); the capital budget of €3.0 million is financed by F1 (€1.5 million) and F2 (€1.5 million). With @eq-dean-rule: P1 and P2 lie above 10%, P4 below; F1 and F2 cost less than 10%, F3 and F4 more.
+
+**3. Indivisible P3.** Compare the one-period surplus (project returns minus interest):
+
+- *Without P3* (€2.0 million, financed by F1 €1.5 million and F2 €0.5 million): returns $1.2 \cdot 0.16 + 0.8 \cdot 0.13 = 0.296$, interest $1.5 \cdot 0.05 + 0.5 \cdot 0.08 = 0.115$, surplus **€181,000**.
+- *With all of P3* (€4.0 million, additionally F2 €1.0 million and F3 €1.0 million): extra return $2.0 \cdot 0.10 = 0.200$, extra interest $1.0 \cdot 0.08 + 1.0 \cdot 0.11 = 0.190$, surplus $0.181 + 0.010 = 0.191$, i.e. **€191,000**.
+
+The first €1.0 million of the hall earns 2 points more than the bank loan financing it (+€20,000); the second earns 1 point less than the second loan (−€10,000). On balance, the full hall adds €10,000: Lindner should build it, raise the budget to €4.0 million and accept the 11% loan. The divisible optimum from Task 2 would have yielded €201,000 — the €10,000 gap is the price of indivisibility. Had the second loan cost 13%, the loss on the second million (−€30,000) would exceed the gain on the first, and Lindner should drop P3 entirely.
+:::
+:::
+
+### Case 2: Southwest's Frozen Budget
+
+::: {.case-study}
+#### Case: Southwest Manufacturing — Filling €200 Million
+
+Back in Southwest's committee room, Aylin Demir lays out the seven proposals from the opening. All are independent and indivisible; all NPVs are computed at the group's cost of capital of 10%.
+
+| Project | $I_0$ (€ million) | NPV (€ million) |
+|:--:|--:|--:|
+| A | 150 | 60 |
+| B | 20 | 5 |
+| C | 40 | 6 |
+| D | 50 | 15 |
+| E | 30 | 11 |
+| F | 20 | 7 |
+| G | 60 | 10 |
+
+**Tasks:**
+
+1. Compute the PI of each project and rank the projects.
+2. Fill the €200 million budget with the PI procedure and compare the result with Reuter's rule "highest NPV first, as long as it fits".
+3. In February the banks relent and the board raises the budget to €240 million. Apply the PI procedure again. Is the result optimal?
+
+::: {.solution}
+**Solution:**
+
+**1. PI and ranking** with @eq-pi, $PI = (NPV + I_0) / I_0$ (amounts in € million):
+
+| Rank | Project | $I_0$ | NPV | PI |
+|:--:|:--:|--:|--:|--:|
+| 1 | A | 150 | 60 | 210 / 150 = 1.40 |
+| 2 | E | 30 | 11 | 41 / 30 = 1.37 |
+| 3 | F | 20 | 7 | 27 / 20 = 1.35 |
+| 4 | D | 50 | 15 | 65 / 50 = 1.30 |
+| 5 | B | 20 | 5 | 25 / 20 = 1.25 |
+| 6 | G | 60 | 10 | 70 / 60 = 1.17 |
+| 7 | C | 40 | 6 | 46 / 40 = 1.15 |
+
+All PIs exceed 1: every project creates value on its own.
+
+**2. Budget €200 million.** *PI procedure:* A (€150 million, €50 million left) → E (€30 million, €20 million left) → F (€20 million, nothing left). Portfolio A + E + F, total NPV $60 + 11 + 7 = 78$, i.e. **€78 million**.
+
+*Highest NPV first* (order A 60, D 15, E 11, G 10, F 7, C 6, B 5): A (€50 million left) → D (nothing left). Portfolio A + D, total NPV $60 + 15 =$ **€75 million**.
+
+Both portfolios contain A; the difference lies in the last €50 million. Reuter spends it on one block, D (PI 1.30); the PI procedure spends it on two more efficient projects, E and F (PI 1.37 and 1.35), worth €18 million instead of €15 million. That answers Reuter's question: smaller NPVs per project, more NPV per euro, more NPV in total. Enumerating all 128 combinations confirms €78 million as the best possible portfolio for €200 million.
+
+**3. Budget €240 million.** *PI procedure:* A (€90 million left) → E (€60 million left) → F (€40 million left) → D (€50 million) does not fit, skip → B (€20 million left) → G and C do not fit. Portfolio A + E + F + B, outlay €220 million, total NPV $60 + 11 + 7 + 5 =$ **€83 million**, with **€20 million idle**.
+
+*Check the margin:* the idle €20 million plus the €30 million tied up in E equal exactly the €50 million that D needs. Swapping E (NPV 11) for D (NPV 15) gives A + B + D + F, outlay $150 + 20 + 50 + 20 = 240$ and total NPV $60 + 5 + 15 + 7 =$ **€87 million** — €4 million more, and the optimum by enumeration. Reuter's NPV rule (A + D + E, €86 million) also beats the pure PI ranking at this budget, but misses the optimum too.
+
+The PI ranking was exactly right at €200 million, where the selected projects happened to fill the budget, and wrong at €240 million, where an indivisible project left a gap. Rank by PI, then always test the margin.
+:::
+:::
+
+The widget below uses Southwest's seven projects. Move the budget slider and watch which projects the PI procedure selects and how its total NPV compares with the "highest NPV first" rule. Start at €200 million, then try €190 million and €240 million: at these two budgets, "budget used" falls short of the budget, and idle capital is the signal to check the margin. At €240 million, the widget even shows the NPV rule ahead of the PI ranking — yet neither finds the optimum of €87 million.
+
+::: {.widget}
 <iframe src="assets/ch08/dean_model.html"
-        style="width: 100%; height: 520px; border: none;"
-        loading="lazy">
+        width="100%" height="560px" frameborder="0"
+        title="Capital rationing with the Profitability Index — budget slider comparing PI ranking and highest-NPV-first selection for seven projects">
 </iframe>
 :::
 
-## The Limits: When the Profitability Index Fails
+## Conclusion: The Opportunity Cost Is the Next Project
 
-The PI method delivers the correct solution under two conditions: projects must be **perfectly divisible** (you can invest a fraction of any project) and the rationing horizon must span only **one period** (the budget constraint applies to today's outlay only, not future stages).
-
-In practice, both conditions can fail:
-
-**Indivisibility:** You cannot commission 60% of a factory. When projects are whole-unit investments and the budget cannot be filled exactly by the PI ranking, a lower-ranked project combination may fit better and produce more total NPV.
-
-::: {.details}
-#### Why PI Is Exact Only for Divisible, Single-Period Problems
-The PI ranking is derived from the Lagrangian relaxation of an integer linear programme — it gives the exact solution only when the variables are continuous (divisible). For indivisible projects, the correct method is **integer programming** (or, for small project sets, complete enumeration of feasible combinations). Multi-period rationing adds a second constraint for each future period and generally requires full LP/IP optimisation.
-:::
-
-> **Practical rule:** When a combination of lower-ranked projects fills the budget better than skipping one higher-ranked project, evaluate both combinations explicitly and select the higher-NPV outcome. The PI ranking is a starting point, not always the final answer.
-
-## Chapter Check
+The deepest shift in this chapter is a change of benchmark. In the Fisher world, a project only has to beat the capital market; under capital rationing, it has to beat the *other projects*, and the cut-off rate and the PI ranking make that internal competition explicit. A positive NPV is no longer a sufficient reason to invest; it is merely the entry ticket to a contest for scarce euros. Strategy, Michael Porter observed, is about choosing what not to do (Porter, 1996). Capital rationing forces that choice, and forces it in numbers. The tools are powerful because they are simple, and they fail where their simplicity ends — with lumpy projects, budgets that bind in several years, and projects that depend on each other. There, a ranking is a first draft, and the decision is made at the margin.
 
 ::: {.quick-check}
-**The board has fixed the investment budget at $ 500M. You have five profitable projects, all with positive NPV, totalling $ 700M. Which ranking criterion selects the value-maximising portfolio?**
+**A supervisory board fixes the investment budget at €500 million. The firm has five independent projects, all with a positive NPV, which together would cost €700 million. Which criterion should guide the selection?**
 
-- Rank by NPV, take the top three.
-- Rank by IRR, take the top three.
-- **Rank by Profitability Index, fill the budget from the top.**
+- Rank by NPV and accept projects from the top as long as they fit — the largest value creators come first.
+- Rank by IRR, because a percentage already corrects for the different project sizes.
+- **Rank by Profitability Index, fill the budget from the top, then check whether idle capital allows a better combination.**
 
-> Correct. Under a binding budget constraint, PI maximises total NPV per dollar of scarce capital. NPV ranking can crowd out efficient small projects; IRR ranking ignores project scale entirely. PI — value per dollar invested — is the right metric for rationed capital.
+> The scarce resource is the euro of budget, so the yardstick is value per euro. Ranking by NPV falls into the elephant trap; the IRR ignores the cost of capital and can rank multi-year projects differently from the PI. Because real projects are indivisible, a check at the margin must follow.
 :::
 
 ::: {.quick-check}
-**You have a $ 100M budget. Project X costs $ 100M (NPV $ 20M, PI 1.20). Project Y costs $ 50M (NPV $ 15M, PI 1.30) and Project Z costs $ 50M (NPV $ 12M, PI 1.24). What do you do?**
+**Budget €100 million. Project X costs €100 million (NPV €20 million, PI 1.20). Project Y costs €50 million (NPV €15 million, PI 1.30), project Z costs €50 million (NPV €12 million, PI 1.24). What do you do?**
 
-- Choose X — it has the highest absolute NPV.
-- **Choose Y and Z — combined NPV of $ 27M exceeds X's $ 20M.**
-- Reject all — capital is rationed.
+- Choose X — it has the highest NPV of the three.
+- **Choose Y and Z — together they create €27 million of NPV with the same €100 million.**
+- Reject all three — under rationing, only projects with a PI above 1.30 qualify.
 
-> Correct. Y (PI 1.30) and Z (PI 1.24) both rank above X (PI 1.20) in efficiency. Together they create $ 27M of value versus $ 20M for X — using the same $ 100M budget. This is precisely the Elephant Trap: a single large-NPV project crowded out by two smaller, more efficient ones.
+> Y and Z rank above X and together use exactly the budget, so here the PI ranking delivers the optimum directly: €27 million against €20 million for X. Rationing changes the ranking, not the threshold of 1.
 :::
 
-This completes the investment appraisal toolkit. From the time value of a single cash flow (Chapter 1) through the management of debt and the valuation of securities (Chapters 2–3), the NPV decision rule (Chapter 4), the IRR comparison (Chapter 5), the annuity method for multi-period comparison (Chapter 6), the tax impact (Chapter 7) — and now the discipline of choosing the best portfolio when resources are scarce. Every decision reduces to the same question: are we creating more value than we are consuming?
+::: {.quick-check}
+**In a Dean diagram, the investment staircase drops from 11% (last accepted project) to 8% (first rejected project) at a volume of €6.5 million. At that volume, the financing staircase is flat at 9%. What is the endogenous cut-off rate?**
+
+- 11%, the IRR of the last accepted project.
+- **9%, the cost of the marginal financing source, because the curves cross on a vertical step of the investment staircase.**
+- 8%, the IRR of the first rejected project.
+
+> The curves cross where the investment staircase falls vertically, at the height of the financing staircase. The cut-off rate equals the IRR of the marginal project only when the curves meet on a vertical step of the *financing* staircase.
+:::
+
+Every IRR, NPV and PI in this chapter was a single, certain figure, and each ranking was only as good as those figures. Chapter 9 drops that last comfort and asks how far a forecast can be trusted — and what happens to the decision when it is wrong.

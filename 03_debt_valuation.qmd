@@ -1,350 +1,415 @@
-# Debt and Valuation – Loans, Bonds and the Price of Promises
+# Debt and Valuation
 
-> "Debt is like fire. It is a useful servant but a terrible master."
+*One Promise, Two Perspectives: Loans, Bonds and Shares*
 
-In Chapter 2, we used the **Capital Recovery Factor (CRF)** to convert a lump-sum loan into a stream of equal annual payments. Now we go deeper: there is not one way to structure that repayment — there are three, each with profoundly different consequences for liquidity, total cost, and risk.
-
-"Amortization" comes from the Latin *ad mortem* — "to death." It is the process of slowly killing a loan. In corporate finance, *how* you structure this death matters as much as the amount you borrow. It shapes your cash-flow profile for years.
-
-Every loan payment, the **Debt Service** ($K_t$), is a hybrid of two forces:
-
-1. **Interest ($Z_t = R_{t-1} \cdot i$):** The rent you pay for using someone else's money. This is an *expense* (P&L effect).
-2. **Principal Repayment ($T_t$):** The act of reducing the debt itself. This is a *balance sheet shift*, not an expense.
-
-$$K_t = Z_t + T_t$$
-
-We distinguish three archetypes — each serves a different strategic master. In the second half of this chapter we flip the camera: the same promised payment streams, seen from the **investor's** side, become bonds and stocks.
-
-## The Annuity Loan (Annuitätendarlehen)
-
-*The "Mortgage Classic" — constant payment, shifting interior.*
-
-This is the standard model for real estate financing and any long-term investment where planning security is paramount. The key intuition: the total annual payment is fixed by the CRF formula. At the start, most of that fixed amount goes to interest (because the debt is large). Over time, as debt shrinks, interest falls — freeing up the same fixed payment to repay more principal. Think of it as a hydraulic system: the same pressure (payment), but the flow gradually shifts from interest to repayment.
-
-* **The Rule:** $K_t = \text{constant} = C_0 \cdot CRF(i, n)$
-* **The Shift:** Interest falls, repayment rises — the "Scissors Effect" (*Scherenwirkung*).
-
-**Example:** $C_0 = \text{€}100{,}000$, $i = 5\%$, $n = 5$ years.
-
-$$K = 100{,}000 \cdot \frac{0.05 \cdot (1.05)^5}{(1.05)^5 - 1} = \mathbf{23{,}097.48 \text{ € p.a.}}$$
-
-| Year | Opening Balance (€) | Annuity (€) | Interest (€) | Principal (€) | Closing Balance (€) |
-|:----:|-------------------:|------------:|-------------:|--------------:|--------------------:|
-| 1    | 100,000.00         | 23,097.48   | 5,000.00     | 18,097.48     | 81,902.52           |
-| 2    | 81,902.52          | 23,097.48   | 4,095.13     | 19,002.35     | 62,900.17           |
-| 3    | 62,900.17          | 23,097.48   | 3,145.01     | 19,952.47     | 42,947.70           |
-| 4    | 42,947.70          | 23,097.48   | 2,147.39     | 20,950.09     | 21,997.61           |
-| 5    | 21,997.61          | 23,097.48   | 1,099.88     | 21,997.60     | 0.00                |
-
-| Pros | Cons |
-|:-----|:-----|
-| **Planning security:** identical outflow every year | **Slow de-leveraging:** debt falls slowly in early years |
-| **Lower initial burden** than constant amortization | **Higher total interest** than constant amortization |
-
-## The Constant Amortization Loan (Ratentilgung)
-
-*The "Strategic Choice" — equal principal slices, falling total payment.*
-
-Here the borrower decides to repay the principal in equal instalments regardless of the interest burden. Because debt falls linearly, interest falls linearly — so the total annual payment starts high and drops every year.
-
-* **The Rule:** $T_t = T = \frac{C_0}{n} = \text{constant}$; $K_t = T + Z_t$ (declining)
-
-**Example:** $C_0 = \text{€}100{,}000$, $i = 5\%$, $n = 5$ years. $T = 20{,}000$ € p.a.
-
-| Year | Opening Balance (€) | Total Payment (€) | Interest (€) | Principal (€) | Closing Balance (€) |
-|:----:|-------------------:|------------------:|-------------:|--------------:|--------------------:|
-| 1    | 100,000.00         | **25,000.00**     | 5,000.00     | 20,000.00     | 80,000.00           |
-| 2    | 80,000.00          | 24,000.00         | 4,000.00     | 20,000.00     | 60,000.00           |
-| 3    | 60,000.00          | 23,000.00         | 3,000.00     | 20,000.00     | 40,000.00           |
-| 4    | 40,000.00          | 22,000.00         | 2,000.00     | 20,000.00     | 20,000.00           |
-| 5    | 20,000.00          | **21,000.00**     | 1,000.00     | 20,000.00     | 0.00                |
-
-| Pros | Cons |
-|:-----|:-----|
-| **Lowest total interest** of all three types | **High initial strain:** first payment (€25k) exceeds annuity (€23k) |
-| **Fast de-leveraging:** good for rapidly depreciating assets | **Variable outflows** require dynamic cash management |
-
-::: {.drag-exercise}
-While the *Annuity Loan* keeps the total liquidity outflow *constant*, the *Constant Amortization Loan* minimizes the total *interest* load over the loan's lifetime.
-:::
-
-## The Bullet Loan (Endfälliges Darlehen)
-
-*The "Trader's Choice" — interest only, then full repayment at maturity.*
-
-Also known as the interest-only loan. During the entire term, only interest is paid — the full principal comes back as a single "bullet" at $t = n$. This structure is typical for corporate bonds (*Anleihen*) and bridge financing.
-
-* **The Rule:** $T_{1 \dots n-1} = 0$; $T_n = C_0$. Interest: $Z_t = C_0 \cdot i$ (constant, because debt never falls).
-
-**Example:** $C_0 = \text{€}100{,}000$, $i = 5\%$, $n = 5$ years.
-
-| Year | Opening Balance (€) | Total Payment (€) | Interest (€) | Principal (€) | Closing Balance (€) |
-|:----:|-------------------:|------------------:|-------------:|--------------:|--------------------:|
-| 1–4  | 100,000.00         | 5,000.00          | 5,000.00     | 0.00          | 100,000.00          |
-| 5    | 100,000.00         | **105,000.00**    | 5,000.00     | 100,000.00    | 0.00                |
-
-| Pros | Cons |
-|:-----|:-----|
-| **Maximum capital:** full loan amount works for the entire term | **Refinancing risk:** the "wall of debt" at the end |
-| **Minimal interim outflows:** only €5k p.a. during the project | **Most expensive:** highest total interest of the three types |
+## Opening: The Same Promise, Seen from Both Sides of the Table
 
 ::: {.details}
-#### Deep Dive: The Zero-Coupon Bond
-A variant of the bullet structure is the **Zero-Coupon Bond** (*Nullkuponanleihe*). Unlike a standard bullet loan — which pays interest annually — the zero-coupon bond pays nothing at all until maturity. Instead, interest compounds and is added to the principal throughout the term. Example: borrow €100,000 at 5% for 5 years → repay $100{,}000 \times (1.05)^5 = 127{,}628$ in Year 5. Liquidity drain during the term is *zero*. This is a separate instrument class from the bullet loan; its valuation uses the standard discounting formula, not the annuity framework.
+#### Story: Two Puzzles in One Week
+Tobias Krämer runs a twelve-person machining shop near Schweinfurt. On Monday his bank offers him €100,000 for a new CNC lathe, at 5% interest over five years, in three versions. Plan A costs €23,097 every year. Plan B starts at €25,000 and falls to €21,000. Plan C asks for only €5,000 a year, followed by €105,000 in year five. His bookkeeper adds up the interest: €15,487 for A, €15,000 for B, €25,000 for C. "B is the cheapest, C is a rip-off," she says. The account manager smiles: "All three cost exactly 5%."
+
+It is autumn 2022. On Thursday his mother calls. In 2021 she paid €1,000 for a corporate bond with a 1% coupon, issued by a company as solid as the Main bridge; it still has seven years to run. In July the European Central Bank raised its key interest rates for the first time in eleven years, and comparable bonds now yield 3.5%. Her bank statement values her bond at about €847. "The company will pay me back every cent. How can it be worth less?"
+
+Who is right, the bookkeeper or the banker? And has his mother lost money or not?
 :::
 
-## Strategic Summary: The CFO's Decision Matrix
+Both puzzles have the same answer. Tobias's loan and his mother's bond are the same kind of object: a **promise of future payments**. Tobias sits on the borrower's side of the table and asks how to *structure* the promise; his mother sits on the investor's side and asks what it is *worth today*. You already own the arithmetic for both: in Chapter 2 you collapsed a stream of equal payments into one number with the PVIFA, turned one number back into a stream with the Capital Recovery Factor (CRF), and valued a never-ending stream as a perpetuity.
 
-Now we can see all three payment profiles side by side. The interactive chart below uses the same parameters as the tables above — adjust the sliders and observe how the payment shapes diverge:
+This chapter applies those tools first from the borrower's view (three ways to repay a loan, how to choose between them, and the most expensive loan most firms never notice) and then from the investor's view (what a bond is worth, which yield its price implies, and how to value a share whose payments nobody guarantees). The guiding question: *What does a loan cost you, and what is a bond or a share really worth today?*
 
-::: {.content-visible when-format="html"}
+## Theory: What a Promise to Pay Is Worth
+
+### Interest and Principal: The Anatomy of a Payment
+
+Every payment a borrower makes on a loan, the **debt service** (dt. *Kapitaldienst*), does two jobs at once. One part is **interest**: the rent for using money that still belongs to the lender, always charged on the balance still outstanding, so it shrinks as the debt shrinks. The other part is **principal repayment**: the part that actually reduces the debt.
+
+The distinction matters. Interest is an expense and reduces profit. Principal repayment is not an expense at all: the firm hands back money it never owned, and the balance sheet gets shorter on both sides. That is why a profitable firm can still run out of cash when its principal repayments are large.
+
+::: {.drag-exercise}
+Each loan payment splits into *interest*, the price for using the outstanding balance that is recorded as an expense, and *principal*, the part that reduces the debt and is not an expense.
+:::
+
+The word *amortization* comes from the Old French *amortir*, "to kill", rooted in the Latin *mors*, death. Amortizing a loan means killing it slowly, and how you schedule that slow death shapes your cash flows for years.
+
+### Three Shapes of Repayment
+
+For the same amount, rate and term, banks offer three standard schedules. They differ only in *when* the principal is repaid.
+
+The **annuity loan** (dt. *Annuitätendarlehen*) fixes the total payment, computed with the CRF from Chapter 2. Inside that constant payment the mix shifts: at the start the debt is large, so most of the payment is interest; as the debt falls, the same payment repays more and more principal. This crossing of a falling interest line and a rising repayment line is the *scissors effect*. The annuity loan is the standard for mortgages because households and landlords value one predictable number above everything else.
+
+The widget shows the scissors effect for any annuity loan. After the default, try a typical mortgage: €300,000 at 4% over 30 years. In year one more than two thirds of the payment is pure interest, and the balance barely moves.
+
+::: {.widget}
+<iframe src="assets/ch03/tilgung.html"
+        width="100%" height="560px" frameborder="0"
+        title="Annuity loan structure: interest and principal share of a constant annual payment">
+</iframe>
+:::
+
+The **constant-amortization loan** (dt. *Ratentilgungsdarlehen*) fixes the principal instead. The debt falls by the same slice every year, so does the interest, and the total payment starts high and declines in a straight line. It suits assets that lose value quickly: the debt shrinks as fast as the machine or vehicle it financed.
+
+The **bullet loan** (dt. *endfälliges Darlehen*) pays only interest during the term and returns the entire principal in one "bullet" at maturity. It suits projects that generate no cash until they are finished and sold, such as a building project, and it is the structure of most corporate and government bonds.
+
+::: {.flip-card}
+#### Matching Principle (dt. *Fristenkongruenz*)
+The rule that the term and payment profile of a loan should match the cash flows of the asset it finances. A 20-year factory financed with a 3-year bullet loan forces the firm to find a new loan to repay the old one at the worst possible moment; a short-lived machine financed over 20 years leaves the firm paying for an asset long after it has been scrapped.
+:::
+
+### Why Total Interest Is the Wrong Yardstick
+
+Tobias's bookkeeper has added correctly: the bullet loan produces €10,000 more interest than the constant-amortization loan. Her conclusion is still wrong, because total interest adds up euros paid at different times, the mistake Chapter 1 warned against.
+
+The bullet loan produces more interest because Tobias keeps *more money for longer*. Under plan C he holds the full €100,000 for five years; under plan B he hands back €20,000 every year. Interest is amount borrowed times time borrowed times rate. The first two factors differ between the plans; the rate does not. Every euro Tobias still owes costs him 5% per year, whichever plan he signs.
+
+The present value makes this precise. Discount each plan's payments at the loan rate of 5%, and each is worth exactly €100,000 today, the amount Tobias receives. All three are fair deals at 5%, so the choice between them is not about price. It is about **fit**: which payment profile matches the cash flows of the asset, and which risks the borrower can carry.
+
+::: {.details}
+#### Deep Dive: When the Repayment Pattern Does Change the Cost
+The plans cost the same only if Tobias's own money is worth 5% to him. Suppose his business earns 8% on every euro he keeps in it. Discounted at 8%, the payments of the bullet plan are worth about €88,022 today, those of the annuity plan €92,222 and those of the constant-amortization plan €92,445. The plan with the *highest* total interest becomes the cheapest, because it keeps the bank's 5% money working at 8% for longer. For a borrower whose idle cash earns only 2% in a deposit, early repayment wins. Total interest captures none of this.
+:::
+
+### The Loan Nobody Calls a Loan: Supplier Credit
+
+Some of the most expensive debt in a company never appears in a loan contract. A supplier who allows payment in 30 days is lending the buyer the invoice amount for 30 days. This **supplier credit** (dt. *Lieferantenkredit*) looks free until the supplier also offers a **cash discount** (dt. *Skonto*) for early payment, say 3% off within 10 days. Now the buyer chooses between paying €97,000 on day 10 or €100,000 on day 30. Waiting means keeping €97,000 for 20 extra days at a price of €3,000: a loan whose annual interest rate, as the Method section shows, is startling.
+
+### Flipping the Camera: From Borrower to Investor
+
+On the other side of the table, a **bond** (dt. *Anleihe*) is a bullet loan cut into tradeable slices: the issuer borrows from many investors, pays each a fixed interest amount, the **coupon**, every year and repays the **face value** at maturity. What should an investor pay for that promise?
+
+The answer is the principle that holds the chapter together: **the value of any promise of future payments is the present value of those payments, discounted at the return the market demands for promises of that risk.** For the borrower in a fair loan, that present value equals the amount borrowed; for the investor, it *is* the price.
+
+This solves the second puzzle. Tobias's mother holds a promise of €10 a year for seven more years plus €1,000 at maturity. The promise has not changed; the return investors demand for comparable promises has, from 1% to 3.5%. Nobody pays €1,000 for a 1% bond when new bonds yield 3.5%, so the price falls until a buyer's return, coupons plus the gain from buying below face value, equals 3.5%. That price is about €847. If she holds the bond to maturity she still receives every euro she was promised; if she sells now, she realizes the loss.
+
+Shares stretch the principle in two directions: they have no maturity, and their dividends are decided each year by the company rather than promised. A **preferred share** with a fixed dividend is a perpetuity; a **common share** with growing dividends is a growing perpetuity. The arithmetic stays simple; the honesty about the inputs becomes the hard part.
+
+::: {.quick-check}
+Tobias can borrow €100,000 at 5% for five years as an annuity loan, a constant-amortization loan or a bullet loan. Measured as the present value of the payments at the loan rate of 5%, which plan is cheapest?
+
+- The constant-amortization loan, because it has the lowest total interest.
+- The bullet loan, because its yearly payments during the term are the lowest.
+- **None: at 5%, the payments of each plan have a present value of exactly €100,000.**
+:::
+
+## Method: Schedules, Prices and Yields
+
+### Building a Repayment Schedule
+
+A repayment schedule (dt. *Tilgungsplan*) tracks the loan year by year: it starts from the remaining debt at the beginning of period $t$, $R_{t-1}$, charges interest on it, deducts the principal repayment and carries the new balance forward. The loan amount is $C_0$, the loan rate $i$ and the term $n$ years. (The Formula Collection uses $C_0$ for the loan amount here; from Chapter 4 on the same symbol stands for net present value.)
+
+$$K_t = Z_t + T_t \qquad \text{with} \qquad Z_t = R_{t-1} \cdot i \qquad \text{and} \qquad R_t = R_{t-1} - T_t$$ {#eq-debt-service}
+
+$K_t$ is the debt service in period $t$, $Z_t$ the interest and $T_t$ the principal repayment. The three loan types differ only in which of these quantities is held constant:
+
+$$\text{Annuity loan:} \qquad K_t = K = C_0 \cdot CRF(i,\,n) = \text{constant}, \qquad T_t = K - Z_t$$ {#eq-annuity-loan}
+
+$$\text{Constant-amortization loan:} \qquad T_t = \frac{C_0}{n} = \text{constant}, \qquad K_t = T_t + Z_t \ \text{(declining)}$$ {#eq-constant-amortization}
+
+$$\text{Bullet loan:} \qquad T_1 = \dots = T_{n-1} = 0, \qquad T_n = C_0, \qquad Z_t = C_0 \cdot i = \text{constant}$$ {#eq-bullet}
+
+The procedure is the same for every type: (1) fix the constant quantity with @eq-annuity-loan, @eq-constant-amortization or @eq-bullet; (2) for each year compute the interest on the opening balance; (3) derive the missing component with @eq-debt-service; (4) carry the closing balance forward; (5) check that the closing balance in year $n$ is zero.
+
+**Example:** Tobias's loan, $C_0 = 100{,}000$, $i = 5\%$, $n = 5$ years. For the annuity loan:
+
+$$K = 100{,}000 \cdot CRF(5\%,\,5) = 100{,}000 \cdot \frac{0.05 \cdot 1.05^5}{1.05^5 - 1} = 23{,}097.48$$
+
+The annual payment is €23,097.48. Banks round interest to the cent each year and let the final payment absorb the rounding difference, here one cent.
+
+| Year | Opening balance (€) | Debt service (€) | Interest (€) | Principal (€) | Closing balance (€) |
+|:----:|-------------------:|----------------:|------------:|-------------:|-------------------:|
+| 1 | 100,000.00 | 23,097.48 | 5,000.00 | 18,097.48 | 81,902.52 |
+| 2 | 81,902.52 | 23,097.48 | 4,095.13 | 19,002.35 | 62,900.17 |
+| 3 | 62,900.17 | 23,097.48 | 3,145.01 | 19,952.47 | 42,947.70 |
+| 4 | 42,947.70 | 23,097.48 | 2,147.39 | 20,950.09 | 21,997.61 |
+| 5 | 21,997.61 | 23,097.49 | 1,099.88 | 21,997.61 | 0.00 |
+| **Total** | | **115,487.41** | **15,487.41** | **100,000.00** | |
+
+For the constant-amortization loan the principal is fixed at $T = 100{,}000 / 5 = 20{,}000$ per year, and interest falls by €1,000 each year:
+
+| Year | Opening balance (€) | Debt service (€) | Interest (€) | Principal (€) | Closing balance (€) |
+|:----:|-------------------:|----------------:|------------:|-------------:|-------------------:|
+| 1 | 100,000 | 25,000 | 5,000 | 20,000 | 80,000 |
+| 2 | 80,000 | 24,000 | 4,000 | 20,000 | 60,000 |
+| 3 | 60,000 | 23,000 | 3,000 | 20,000 | 40,000 |
+| 4 | 40,000 | 22,000 | 2,000 | 20,000 | 20,000 |
+| 5 | 20,000 | 21,000 | 1,000 | 20,000 | 0 |
+| **Total** | | **115,000** | **15,000** | **100,000** | |
+
+For the bullet loan the balance stays at €100,000 until the end:
+
+| Year | Opening balance (€) | Debt service (€) | Interest (€) | Principal (€) | Closing balance (€) |
+|:----:|-------------------:|----------------:|------------:|-------------:|-------------------:|
+| 1–4 (each) | 100,000 | 5,000 | 5,000 | 0 | 100,000 |
+| 5 | 100,000 | 105,000 | 5,000 | 100,000 | 0 |
+| **Total** | | **125,000** | **25,000** | **100,000** | |
+
+The last row of the comparison below is the one Tobias's bookkeeper forgot. The present value of each schedule at the loan rate, $\sum_{t=1}^{5} K_t \cdot 1.05^{-t}$, is the same for all three:
+
+| | Annuity | Constant amortization | Bullet |
+|:--|--:|--:|--:|
+| Debt service year 1 (€) | 23,097.48 | 25,000 | 5,000 |
+| Largest single payment (€) | 23,097.49 | 25,000 | 105,000 |
+| Total interest (€) | 15,487.41 | 15,000 | 25,000 |
+| Present value of all payments at 5% (€) | 100,000 | 100,000 | 100,000 |
+
+The comparison widget draws the three schedules side by side for any amount, rate and term. Raise the interest rate and watch the gap in total interest widen; then lengthen the term and see the bullet loan's final payment tower over everything else.
+
+::: {.widget}
 <iframe src="assets/ch03/loan_comparison.html"
-        style="width: 100%; height: 540px; border: none;"
-        loading="lazy">
+        width="100%" height="560px" frameborder="0"
+        title="Loan comparison: debt service of annuity, constant-amortization and bullet loans">
 </iframe>
 :::
 
-**Total interest comparison (€100,000 / 5% / 5 years):**
+**Choosing the loan type.** Because the present value is the same at the loan rate, the choice follows the cash-flow profile of the asset, in three questions:
 
-| Loan Type          | Total Paid (€) | Total Interest (€) | Verdict         |
-|:-------------------|---------------:|-------------------:|:----------------|
-| Constant Amort.    | 115,000.00     | **15,000.00**      | 🏆 Cheapest     |
-| Annuity            | 115,487.40     | 15,487.40          | ⚖️ Middle       |
-| Bullet             | 125,000.00     | **25,000.00**      | 💸 Most expensive |
+1. **When does the asset produce cash?** Stable cash from year one (rented property, a long service contract) fits the constant annuity payment; cash only at the end (a building sold on completion) fits a bullet loan.
+2. **How fast does it lose value?** For vehicles, IT or machines with rising maintenance, the debt should fall at least as fast: constant amortization, or an annuity over a short term.
+3. **Can the borrower carry the largest payment?** The highest single payment must fit the cash available in that year, with a buffer. For a bullet loan, plan the final repayment, or its refinancing, from day one.
 
-The bullet loan feels cheap (€5k/year) but costs €10,000 more in total interest than constant amortization — because you pay interest on the *full* principal for the entire term.
+### The Effective Cost of Forgoing Skonto
 
-**The CFO's matching logic:** Each loan type matches a different asset profile.
+Let $s_k$ be the cash discount in percent, $t_{\text{discount}}$ the last day on which the discount may be taken and $t_{\text{net}}$ the day on which the full invoice is due:
 
-| Criterion | Constant Amortization | Annuity Loan | Bullet Loan |
-|:----------|:---------------------:|:------------:|:-----------:|
-| **Ideal asset** | Machines / vehicles (rapid depreciation, rising maintenance) | Real estate / infrastructure (stable long-term cash flows) | Inventory / construction (asset sold at the end to repay) |
-| **Total interest cost** | 🏆 Lowest | ⚖️ Medium | 💸 Highest |
-| **Liquidity stress** | High at start, then easing | Constant and predictable | Low during term, then critical |
-| **Accounting** | Interest expense drops fast → profits improve over time | Interest expense drops slowly | Interest stays constant → profit depressed |
+$$r_{\text{eff}} = \frac{s_k}{100 - s_k} \cdot \frac{360}{t_{\text{net}} - t_{\text{discount}}} \cdot 100$$ {#eq-skonto}
 
-The logic behind the matching: an annuity loan works for real estate because the stable rental income provides a predictable cash flow to cover the constant annual payment. A constant amortization loan suits machines because the asset depreciates quickly — you want the debt to fall just as fast, keeping the LTV ratio (Loan-to-Value) healthy. A bullet loan suits construction because the project generates *no* revenue until completion, when the asset is sold to repay the principal.
+The first factor is the interest for the credit period, relative to the amount actually borrowed: the buyer pays $s_k$ for keeping $100 - s_k$. The second factor counts how many such credit periods fit into a year, using the commercial convention of 360 days. Multiplying by 100 turns the result into a percentage.
 
-::: {.flip-card}
-#### The Matching Principle (Fristenkongruenz)
-The rule that the **duration** and **cash-flow profile** of the financing must match the asset being financed. Financing a 20-year factory with a 3-year bullet loan creates catastrophic refinancing risk. Financing short-term inventory with a 20-year mortgage wastes flexibility and overpays interest.
-:::
+**Example:** "3% within 10 days, net 30 days", invoice €100,000. Waiting means borrowing €97,000 for 20 days at a cost of €3,000:
 
-## The "Hidden" Loan: Supplier Credit & Skonto
+$$r_{\text{eff}} = \frac{3}{97} \cdot \frac{360}{30 - 10} \cdot 100 = 0.030928 \cdot 18 \cdot 100 = 55.67\%$$
 
-Not all loans appear on the balance sheet. One of the most common and dangerous forms of implicit borrowing is the **Supplier Credit** (*Lieferantenkredit*).
-
-**What is it?** When a supplier sells you goods on credit terms — for example, "pay in 30 days" — they are effectively giving you a short-term loan for those 30 days. Now add the *Skonto* (early-payment discount): the supplier offers you a 3% price reduction if you pay within 10 days instead. This looks like a discount. But from a finance perspective, it is the **cost of borrowing** for those extra 20 days.
-
-**The decision:** Pay in 10 days (pay €97,000 for a €100,000 invoice) or pay in 30 days (pay the full €100,000). If you choose to wait, you are borrowing €97,000 for 20 days at a cost of €3,000. That implicit interest rate is shocking.
-
-$$r_{\text{eff}} = \frac{s}{100 - s} \cdot \frac{360}{t_{\text{net}} - t_{\text{discount}}} \cdot 100$$
-
-**Example:** 3% Skonto, pay within 10 days or net 30 days.
-
-$$r_{\text{eff}} = \frac{3}{97} \cdot \frac{360}{20} \approx 0.031 \times 18 = \mathbf{55.6\% \text{ p.a.}}$$
-
-> **Strategic Insight:** Unless you are facing immediate insolvency, **always** take the cash discount. Even borrowing from a bank at 10% to pay the supplier early is five times cheaper than ignoring the Skonto.
-
-## Checkpoint: Loans
-
-::: {.quick-check}
-**Why is the Annuity Loan the standard choice for private mortgages?**
-
-- Because it has the lowest total interest cost.
-- **Because the monthly payment is constant, providing planning security.**
-- Because it allows zero payments for the first 10 years.
-
-> **Reason:** Households need predictability. A constant amortization loan would require much higher payments in the early years — a liquidity burden most families cannot absorb.
-:::
-
-::: {.quick-check}
-**You have an invoice with "2% Skonto / 10 days, net 30". You have no cash, but an overdraft facility at 12% p.a. What do you do?**
-
-- Wait 30 days to save the overdraft interest.
-- **Use the overdraft and pay on day 10.**
-
-> **Calculation:** $r_{\text{Skonto}} = \frac{2}{98} \cdot \frac{360}{20} \approx 36.7\%$ p.a. Borrowing at 12% to avoid a 36.7% implicit cost is clearly optimal.
-:::
-
-::: {.drag-exercise}
-In a *Bullet Loan*, the liquidity outflow during the term is *minimal* (interest only), but the refinancing risk at maturity is *maximum*. In contrast, a *Constant Amortization Loan* rapidly reduces the outstanding *principal*, steadily lowering the credit risk over time.
-:::
-
-## From Borrower to Investor: The Art of Pricing Promises
-
-> "Price is what you pay. Value is what you get."
-> — *Warren Buffett*
-
-Up to this point we looked at loans from the **borrower's** perspective: how do you structure repayment? Now we flip the camera. A bond is essentially the same instrument — but seen from the **investor's** perspective. Instead of asking "how much do I pay back?", we ask "how much should I pay *today* for the right to receive a promised stream of future cash flows?"
-
-The answer is always the same principle:
-
-> **The Universal Law of Valuation:** The value of any financial asset equals the **Present Value** of all future cash flows it is expected to generate.
-
-* **Bonds:** Cash flows are contractually fixed (certainty).
-* **Stocks:** Cash flows must be estimated (uncertainty).
-
-## Bond Valuation
-
-A bond is a standardised loan traded on a market. You (the investor) lend money to a government or corporation. In return, they promise two things:
-
-1. **Regular interest payments — Coupons ($C$):** paid annually (or semi-annually), equal to the par value times the coupon rate.
-2. **Return of the principal — Par Value ($F$):** repaid in full at maturity.
-
-### The Anatomy of a Bond
-
-Four variables fully define a bond's cash flows:
-
-| Variable | Symbol | Set by | Typical value |
-|:---------|:------:|:------:|:-------------|
-| Par Value (Nennwert) | $F$ | Issuer | € 1,000 |
-| Coupon Rate (Kuponrate) | $c$ | Issuer | e.g. 5 % |
-| Maturity (Laufzeit) | $n$ | Issuer | e.g. 10 years |
-| Yield to Maturity | $r$ | **Market** | reflects risk & rates |
-
-The first three are printed on the bond certificate and never change. The fourth — the **Yield to Maturity (YTM)** — is determined by the market every day, and it is what drives the price.
-
-### The Valuation Model
-
-A bond is a "Frankenstein" of two instruments we already know:
-
-* The **coupons** are an **annuity** — equal payments at equal intervals.
-* The **par value** is a **lump sum** — one payment at $t = n$.
-
-$$\boxed{P_0 = \underbrace{C \cdot \frac{1-(1+r)^{-n}}{r}}_{\text{PV of Coupons (Annuity)}} + \underbrace{F \cdot (1+r)^{-n}}_{\text{PV of Par Value}}}$$
-
-The interactive timeline below places all cash flows on the time axis — adjust the YTM slider to see the inverse price-yield relationship live:
-
-::: {.content-visible when-format="html"}
-<iframe src="assets/ch03/bond_timeline.html"
-        style="width: 100%; height: 500px; border: none;"
-        loading="lazy">
-</iframe>
-:::
-
-### The Calculation: Discount Bond
-
-**Parameters:** $F = \$1{,}000$, $c = 5\%$ ($C = \$50$), $n = 10$ years, $YTM = 7\%$.
-
-**The intuition first:** The bond pays 5 % while the market demands 7 %. Nobody pays full price for an asset that yields less than the market. The price must fall until the total return — coupons plus the capital gain from buying below par — equals exactly 7 %.
-
-$$P_0 = 50 \cdot \frac{1-(1.07)^{-10}}{0.07} + 1{,}000 \cdot (1.07)^{-10} = 351.18 + 508.35 = \mathbf{\$859.53}$$
-
-The bond trades at **85.95 % of par** — a **Discount Bond**. The $140.47 discount compensates for the below-market coupon.
-
-::: {.drag-exercise}
-There is an *inverse* relationship between market interest rates and bond prices. When the market rate *rises*, existing bond prices *fall*. When YTM exceeds the coupon rate, the bond sells at a *discount*; when YTM is below the coupon rate, it sells at a *premium*.
-:::
-
-### YTM Back-Calculation: Given Price, Find the Return
-
-In practice, you often know the market price but not the YTM. The equation has no closed-form solution for $r$; it requires **linear interpolation** (Regula Falsi).
-
-**Example:** A bond with $F = \$1{,}000$, $c = 6\%$, $n = 5$ years trades at $P_0 = \$963$.
-
-Try $r_1 = 7\%$: $P(7\%) = 60 \cdot PVIFA(7\%,5) + 1{,}000 \cdot (1.07)^{-5} \approx 959.00$
-
-Try $r_2 = 6.5\%$: $P(6.5\%) = 60 \cdot PVIFA(6.5\%,5) + 1{,}000 \cdot (1.065)^{-5} \approx 979.07$
-
-$$YTM \approx r_1 + (r_2 - r_1) \cdot \frac{P(r_1) - P_0}{P(r_1) - P(r_2)} \approx 7\% - 0.5\% \cdot \frac{959-963}{959-979} \approx 6.9\%$$
+Forgoing the discount is a loan at an effective 55.7% per year. The decision rule: **take the cash discount whenever you can finance the early payment at a rate below $r_{\text{eff}}$**, for instance through a bank overdraft at 10%. Only a buyer with no cheaper source of money should let it lapse. Either way, pay on the last day of the chosen window; paying earlier gives away free credit.
 
 ::: {.details}
-#### Deep Dive: Why Bonds Trade at a Discount or Premium
-When a bond is issued, its coupon is set to match the prevailing market rate — so it trades at par ($P_0 = F$). But market rates change after issuance. If rates rise, newly issued bonds offer higher coupons; the old bond becomes less attractive and its price falls to compensate. If rates fall, the old bond's higher coupon becomes valuable — its price rises above par. This mechanism ensures that every bond, regardless of its coupon, offers the same YTM as comparable new issues.
+#### Deep Dive: 360 Days, 365 Days and Compounding
+@eq-skonto uses the German commercial convention of 360 days per year (twelve months of 30 days), as does the Formula Collection; use it consistently in exercises and exams. With 365 days the example gives $\frac{3}{97} \cdot \frac{365}{20} \cdot 100 = 56.44\%$. Both are *simple-interest* rates: they multiply the 20-day rate by the number of periods instead of compounding it. A buyer who forgoes the discount on every invoice all year effectively borrows 18 times in a row, at a compound rate of $(1 + 3/97)^{18} - 1 = 73.0\%$. The simple formula thus understates the true cost, but the decision rarely changes: all three figures dwarf any bank rate.
 :::
 
-## Stock Valuation
+### Pricing a Bond
 
-Bonds are for sleeping well; stocks are for eating well. Stocks represent **ownership** in a company. Unlike bonds, they have:
+Four quantities describe a bond. Three of them are fixed when the bond is issued and printed in its terms; the fourth is set by the market every trading day:
 
-1. **No maturity:** the company (hopefully) lives forever.
-2. **No guaranteed payments:** dividends are declared at management's discretion.
+| Quantity | Symbol | Set by | Example |
+|:---------|:------:|:------:|:--------|
+| Face value (dt. *Nennwert*), repaid at maturity | $F$ | Issuer | €1,000 |
+| Coupon rate; coupon $C = F \cdot c$ paid each year | $c$ | Issuer | 5% |
+| Years to maturity | $n$ | Issuer | 10 |
+| Yield to maturity: the return the market demands | $r$ | **Market** | 7% |
 
-Since the cash flows must be *estimated* rather than *promised*, valuation requires an assumption about the future.
+The coupons form an ordinary annuity, which Chapter 2 values with the PVIFA; the face value is a single payment at $t = n$, discounted as in Chapter 1. The price is the sum:
 
-### Preferred Stock (The Hybrid)
+$$P_0 = C \cdot PVIFA(r,\,n) + F \cdot (1+r)^{-n}$$ {#eq-bond-price}
 
-Preferred stock behaves like a hybrid: it pays a **fixed dividend** (like a bond coupon) but has **no maturity** (like equity). It is therefore valued as a **perpetuity**:
+On a timeline the bond looks like this: coupons at $t = 1$ to $t = n$, the face value on top of the last coupon, every payment discounted back (←) to $t = 0$.
 
-$$P_0 = \frac{Div}{r}$$
+| $t$ | 0 | 1 | 2 | … | 9 | 10 |
+|:--|:--:|:--:|:--:|:--:|:--:|:--:|
+| Payment to the investor (€) | price $P_0$ | 50 | 50 | … | 50 | 50 + 1,000 |
 
-**Example:** A preferred share pays $2.00 per year. Required return = 8 %.
-$$P_0 = \frac{2.00}{0.08} = \mathbf{\$25.00}$$
+**Example:** $F = 1{,}000$, $c = 5\%$ (so $C = 50$), $n = 10$ years, market yield $r = 7\%$.
 
-### Common Stock: The Gordon Growth Model
+$$P_0 = 50 \cdot PVIFA(7\%,\,10) + 1{,}000 \cdot 1.07^{-10} = 50 \cdot 7.0236 + 508.35 = 351.18 + 508.35 = 859.53$$
 
-Most companies grow. Coca-Cola raises its dividend a little every year. If we assume dividends grow at a **constant rate** $g$ forever (a simplification — but a useful one for stable, mature firms), we use the **Dividend Discount Model (DDM)**:
+The bond is worth €859.53, or 85.95% of its face value. It pays 5% while the market demands 7%, so its price must fall until the buyer's total return, coupons plus the gain of €140.47 up to face value, equals 7%: the bond trades at a **discount**. At a market yield of 5%, equal to the coupon rate, it is worth exactly €1,000 (**at par**), just as Tobias's bullet loan was worth exactly €100,000 at its own rate. At 3% it is worth €1,170.60 (**premium**): investors pay extra for a coupon above the market rate.
 
-$$\boxed{P_0 = \frac{D_1}{r - g}}$$
+The second term of @eq-bond-price is a bond in its own right: a **zero-coupon bond** (dt. *Nullkuponanleihe*) pays only the face value at maturity, so its price is $F \cdot (1+r)^{-n}$, here €508.35 for a ten-year zero at 7%.
 
-* $D_1 = D_0 \cdot (1+g)$: next year's dividend (not the current one).
-* $r$: required return (= Cost of Equity).
-* $g$: sustainable long-run growth rate — must be below $r$, and in practice anchored to long-run GDP growth.
+In the bond widget, keep the coupon at 5% and move the yield slider from 1% to 12%: the price falls continuously, crosses €1,000 exactly where yield equals coupon, and moves more for long maturities than for short ones.
 
-> **The $D_0$ vs. $D_1$ trap:** Always use *next year's* dividend in the numerator. The model values the stock at $t = 0$ based on what it will pay starting at $t = 1$.
+::: {.widget}
+<iframe src="assets/ch03/bond_timeline.html"
+        width="100%" height="560px" frameborder="0"
+        title="Bond valuation: cash-flow timeline and the inverse price-yield relationship">
+</iframe>
+:::
 
-**Example:** $D_0 = \$2.00$, $g = 4\%$, $r = 10\%$.
+::: {.drag-exercise}
+When market yields *rise*, the price of an existing fixed-coupon bond *falls*. A bond whose coupon rate lies below the market yield trades at a *discount*, while a bond whose coupon rate lies above the market yield trades at a *premium*.
+:::
 
-$$D_1 = 2.00 \times 1.04 = \$2.08$$
-$$P_0 = \frac{2.08}{0.10 - 0.04} = \frac{2.08}{0.06} = \mathbf{\$34.67}$$
+### Back from Price to Yield: Interpolating the YTM
+
+In practice the price is on the screen and the yield is the unknown. @eq-bond-price has no practical closed-form solution for $r$, so you estimate it by **linear interpolation** (also called *regula falsi*): choose a trial rate $r_1$ whose price $P(r_1)$ lies above the market price $P_0$ and a trial rate $r_2$ whose price $P(r_2)$ lies below it, then draw a straight line between the two points:
+
+$$r \approx r_1 + \frac{P(r_1) - P_0}{P(r_1) - P(r_2)} \cdot (r_2 - r_1)$$ {#eq-ytm-interpolation}
+
+**Example:** $F = 1{,}000$, $c = 6\%$, $n = 5$ years, market price $P_0 = 963$. The price is below face value, so the yield must be above the 6% coupon rate. A clever first trial is the coupon rate itself, because there the price is exactly the face value:
+
+- $r_1 = 6\%$: $P(6\%) = 1{,}000.00$ without any calculation, because yield and coupon rate are equal; above 963
+- $r_2 = 7\%$: $P(7\%) = 60 \cdot 4.1002 + 1{,}000 \cdot 1.07^{-5} = 246.01 + 712.99 = 959.00$, below 963
+
+$$r \approx 6\% + \frac{1{,}000.00 - 963}{1{,}000.00 - 959.00} \cdot (7\% - 6\%) = 6\% + \frac{37}{41} \cdot 1\% = 6.90\%$$
+
+The exact yield is 6.900%; the interpolation gives 6.902%. Because the price–yield curve is bent (convex), the straight line slightly overshoots; the narrower the bracket, the smaller the error. The yield to maturity is the discount rate at which the present value of the bond's payments equals its price, in other words the bond's internal rate of return, and you will meet the same interpolation again in Chapter 5.
+
+### Valuing Shares: Preferred and Common Stock
+
+The valuation principle for shares is the **dividend discount model**: the price of a share is the present value of all expected future dividends, discounted at the return $r$ that investors require for the risk of that share. Two special cases have closed formulas.
+
+**Preferred stock** pays a fixed dividend $Div$ every year without end. That is a perpetuity (@eq-perpetuity in Chapter 2), with the required return $r$ in place of the interest rate $i$:
+
+$$P_0 = \frac{Div}{r}$$ {#eq-preferred}
+
+**Example:** a fixed dividend of €2.00 per year and a required return of 8% give $P_0 = 2.00 / 0.08 = 25.00$, a value of €25.00 per share. If the required return rises to 10%, the value drops to €20.00, the same inverse relationship as for bonds. (The German *Vorzugsaktie* is only a distant relative: it ranks ahead in the dividend and usually carries no vote, but its dividend is not fixed like a coupon.)
+
+**Common stock** (dt. *Stammaktie*) of a mature company is better described by a dividend that grows at a constant rate $g$. Companies such as Coca-Cola have raised their dividend every year for decades. A dividend growing forever at $g$ is a growing perpetuity, so @eq-growing-perpetuity from Chapter 2 applies with $D_1$ for $C_1$ and $r$ for $i$. In share valuation it is called the **Gordon Growth Model**:
+
+$$P_0 = \frac{D_1}{r - g} \qquad \text{with} \qquad D_1 = D_0 \cdot (1+g), \quad g < r$$ {#eq-gordon}
+
+$D_0$ is the dividend just paid, $D_1$ the dividend expected one year from now, $r$ the required return and $g$ the long-run growth rate of the dividend.
+
+**Example:** the company has just paid $D_0 = 2.00$; dividends are expected to grow by $g = 4\%$ per year; investors require $r = 10\%$.
+
+$$D_1 = 2.00 \cdot 1.04 = 2.08 \qquad\qquad P_0 = \frac{2.08}{0.10 - 0.04} = \frac{2.08}{0.06} = 34.67$$
+
+The share's **intrinsic value**, its value on the analyst's own assumptions as opposed to its market price, is €34.67. The classic trap: the numerator is *next* year's dividend, because the formula values payments starting at $t = 1$, like every ordinary annuity in Chapter 2. Using the dividend already paid ($2.00 / 0.06 = 33.33$) undervalues the share by a full year of growth.
 
 ::: {.flip-card}
-#### Why does the Gordon Model fail when $g \geq r$?
-If $g \geq r$, the denominator becomes zero or negative — the formula returns infinite or negative value. Economically: no single company can grow faster than the entire economy forever without eventually becoming larger than the global GDP. This is impossible. The model is therefore only valid for *stable, mature firms* with a conservative $g$ anchored to long-run economic growth.
+#### Why the Gordon Growth Model requires g < r
+The model is the growing perpetuity of Chapter 2 and inherits its condition: for $g \geq r$ the discounted dividends do not shrink, the series never converges, and the formula returns a meaningless infinite or negative value. Economically, no company can grow faster than the whole economy forever without eventually becoming larger than it, so $g$ must be a modest long-run rate, typically anchored to long-run nominal economic growth, and the model suits only stable, mature firms.
 :::
 
-### The Price-to-Earnings (P/E) Ratio
+Because the denominator $r - g$ is small, the model is very sensitive: raise $r$ from 10% to 11% and the value falls from €34.67 to €29.71, a drop of 14% for one percentage point.
 
-For companies that pay **no dividends** — Amazon, many tech firms — the Gordon Model fails. Analysts instead use **relative valuation**, comparing the stock's price to its earnings.
-
-$$P/E = \frac{\text{Stock Price}}{\text{Earnings per Share (EPS)}}$$
-
-**Example:** A technology company has a stock price of **€ 120** and EPS of **€ 6**.
-$$P/E = \frac{120}{6} = 20$$
-
-If the sector average P/E is 15, this stock trades at a **premium** — the market expects above-average growth. If the P/E were 8 (below sector average), it would signal either undervaluation or structural weakness.
-
-| P/E Signal | Interpretation |
-|:----------:|:---------------|
-| High P/E (e.g. 30+) | Market expects strong future growth (*growth stock*) |
-| Moderate P/E (10–20) | Mature, stable earnings (*value stock*) |
-| Very low P/E (\< 8) | Stagnation, distress, or genuine undervaluation |
-
-> **Connection to GGM:** For dividend-paying stocks, $P/E$ is implicitly driven by $r - g$. A lower required return or higher expected growth both compress the denominator and inflate the P/E — making the P/E ratio a window into the market's growth expectations, not just a price comparison.
-
-## Summary: The Valuation Matrix
-
-Both instruments apply the same Universal Law: Value = PV of future cash flows. They differ only in how predictable those cash flows are.
-
-| Feature | Bonds (Debt) | Stocks (Equity) |
-|:--------|:------------:|:---------------:|
-| Legal status | Creditor (Gläubiger) | Owner (Eigentümer) |
-| Cash flows | Fixed: coupons + par | Variable: dividends (uncertain) |
-| Lifespan | Finite (maturity date) | Infinite (going concern) |
-| Key risk | Interest rate risk | Business & market risk |
-| Valuation formula | Annuity + Lump Sum | DDM / P/E |
-
-Chapter 4 takes this exact logic — Value = PV of future cash flows — and applies it to real *investment projects*: machines, factories, acquisitions. The coupon stream becomes an operating cash-flow stream; the required return becomes the cost of capital. The formula is identical. Only the inputs change.
-
-## Chapter Check
-
-::: {.quick-check}
-**A bond has a 5 % coupon. The central bank raises interest rates to 6 %. What happens to the bond's market price?**
-
-- It stays at € 1,000 (par).
-- It rises above € 1,000 (premium).
-- **It falls below € 1,000 (discount).**
-
-> **Reason:** The bond now pays less (5 %) than the new market rate (6 %). Investors will only buy it at a lower price, so that the capital gain compensates for the below-market coupon — driving the effective yield up to 6 %.
+::: {.details}
+#### Deep Dive: The P/E Ratio as a Shortcut
+Analysts often compare a share's price with its earnings per share (EPS), the **price–earnings ratio** P/E. For a company that pays no dividends, such as many young technology firms, the Gordon Growth Model has nothing to discount, and comparing P/E ratios across similar firms is a common substitute. For a dividend payer the two views are linked: dividing @eq-gordon by next year's EPS gives $\frac{P_0}{\text{EPS}_1} = \frac{\text{payout ratio}}{r - g}$, where the payout ratio is the share of earnings paid out as dividends. If the company in the example pays out 65% of its earnings, its justified P/E is $0.65 / 0.06 = 10.8$. A high P/E signals low required returns or high expected growth: it is a growth forecast in disguise, not on its own a sign of "expensive".
 :::
 
 ::: {.quick-check}
-**In the Gordon Growth Model, a company's perceived risk suddenly increases. What happens to the stock price?**
+A bond with a 5% coupon trades at its face value of €1,000. The yields of comparable bonds then rise to 6%. What happens to the bond's price?
 
-- The price rises — riskier companies need higher compensation.
-- **The price falls.**
-- The dividend growth rate automatically adjusts upward.
-
-> **Reason:** Higher risk → investors demand a higher return $r$ → denominator $(r - g)$ grows → $P_0 = D_1/(r-g)$ shrinks.
+- It stays at €1,000, because the issuer still repays the full face value.
+- It rises above €1,000, because investors now demand more return.
+- **It falls below €1,000, so that a buyer earns 6% from coupons plus the gain up to face value.**
 :::
+
+## Practice: Two Seats at the Same Table
+
+The two cases below follow the chapter's two perspectives. Röder Logistik borrows and must choose a repayment structure; the Lindenhof Foundation invests and must decide what a bond and two shares are worth.
+
+::: {.case-study}
+#### Case: Röder Logistik GmbH — Financing an Electric Fleet
+Röder Logistik GmbH, a regional delivery company in Schweinfurt, buys three electric vans for €180,000. Its bank offers a loan of €180,000 at 6% over three years, as an annuity loan, a constant-amortization loan or a bullet loan. The vans run on a three-year delivery contract with a supermarket chain that pays a fixed fee every month; after three years of heavy use they will be worth little. Managing director Petra Röder has one rule for her board: annual debt service must never exceed €70,000.
+
+In the same week the charging equipment arrives with an invoice of €20,000 and the terms "2% within 14 days, net 45 days". Röder Logistik has an overdraft facility at 9% per year.
+
+**Tasks:**
+
+1. Build the repayment schedules of the annuity loan and the constant-amortization loan, and state the payments of the bullet loan.
+2. Compare total interest and show that all three schedules have the same present value at 6%.
+3. Which loan type should Petra Röder choose? Justify the choice with the cash-flow profile and her €70,000 rule.
+4. Should Röder Logistik take the cash discount on the charging equipment?
+
+::: {.solution}
+**Solution:**
+
+**1. Schedules.** Annuity loan with @eq-annuity-loan: $K = 180{,}000 \cdot CRF(6\%,\,3) = 180{,}000 \cdot 0.374110 = 67{,}339.77$. (With the four-digit table value 0.3741 you get €67,338.00; the difference is rounding.)
+
+| Year | Opening balance (€) | Debt service (€) | Interest (€) | Principal (€) | Closing balance (€) |
+|:----:|-------------------:|----------------:|------------:|-------------:|-------------------:|
+| 1 | 180,000.00 | 67,339.77 | 10,800.00 | 56,539.77 | 123,460.23 |
+| 2 | 123,460.23 | 67,339.77 | 7,407.61 | 59,932.16 | 63,528.07 |
+| 3 | 63,528.07 | 67,339.75 | 3,811.68 | 63,528.07 | 0.00 |
+| **Total** | | **202,019.29** | **22,019.29** | **180,000.00** | |
+
+Constant-amortization loan with @eq-constant-amortization: $T = 180{,}000 / 3 = 60{,}000$ per year.
+
+| Year | Opening balance (€) | Debt service (€) | Interest (€) | Principal (€) | Closing balance (€) |
+|:----:|-------------------:|----------------:|------------:|-------------:|-------------------:|
+| 1 | 180,000 | 70,800 | 10,800 | 60,000 | 120,000 |
+| 2 | 120,000 | 67,200 | 7,200 | 60,000 | 60,000 |
+| 3 | 60,000 | 63,600 | 3,600 | 60,000 | 0 |
+| **Total** | | **201,600** | **21,600** | **180,000** | |
+
+Bullet loan with @eq-bullet: €10,800 interest in years 1 and 2, then €190,800 in year 3 (€10,800 interest plus €180,000 principal); total interest €32,400.
+
+**2. Comparison.** Total interest: constant amortization €21,600 < annuity €22,019.29 < bullet €32,400. The present values at the loan rate are identical, for example for the constant-amortization loan:
+
+$$\frac{70{,}800}{1.06} + \frac{67{,}200}{1.06^2} + \frac{63{,}600}{1.06^3} = 66{,}792.45 + 59{,}807.76 + 53{,}399.79 = 180{,}000.00$$
+
+The same calculation gives €180,000 for the annuity and the bullet loan. The differences in total interest only reflect how long Röder keeps how much of the bank's money.
+
+**3. Recommendation: the annuity loan.** The vans earn a fixed fee from the first month and lose most of their value within three years, so the debt must be repaid during the contract, not at its end. That rules out the bullet loan: its €190,800 would fall due just as the vans are worn out and the contract ends, and it breaks the €70,000 rule. Constant amortization would track the vans' loss of value best, but its first payment of €70,800 exceeds the limit by €800. The annuity loan never pays more than €67,339.77, matches the stable contract income and still clears the debt within the vans' working life. Were the limit €800 higher, constant amortization would be equally sound.
+
+**4. Skonto.** With @eq-skonto, waiting 31 extra days costs
+
+$$r_{\text{eff}} = \frac{2}{98} \cdot \frac{360}{45 - 14} \cdot 100 = 23.70\%$$
+
+The overdraft costs only 9%, so Röder Logistik should pay €19,600 on day 14 and finance it with the overdraft. In euros: the discount saves €400; 31 days of overdraft on €19,600 cost $19{,}600 \cdot 0.09 \cdot 31 / 360 = 151.90$, so the firm is €248.10 better off.
+:::
+:::
+
+::: {.case-study}
+#### Case: Lindenhof Foundation — Three Promises, Three Prices
+Dr. Aylin Demir is treasurer of the Lindenhof Foundation, a charitable foundation in Würzburg that funds scholarships from the returns on its capital. Her investment committee is considering three securities:
+
+- a corporate bond with a face value of €1,000, a coupon rate of 3% paid annually and 4 years to maturity; comparable bonds currently yield 4.5%;
+- a preferred share with a fixed dividend of €3.60 per year; the committee requires 7.2% on securities of this risk;
+- a common share of a mature utility that has just paid a dividend of €1.80; the dividend is expected to grow by 2.5% per year indefinitely, the committee requires 7.5%, and the share trades at €40.00.
+
+**Tasks:**
+
+1. What is the bond worth today? Does it trade at a discount or a premium?
+2. A committee member expects market yields to fall to 2.5% next week. What would the bond be worth then (still 4 years to maturity)?
+3. What are the preferred share and the common share worth to the foundation? Should it buy the common share at €40.00?
+4. Which return does a buyer of the common share at €40.00 implicitly expect?
+
+::: {.solution}
+**Solution:**
+
+**1. Bond at 4.5%.** With @eq-bond-price and $C = 1{,}000 \cdot 0.03 = 30$:
+
+$$P_0 = 30 \cdot PVIFA(4.5\%,\,4) + 1{,}000 \cdot 1.045^{-4} = 107.63 + 838.56 = 946.19$$
+
+The bond is worth €946.19. The coupon rate (3%) is below the market yield (4.5%), so it trades at a **discount**.
+
+**2. Bond at 2.5%.**
+
+$$P_0 = 30 \cdot PVIFA(2.5\%,\,4) + 1{,}000 \cdot 1.025^{-4} = 112.86 + 905.95 = 1{,}018.81$$
+
+The price would rise by €72.62 to €1,018.81, a **premium**, because the 3% coupon would then exceed the market yield. Falling yields mean rising bond prices.
+
+**3. Shares.** Preferred share with @eq-preferred: $P_0 = 3.60 / 0.072 = 50.00$, a value of €50.00. Common share with @eq-gordon:
+
+$$D_1 = 1.80 \cdot 1.025 = 1.845 \qquad\qquad P_0 = \frac{1.845}{0.075 - 0.025} = \frac{1.845}{0.05} = 36.90$$
+
+The common share is worth €36.90 to the foundation but costs €40.00: it is **overvalued** by €3.10 per share at the committee's required return. The committee should not buy at that price, unless it has reasons to expect faster dividend growth than 2.5%.
+
+**4. Implied return.** Solving @eq-gordon for $r$ gives $r = D_1 / P_0 + g$, the dividend yield plus growth:
+
+$$r = \frac{1.845}{40.00} + 0.025 = 0.0461 + 0.025 = 7.11\%$$
+
+A buyer at €40.00 accepts 7.11% instead of the 7.5% the foundation requires: the same statement as task 3, expressed as a return instead of a price.
+:::
+:::
+
+## Conclusion: Every Price Is a Forecast in Disguise
+
+Tobias's bookkeeper and his mother made the same mistake from opposite sides of the table: both counted the euros of a promise and ignored *when* and *at what rate* they arrive. Every loan, bond and share has exactly one value at a given rate, the present value of what it promises. For the borrower, that makes all repayment plans equally expensive at the loan rate and turns the choice into a question of fit. For the investor, it forces the price of a fixed promise to move against market yields and turns every share price into a dividend forecast. The formulas are short. The judgement lies in the inputs: which cash flows you believe in, and which return you demand for the risk that they never arrive.
+
+::: {.quick-check}
+An invoice offers "2% within 10 days, net 30 days". The company has no cash on hand but an overdraft facility at 12% per year. What should it do?
+
+- Wait until day 30, because the overdraft interest of 12% is a real cost while the discount is only 2%.
+- **Use the overdraft and pay on day 10, because forgoing the discount costs about 36.7% per year.**
+- Pay immediately on day 1 to secure the discount.
+:::
+
+::: {.quick-check}
+Investors suddenly perceive a dividend-paying company as riskier, while its expected dividends stay unchanged. According to the Gordon Growth Model, what happens to the share's value?
+
+- It rises, because riskier companies have to offer higher returns.
+- **It falls, because the higher required return $r$ enlarges the denominator $r - g$.**
+- It stays the same, because the dividends have not changed.
+:::
+
+::: {.quick-check}
+A property developer finances an apartment building that will produce no cash until the flats are sold on completion in three years. Which loan type fits this cash-flow profile best?
+
+- The annuity loan, because constant payments are easiest to plan.
+- The constant-amortization loan, because it has the lowest total interest.
+- **The bullet loan, because the principal falls due exactly when the sale proceeds arrive.**
+:::
+
+Chapter 4 takes the principle of this chapter, value equals the present value of future cash flows, from securities to real investments: a machine, a production line, a new plant. There the price paid becomes the initial investment, the coupons and dividends become operating cash flows, and the difference between value and cost gets its own name: the net present value.

@@ -1,0 +1,407 @@
+# Betting on the Future: Risk and Uncertainty
+
+*Expected Value, Sensitivity, Scenarios and Break-Even — How Much Should You Trust a Forecast?*
+
+## Opening: One Question from the Back of the Room
+
+::: {.details}
+#### Story: "And If Solaris Only Takes Twelve Thousand?"
+
+Mid-April 2024, the conference room of Vogt Antriebstechnik GmbH in Würzburg. Five weeks earlier, Clara Voss had found her uncle's folder of half-finished investment dossiers; now the supervisory board was waiting for her verdict on the project behind them all. Solaris Drive Systems GmbH, the Munich supplier to battery assembly lines for three German carmakers, wanted a five-year framework contract (dt. *Rahmenvertrag*) for 18,000 coupling units a year. To deliver them, Vogt would have to build a dedicated assembly and test line for €1,500,000.
+
+Clara's spreadsheet was immaculate: 18,000 units at €235, variable costs of €180 per unit, €450,000 of fixed cash costs a year, five years, Vogt's usual 10% cost of capital. Net present value: **+€547,025**, in bold green on the last slide.
+
+Her father Werner, who had founded the company in 1986, looked at the slide for a long time. Then he asked a single question: *"And if Solaris only takes twelve thousand?"*
+
+Clara had no answer. Her model held exactly one number in every cell. The federal subsidy for electric cars had been scrapped at short notice in December 2023, and nobody in the room could say how many battery lines Solaris would really equip. A framework contract fixes the price and the terms, but the call-offs (the orders the customer actually places under it) are a forecast, not a promise. She did not know what the project was worth at 12,000 units, which of her assumptions mattered most, or how far any of them could fall before the green number turned red.
+
+The board adjourned for a week. Clara went back to her desk with a new question: not *"What is the NPV?"* but *"How wrong can I be, and does the decision survive it?"*
+:::
+
+Werner's question is the most useful sentence a supervisory board can say. Every investment appraisal rests on forecasts of volumes, prices, costs and lifetimes, and every one of them will turn out to be wrong. The only open questions are by how much, in which direction, and whether the decision would change. A net present value (NPV, dt. *Kapitalwert*, symbol $C_0$) calculated from single best guesses answers none of them. It looks precise because it is printed to the euro, but that precision comes from the format, not from the future.
+
+Chapter 4 gave us the NPV rule, and Chapter 8 used it to rank projects under a fixed budget, but both treated every cash flow as if it were already known. This chapter drops that assumption. We keep one project, Clara's Solaris line, and run it through five tools in turn: expected value, sensitivity analysis, scenario analysis, break-even analysis and the risk-adjusted discount rate. Each answers a different version of the chapter's guiding question: *How much should you trust a forecast, and what happens to your decision if you are wrong?*
+
+## Theory: Why a Single Number Is Not Enough
+
+### Risk, Uncertainty and the Single-Point Forecast
+
+Economists distinguish two kinds of "not knowing", a distinction going back to Frank Knight's *Risk, Uncertainty and Profit* (Knight, 1921). We face **risk** (dt. *Risiko*) when we do not know which outcome will occur, but we can list the possible outcomes and attach probabilities to them. A dice roll is pure risk. So, in business, is the scrap rate of a well-known production process: Vogt has almost forty years of data on how many couplings fail final inspection. We face **uncertainty** (dt. *Ungewissheit*) when we cannot even assign meaningful probabilities, because the situation is new and there is no history to learn from. Whether a new battery chemistry will make mechanical couplings obsolete by 2035 is uncertain in this sense. As Keynes put it about such long-range questions: "We simply do not know" (Keynes, 1937).
+
+::: {.flip-card}
+#### Risk vs. Uncertainty
+Under risk, the possible outcomes are known and probabilities can be assigned to them, either from data (scrap rates, failure statistics) or from structured expert estimates. Under uncertainty, probabilities cannot be assigned in a meaningful way because the situation has no precedent. In practice the line is blurred: managers turn uncertainty into risk by estimating subjective probabilities, which makes calculation possible but does not make the probabilities true.
+:::
+
+In everyday business language the two words are used interchangeably. The distinction still matters: every tool that uses probabilities, above all the expected value, quietly assumes the world of risk. The deeper a project moves into genuine uncertainty, the more weight shifts to tools that need no probabilities, such as scenario and break-even analysis.
+
+Clara's original appraisal used a **single-point forecast**: one value per input, usually the most plausible one, producing one NPV. That is a sensible starting point, which we will call the **base case**. As a basis for a decision it is incomplete, for three reasons. It hides the *range*: an NPV of +€547,025 could come from a project that lands between €500,000 and €600,000, or from one that lands anywhere between −€1 million and +€1 million. It hides the *drivers*: it does not tell you which input deserves another week of research. And it hides the *asymmetry*: in many projects, things can go much more wrong than they can go right. Solaris can order fewer than 18,000 units, but it has not committed to more.
+
+### Expected Value: Weighing the Possible Futures
+
+The first remedy is to replace the single guess with a list of possible outcomes and their probabilities, and to compute the probability-weighted average. Suppose a customer will pay either €100,000 next year (probability 50%) or only €40,000 (probability 50%). The **expected value** (dt. *Erwartungswert*) of the payment is
+
+$$0.5 \cdot 100{,}000 + 0.5 \cdot 40{,}000 = 70{,}000$$
+
+Two features of this number deserve attention. First, €70,000 will *never* actually be paid: the customer pays either €100,000 or €40,000. The expected value is what you would earn *on average* if you could repeat the bet many times. Second, the expected value is not the same as the **most likely value**. With probabilities of 60% for €100,000 and 40% for €40,000, the most likely payment is €100,000, but the expected value is only €76,000. When the bad outcomes lie further from the most likely value than the good ones, as they usually do in investment projects, the expected value lies below the most likely value. A planner who uses the most likely value as the base case then overstates what the project earns on average.
+
+::: {.drag-exercise}
+The *expected value* weights every possible outcome with its *probability*, whereas the *most likely value* is simply the single outcome with the highest probability.
+:::
+
+The expected value also says nothing about how widely the outcomes are spread around it. A payment of €70,000 for certain and a payment of either €100,000 or €40,000 have the same expected value, yet few owners of a family firm would call them equally attractive. Most decision-makers are **risk-averse**: they prefer the certain amount and would give up some expected value in exchange for a narrower spread. That is why expected value is the first tool, not the only one.
+
+### Five Tools, Five Questions
+
+The other tools attack the single-point forecast from different angles. None of them makes the future less uncertain; each makes a different part of the uncertainty visible.
+
+| Tool | Question it answers | What it needs |
+|---|---|---|
+| Expected value | What does the project earn on average across the possible futures? | Outcomes and their probabilities |
+| Sensitivity analysis | Which input moves the NPV most? | The base case; one input changed at a time |
+| Scenario analysis | How good or bad can it get when several inputs move together? | Internally consistent sets of inputs |
+| Break-even analysis | How far can one input move before the NPV turns negative? | The base case and the condition $C_0 = 0$ |
+| Risk-adjusted discount rate | How much extra return should a risky project have to earn? | A risk premium on the discount rate |
+
+The first four tools examine the *cash flows*. The fifth adjusts the *discount rate*: it demands a higher return from projects whose cash flows are more risky. Both routes appear in practice, and the Method section shows why they must not be stacked on top of each other carelessly.
+
+::: {.quick-check}
+Vogt's engineers know from decades of data that about 2% of couplings fail final inspection. Whether a new battery chemistry will make couplings obsolete by 2035, nobody can say. Which statement is correct?
+
+- Both are risks, because a probability can always be estimated.
+- **The failure rate is a risk; the battery-chemistry question is uncertainty.**
+- The failure rate is uncertainty, because nobody knows whether a particular coupling will fail.
+:::
+
+## Method: Five Tools Applied to One Project
+
+### The Base Case
+
+Every tool starts from the same base case. Here are Clara's inputs:
+
+| Input | Symbol | Base value |
+|---|---|---|
+| Initial investment (assembly and test line) | $I_0$ | €1,500,000 |
+| Useful life, residual value | $n$, $L_n$ | 5 years, €0 |
+| Annual volume (Solaris call-offs) | $x$ | 18,000 units |
+| Price per unit | $P$ | €235 |
+| Variable cost per unit (material, energy, direct labour) | $v$ | €180 |
+| Annual fixed cash costs (staff, maintenance, rent) | $FC$ | €450,000 |
+| Discount rate (Vogt's cost of capital) | $i$ | 10% |
+
+Variable costs rise and fall with the number of units produced; fixed costs do not. The difference between price and variable cost per unit, $P - v$, is the **contribution margin** (dt. *Deckungsbeitrag*) per unit: what each coupling contributes towards covering the fixed costs. The annual net cash flow is therefore
+
+$$CF_t = x \cdot (P - v) - FC$$ {#eq-cf-model}
+
+With the base values, $CF_t = 18{,}000 \cdot (235 - 180) - 450{,}000 = 990{,}000 - 450{,}000 = 540{,}000$ in each of the five years. On the timeline, every cash flow is discounted back to $t = 0$ (discounting runs ←):
+
+| $t$ | 0 | 1 | 2 | 3 | 4 | 5 |
+|---|---:|---:|---:|---:|---:|---:|
+| Cash flow (€) | −1,500,000 | 540,000 | 540,000 | 540,000 | 540,000 | 540,000 |
+| Discount factor $(1.10)^{-t}$ | 1.0000 | 0.9091 | 0.8264 | 0.7513 | 0.6830 | 0.6209 |
+| Present value (€) | −1,500,000 | 490,909 | 446,281 | 405,710 | 368,827 | 335,298 |
+
+Because the annual cash flow is constant, the PVIFA from Chapter 2 gives the same result in one line:
+
+$$C_0 = -I_0 + CF \cdot PVIFA(i,\,n)$$ {#eq-npv-annuity}
+
+$$C_0 = -1{,}500{,}000 + 540{,}000 \cdot 3.790787 = -1{,}500{,}000 + 2{,}047{,}025 = 547{,}025$$
+
+The base-case NPV is **+€547,025**. (Throughout this chapter we calculate with unrounded factors. With the four-digit table factor 3.7908 you get €547,032; differences of a few euros are rounding, not errors.)
+
+### Expected Value and Expected NPV
+
+Clara's first step after the board meeting was to ask Vogt's sales manager for more than one number. After two calls with Solaris he sketched three states of the world for the annual call-off volume, each assumed to hold for the whole contract:
+
+- **Strong:** all three carmakers ramp up as planned; Solaris calls off the full 18,000 units (probability 50%).
+- **Moderate:** electric-car sales grow more slowly; Solaris calls off 16,000 units (probability 30%).
+- **Weak:** Solaris loses one of its three customers and calls off only 12,000 units (probability 20%).
+
+The probabilities are the sales manager's judgement, not statistics; for a new contract there is no data, only experience. What matters is that the states exclude each other and the probabilities add up to 100%.
+
+The **expected cash flow** in year $t$ weights the cash flow of each state $s$ with its probability $p_s$:
+
+$$E(CF_t) = \sum_{s=1}^{S} p_s \cdot CF_{t,s} \qquad \text{with} \quad \sum_{s=1}^{S} p_s = 1$$ {#eq-expected-cf}
+
+The **expected NPV** discounts the expected cash flows, or, equivalently, weights the NPV of each state with its probability:
+
+$$E(C_0) = -I_0 + \sum_{t=1}^{n} \frac{E(CF_t)}{(1+i)^t} = \sum_{s=1}^{S} p_s \cdot C_{0,s}$$ {#eq-expected-npv}
+
+Both routes give the same answer because discounting and averaging are both linear operations: it does not matter whether you average first and discount second, or the other way round.
+
+**Route 1 — expected cash flow first.** The expected volume is $0.5 \cdot 18{,}000 + 0.3 \cdot 16{,}000 + 0.2 \cdot 12{,}000 = 16{,}200$ units, so
+
+$$E(CF_t) = 16{,}200 \cdot 55 - 450{,}000 = 441{,}000$$
+
+$$E(C_0) = -1{,}500{,}000 + 441{,}000 \cdot 3.790787 = 171{,}737$$
+
+**Route 2 — NPV per state first.**
+
+| State | Probability $p_s$ | Volume $x$ | $CF_t$ (€ p.a.) | $C_{0,s}$ (€) | $p_s \cdot C_{0,s}$ (€) |
+|---|---:|---:|---:|---:|---:|
+| Strong | 0.5 | 18,000 | 540,000 | 547,025 | 273,512 |
+| Moderate | 0.3 | 16,000 | 430,000 | 130,038 | 39,011 |
+| Weak | 0.2 | 12,000 | 210,000 | −703,935 | −140,787 |
+| **Expected value** | **1.0** | **16,200** | **441,000** | | **171,737** |
+
+(The last column adds up to €171,736 because each entry is rounded; the exact sum is €171,737.)
+
+Two observations change the picture Clara showed the board. First, the expected NPV of €171,737 is less than a third of the base-case NPV. Her base case was not wrong; it was the *best* of the three states, because 18,000 units is the contract volume and Solaris can only order less. Whoever takes the customer's own forecast as the base case builds the most optimistic state into the plan without noticing. Second, the expected NPV is still positive, so the project passes the expected-value test, but with a probability of 20% (the weak state) Vogt loses more than €700,000 in present-value terms.
+
+::: {.details}
+#### Deep Dive: Measuring the Spread with the Standard Deviation
+The expected value measures the centre of the possible outcomes; the **standard deviation** $\sigma$ measures how far they typically lie from that centre. It is the square root of the probability-weighted squared deviations: $\sigma(C_0) = \sqrt{\sum_s p_s \cdot \left(C_{0,s} - E(C_0)\right)^2}$. For the Solaris line, $\sigma = \sqrt{0.5 \cdot 375{,}288^2 + 0.3 \cdot 41{,}699^2 + 0.2 \cdot 875{,}672^2} \approx 473{,}606$. The typical deviation from the expected NPV is almost three times the expected NPV itself, a compact way of saying "positive on average, but a coin you would not want to toss with your whole firm". Comparing projects by expected value *and* standard deviation is the starting point of portfolio theory, which master-level finance develops in full.
+:::
+
+<!-- Widget idea: Expected-value explorer for the Solaris line — three sliders for the state probabilities (forced to sum to 100%) and editable volumes; live display of E(C_0), the standard deviation and the probability of a negative NPV, with a bar per state. -->
+
+### Sensitivity Analysis: Which Input Matters Most?
+
+Expected value looked at one input, the volume. But Clara's model has six inputs, and every one of them is a forecast. **Sensitivity analysis** (dt. *Sensitivitätsanalyse*) asks which of them the NPV reacts to most strongly. The procedure is mechanical:
+
+1. Start from the base case.
+2. Change *one* input by a fixed percentage (here: 10% in the unfavourable direction) and keep all others at their base values.
+3. Recalculate the NPV and record the change $\Delta C_0$.
+4. Reset that input, move to the next one, and repeat.
+5. Rank the inputs by the size of $\Delta C_0$.
+
+Because a change in an annual input shifts every year's cash flow by the same amount $\Delta CF$, the NPV change follows directly from the PVIFA:
+
+$$\Delta C_0 = \Delta CF \cdot PVIFA(i,\,n)$$ {#eq-sensitivity}
+
+A 10% price cut, for example, lowers the price from €235 to €211.50, which reduces the annual cash flow by $18{,}000 \cdot 23.50 = 423{,}000$ and the NPV by $423{,}000 \cdot 3.790787 = 1{,}603{,}503$. Ranked from the largest to the smallest effect, the result is a **tornado table**, named after the funnel shape of the bar chart that is usually drawn from it:
+
+| Rank | Input | Base value | After 10% adverse change | $\Delta CF_t$ (€ p.a.) | $C_0$ (€) | $\Delta C_0$ (€) |
+|---:|---|---:|---:|---:|---:|---:|
+| 1 | Price $P$ | €235 | €211.50 | −423,000 | −1,056,478 | −1,603,503 |
+| 2 | Variable cost $v$ | €180 | €198 | −324,000 | −681,190 | −1,228,215 |
+| 3 | Volume $x$ | 18,000 | 16,200 | −99,000 | 171,737 | −375,288 |
+| 4 | Fixed cash costs $FC$ | €450,000 | €495,000 | −45,000 | 376,439 | −170,585 |
+| 5 | Investment $I_0$ | €1,500,000 | €1,650,000 | (one-off) | 397,025 | −150,000 |
+| 6 | Discount rate $i$ | 10% | 11% | — | 495,784 | −51,240 |
+
+(The discount rate row is a *relative* change of 10%, from 10% to 11%.) The ranking surprises most people, including Werner. The board spent its whole discussion on volume, yet volume ranks only third. A 10% fall in price would turn a comfortable NPV into a loss of more than €1 million; a 10% fall in volume would merely shrink it. The reason is the size of the line item each input acts on. A price change hits the whole revenue of €4,230,000 a year; a volume change only hits the contribution margin of €990,000, because every coupling not sold also saves its variable cost. Revenue is more than four times the contribution margin, so a 10% price change has more than four times the effect. The same logic puts variable cost (€3,240,000 a year) in second place. As a rule of thumb, *a 10% change in an input moves the NPV by 10% of the present value of the line item it drives.* In a business with thin margins, prices and unit costs are the dangerous inputs.
+
+The inputs at the top of the tornado table are the project's **critical variables**: those where a small forecasting error has a large effect on the NPV. They deserve the most research before the decision and the closest monitoring after it. For Vogt, the price and material-cost clauses of the Solaris contract matter more than any volume forecast, which is worth knowing before the negotiation starts.
+
+Sensitivity analysis has two blind spots. It changes inputs *one at a time*, although in reality they often move together: an electric-car slump lowers volume *and* strengthens the customer's hand in price talks. And it moves every input by the same 10%, although a price fixed in the contract may be fairly safe while volume could easily fall by 30%. The tornado table shows how *sensitive* the NPV is, not how *likely* each change is.
+
+<!-- Widget idea: Sensitivity slider and live tornado chart — one slider per input (x, P, v, FC, I_0, i) around the Solaris base case; the NPV updates live, the tornado bars re-sort for a chosen ±% change, and each slider marks its break-even value. -->
+
+### Scenario Analysis: How Good, How Bad?
+
+**Scenario analysis** (dt. *Szenarioanalyse*) repairs the first blind spot. It changes several inputs at once, combined into an internally consistent story about the future. The usual set is a **worst case**, the **base case** and a **best case**. Each scenario must be plausible as a whole: a worst case in which volume collapses but the customer happily pays more per unit is not a scenario but a contradiction.
+
+Clara built two stories around the base case. In the *worst case*, Solaris loses a customer (12,000 units), uses its stronger position to push through a price cut of €5, and steel prices add €5 to the variable cost per unit. In the *best case*, the full contract volume is called off, bundled steel purchasing lowers variable cost to €175, and a leaner shift plan saves €30,000 of fixed costs. The best case leaves volume at 18,000, because the framework contract caps the upside.
+
+| Input | Worst case | Base case | Best case |
+|---|---:|---:|---:|
+| Volume $x$ (units p.a.) | 12,000 | 18,000 | 18,000 |
+| Price $P$ (€/unit) | 230 | 235 | 235 |
+| Variable cost $v$ (€/unit) | 185 | 180 | 175 |
+| Fixed cash costs $FC$ (€ p.a.) | 450,000 | 450,000 | 420,000 |
+| Contribution margin $P - v$ (€/unit) | 45 | 55 | 60 |
+| Annual cash flow $CF_t$ (€) | 90,000 | 540,000 | 660,000 |
+| **NPV $C_0$ (€)** | **−1,158,829** | **547,025** | **1,001,919** |
+
+The worst-case cash flow, for example, is $12{,}000 \cdot 45 - 450{,}000 = 90{,}000$, so $C_0 = -1{,}500{,}000 + 90{,}000 \cdot 3.790787 = -1{,}158{,}829$. The **NPV range** runs from −€1,158,829 to +€1,001,919, a spread of €2,160,748 for a project that costs €1,500,000. More telling than the width is the shape: the worst case lies €1,705,854 below the base case, the best case only €454,894 above it. The downside is almost four times as deep as the upside is high. That asymmetry is the quantitative version of Werner's unease, and the single-point forecast had hidden it completely.
+
+How should a board read such a range? Not as a forecast: scenario analysis carries no probabilities, so it cannot say whether the worst case is a one-in-five or a one-in-a-hundred event. It answers a different question: *Can we live with the worst case?* For Vogt, with €18 million of annual revenue, a present-value loss of €1.2 million would hurt badly but not end the company. For a start-up whose entire capital is €1.5 million, the same worst case would be fatal, and the project should be rejected or restructured whatever its expected NPV.
+
+::: {.details}
+#### Deep Dive: From Three Scenarios to Ten Thousand — Monte Carlo Simulation
+Three scenarios are three points out of countless possible futures. **Monte Carlo simulation** fills in the rest: the analyst gives each uncertain input a probability distribution (for example, volume between 10,000 and 18,000, most likely 17,000), and a computer draws thousands of random input combinations, computes the NPV for each and collects the results into a distribution. This answers questions no three-scenario table can, such as "What is the probability that the NPV is negative?" Its weakness is the same as that of every tool in this chapter, only better hidden: the result is only as good as the distributions fed into it, and ten thousand simulations of a bad assumption are still a bad assumption.
+:::
+
+<!-- Widget idea: Scenario builder — students enter worst/base/best values for each input and see the three NPVs as a range bar; optional probability fields turn the three scenarios into an expected NPV. -->
+
+### Break-Even Analysis: How Far Can an Input Fall?
+
+Sensitivity analysis asks: *If the input changes by 10%, what happens to the NPV?* **Break-even analysis** turns the question around: *How far can the input change before the NPV reaches zero?* The answer is the input's **break-even value** or critical value (dt. *kritischer Wert*). Because the NPV is exactly zero at that point, the project still earns precisely its cost of capital there, no more and no less.
+
+The procedure: hold all other inputs at their base values, set $C_0 = 0$ and solve for the input in question. For volume, @eq-npv-annuity with the cash flow from @eq-cf-model gives
+
+$$0 = -I_0 + \left[x^* \cdot (P - v) - FC\right] \cdot PVIFA(i,\,n) \quad \Longrightarrow \quad x^* = \frac{I_0 / PVIFA(i,\,n) + FC}{P - v}$$ {#eq-breakeven-volume}
+
+The term $I_0 / PVIFA(i,\,n)$ is the annual cash flow the project needs just to recover its investment including interest, the Capital Recovery Factor logic from Chapter 2 in disguise. For the Solaris line, $1{,}500{,}000 / 3.790787 = 395{,}696$. Add the fixed costs and divide by the contribution margin:
+
+$$x^* = \frac{395{,}696 + 450{,}000}{55} = \frac{845{,}696}{55} \approx 15{,}376 \text{ units}$$
+
+Solaris must call off at least about 15,376 units a year for the project to break even. The **margin of safety** expresses the distance between base case and break-even value as a percentage of the base value:
+
+$$\text{Margin of safety} = \frac{x - x^*}{x} = \frac{18{,}000 - 15{,}376}{18{,}000} \approx 14.6\%$$ {#eq-margin-of-safety}
+
+The same procedure gives the break-even values for every other input. For price and variable cost, the required contribution margin per unit is $845{,}696 / 18{,}000 = 46.98$:
+
+| Input | Base value | Break-even value | Margin of safety |
+|---|---:|---:|---:|
+| Volume $x$ | 18,000 units | 15,376 units | 14.6% |
+| Price $P$ | €235.00 | €226.98 | 3.4% |
+| Variable cost $v$ | €180.00 | €188.02 | 4.5% |
+| Fixed cash costs $FC$ | €450,000 | €594,304 | 32.1% |
+| Investment $I_0$ | €1,500,000 | €2,047,025 | 36.5% |
+| Discount rate $i$ | 10% | 23.4% | 13.4 percentage points |
+
+The last row is an old friend: the break-even discount rate is the internal rate of return from Chapter 5, the rate at which the NPV is exactly zero. Read the table as a set of tripwires. The project survives a 32% overrun in fixed costs and a 36% overrun in the investment budget, but a price cut of €8.02 per unit, or a rise in variable cost of the same €8.02, wipes out its entire value. The break-even table and the tornado table tell the same story from two sides: the inputs with the smallest margin of safety are the critical variables.
+
+Break-even analysis is popular in boardrooms because it needs no probabilities: instead of "How likely is a volume of 15,000?", it asks the sales manager "Do you believe Solaris will take at least 15,376 units?", which he can answer. Its limit is that of sensitivity analysis: it moves one input at a time. In the worst case, volume, price and variable cost are all beyond their break-even values at once.
+
+### The Risk-Adjusted Discount Rate
+
+All tools so far worked on the cash flows. The **risk-adjusted discount rate** (dt. *risikoangepasster Kalkulationszinssatz*) works on the denominator instead. The idea goes back to Chapter 1: investors demand compensation for bearing risk, so a project that is riskier than the firm's average business should have to clear a higher hurdle:
+
+$$i_{RA} = i + RP$$ {#eq-radr}
+
+Here $i$ is the firm's standard discount rate for projects of average risk and $RP$ is a risk premium in percentage points for this project's risk class (negative for projects that are safer than average). Many firms work with a small number of risk classes instead of individual premiums. Suppose Vogt's board adopts three: 7% for low-risk projects (cost savings with proven technology), 10% for normal business, and 13% for high-risk projects (new customers, new markets). The Solaris line, with one customer in a volatile market, belongs in the high-risk class. Applied to the *expected* cash flow of €441,000,
+
+$$E(C_0) = -1{,}500{,}000 + 441{,}000 \cdot PVIFA(13\%,\,5) = -1{,}500{,}000 + 441{,}000 \cdot 3.517231 = 51{,}099$$
+
+At 13%, the expected NPV shrinks from €171,737 to €51,099. The project still passes, but only just.
+
+The risk-adjusted rate owes its popularity to its simplicity, but it has three weaknesses. First, in this course the size of the premium is a management judgement; deriving it from capital-market data (with the Capital Asset Pricing Model) is master-level material, and a premium picked by feel can make any project look good or bad. Second, a constant premium compounds, so it penalises distant cash flows much more than near ones: compared with discounting at 10%, a 13% rate cuts the present value of the year-1 cash flow by 2.7%, but that of the year-5 cash flow by 12.6% ($1 - (1.10/1.13)^5 \approx 0.126$). That is appropriate only if risk really grows with time. Third, the premium belongs on *expected* cash flows. Applied to the optimistic base case, it understates the risk; applied to cash flows that a cautious planner has already cut to a worst case, it counts the same risk twice and rejects good projects.
+
+::: {.quick-check}
+In the tornado table, a 10% price cut lowers the NPV by €1,603,503, a 10% volume decline only by €375,288. Why?
+
+- Because a price cut is more likely than a fall in volume.
+- **Because price acts on the whole revenue (€4.23 million a year), volume only on the contribution margin (€0.99 million a year).**
+- Because price changes are discounted at a higher rate than volume changes.
+:::
+
+### Comparing the Tools
+
+Each tool answers one question well and stays silent on the others, which is why practitioners combine them:
+
+| Tool | Strength | Limit |
+|---|---|---|
+| Expected NPV | Uses all states and their probabilities; gives one number for the decision rule | Hides the spread; probabilities are often subjective; misleading for a one-off bet the firm cannot afford to lose |
+| Sensitivity analysis | Simple; identifies the critical variables; shows where more research pays off | One input at a time; ignores how likely each change is and how inputs move together |
+| Scenario analysis | Combines inputs into consistent stories; shows the range and its asymmetry | Only a few points; no probabilities unless added; the scenarios themselves are judgement calls |
+| Break-even analysis | Intuitive margin of safety; needs no probabilities | One input at a time; says nothing about likelihood |
+| Risk-adjusted discount rate | Builds risk into the familiar NPV rule with a single number | Premium is a judgement; compounds over time; easily double-counts risk |
+
+A sensible sequence for a real decision is the one Clara followed: start with the base case, find the critical variables with sensitivity and break-even analysis, build consistent scenarios around them, estimate probabilities where you honestly can, and discount expected cash flows at a rate that fits the project's risk class.
+
+## Practice: The Solaris Decision
+
+The two cases below put the tools to work on decisions the Vogt board actually has to take. The first combines expected value and break-even analysis in a contract negotiation; the second shows what happens when one discount rate is applied to projects of very different risk.
+
+### Case 1: A Guarantee at a Price
+
+::: {.case-study}
+#### Case: Vogt Antriebstechnik — The Minimum-Volume Offer
+
+A week after the board meeting, Solaris' purchasing director calls Clara with an offer. Solaris will commit to a **minimum purchase of 15,000 units a year** for the full five years, if Vogt lowers the price from €235 to **€233 per unit**. Werner likes the safety; the sales manager hates giving away price on 18,000 units to protect 3,000.
+
+Use the three volume states from the Method section (strong 50%: 18,000 units; moderate 30%: 16,000 units; weak 20%: 12,000 units). Under the guarantee, the weak state becomes 15,000 units; the other two states are unchanged. All other inputs stay at their base values ($I_0$ = €1,500,000, $v$ = €180, $FC$ = €450,000, $n$ = 5, $i$ = 10%).
+
+**Tasks:**
+
+1. Calculate the NPV of each state and the expected NPV with the guarantee. Compare it with the expected NPV without the guarantee (€171,737).
+2. How does the guarantee change the worst outcome and the spread of the outcomes?
+3. What is the largest price cut per unit Vogt could accept in exchange for the guarantee without lowering the expected NPV?
+4. Should Clara accept the offer?
+
+::: {.solution}
+**Solution:**
+
+**1. Expected NPV with the guarantee.** The contribution margin falls to $233 - 180 = 53$ per unit. With @eq-cf-model and @eq-npv-annuity ($PVIFA(10\%,\,5) = 3.790787$):
+
+| State | $p_s$ | Volume $x$ | $CF_t$ (€ p.a.) | $C_{0,s}$ (€) | $p_s \cdot C_{0,s}$ (€) |
+|---|---:|---:|---:|---:|---:|
+| Strong | 0.5 | 18,000 | 504,000 | 410,557 | 205,278 |
+| Moderate | 0.3 | 16,000 | 398,000 | 8,733 | 2,620 |
+| Weak (guaranteed) | 0.2 | 15,000 | 345,000 | −192,179 | −38,436 |
+| **Expected value** | **1.0** | **16,800** | **440,400** | | **169,462** |
+
+For example, the strong state gives $18{,}000 \cdot 53 - 450{,}000 = 504{,}000$ and $C_0 = -1{,}500{,}000 + 504{,}000 \cdot 3.790787 = 410{,}557$. The expected NPV with the guarantee is **€169,462**, only **€2,274** below the €171,737 without it, a reduction of 1.3%.
+
+**2. Worst outcome and spread.** The worst outcome improves from −€703,935 to **−€192,179**, i.e. by **€511,756**. The probability of a negative NPV stays at 20% (only the weak state is negative), but the loss in that state shrinks to just over a quarter of its former size. The standard deviation of the NPV falls from about €473,606 to about €250,939. The guarantee does not make the project more profitable on average; it cuts off most of the downside.
+
+**3. Largest acceptable price cut (break-even concession).** With the guarantee, the expected volume is $0.5 \cdot 18{,}000 + 0.3 \cdot 16{,}000 + 0.2 \cdot 15{,}000 = 16{,}800$. The expected NPV stays unchanged if the expected cash flow stays at €441,000. With a price cut of $\Delta P$ euros per unit:
+
+$$(55 - \Delta P) \cdot 16{,}800 - 450{,}000 = 441{,}000 \quad \Longrightarrow \quad 55 - \Delta P = \frac{891{,}000}{16{,}800} = 53.04 \quad \Longrightarrow \quad \Delta P \approx 1.96$$
+
+A price cut of up to about **€1.96 per unit** leaves the expected NPV intact. Solaris asks for €2.00, very slightly more.
+
+**4. Recommendation.** Accept, ideally after negotiating the price cut down to €1.96 or less. In expected-value terms the deal is almost neutral (−€2,274), but it improves the worst outcome by more than half a million euros and roughly halves the spread. For a family firm with €18 million of revenue and one large new customer, that insurance is cheap. The sensitivity analysis explains why Clara must still negotiate hard on price: every euro of price concession on 18,000 units costs $18{,}000 \cdot 3.790787 = 68{,}234$ of NPV in the strong state. The guarantee may also justify moving the project from the high-risk class (13%) to the normal class (10%).
+:::
+:::
+
+### Case 2: One Rate for Every Project?
+
+::: {.case-study}
+#### Case: Vogt Antriebstechnik — Solar Roof vs. Solaris Line
+
+Alongside the Solaris line, Vogt's facility manager proposes a photovoltaic system on the factory roof. It costs **€400,000**, runs for **20 years** with no residual value, and produces **400,000 kWh** of electricity a year that Vogt would otherwise buy from the grid at **€0.14 per kWh**. Maintenance and insurance cost **€11,000 a year**. Vogt's controller has always discounted every project at the company-wide 10%. Clara proposes the three risk classes from the Method section: 7% for low-risk cost savings with proven technology, 10% for normal business, 13% for new customers and new markets.
+
+**Tasks:**
+
+1. Calculate the NPV of the solar roof at 10% and at 7%.
+2. Calculate the expected NPV of the Solaris line (expected cash flow €441,000 p.a., five years, $I_0$ = €1,500,000) at the company-wide 10% and at the high-risk rate of 13%.
+3. Which projects are accepted under the single company-wide rate, and which under risk classes? What does the comparison show?
+4. Calculate the break-even electricity price for the solar roof at 7%.
+
+::: {.solution}
+**Solution:**
+
+**1. Solar roof.** Annual cash flow: $400{,}000 \cdot 0.14 - 11{,}000 = 56{,}000 - 11{,}000 = 45{,}000$.
+
+$$C_0(10\%) = -400{,}000 + 45{,}000 \cdot PVIFA(10\%,\,20) = -400{,}000 + 45{,}000 \cdot 8.513564 = -16{,}890$$
+
+$$C_0(7\%) = -400{,}000 + 45{,}000 \cdot PVIFA(7\%,\,20) = -400{,}000 + 45{,}000 \cdot 10.594014 = 76{,}731$$
+
+**2. Solaris line.** At 10%: $E(C_0) = -1{,}500{,}000 + 441{,}000 \cdot 3.790787 = 171{,}737$ (as in the Method section). At 13%: $E(C_0) = -1{,}500{,}000 + 441{,}000 \cdot 3.517231 = 51{,}099$.
+
+**3. Comparison.**
+
+| Project | Single rate (10%) | Risk class | Risk-adjusted NPV |
+|---|---:|---|---:|
+| Solar roof | −€16,890 → reject | Low risk (7%) | +€76,731 → accept |
+| Solaris line | +€171,737 → accept | High risk (13%) | +€51,099 → accept |
+
+Under the single rate, Vogt accepts the risky project and rejects the safe one. Under risk classes, both pass, and the solar roof even creates more value than the Solaris line. Its internal rate of return of about 9.4% is below the company-wide 10%, but well above the 7% its low risk justifies. A single company-wide rate systematically favours risky projects (discounted too gently) and penalises safe ones (discounted too harshly), so over the years the firm drifts towards a riskier portfolio than its owners would choose.
+
+**4. Break-even electricity price at 7%.** The required annual cash flow is $400{,}000 / 10.594014 = 37{,}757$. Adding the maintenance costs gives required savings of $37{,}757 + 11{,}000 = 48{,}757$, so
+
+$$\text{Break-even price} = \frac{48{,}757}{400{,}000} \approx 0.122 \text{ per kWh}$$
+
+The grid price would have to fall from €0.14 to about **€0.122 per kWh**, a margin of safety of about 12.9%, before the solar roof stops creating value at 7%. Because the ±3 percentage-point premiums are themselves a judgement, such a break-even check on the critical input is a useful companion to any risk-adjusted NPV.
+:::
+:::
+
+::: {.quick-check}
+Instead of €233, Solaris asks for a price of €231 (a cut of €4 per unit) in exchange for the 15,000-unit guarantee. What happens to the expected NPV of the Solaris line at 10%?
+
+- It rises, because the guarantee removes the weak state with 12,000 units.
+- It stays roughly unchanged, because the higher expected volume of 16,800 units offsets the price cut.
+- **It falls to about €42,092, because the price cut exceeds the break-even concession of about €1.96 per unit.**
+:::
+
+## Conclusion: Knowing the Odds, Knowing Your Limits
+
+Clara's second board presentation had no bold green number on its last slide. It had a range from −€1.2 million to +€1.0 million, an expected NPV of €171,737, a tornado table with price at the top, and a recommendation: accept the Solaris contract, but only with the volume guarantee and a hard line in the price negotiation. Werner read it for a long time again. This time he had no question.
+
+The tools of this chapter do not reduce risk; they make it visible. Risk itself is reduced by contracts (Clara's guarantee), by flexibility (a line that can also build couplings for other customers), and by not betting the firm on a single customer. A project that looks safe because every cell of the spreadsheet holds one confident number is not safe. It is simply unexamined.
+
+::: {.drag-exercise}
+Sensitivity analysis changes an input by a *given percentage* and measures the effect on the NPV, whereas break-even analysis searches for the *critical value* of the input at which the NPV equals *zero*.
+:::
+
+::: {.quick-check}
+A planner has already cut every cash flow of a project to its worst-case value. Her colleague now discounts these cash flows at a risk-adjusted rate of 13% instead of the standard 10%. What is the problem?
+
+- There is none; the more caution, the better the decision.
+- **The same risk is counted twice, so good projects are likely to be rejected.**
+- The risk-adjusted rate must only be applied to the best-case cash flows.
+:::
+
+::: {.quick-check}
+The board wants to know how bad the Solaris line could turn out if an electric-car slump lowers volume, weakens the price and raises steel costs at the same time. Which tool answers this question?
+
+- Sensitivity analysis, because it shows which input matters most.
+- **Scenario analysis, because it changes several inputs together in a consistent story.**
+- Break-even analysis, because it shows the critical value of each input.
+:::
+
+This chapter assumed that the forecasts are honest, merely uncertain. Chapter 10 asks the uncomfortable follow-up question: who writes the numbers, why forecasts tend to be not only uncertain but systematically optimistic, and who pays for the costs that no cash-flow forecast contains.

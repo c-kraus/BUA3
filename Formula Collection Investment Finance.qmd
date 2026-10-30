@@ -18,7 +18,10 @@ This formula collection supports you during the Investment Finance lecture in th
 | Abbreviation | Explanation |
 |--------------|-------------|
 | $C$ | Equal periodic payment (annuity); coupon payment |
-| $C_0$ | Initial loan capital (Chapter 3); Kapitalwert / NPV (Chapters 4–5) |
+| $B$ | Budget (capital rationing) |
+| $C_0$ | Initial loan capital (Chapter 3); Kapitalwert / NPV (Chapters 4–10) |
+| $C_0^{before}$, $C_0^{after}$ | NPV before / after taxes |
+| $CF_{before,t}$, $CF_{after,t}$ | Cash flow before / after taxes in period $t$ |
 | $C_1$ | First payment of a growing perpetuity |
 | $c$ | Coupon rate |
 | $CF_t$ | Cash flow / Net inflow in period $t$ |
@@ -29,33 +32,52 @@ This formula collection supports you during the Investment Finance lecture in th
 | $D_t$ | Depreciation in period $t$ |
 | $Div$ | Fixed (perpetual) dividend |
 | $E$ | Equity value |
+| $E(\cdot)$ | Expected value |
 | $F$ | Par value / Face value of a bond |
+| $FC$ | Fixed costs per period |
 | $FV$ | Future Value |
 | $g$ | Growth rate |
 | $i$ | Interest rate / Discount rate |
 | $i_{after}$ | After-tax discount rate |
+| $i_{eff}$ | Effective annual interest rate |
 | $i_{nom}$ | Nominal annual interest rate |
+| $i^*$ | Endogenous cut-off rate (Dean model) |
 | $i_{rel}$ | Relative (intra-year) interest rate |
+| $i_{RA}$ | Risk-adjusted discount rate |
 | $I_0$ | Initial investment |
 | $k$ | Number of sub-annual interest periods (beyond complete years) |
 | $k_D$ | Cost of debt |
 | $k_E$ | Cost of equity |
+| $k_f$ | Cost of financing source $f$ (Dean model) |
 | $K_t$ | Debt service (total payment) in period $t$ |
 | $L_n$ | Liquidation / Residual value at end of project |
 | $m$ | Number of interest periods per year |
+| $MIRR$ | Modified internal rate of return (Baldwin rate) |
 | $n$ | Duration / Term |
 | $NPV$ | Net Present Value (Kapitalwert / $C_0$) |
+| $P$ | Unit selling price (risk analysis) |
+| $p_s$ | Probability of state $s$ |
 | $P_0$ | Asset price / Bond price at $t = 0$ |
 | $PI$ | Profitability Index |
+| $PP$, $PP_{disc}$ | Payback period (static / discounted) |
 | $PV$ | Present Value |
+| $PV_{out}$ | Present value of all outflows (MIRR) |
 | $PVIFA$ | Present Value Interest Factor of an Annuity (Rentenbarwertfaktor) |
 | $r$ | Rate of return / Yield to Maturity / IRR |
 | $R_{t-1}$ | Remaining debt at the beginning of period $t$ |
+| $RP$ | Risk premium |
 | $s$ | Tax rate |
 | $t$ | Point in time / Period |
+| $T$ | Last full year before payback |
 | $T_t$ | Principal repayment in period $t$ |
+| $v$ | Variable cost per unit |
+| $x$, $x^*$ | Volume / break-even volume |
+| $\text{Tax}_t$ | Tax payment in period $t$ |
+| $TV_n$ | Terminal value of all inflows at $t = n$ (MIRR) |
+| $\Delta CF_t$ | Cash flow of the incremental investment B − A |
 | $Z_t$ | Interest payment in period $t$ |
 | $\pi$ | Inflation rate |
+| $\sigma$ | Standard deviation |
 
 {{< pagebreak >}}
 
@@ -105,6 +127,14 @@ $$ FV = PV \cdot \bigl(1 + (n \cdot m + k) \cdot i_{rel}\bigr) $$
 
 $$ FV = PV \cdot (1 + i_{rel})^{n \cdot m + k} $$
 
+### Effective Annual Rate
+
+The annual rate that yields the same result with one compounding per year:
+
+$$ i_{eff} = \left(1 + \frac{i_{nom}}{m}\right)^m - 1 $$
+
+> **Two meanings of "nominal":** $i_{nom}$ is nominal as opposed to *real* in the Fisher equation (before inflation) and as opposed to *effective* here (before intra-year compounding).
+
 {{< pagebreak >}}
 
 # Annuities & Perpetuities
@@ -118,6 +148,10 @@ $$ PV = C \cdot PVIFA(i,\,n) $$
 Annual payment required to amortise or generate a lump sum $PV$:
 
 $$ C = PV \cdot CRF(i,\,n) $$
+
+Future value of $n$ equal end-of-period payments (savings plan):
+
+$$ FV = C \cdot \frac{(1+i)^n - 1}{i} = C \cdot PVIFA(i,\,n) \cdot (1+i)^n $$
 
 ## Annuity Due (Vorschüssige Rente)
 
@@ -209,6 +243,14 @@ $$ P_0 = \frac{D_1}{r - g} \qquad \text{with } D_1 = D_0 \cdot (1+g) $$
 
 {{< pagebreak >}}
 
+# Payback Period
+
+Static payback: the year $T$ is the last full year in which the cumulative cash flows are still below $I_0$; the remainder is interpolated within year $T+1$:
+
+$$ PP = T + \frac{I_0 - \sum_{t=1}^{T} CF_t}{CF_{T+1}} $$
+
+The **discounted payback** $PP_{disc}$ uses the discounted cash flows $CF_t \cdot (1+i)^{-t}$ instead. Payback measures *how soon*, not *how much* — it ignores everything after the cut-off and is no substitute for the NPV.
+
 # Net Present Value
 
 $$ NPV = -I_0 + \sum_{t=1}^{n} CF_t \cdot (1+i)^{-t} + L_n \cdot (1+i)^{-n} $$
@@ -235,7 +277,21 @@ $$ r \approx i_1 + \frac{C_0(i_1)}{C_0(i_1) - C_0(i_2)} \cdot (i_2 - i_1) $$
 | $r = i$ | Indifferent |
 | $r < i$ | **Reject** |
 
-> Use NPV instead of IRR if the cash flow stream changes sign more than once (Descartes' Rule).
+> **Descartes' rule of signs:** the number of positive real roots in $q = 1+r$ equals the number of sign changes in the cash flow series, or is smaller by an even number. One sign change → exactly one IRR (above −100 %). More than one sign change → several or no IRRs are possible; use the NPV.
+
+## Modified IRR (MIRR, Baldwin Rate)
+
+Inflows are compounded to $t = n$ at the reinvestment rate $i$, outflows discounted to $t = 0$:
+
+$$ MIRR = \left(\frac{TV_n}{PV_{out}}\right)^{1/n} - 1 \qquad TV_n = \sum_{CF_t > 0} CF_t \cdot (1+i)^{n-t}, \quad PV_{out} = \sum_{CF_t < 0} |CF_t| \cdot (1+i)^{-t} $$
+
+## Incremental Investment (Differenzinvestition)
+
+For mutually exclusive projects A and B, judge the difference B − A like a project of its own:
+
+$$ \Delta CF_t = CF_t^{B} - CF_t^{A}, \qquad C_0^{\Delta}(i) = C_0^{B}(i) - C_0^{A}(i) $$
+
+Choose the larger project B if $C_0^{\Delta} > 0$, i.e. if the IRR of the increment $r_{\Delta}$ exceeds $i$ (conventional increment).
 
 # Annuity Method
 
@@ -243,39 +299,55 @@ The **annual value** $d$ spreads the NPV evenly across the project's useful life
 
 $$ d = NPV \cdot CRF(i,\,n) $$
 
-A positive $d$ means the project earns more than $i$ in every single year.
+$d$ is the equal annual surplus left after the capital service (return *of* and *on* capital at rate $i$); a positive $d$ means the project earns more than $i$ over its life — not necessarily a surplus in every single year.
 
-> Compare projects with **different lifespans** using $d$ rather than NPV — provided the shorter project can be repeated on equivalent terms.
+> Compare projects with **different lifespans** using $d$ rather than NPV — provided both alternatives can be repeated identically (repeatability assumption). If the successor projects are known and differ, value the actual sequence instead.
 
 {{< pagebreak >}}
 
 # Investment Appraisal with Taxes
 
+Standard model: tax base = cash flow minus depreciation, one tax rate $s$ on project profits and on interest from the alternative investment; the result does not depend on how the project is financed.
+
 ## After-Tax Cash Flow — Volume Effect
 
-$$ CF_{after} = CF_{before} \cdot (1 - s) + D_t \cdot s $$
+$$ \text{Tax}_t = s \cdot (CF_{before,t} - D_t) $$
 
-The term $D_t \cdot s$ is the **Depreciation Tax Shield**.
+$$ CF_{after,t} = CF_{before,t} - \text{Tax}_t = CF_{before,t} \cdot (1 - s) + s \cdot D_t $$
+
+The term $s \cdot D_t$ is the **Depreciation Tax Shield**. $I_0$ is not adjusted; it enters the tax calculation only through $D_t$.
 
 ## After-Tax Discount Rate — Interest Effect
 
-$$ i_{after} = i_{before} \cdot (1 - s) $$
+$$ i_{after} = i \cdot (1 - s) $$
 
-The Interest Tax Shield lowers the effective cost of debt, raising the present value of future cash flows.
+The interest of the alternative capital-market investment is taxed too, so the opportunity cost after tax falls — this is a property of the alternative, not of debt financing.
+
+## After-Tax NPV
+
+$$ C_0^{after} = -I_0 + \sum_{t=1}^{n} CF_{after,t} \cdot (1+i_{after})^{-t} $$
+
+**Tax paradox:** $C_0^{after} > C_0^{before}$ is possible when the interest effect outweighs the volume effect — typically when tax depreciation runs ahead of economic depreciation.
 
 ## Weighted Average Cost of Capital (WACC)
 
-For mixed equity/debt financing:
+Belongs to a *different* model (different costs of debt and equity, only debt interest deductible) — do not combine it with the standard model above. For mixed equity/debt financing:
 
 $$ r_{WACC} = k_E \cdot \frac{E}{E+D} + k_D \cdot (1-s) \cdot \frac{D}{E+D} $$
 
 # Capital Rationing — Dean Model
 
+## Dean Model
+
+Investment staircase: projects sorted by IRR $r_j$ (descending). Financing staircase: sources sorted by cost $k_f$ (ascending). Where the staircases cross lies the optimal budget and the endogenous **cut-off rate** $i^*$. Assumptions: one period, independent and divisible projects.
+
 ## Profitability Index (PI)
 
-Value created per unit of invested capital:
+Present value per euro of initial outlay ($PV$ = present value of all cash flows from $t = 1$, incl. $L_n$):
 
-$$ PI = \frac{NPV + I_0}{I_0} = 1 + \frac{NPV}{I_0} $$
+$$ PI = \frac{PV}{I_0} = \frac{NPV + I_0}{I_0} = 1 + \frac{NPV}{I_0} $$
+
+For a one-period project: $PI = \dfrac{1+r}{1+i}$.
 
 | $PI$ | Decision |
 |:----:|:--------:|
@@ -283,7 +355,31 @@ $$ PI = \frac{NPV + I_0}{I_0} = 1 + \frac{NPV}{I_0} $$
 | $= 1$ | Indifferent ($NPV = 0$) |
 | $< 1$ | **Reject** |
 
-Under a **binding budget constraint**, rank all projects by $PI$ (descending) and fill the budget from the top. Ranking by absolute $NPV$ can crowd out efficient smaller projects (*Elephant Trap*).
+Under a **binding budget constraint** $B$, rank all projects by $PI$ (descending) and fill the budget from the top. Ranking by absolute $NPV$ can crowd out efficient smaller projects (*Elephant Trap*). The PI ranking is optimal only for divisible projects and a single-period budget — with indivisible projects, check whether another combination that uses the budget more fully has a higher total NPV.
+
+# Risk and Uncertainty
+
+## Cash-Flow Model and Expected NPV
+
+$$ CF_t = x \cdot (P - v) - FC $$
+
+with volume $x$, unit price $P$ (not to be confused with the asset price $P_0$), variable cost per unit $v$ and fixed costs $FC$. With states $s$ and probabilities $p_s$ ($\sum p_s = 1$):
+
+$$ E(CF_t) = \sum_{s} p_s \cdot CF_{t,s}, \qquad E(C_0) = -I_0 + \sum_{t=1}^{n} \frac{E(CF_t)}{(1+i)^t} = \sum_{s} p_s \cdot C_{0,s} $$
+
+## Sensitivity and Break-even
+
+For level cash flows, a change $\Delta CF$ moves the NPV by $\Delta C_0 = \Delta CF \cdot PVIFA(i,\,n)$. The break-even (critical) value of an input sets $C_0 = 0$, e.g. for the volume:
+
+$$ x^* = \frac{I_0 / PVIFA(i,\,n) + FC}{P - v}, \qquad \text{Margin of safety} = \frac{x - x^*}{x} $$
+
+The break-even discount rate is the IRR $r$.
+
+## Risk-Adjusted Discount Rate
+
+$$ i_{RA} = i + RP $$
+
+with risk premium $RP$ for the project's risk class. Do not adjust for the same risk twice (pessimistic cash flows *and* a premium).
 
 {{< pagebreak >}}
 

@@ -1,6 +1,8 @@
 project:
   type: book
   output-dir: _site
+  resources:
+    - assets/
 
 number-sections: true
 
@@ -25,6 +27,13 @@ book:
       chapters:
         - 07_taxes.qmd
         - 08_dean.qmd
+        - 09_risk.qmd
+    - part: "Part IV — Investing Responsibly"
+      chapters:
+        - 10_ethics.qmd
+
+  appendices:
+    - tutorials.qmd
 
   # Navigation & Suche
   sidebar:
@@ -36,9 +45,12 @@ book:
   repo-actions: [issue]
   
 format:
-  moodle-html
+  moodle-html:
+    toc-depth: 2
 
 # Globale Optionen für Code-Zellen (Tech-Stack)
 execute:
   echo: false
   warning: false
+
+lang: en

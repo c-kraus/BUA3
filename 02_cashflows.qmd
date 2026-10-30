@@ -1,170 +1,368 @@
-# The Geometry of Cash Flows – Annuities & Perpetuities
+# The Geometry of Cash Flows
 
-> "Compound interest is powerful, but consistency is lethal. A drop of water hollows the stone not by force, but by falling often."
+*Annuities and Perpetuities — How to Value a Stream of Payments, Even One That Never Ends*
 
-Building on the time-value tools from Chapter 1, we now face a realistic complication: most financial decisions do not involve a single payment, but a *stream* of equal, recurring payments. Rents, salaries, leasing rates, and bond coupons do not happen once — they happen repeatedly.
+## Opening: A Promise Without an End Date
 
-Mathematically, we *could* discount every single payment individually using the $PV = FV \cdot (1+i)^{-n}$ formula from Chapter 1. But for 20, 30, or even infinite payments, that becomes impractical. Instead, we use the **Geometry of Cash Flows**: elegant closed-form expressions that condense an entire payment stream into a single calculation. This chapter transforms you from a calculator of points into an architect of lines.
+::: {.details}
+#### Story: The Bond That Has Paid Interest Since 1648
+In May 1648, the water board Lekdijk Bovendams, responsible for the dikes along the river Lek in the Netherlands, needed money to protect a dangerous river bend. It borrowed 1,000 Carolus guilders from a man named Niclaes de Meijer and wrote the terms on a sheet of goatskin. The board promised 5% interest per year — and it promised it *forever*. There was no maturity date — no day on which the borrowed amount, the principal, would be repaid — only interest, year after year. Later the rate was reduced, first to 3.5% and then to 2.5%, but the promise itself was never broken. Every collection of interest was written on the document, and when the goatskin ran out of space, a paper attachment was added. In 2003, Yale University's Beinecke Rare Book & Manuscript Library bought the bond. In 2015, Yale collected twelve years of accrued interest from the water board's successor: €136.20, or about €11.35 a year (Yale News, 2015).
+:::
 
-## The Concept: Ordinary vs. Due
+The Dutch water bond is an extreme case, but its structure is everywhere. Your rent is a stream of equal payments. So is your salary, a car lease, the instalments on a mortgage, the coupons (the fixed interest payments) on a government bond, and the pension a retiree draws for the rest of her life. Almost no financial decision of any size consists of a single payment. It consists of a *pattern* of payments spread over time.
 
-An **Annuity** (*Rente*) is a sequence of **equal payments** ($C$) at **equal time intervals** over $n$ periods at a constant interest rate ($i$). The one thing that changes the valuation logic entirely is *when* within each period the payment occurs.
+Chapter 1 gave us a time machine for one payment: compound it forward with $(1+i)^n$ or discount it back with $(1+i)^{-n}$. In principle, that is all we need — we could discount every one of the 60 monthly rents of a five-year lease separately and add the results. In practice, that is slow, error-prone and blind to structure. And for the 1648 bond it is impossible, because the list of payments never ends. This chapter shows that regular payment streams have a *geometry*: equal heights at equal distances on the timeline. That regularity lets us collapse an entire stream into one number with a single factor — and it explains why a promise of payments that continue forever still has a finite, and surprisingly modest, price.
 
-### Ordinary Annuity (Nachschüssig)
+## Theory: Patterns on the Timeline
 
-* **Logic:** You work first, then you get paid. Payment occurs at the **end** of each period: $t = 1, 2, \dots, n$.
-* **Examples:** Loan repayments, corporate dividends, most salaries.
-* **Key property:** The first payment is discounted by one full period — it arrives at $t = 1$, so it is multiplied by $(1+i)^{-1}$.
+### From Points to Streams
 
-### Annuity Due (Vorschüssig)
+Every valuation in this book starts with a timeline. Time runs from left to right in periods $t = 0, 1, 2, \dots, n$; $t = 0$ is today, and $t = 1$ is the *end* of the first period. Compounding moves a value to the right (→), discounting moves it to the left (←). In Chapter 1 there was one arrow on that line. Now there are many, and they share three properties: the payments are equal, they arrive at equal intervals, and the same interest rate applies to all of them.
 
-* **Logic:** You pay first, then you receive the service. Payment occurs at the **start** of each period: $t = 0, 1, \dots, n-1$.
-* **Examples:** Rent (*Miete*), insurance premiums, leasing agreements.
-* **Key property:** The first payment is *not* discounted — it arrives today at $t = 0$. Every payment is exactly one period earlier than its ordinary-annuity counterpart, so every discounted value is multiplied by one extra factor of $(1+i)$. Therefore:
+Such a stream is called an **annuity** (dt. *Rente*). The word is confusing at first, because in everyday English an annuity is an insurance product that pays a pension. In finance it means any series of equal periodic payments — whether you pay them or receive them, whether they last three years or thirty. We write the periodic payment as $C$, the number of payments as $n$ and the interest rate per period as $i$.
 
-$$PV_{\text{due}} = PV_{\text{ordinary}} \times (1+i)$$
+::: {.flip-card}
+#### Annuity
+A series of $n$ equal payments $C$ at equal time intervals, valued at a constant interest rate $i$ per period. Rents, salaries, leasing rates, loan instalments and bond coupons are all annuities. What distinguishes one annuity from another is only three things: the size of the payment, the number of payments and the date of the first payment.
+:::
 
-The interactive timeline below makes the one-period shift visible:
+Why do we need a separate tool for something Chapter 1 can already do by brute force? Because the brute-force result hides the economics. Once a stream is compressed into a single present value, you can compare it with a price, a loan amount or another stream. A €900 monthly rent and a €54,000 purchase price are not comparable; their present values are.
 
-::: {.content-visible when-format="html"}
+### Ordinary Annuity and Annuity Due
+
+The single most important question about any annuity is *when the first payment arrives*. There are two standard answers.
+
+In an **ordinary annuity** (dt. *nachschüssige Rente*), payments fall at the **end** of each period, at $t = 1, 2, \dots, n$. You work first, then you are paid; you borrow first, then you repay. Salaries, loan instalments and bond coupons follow this pattern, and it is the default in finance: unless a problem says otherwise, assume an ordinary annuity.
+
+In an **annuity due** (dt. *vorschüssige Rente*), payments fall at the **start** of each period, at $t = 0, 1, \dots, n-1$. You pay before you receive the service. Rent, insurance premiums and most leasing contracts work this way — the landlord wants the money on the first of the month, not the last.
+
+On a timeline, five payments of €1,000 look like this:
+
+| $t$ | 0 | 1 | 2 | 3 | 4 | 5 |
+|:----|:-:|:-:|:-:|:-:|:-:|:-:|
+| Ordinary annuity | — | 1,000 | 1,000 | 1,000 | 1,000 | 1,000 |
+| Annuity due | 1,000 | 1,000 | 1,000 | 1,000 | 1,000 | — |
+
+Both rows contain the same five payments. The annuity due is simply the ordinary annuity shifted one period to the left. Every single payment arrives one period earlier, so every single payment has to be discounted by one period *less*. That is the whole difference — and it has a precise consequence: the present value of an annuity due is the present value of the ordinary annuity multiplied by $(1+i)$. We will derive this formally in the Method section, but the logic is already complete here. Moving a value one period to the right means multiplying by $(1+i)$; the annuity due is the ordinary annuity "pre-compounded" by one period.
+
+::: {.drag-exercise}
+In an *ordinary annuity* the first payment falls at the end of the first period (t = 1), while in an *annuity due* it falls today (t = 0). Because every payment of the annuity due arrives one period *earlier*, its present value is higher by the factor *(1 + i)*.
+:::
+
+The widget below draws both timelines and computes their present values. Start with the default setting (€1,000, 6%, 5 periods) and check that the difference equals exactly 6% of the ordinary annuity's value. Then raise the interest rate to 10% and watch the gap grow: the more expensive time is, the more it is worth to receive each payment a period sooner.
+
+::: {.widget}
 <iframe src="assets/ch02/annuity_timeline.html"
-        style="width: 100%; height: 480px; border: none;"
-        loading="lazy">
+        width="100%" height="620px" frameborder="0"
+        title="Annuity timeline — ordinary annuity versus annuity due, with present values">
 </iframe>
 :::
 
-::: {.drag-exercise}
-In an *ordinary* annuity, the first cash flow occurs at t = 1. In an annuity *due*, the first cash flow starts at t = 0, which is typical for *rental* agreements. Therefore, the Present Value of an annuity due is always *higher* by the factor (1+i).
-:::
+### When the Stream Never Ends
 
-## The Toolkit: Present Value Factors
+Now let the number of payments grow without limit. A stream of equal payments that continues forever is a **perpetuity** (dt. *ewige Rente*). The 1648 water bond is one; so is a scholarship fund designed to pay out every year "for as long as the university exists", or the British government's consols, perpetual bonds first issued in 1751 that paid interest without a maturity date until the government chose to repay the last of them in 2015.
 
-Discounting $n$ individual payments one by one is tedious and error-prone. Instead, we use **Factors** — multipliers that condense the entire geometric series of discounted payments into a single number.
+Intuition says that infinitely many payments must be worth an infinite amount. Discounting says otherwise. A payment that arrives in 50 years at 6% is worth only about 5 cents per euro today; one that arrives in 100 years, less than a third of a cent. The distant payments still exist, but their present values shrink toward zero so fast that the sum approaches a finite limit — mathematicians say it *converges*.
 
-### The Present Value Factor for Annuities ($PVIFA$)
+There is an even simpler way to see the value. Suppose you deposit an amount $PV$ in an account that pays $i$ per year, and each year you withdraw exactly the interest, $PV \cdot i$. The balance never falls, so you can withdraw forever. Read backwards: a perpetual payment of $C$ is worth exactly the deposit that generates $C$ as interest, namely $C / i$. The 1648 bond paid 50 guilders a year on a principal of 1,000 guilders at 5% — and at a market rate of 5%, an endless stream of 50 guilders is worth precisely $50 / 0.05 = 1{,}000$ guilders. The lender gave up 1,000 guilders and received a promise worth 1,000 guilders.
 
-Also known as the *Rentenbarwertfaktor (RBF)*. Intuitively, it answers: *"How much capital do I need today to fund a payment of €1.00 at the end of each year for $n$ years?"* — which is simply the sum of $n$ individual discount factors, collapsed via the geometric series formula.
-
-$$PV = C \cdot \underbrace{\left[ \frac{(1+i)^n - 1}{i \cdot (1+i)^n} \right]}_{PVIFA(i,\,n)}$$
-
-::: {.details}
-#### Deep Dive: Mathematical Derivation from the Geometric Series
-The $PVIFA$ is derived by summing $n$ individual present values:
-$$PV = \sum_{t=1}^n \frac{C}{(1+i)^t} = C \cdot \left[ \frac{1 - (1+i)^{-n}}{i} \right]$$
-
-This is a finite geometric series with first term $a = (1+i)^{-1}$ and ratio $r = (1+i)^{-1}$. Applying the formula $S_n = a \cdot \frac{1 - r^n}{1 - r}$ and simplifying yields the closed form above.
-
-**This derivation assumes an ordinary annuity.** For an annuity due, multiply the result by $(1+i)$.
-:::
-
-### The Capital Recovery Factor ($CRF$)
-
-Also known as the *Annuitätenfaktor* or *Wiedergewinnungsfaktor (WGF)*. This is the **mathematical inverse** of the $PVIFA$. It answers: *"If I borrow a lump sum today, how much must I pay annually to repay it fully in $n$ years?"*
-
-$$C = PV \cdot \underbrace{\left[ \frac{i \cdot (1+i)^n}{(1+i)^n - 1} \right]}_{CRF(i,\,n)}$$
-
-The resulting annual payment $C$ has two components:
-
-1. **Interest payment** (*Zinsen*): The cost of renting the remaining capital.
-2. **Principal repayment** (*Tilgung*): Reducing the outstanding debt.
-
-As the debt decreases, the interest component shrinks and the repayment component grows — even though the total payment $C$ stays constant throughout.
-
-> **Exam Direction Rule:**
-> * Need the pile of money **now** from a stream? → Use the **Present Value Factor** (PVIFA).
-> * Need to distribute a pile of money into **equal slices**? → Use the **Capital Recovery Factor** (CRF).
-
-::: {.flip-card}
-#### Capital Recovery Factor (CRF / WGF)
-The factor that converts a present lump sum into $n$ equal annual payments. It is the exact reciprocal of the PVIFA: $CRF = 1 / PVIFA$. A higher interest rate or a shorter term increases the CRF — meaning each instalment must be larger.
-:::
-
-## The "Infinity Glitch": Perpetuities
-
-What if cash flows continue forever? In equity valuation and brand valuation, we often assume a company generates cash flows indefinitely. As $n \to \infty$, the $PVIFA$ formula collapses into the most elegant equation in finance:
-
-$$PV_{\infty} = \frac{C}{i}$$
-
-**Example:** A mature infrastructure company generates **€ 100,000** of free cash flow every year. At a discount rate of 5%:
-
-$$PV = \frac{100{,}000}{0.05} = 2{,}000{,}000$$
-
-Two million euros — that is what an investor should pay today for this endless stream of €100,000 payments.
-
-### The Growth Variant (Gordon Growth Model)
-
-In reality, corporate cash flows typically grow over time (with inflation or productivity gains). If the first payment $C_1$ grows at a constant rate $g$ per year in perpetuity, and provided $g < i$:
-
-$$PV = \frac{C_1}{i - g}$$
-
-**Example:** A company pays a dividend of **€ 5 per share** next year ($C_1$). Dividends are expected to grow at **3% p.a.** ($g$). Investors require a return of **8%** ($i$).
-
-$$PV = \frac{5}{0.08 - 0.03} = \frac{5}{0.05} = \mathbf{100}$$
-
-The fair value per share is **€ 100**.
-
-> **Two critical rules for the GGM:**
-> 1. **$g < i$ is mandatory.** If $g \geq i$, the denominator becomes zero or negative — the model breaks, implying infinite or negative value. No company can grow faster than the economy forever.
-> 2. **Consistency of rates.** $i$ and $g$ must be expressed in the same terms: both nominal or both real. Mixing a real growth rate with a nominal discount rate will systematically overvalue the asset.
-
-::: {.details}
-#### Deep Dive: Why Tech Stocks Have Extreme Valuations
-The Gordon Growth Model explains why high-growth companies trade at enormous multiples even with low current earnings. A company with $i = 8\%$ and $g = 7\%$ has a denominator of only $0.01$ — a small change in $g$ or $i$ swings the valuation dramatically. When $g$ approaches $i$, the Present Value approaches infinity. This is not a modelling error; it reflects a genuine economic truth: a company that genuinely grows faster than the discount rate forever is worth an extraordinary amount. The difficult question is whether the growth assumption is credible.
-:::
-
-## The Trinity of Practice: Loan Amortization
-
-The Capital Recovery Factor is the mathematical engine behind every standard bank loan. Here is the complete mechanics.
-
-**Scenario:** You borrow **€ 100,000** at **5% p.a.** and repay over **5 years**.
-
-$$C = 100{,}000 \cdot \frac{0.05 \cdot (1.05)^5}{(1.05)^5 - 1} \approx \mathbf{23{,}097.48 \text{ per year}}$$
-
-Each annual payment of €23,097.48 covers interest on the remaining balance first; the rest reduces the principal. Because the balance falls each year, the interest portion shrinks — and since the total is fixed, the repayment portion rises automatically:
-
-| Year | Opening Balance (€) | Total Payment (€) | Interest 5% (€) | Principal (€) | Closing Balance (€) |
-|:----:|-------------------:|------------------:|----------------:|--------------:|--------------------:|
-| 1    | 100,000.00         | 23,097.48         | 5,000.00        | 18,097.48     | 81,902.52           |
-| 2    | 81,902.52          | 23,097.48         | 4,095.13        | 19,002.35     | 62,900.17           |
-| 3    | 62,900.17          | 23,097.48         | 3,145.01        | 19,952.47     | 42,947.70           |
-| 4    | 42,947.70          | 23,097.48         | 2,147.39        | 20,950.09     | 21,997.61           |
-| 5    | 21,997.61          | 23,097.48*        | 1,099.88        | 21,997.60     | 0.00                |
-
-*\*Rounding difference of €0.01 absorbed in final payment.*
-
-**Three patterns to memorise for the exam:**
-
-1. **Payment is constant:** The bank debits the same amount every year.
-2. **Interest declines:** As you pay off debt, you pay less in interest.
-3. **Repayment accelerates:** Since total payment is fixed and interest shrinks, the principal slice *must* grow.
+Payments can also *grow*. A scholarship that rises with inflation, a ground rent indexed to prices, or the dividends of a mature company form a **growing perpetuity** (dt. *wachsende ewige Rente*): the first payment $C_1$ arrives at $t = 1$ and every later payment is larger by a constant rate $g$. Here two forces compete. Growth pushes each future payment up by the factor $(1+g)$ per period; discounting pulls its present value down by the factor $(1+i)$ per period. As long as discounting wins — as long as $g < i$ — the present values of distant payments still shrink, and the stream has a finite value. If growth keeps pace with or outruns discounting, the distant payments no longer fade, and no finite price exists. This condition, $g < i$, is not a technicality. It is the one assumption on which every growing-perpetuity valuation stands or falls.
 
 ::: {.quick-check}
-**Why does the principal repayment (Tilgung) increase each year in an annuity loan?**
+Two contracts each pay €1,000 per year for five years at an interest rate of 6%. Contract A pays at the start of each year, Contract B at the end. Which statement is correct?
 
-- The bank becomes more generous over time.
-- **The interest portion shrinks as debt falls, so the fixed total payment contains more principal.**
-- Inflation increases the real value of each payment.
-
-> **Reason:** $C = \text{Interest} + \text{Principal}$. Interest $= i \times \text{Remaining debt}$. As debt falls, interest falls. Since $C$ is constant, Principal $= C - \text{Interest}$ must rise.
+- Contract B is worth more, because its last payment arrives later.
+- **Contract A is worth exactly 1.06 times Contract B, because every payment arrives one year earlier.**
+- Both are worth the same, because both pay a total of €5,000.
 :::
+
+## Method: Four Formulas and One Procedure
+
+### Present Value of an Annuity: The PVIFA
+
+The present value of an ordinary annuity is the sum of $n$ discounted payments:
+
+$$PV = \frac{C}{(1+i)^1} + \frac{C}{(1+i)^2} + \dots + \frac{C}{(1+i)^n} = C \cdot \sum_{t=1}^{n} (1+i)^{-t}$$
+
+Because $C$ is the same in every period, it can be pulled out of the sum. What remains — the sum of $n$ discount factors — depends only on $i$ and $n$. It is called the **present value interest factor of an annuity**, **PVIFA** (dt. *Rentenbarwertfaktor*), and it has a closed form:
+
+$$PV = C \cdot PVIFA(i,\,n) \qquad \text{with} \qquad PVIFA(i,\,n) = \frac{(1+i)^n - 1}{i \cdot (1+i)^n}$$ {#eq-pvifa}
+
+Here $PV$ is the value at $t = 0$, $C$ the payment at the end of each period, $i$ the interest rate per period and $n$ the number of payments. The PVIFA answers a concrete question: *how much must I hold today to fund €1 at the end of each of the next $n$ periods?*
+
+**Example:** €1,000 at the end of each year for five years at $i = 6\%$. The brute-force route from Chapter 1 and the factor route must agree:
+
+| $t$ | Payment (€) | Discount factor $(1.06)^{-t}$ | Present value (€) |
+|:---:|------------:|------------------------------:|------------------:|
+| 1 | 1,000 | 0.9434 | 943.40 |
+| 2 | 1,000 | 0.8900 | 890.00 |
+| 3 | 1,000 | 0.8396 | 839.62 |
+| 4 | 1,000 | 0.7921 | 792.09 |
+| 5 | 1,000 | 0.7473 | 747.26 |
+| **Sum** | **5,000** | **4.2124** | **4,212.36** |
+
+*The rounded present values add up to €4,212.37; the exact total is €4,212.36.*
+
+$$PVIFA(6\%,\,5) = \frac{1.06^5 - 1}{0.06 \cdot 1.06^5} = \frac{0.338226}{0.080294} = 4.2124 \qquad PV = 1{,}000 \cdot 4.2124 = 4{,}212.36$$
+
+The PVIFA is literally the sum of the discount-factor column. Five payments of €1,000 are worth €4,212.36 today — the "missing" €787.64 is the price of waiting. The Formula Collection tabulates the PVIFA for common rates and terms, so in an exam you look it up rather than compute it.
+
+::: {.details}
+#### Deep Dive: From the Sum to the Shortcut
+Where does the closed form come from? Write the sum once, then multiply it by $(1+i)$, which shifts every payment one period to the right:
+
+$$PV = \frac{C}{1+i} + \frac{C}{(1+i)^2} + \dots + \frac{C}{(1+i)^n} \qquad PV \cdot (1+i) = C + \frac{C}{1+i} + \dots + \frac{C}{(1+i)^{n-1}}$$
+
+Subtract the first line from the second. All terms except the first of the second line and the last of the first line cancel:
+
+$$PV \cdot (1+i) - PV = C - \frac{C}{(1+i)^n} \quad \Longrightarrow \quad PV = C \cdot \frac{1 - (1+i)^{-n}}{i} = C \cdot \frac{(1+i)^n - 1}{i \cdot (1+i)^n}$$
+
+The middle expression shows what happens as $n$ grows. For $i > 0$, the term $(1+i)^{-n}$ shrinks toward zero, so the PVIFA approaches $1/i$ and the annuity becomes a perpetuity with $PV = C/i$. The perpetuity formula is not a separate invention; it is the PVIFA with the end of the timeline removed.
+:::
+
+For an **annuity due**, every payment arrives one period earlier, so the whole value is compounded by one period:
+
+$$PV_{\text{due}} = C \cdot PVIFA(i,\,n) \cdot (1+i)$$ {#eq-pv-due}
+
+In the example: $PV_{\text{due}} = 4{,}212.36 \cdot 1.06 = 4{,}465.11$. Paying in advance makes the same five payments worth €252.74 more — exactly 6% of €4,212.36. A useful cross-check: an annuity due consists of one undiscounted payment today plus an ordinary annuity of $n-1$ payments, $1{,}000 + 1{,}000 \cdot PVIFA(6\%,\,4) = 1{,}000 + 3{,}465.11 = 4{,}465.11$.
+
+### Future Value of an Annuity
+
+Sometimes the question points the other way: *how much will I have accumulated at the end?* A savings plan, a reserve built up for replacing a machine or a pension contribution all ask for the value at $t = n$. Chapter 1 already supplies the tool. Once the whole stream is condensed into $PV$ at $t = 0$, compound it forward over $n$ periods:
+
+$$FV = C \cdot PVIFA(i,\,n) \cdot (1+i)^n = C \cdot \frac{(1+i)^n - 1}{i}$$ {#eq-fv-annuity}
+
+$FV$ is the value at $t = n$, immediately after the last payment of an ordinary annuity. **Example:** €1,000 saved at the end of each year for five years at 6% grows to
+
+$$FV = 1{,}000 \cdot \frac{1.06^5 - 1}{0.06} = 1{,}000 \cdot 5.6371 = 5{,}637.09$$
+
+The same result follows by compounding every payment separately: the first deposit (at $t = 1$) earns interest for four years and grows to €1,262.48, the second to €1,191.02, the third to €1,123.60, the fourth to €1,060.00, and the last one, paid at $t = 5$, earns nothing. Of the €5,637.09, €5,000 are your own deposits and €637.09 are interest — including interest on interest.
+
+For an annuity due, each deposit earns one extra period of interest: $FV_{\text{due}} = FV \cdot (1+i) = 5{,}637.09 \cdot 1.06 = 5{,}975.32$.
+
+Notice the direction. The future value of an annuity is nothing more than its present value moved to the right along the timeline. You never need a separate mental model for "future value of a stream": condense first, then travel.
+
+### The Capital Recovery Factor: From Lump Sum to Payment
+
+The most frequent question in practice is the reverse of the PVIFA. You know the lump sum today — a loan amount, a purchase price, a retirement capital — and you want to know which equal payment over $n$ periods is equivalent to it. Solve @eq-pvifa for $C$:
+
+$$C = PV \cdot CRF(i,\,n) \qquad \text{with} \qquad CRF(i,\,n) = \frac{i \cdot (1+i)^n}{(1+i)^n - 1} = \frac{1}{PVIFA(i,\,n)}$$ {#eq-crf}
+
+The **Capital Recovery Factor**, **CRF** (dt. *Annuitätenfaktor*), is simply the reciprocal of the PVIFA. Its name says what it does: it tells you how much must flow back each period so that the capital is fully *recovered* by the end of period $n$, together with interest at rate $i$ on whatever is still outstanding.
+
+**Example — a loan:** A workshop borrows €60,000 at 4% p.a., to be repaid in ten equal annual instalments at the end of each year.
+
+$$C = 60{,}000 \cdot CRF(4\%,\,10) = 60{,}000 \cdot \frac{0.04 \cdot 1.04^{10}}{1.04^{10} - 1} = 60{,}000 \cdot 0.123291 = 7{,}397.46$$
+
+Each year the borrower pays €7,397.46. In the first year, interest on the full €60,000 is €2,400, so €4,997.46 of the instalment reduces the debt. Because the debt shrinks, next year's interest is smaller and more of the same instalment goes into repayment. Over ten years the borrower pays €73,974.57 in total, of which €13,974.57 is interest. How exactly the instalment splits into interest and principal year by year — the repayment schedule — and how this loan compares with other loan types is the subject of Chapter 3.
+
+**Example — an investment:** The same factor works for any investment that ties up capital. A machine costs €120,000, lasts six years and is financed with capital that could otherwise earn 8%. Which annual surplus must the machine generate just to give the capital back *with* its 8% return?
+
+$$C = 120{,}000 \cdot CRF(8\%,\,6) = 120{,}000 \cdot 0.216315 = 25{,}957.85$$
+
+Straight-line thinking would say €20,000 per year ($120{,}000 / 6$). That figure recovers the capital but forgets that the capital has a price. The extra €5,957.85 per year is the interest on the money tied up in the machine. Chapter 6 builds an entire appraisal method on this idea.
+
+::: {.flip-card}
+#### Capital Recovery Factor (CRF)
+The factor that converts a present amount into $n$ equal end-of-period payments at interest rate $i$: $C = PV \cdot CRF(i,\,n)$. It is the reciprocal of the PVIFA. Each payment covers interest on the outstanding capital plus a share of the capital itself, so the CRF is always larger than $1/n$ (for $i > 0$) and larger than $i$; it rises with the interest rate and falls with the term, approaching $i$ as $n$ becomes very long.
+:::
+
+The last property of the flip-card connects the CRF to perpetuities. As the term lengthens, the capital share of each payment becomes tiny and the CRF approaches the pure interest rate: $CRF(4\%,\,10) = 0.1233$, $CRF(4\%,\,50) = 0.0466$, $CRF(4\%,\,100) = 0.0408$. In the limit, the payment is pure interest and nothing is ever repaid — which is exactly the 1648 bond.
+
+### Perpetuities and Growing Perpetuities
+
+Let $n \to \infty$ in @eq-pvifa. The term $(1+i)^{-n}$ disappears and the PVIFA collapses to $1/i$:
+
+$$PV = \frac{C}{i}$$ {#eq-perpetuity}
+
+The formula requires $i > 0$, and — like the ordinary annuity — it assumes the first payment arrives at $t = 1$. **Example:** The 1648 water bond today pays about €11.35 a year. An investor who requires 3% would value the stream at
+
+$$PV = \frac{11.35}{0.03} = 378.33$$
+
+or about €378 — a modest price for a promise that never ends, and one that ignores the document's far higher value as a museum piece. The payments after year 100 contribute less than 6% of this value.
+
+For a **growing perpetuity**, the first payment $C_1$ arrives at $t = 1$ and each later payment grows by the constant rate $g$ per period, so the payment at $t$ is $C_1 \cdot (1+g)^{t-1}$. Provided that $g < i$, the present value is:
+
+$$PV = \frac{C_1}{i - g} \qquad (g < i)$$ {#eq-growing-perpetuity}
+
+Three warnings come with this formula, and each one is a classic exam trap.
+
+First, $C_1$ is the payment **one period from now**, not today's payment. If you are told that a stream pays €48,000 today and will grow by 2%, the numerator is $48{,}000 \cdot 1.02 = 48{,}960$.
+
+Second, **the condition $g < i$ is mandatory.** The ratio of two successive present values is $(1+g)/(1+i)$. If $g < i$, that ratio is below 1 and the present values shrink, so their sum converges. If $g = i$, every payment has the same present value, $C_1/(1+i)$, and infinitely many of them add up to infinity. If $g > i$, the present values even grow. In both cases the formula returns zero or a negative denominator — not because the stream is worthless, but because the formula no longer applies. A negative "value" from @eq-growing-perpetuity is a signal that the assumptions are wrong, not a result.
+
+Third, $i$ and $g$ must be measured **consistently**: both nominal or both real. Combining a nominal discount rate with a real growth rate (which excludes inflation) makes the denominator too large and understates the value; combining a real discount rate with nominal growth does the opposite.
+
+**Example:** An infrastructure concession — say, the right to collect tolls on a bridge — is expected to pay €50,000 next year and to grow steadily thereafter. The investor requires $i = 7\%$. How does the value depend on the growth assumption?
+
+| Growth rate $g$ | Denominator $i - g$ | Present value (€) |
+|:---------------:|:-------------------:|------------------:|
+| 0% | 0.07 | 714,285.71 |
+| 2% | 0.05 | 1,000,000.00 |
+| 4% | 0.03 | 1,666,666.67 |
+| 6% | 0.01 | 5,000,000.00 |
+| 7% | 0 | not defined |
+
+Raising the growth assumption from 4% to 6% triples the value. As $g$ approaches $i$, the denominator shrinks toward zero and the valuation becomes hypersensitive to a single, hard-to-verify number. This is why analysts who value whole companies treat the growth rate in this formula with deep suspicion — a point Chapter 3 picks up when it applies the growing perpetuity to shares.
+
+<!-- Widget idea: "The race between g and i" — slider for g and i, bars of discounted payments for t = 1…100 and the running sum; shows convergence for g < i and divergence for g ≥ i. -->
+
+### The Procedure: Five Steps for Any Payment Stream
+
+All four formulas rest on the same timeline logic. A reliable procedure avoids most errors:
+
+1. **Draw the timeline.** Mark $t = 0$ and place every payment at its date. This one step prevents the most common mistake: treating an annuity due as an ordinary annuity.
+2. **Identify the pattern.** Equal payments, finite number → annuity. Equal payments, no end → perpetuity. Payments growing at a constant rate, no end → growing perpetuity.
+3. **Align rate and period.** The interest rate must refer to the same period as the payments (see the Deep Dive below).
+4. **Choose the direction.** Stream → value today: PVIFA. Stream → value at the end: future value of the annuity. Value today → stream: CRF.
+5. **Check the date of the result.** The present-value formulas for ordinary annuities and (growing) perpetuities deliver a value one period *before* the first payment; the future-value formula delivers it at the date of the *last* payment. If the first payment comes earlier or later than assumed, move the result along the timeline with $(1+i)$ or $(1+i)^{-1}$ per period, exactly as in Chapter 1.
+
+| Pattern | First payment at | Formula | Value refers to |
+|:--------|:----------------:|:--------|:---------------:|
+| Ordinary annuity | $t = 1$ | $PV = C \cdot PVIFA(i,\,n)$ | $t = 0$ |
+| Annuity due | $t = 0$ | $PV = C \cdot PVIFA(i,\,n) \cdot (1+i)$ | $t = 0$ |
+| Future value, ordinary annuity | $t = 1$ | $FV = C \cdot \frac{(1+i)^n - 1}{i}$ | $t = n$ |
+| Payment from a lump sum | $t = 1$ | $C = PV \cdot CRF(i,\,n)$ | lump sum at $t = 0$ |
+| Perpetuity | $t = 1$ | $PV = C / i$ | $t = 0$ |
+| Growing perpetuity | $t = 1$ | $PV = C_1 / (i - g)$, $g < i$ | $t = 0$ |
+
+Step 5 deserves an example. A perpetuity of €1,000 whose first payment arrives at $t = 4$ is worth $1{,}000 / i$ at $t = 3$ — one period before its first payment. To bring that value to today, discount it three periods: $PV_0 = (1{,}000 / i) \cdot (1+i)^{-3}$. Annuity formulas and Chapter 1's discounting are not alternatives; they are used in sequence.
+
+::: {.details}
+#### Deep Dive: Monthly Payments
+Rents, salaries and consumer loans are paid monthly, but interest rates are quoted per year. The annuity formulas work for any period length, provided rate and period match. With a nominal annual rate $i_{nom}$ and $m$ payments per year, use the relative rate $i_{rel} = i_{nom} / m$ from Chapter 1 and count $n \cdot m$ periods. **Example:** a two-year lease of €1,200 per month at a nominal 6% p.a. gives $i_{rel} = 0.5\%$ and $24$ periods: $PV = 1{,}200 \cdot PVIFA(0.5\%,\,24) = 1{,}200 \cdot 22.5629 = 27{,}075.44$ for payments at the end of each month, and $27{,}075.44 \cdot 1.005 = 27{,}210.82$ if, as usual for leases, each month is paid in advance. Treating the contract as two annual payments of €14,400 at the end of each year would give only €26,400.85 — it ignores that monthly payments arrive earlier. The PVIFA table in the Formula Collection covers annual rates only, so monthly factors must be computed with @eq-pvifa.
+:::
+
+## Practice: Valuing Real Payment Streams
+
+The two cases below use every tool of the Method section. The first compares two payment streams that look alike but differ in timing; the second asks what it costs to promise a payment forever.
 
 ::: {.case-study}
-#### Practice: Annuity Loan — € 10,000 at 5 % over 5 Years
+#### Case: Jonas Becker's 3D Printer — Lease or Loan?
 
-A company borrows **€ 10,000** at **5% p.a.** and repays in equal annual instalments over **5 years**.
+Jonas Becker, a recent engineering graduate, is setting up a small prototyping workshop in Schweinfurt. He needs an industrial 3D printer with a price of **€48,000**. The printer will be technically obsolete after five years and cannot be sold at the end (no residual value). Two offers are on the table:
 
-**Step 1 — Calculate the annuity:**
-$$C = 10{,}000 \cdot CRF(5\%,\,5) = 10{,}000 \times 0.23097 = \mathbf{2{,}309.70 \text{ EUR p.a.}}$$
+- **Lease:** five annual payments of **€11,000**, each due at the **start** of the year; the first payment is due when the contract is signed.
+- **Loan:** Jonas buys the printer with a bank loan of **€48,000** at **6% p.a.**, repaid in five equal instalments at the **end** of each year.
 
-**Step 2 — Build the first three years of the schedule:**
+Jonas's own money could also earn 6%, so he uses $i = 6\%$ to compare the offers. Maintenance and taxes are identical under both offers and can be ignored.
 
-| Year   | Annuity (€) | Interest (€) | Principal (€) | Remaining Balance (€) |
-|:------:|------------:|-------------:|--------------:|----------------------:|
-| Year 1 | 2,309.70    | 500.00       | 1,809.70      | 8,190.30              |
-| Year 2 | 2,309.70    | 409.52       | 1,900.18      | 6,290.12              |
-| Year 3 | 2,309.70    | 314.51       | 1,995.19      | 4,294.93              |
+**Tasks:**
 
-**Check Year 1:** Interest = 10,000 × 5% = 500.00 ✓ · Principal = 2,309.70 − 500.00 = 1,809.70 ✓
+1. Place both payment streams on a timeline.
+2. Calculate the annual loan instalment.
+3. Calculate the present value of the lease payments and decide which offer is cheaper.
+4. Jonas notices that the lease instalment (€11,000) is lower than the loan instalment. Explain why the lease is nevertheless the more expensive offer, and calculate the lease payment at which Jonas would be indifferent.
+
+::: {.solution}
+**Solution:**
+
+**1. Timeline** (payments in €):
+
+| $t$ | 0 | 1 | 2 | 3 | 4 | 5 |
+|:----|:-:|:-:|:-:|:-:|:-:|:-:|
+| Lease (annuity due) | 11,000 | 11,000 | 11,000 | 11,000 | 11,000 | — |
+| Loan (ordinary annuity) | — | $C$ | $C$ | $C$ | $C$ | $C$ |
+
+**2. Loan instalment** — a lump sum today converted into five equal end-of-year payments (@eq-crf):
+
+$$C = 48{,}000 \cdot CRF(6\%,\,5) = 48{,}000 \cdot 0.237396 = 11{,}395.03$$
+
+(With the rounded table value 0.2374 you obtain €11,395.20.) Discounted at the loan rate of 6%, the five instalments are worth exactly €48,000 today — the loan's present value equals the price of the printer.
+
+**3. Present value of the lease** — an annuity due (@eq-pv-due):
+
+$$PV_{\text{lease}} = 11{,}000 \cdot PVIFA(6\%,\,5) \cdot 1.06 = 11{,}000 \cdot 4.212364 \cdot 1.06 = 49{,}116.16$$
+
+(With the table value 4.2124: €49,116.58.) The lease costs €49,116.16 in today's money, the loan €48,000. **Jonas should take the loan**; the lease is €1,116.16 more expensive in present-value terms.
+
+**4. Why the lower instalment is more expensive:** each lease payment arrives one year earlier than the corresponding loan payment. Paying €11,000 at the start of a year is equivalent to paying $11{,}000 \cdot 1.06 = 11{,}660$ at its end — more than the loan's €11,395.03. Comparing the two nominal amounts ignores timing, exactly the mistake Chapter 1 warned against. Jonas would be indifferent at the lease payment whose present value equals €48,000:
+
+$$C_{\text{lease}} = \frac{48{,}000}{PVIFA(6\%,\,5) \cdot 1.06} = \frac{48{,}000}{4.465106} = 10{,}750.03$$
+
+Any lease offer below about €10,750 per year in advance would beat the loan.
+:::
 :::
 
-Chapter 3 will examine the full spectrum of loan structures — the constant-amortization loan, the bullet loan, and supplier credit — and then flip to the investor's side with bonds and stocks. It will show how each is a strategic variant of the annuity mechanics developed here.
+The second case moves from a finite stream to one that never ends — and shows how sensitive the price of "forever" is to a growth assumption.
+
+::: {.case-study}
+#### Case: The Weber Scholarship — Paying Forever
+
+Ingrid Weber, a retired engineer, wants to set up a foundation that awards an annual scholarship of **€12,000** to a first-year engineering student. The first scholarship is to be paid **one year from now**. The foundation can invest its capital safely at **4% p.a.**
+
+**Tasks:**
+
+1. How much capital must the foundation hold today if the scholarship stays at €12,000 forever?
+2. Ingrid wants the scholarship to keep its purchasing power and to grow with an expected inflation rate of **2% p.a.** How much capital is needed now?
+3. A board member suggests limiting the constant scholarship to **25 years**. How much capital would that require, and what share of the perpetuity value from Task 1 is this?
+4. Ingrid cannot pay the amount from Task 2 at once. She plans to build it up with **ten equal contributions** at the end of each of the next ten years, invested at 4%, so that the fund holds the required €600,000 at $t = 10$ (the scholarships would then start at $t = 11$). How large must each contribution be?
+
+::: {.solution}
+**Solution:**
+
+**1. Constant perpetuity** (@eq-perpetuity), first payment at $t = 1$:
+
+$$PV = \frac{12{,}000}{0.04} = 300{,}000$$
+
+The foundation needs **€300,000**. Check: 4% interest on €300,000 is exactly €12,000 per year, so the capital is never touched.
+
+**2. Growing perpetuity** (@eq-growing-perpetuity) with $C_1 = 12{,}000$, $g = 2\% < i = 4\%$:
+
+$$PV = \frac{12{,}000}{0.04 - 0.02} = \frac{12{,}000}{0.02} = 600{,}000$$
+
+Protecting the scholarship against 2% inflation **doubles** the required capital to **€600,000**. The denominator falls from 0.04 to 0.02, so the value doubles — a vivid illustration of how strongly the formula reacts to $g$.
+
+**3. Finite annuity of 25 years** (@eq-pvifa):
+
+$$PV = 12{,}000 \cdot PVIFA(4\%,\,25) = 12{,}000 \cdot 15.6221 = 187{,}464.96$$
+
+(With the table value 15.6221: €187,465.20.) This is $187{,}464.96 / 300{,}000 = 62.5\%$ of the perpetuity value. The first 25 payments account for almost two thirds of the value of an endless stream; all payments from year 26 to infinity together contribute only the remaining 37.5%.
+
+**4. Saving plan** — a future value of an ordinary annuity (@eq-fv-annuity) set equal to the target:
+
+$$600{,}000 = C \cdot \frac{1.04^{10} - 1}{0.04} = C \cdot 12.006107 \quad \Longrightarrow \quad C = \frac{600{,}000}{12.006107} = 49{,}974.57$$
+
+Alternative route: discount the target to today, $600{,}000 \cdot 1.04^{-10} = 405{,}338.50$, and convert it into ten payments with the CRF: $405{,}338.50 \cdot CRF(4\%,\,10) = 405{,}338.50 \cdot 0.123291 = 49{,}974.57$. Both routes agree. Ingrid must contribute **€49,974.57 per year**, €499,745.67 in total; interest supplies the remaining €100,254.33.
+:::
+:::
+
+::: {.quick-check}
+Suppose the Weber scholarship of €12,000 were paid at the *start* of each year instead, with the first award today and no growth (i = 4%). How much capital would the foundation need today?
+
+- €300,000, because the formula C/i does not depend on the timing of the payments.
+- **€312,000, because today's payment is added to the perpetuity value of €300,000 for the payments from t = 1 onwards.**
+- €288,461.54, because paying earlier means discounting by one more period.
+:::
+
+## Conclusion: The Shape of Money
+
+The water board of 1648 never needed a formula. It needed trust, a goatskin and three and a half centuries of keeping its word. But anyone who wants to *price* such a promise — or a lease, a loan, a pension or a scholarship — needs the geometry of this chapter. Equal payments at equal intervals form a shape on the timeline, and that shape has a value that one factor can capture: the PVIFA when the stream is turned into a lump sum, the CRF when a lump sum is turned into a stream, $1/i$ when the stream never ends, and $1/(i - g)$ when it grows — but only while growth stays below the interest rate. Behind all of them stands one question that decides more exam points and more real money than any formula: *when does the first payment arrive?*
+
+For an integrated exercise, Envelope 2 of the Hartmann case applies the PVIFA, the CRF and the perpetuity to a single property decision.
+
+::: {.quick-check}
+A company wants to lower the annual instalment on a new loan of a given amount. Which change achieves this?
+
+- Raising the interest rate from 4% to 6%, because a higher rate spreads the capital more evenly.
+- **Extending the term from 10 to 15 years, because the CRF falls when the capital is spread over more payments.**
+- Shortening the term from 10 to 8 years, because fewer payments mean less interest in total.
+:::
+
+::: {.quick-check}
+A stream pays €100 next year and is expected to grow by 5% per year forever. The discount rate is 4%. What is its present value?
+
+- −€10,000, because 100 / (0.04 − 0.05) = −10,000.
+- €10,000, because the formula should use the absolute difference between i and g.
+- **No finite value exists: with g ≥ i the present values of distant payments do not shrink, so the formula does not apply.**
+:::
+
+::: {.quick-check}
+At an interest rate of 8%, what fraction of the value of a perpetuity does a 10-year annuity with the same annual payment capture?
+
+- About 10%, because it covers only 10 of infinitely many payments.
+- **About 54%, because PVIFA(8%, 10) = 6.7101 compared with 1/0.08 = 12.5.**
+- About 90%, because payments after year 10 are worth almost nothing.
+:::
+
+Chapter 3 puts these tools to work on both sides of a contract: on the borrower's side, where the CRF instalment is split year by year into interest and repayment and compared with other loan types, and on the investor's side, where a bond turns out to be an annuity plus a final payment and a share a growing perpetuity.

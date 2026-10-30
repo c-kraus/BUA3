@@ -1,0 +1,244 @@
+---
+title: "Tutorial 09: Risk and Uncertainty"
+subtitle: "Expected NPV · sensitivity analysis · scenarios · break-even values · risk-adjusted discount rate"
+lang: en
+author:
+  - name: Prof. Dr. Christian Kraus
+    email: christian.kraus@thws.de
+    role: Lecturer
+    affiliation: THWS Business & Engineering
+course: "Investment Decisions (BUA3)"
+semester: "WS 2026/27"
+sheet: "09"
+date: last-modified
+show_solutions: false
+format: tutorial-typst
+---
+
+# Tutorial 09: Risk and Uncertainty
+
+## Exercise 1: Expected Value and Expected NPV
+
+The landlord of the pub *Specht* wants to turn his car park into a beer garden for **€120,000**. The garden will run for **4 summers** with no residual value; his discount rate is **8%**. Unfortunately, his annual net cash flow depends on something no business plan controls: the weather. Each summer is independent of the others.
+
+| Summer | Probability | Net cash flow (€ p.a.) |
+|---|---:|---:|
+| Sunny | 0.3 | 50,000 |
+| Average | 0.5 | 38,000 |
+| Rainy | 0.2 | 15,000 |
+
+#### Task 1: Expected cash flow and expected NPV
+
+Calculate the expected annual cash flow and the expected NPV of the beer garden. Show the cash flows on a timeline. Should the landlord invest?
+
+::: {.content-visible when-meta="show_solutions"}
+**Solution:**
+
+Given: $I_0 = 120{,}000$; $i = 8\%$; $n = 4$; $L_4 = 0$.
+
+$$E(CF_t) = 0.3 \cdot 50{,}000 + 0.5 \cdot 38{,}000 + 0.2 \cdot 15{,}000 = 15{,}000 + 19{,}000 + 3{,}000 = 37{,}000$$
+
+Timeline (discounting runs ←):
+
+| $t$ | 0 | 1 | 2 | 3 | 4 |
+|---|---:|---:|---:|---:|---:|
+| $E(CF_t)$ (€) | −120,000 | 37,000 | 37,000 | 37,000 | 37,000 |
+| Discount factor $(1.08)^{-t}$ | 1.0000 | 0.9259 | 0.8573 | 0.7938 | 0.7350 |
+| Present value (€) | −120,000 | 34,259 | 31,722 | 29,372 | 27,196 |
+
+$$E(C_0) = -120{,}000 + 37{,}000 \cdot PVIFA(8\%,\,4) = -120{,}000 + 37{,}000 \cdot 3.312127 = 2{,}549$$
+
+The expected NPV is **€2,549 > 0**: by the expected-value rule the beer garden is (just) worthwhile.
+
+**Grading Notes:** Accept €2,549 ± 5 (rounding of the PVIFA; the table factor 3.3121 gives €2,548).
+:::
+
+#### Task 2: Best and worst case
+
+Calculate the NPV if all four summers are sunny, and if all four summers are rainy. Interpret the range.
+
+::: {.content-visible when-meta="show_solutions"}
+**Solution:**
+
+$$C_0(\text{sunny}) = -120{,}000 + 50{,}000 \cdot 3.312127 = 45{,}606$$
+
+$$C_0(\text{rainy}) = -120{,}000 + 15{,}000 \cdot 3.312127 = -70{,}318$$
+
+The NPV ranges from **−€70,318** to **+€45,606**. The expected NPV of €2,549 lies close to zero inside a very wide range: on average the garden barely earns its 8%, and a run of bad summers would destroy more than half the investment. Whether the landlord can live with the worst case matters more here than the small positive expected value.
+:::
+
+#### Task 3: Most likely vs. expected
+
+The landlord's business plan simply assumes an "average summer" every year. Calculate the NPV of this plan, compare it with the expected NPV, and explain the difference. By how much may the expected annual cash flow fall before the expected NPV turns negative?
+
+::: {.content-visible when-meta="show_solutions"}
+**Solution:**
+
+$$C_0(\text{average}) = -120{,}000 + 38{,}000 \cdot 3.312127 = 5{,}861$$
+
+The plan shows €5,861, more than twice the expected NPV of €2,549. The difference, $(38{,}000 - 37{,}000) \cdot 3.312127 = 3{,}312$, arises because the "average summer" is the **most likely** outcome, not the **expected** one: the rainy summer lies much further below it (−€23,000) than the sunny summer lies above it (+€12,000), so the probability-weighted average is lower.
+
+Break-even cash flow: $120{,}000 / 3.312127 = 36{,}230$. The expected cash flow may fall by only $37{,}000 - 36{,}230 = 770$ per year, i.e. **about 2.1%**, before the expected NPV becomes negative.
+:::
+
+## Exercise 2: Sensitivity, Break-Even and Scenarios
+
+Bohnenkraft GmbH plans a network of self-service coffee machines in the campus buildings. Students, it is assumed, will keep drinking coffee whatever the interest rate.
+
+| Input | Base value |
+|---|---|
+| Initial investment $I_0$ | €60,000 |
+| Useful life, residual value | 5 years, €0 |
+| Cups sold per year $x$ | 40,000 |
+| Price per cup $P$ | €2.00 |
+| Variable cost per cup $v$ (beans, milk, cup) | €0.80 |
+| Fixed cash costs $FC$ (rent, cleaning, maintenance) | €28,000 p.a. |
+| Discount rate $i$ | 8% |
+
+The annual net cash flow is $CF_t = x \cdot (P - v) - FC$.
+
+#### Task 1: Base-case NPV
+
+Calculate the annual cash flow and the NPV of the base case. Show the cash flows on a timeline.
+
+::: {.content-visible when-meta="show_solutions"}
+**Solution:**
+
+$$CF_t = 40{,}000 \cdot (2.00 - 0.80) - 28{,}000 = 48{,}000 - 28{,}000 = 20{,}000$$
+
+| $t$ | 0 | 1 | 2 | 3 | 4 | 5 |
+|---|---:|---:|---:|---:|---:|---:|
+| $CF_t$ (€) | −60,000 | 20,000 | 20,000 | 20,000 | 20,000 | 20,000 |
+| Discount factor $(1.08)^{-t}$ | 1.0000 | 0.9259 | 0.8573 | 0.7938 | 0.7350 | 0.6806 |
+| Present value (€) | −60,000 | 18,519 | 17,147 | 15,877 | 14,701 | 13,612 |
+
+$$C_0 = -60{,}000 + 20{,}000 \cdot PVIFA(8\%,\,5) = -60{,}000 + 20{,}000 \cdot 3.992710 = 19{,}854$$
+
+The base-case NPV is **€19,854**. (The rounded present values in the table add up to €79,856; the difference of €2 is rounding.)
+:::
+
+#### Task 2: Sensitivity analysis
+
+Change each of the four operating inputs ($P$, $x$, $v$, $FC$) by **10% in the unfavourable direction**, one at a time, and calculate the new NPV. Rank the inputs in a tornado table and name the critical variable.
+
+::: {.content-visible when-meta="show_solutions"}
+**Solution:**
+
+Each change shifts every annual cash flow by $\Delta CF$, so $\Delta C_0 = \Delta CF \cdot 3.992710$.
+
+| Rank | Input | Adverse value | $\Delta CF_t$ (€ p.a.) | $C_0$ (€) | $\Delta C_0$ (€) |
+|---:|---|---:|---:|---:|---:|
+| 1 | Price $P$ | €1.80 | $-0.20 \cdot 40{,}000 = -8{,}000$ | −12,087 | −31,942 |
+| 2 | Volume $x$ | 36,000 cups | $-4{,}000 \cdot 1.20 = -4{,}800$ | 689 | −19,165 |
+| 3 | Variable cost $v$ | €0.88 | $-0.08 \cdot 40{,}000 = -3{,}200$ | 7,078 | −12,777 |
+| 4 | Fixed cash costs $FC$ | €30,800 | $-2{,}800$ | 8,675 | −11,180 |
+
+The **price** is the critical variable: a 10% price cut alone makes the NPV negative. It acts on the whole revenue (€80,000 p.a.), whereas volume acts only on the contribution margin (€48,000 p.a.), because every cup not sold also saves its variable cost.
+
+**Grading Notes:** The ranking matters more than the last euro. A common error is to change volume by 10% of revenue (−€8,000) instead of 10% of the contribution margin (−€4,800).
+:::
+
+#### Task 3: Break-even values
+
+Calculate the break-even number of cups and the break-even price, each with all other inputs at their base values, and state the margin of safety in per cent.
+
+::: {.content-visible when-meta="show_solutions"}
+**Solution:**
+
+Required annual cash flow for $C_0 = 0$: $60{,}000 / 3.992710 = 15{,}027$. Adding fixed costs, the required total contribution margin is $15{,}027 + 28{,}000 = 43{,}027$.
+
+$$x^* = \frac{43{,}027}{2.00 - 0.80} = 35{,}856 \text{ cups} \qquad \text{margin of safety} = \frac{40{,}000 - 35{,}856}{40{,}000} \approx 10.4\%$$
+
+$$P^* = 0.80 + \frac{43{,}027}{40{,}000} = 1.8757 \approx 1.88 \qquad \text{margin of safety} = \frac{2.00 - 1.8757}{2.00} \approx 6.2\%$$
+
+Sales may fall to about **35,856 cups** (−10.4%) or the price to about **€1.88** (−6.2%) before the project stops earning its 8%. The smaller margin of safety confirms the price as the critical variable.
+:::
+
+#### Task 4: Scenario analysis
+
+The managing director defines two scenarios. **Worst case:** a competitor opens a café in the library, so only 34,000 cups are sold at €1.90, and milk prices raise the variable cost to €0.85; fixed costs stay at €28,000. **Best case:** 46,000 cups at €2.00, bulk purchasing lowers the variable cost to €0.75, and a cheaper cleaning contract cuts fixed costs to €26,000. Calculate the NPV of both scenarios and the NPV range.
+
+::: {.content-visible when-meta="show_solutions"}
+**Solution:**
+
+Worst case: $CF_t = 34{,}000 \cdot (1.90 - 0.85) - 28{,}000 = 35{,}700 - 28{,}000 = 7{,}700$
+
+$$C_0(\text{worst}) = -60{,}000 + 7{,}700 \cdot 3.992710 = -29{,}256$$
+
+Best case: $CF_t = 46{,}000 \cdot (2.00 - 0.75) - 26{,}000 = 57{,}500 - 26{,}000 = 31{,}500$
+
+$$C_0(\text{best}) = -60{,}000 + 31{,}500 \cdot 3.992710 = 65{,}770$$
+
+| | Worst case | Base case | Best case |
+|---|---:|---:|---:|
+| $CF_t$ (€ p.a.) | 7,700 | 20,000 | 31,500 |
+| $C_0$ (€) | −29,256 | 19,854 | 65,770 |
+
+The NPV range runs from **−€29,256** to **+€65,770**, a spread of **€95,026**. The worst case combines three adverse changes that hang together (a competitor lowers both volume and price), which is why it is far worse than any single 10% change in Task 2. Without probabilities, the scenarios cannot say how likely the worst case is, only whether Bohnenkraft can survive it.
+:::
+
+## Exercise 3: Risk-Adjusted Rate and Concepts
+
+#### Task 1: Risk-adjusted discount rate
+
+Bohnenkraft normally discounts at 8%. Because a campus location with a single landlord and a competitor down the corridor is riskier than its usual office locations, the bank advises a risk premium of **4 percentage points**.
+
+a) Calculate the NPV of the coffee project (base-case cash flow €20,000 p.a., Exercise 2) at the risk-adjusted rate.
+
+b) The project's IRR is about 19.9%. What is the highest risk premium the project can bear before its NPV turns negative?
+
+::: {.content-visible when-meta="show_solutions"}
+**Solution:**
+
+**a)** $i_{RA} = 8\% + 4\% = 12\%$; $PVIFA(12\%,\,5) = 3.604776$.
+
+$$C_0 = -60{,}000 + 20{,}000 \cdot 3.604776 = 12{,}096$$
+
+The NPV falls from €19,854 to **€12,096**, but stays positive.
+
+**b)** The NPV is zero at a discount rate equal to the IRR, so the break-even discount rate is 19.9%. The highest bearable risk premium is $19.9\% - 8\% \approx$ **11.9 percentage points**.
+:::
+
+#### Task 2: Multiple choice — tools for risky decisions
+
+Which of the following statements are **correct**? (Multiple answers possible.)
+
+a) Under uncertainty in Knight's sense, the possible outcomes can be listed and probabilities assigned to them.
+
+b) Discounting the expected cash flows gives the same result as weighting the NPVs of all states with their probabilities.
+
+c) A sensitivity analysis shows how likely a 10% change in each input is.
+
+d) A scenario combines changes in several inputs into an internally consistent picture of the future.
+
+e) The break-even value of the discount rate is the project's internal rate of return.
+
+f) A constant risk-adjusted discount rate penalises near cash flows more heavily than distant ones.
+
+g) None of the statements is correct.
+
+::: {.content-visible when-meta="show_solutions"}
+**Solution:** Correct are **b)**, **d)** and **e)**.
+
+- **a) Incorrect.** That describes *risk*. Under uncertainty, meaningful probabilities cannot be assigned.
+- **b) Correct.** Discounting and averaging are both linear, so the order does not matter: $E(C_0)$ is the same either way.
+- **c) Incorrect.** Sensitivity analysis shows how strongly the NPV reacts to a change, not how likely the change is.
+- **d) Correct.** That is the defining feature of a scenario, as opposed to a one-at-a-time sensitivity.
+- **e) Correct.** The IRR is the rate at which $C_0 = 0$, i.e. the critical value of the discount rate.
+- **f) Incorrect.** The opposite holds: because the premium compounds, distant cash flows are penalised more.
+- **g) Incorrect**, since b), d) and e) are correct.
+:::
+
+#### Task 3: Transfer — counting risk twice
+
+Bohnenkraft's cautious controller takes the **worst-case** cash flow from Exercise 2 (€7,700 p.a.) and discounts it at the **risk-adjusted rate of 12%**. He reports an NPV of −€32,243 and recommends rejecting the project. Explain what is wrong with his approach and how the analysis should be done instead.
+
+::: {.content-visible when-meta="show_solutions"}
+**Solution:**
+
+The controller counts the same risk twice. The worst-case cash flow already assumes that almost everything goes wrong; the risk premium in the discount rate is meant to compensate for the *possibility* that things go wrong. Combining both penalises the project for a risk it is already being punished for in the cash flows, so good projects get rejected systematically.
+
+The consistent approach is to use the *expected* cash flows (or, without probabilities, the base case as a stand-in) at the risk-adjusted rate, and to show the worst case separately as a scenario, answering the different question "Can we survive it?" Acceptable alternative argument: if management deliberately wants a very conservative check, it may use worst-case cash flows, but then at the normal (not risk-adjusted) rate.
+
+**Grading Notes:** Full marks require the term "double counting" (or equivalent) *and* the correct pairing: expected cash flows with the risk-adjusted rate.
+:::

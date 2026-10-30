@@ -85,8 +85,8 @@
 <div class="card">
     <div class="card-title">Annuity Method — Comparing Projects with Different Lifespans</div>
     <div class="card-sub">
-        Adjust both projects and the cost of capital. The chart shows annual NPV (raw) vs. annual Annuity (normalised).
-        Notice how NPV favours longer projects — the Annuity removes this bias.
+        Adjust both projects and the cost of capital. The chart compares the naive NPV / n with the annual value
+        d = NPV × CRF(i, n); the note at the bottom compares the NPV ranking with the annual-value ranking.
     </div>
 
     <div class="rate-row">
@@ -98,11 +98,11 @@
         <div class="proj-card proj-a">
             <div class="proj-title">Project A (Short)</div>
             <div class="ctrl">
-                <label>Investment I₀ <span class="val" id="a0d">€ 30,000</span></label>
+                <label>Investment I₀ <span class="val" id="a0d">€30,000</span></label>
                 <input type="range" id="a0sl" min="5000" max="200000" step="5000" value="30000">
             </div>
             <div class="ctrl">
-                <label>Annual CF <span class="val" id="acd">€ 14,000</span></label>
+                <label>Annual CF <span class="val" id="acd">€14,000</span></label>
                 <input type="range" id="acsl" min="1000" max="100000" step="1000" value="14000">
             </div>
             <div class="ctrl">
@@ -113,11 +113,11 @@
         <div class="proj-card proj-b">
             <div class="proj-title">Project B (Long)</div>
             <div class="ctrl">
-                <label>Investment I₀ <span class="val" id="b0d">€ 50,000</span></label>
+                <label>Investment I₀ <span class="val" id="b0d">€50,000</span></label>
                 <input type="range" id="b0sl" min="5000" max="200000" step="5000" value="50000">
             </div>
             <div class="ctrl">
-                <label>Annual CF <span class="val" id="bcd">€ 14,000</span></label>
+                <label>Annual CF <span class="val" id="bcd">€14,000</span></label>
                 <input type="range" id="bcsl" min="1000" max="100000" step="1000" value="14000">
             </div>
             <div class="ctrl">
@@ -133,18 +133,18 @@
 
     <div class="results">
         <div class="rbox ra">
-            <div class="rl">Project A — Annuity</div>
+            <div class="rl">Project A — Annual value d</div>
             <div class="rf" id="rfA">NPV_A × CRF(i, nₐ)</div>
             <div class="ra-val" id="raA">—</div>
         </div>
         <div class="rbox rb">
-            <div class="rl">Project B — Annuity</div>
+            <div class="rl">Project B — Annual value d</div>
             <div class="rf" id="rfB">NPV_B × CRF(i, n_b)</div>
             <div class="ra-val" id="raB">—</div>
         </div>
         <div class="rbox vrd">
-            <div class="rl">Verdict</div>
-            <div class="rf">Choose higher annuity</div>
+            <div class="rl">Annual-value verdict</div>
+            <div class="rf">Higher d (assumes identical repeatability)</div>
             <div class="ra-val" id="raVrd">—</div>
         </div>
     </div>
@@ -165,8 +165,8 @@
 
     function fmtE(v, d) {
         d = d===undefined?0:d;
-        var s = Math.abs(v).toLocaleString('de-DE',{minimumFractionDigits:d,maximumFractionDigits:d});
-        return (v<0?'−':'')+'€ '+s;
+        var s = Math.abs(v).toLocaleString('en-GB',{minimumFractionDigits:d,maximumFractionDigits:d});
+        return (v<0?'−':'')+'€'+s;
     }
 
     function npvCalc(I0, CF, n, i) {
@@ -219,20 +219,29 @@
         var vrd = document.getElementById('raVrd');
         var insight = document.getElementById('insightBox');
 
+        var npvTxt = 'NPV: A ' + fmtE(npvA,0) + ', B ' + fmtE(npvB,0) + '. Annual value: A ' + fmtE(annA,0) + '/yr, B ' + fmtE(annB,0) + '/yr. ';
+        var npvWinner = npvA > npvB ? 'A' : 'B';
+        var annWinner = annA > annB ? 'A' : 'B';
         if (Math.abs(annA - annB) < 1) {
             vrd.textContent = 'Tie (≈ equal)';
             vrd.style.color = '#555';
-            insight.textContent = 'Both projects are economically equivalent on an annualised basis.';
-        } else if (annA > annB) {
-            vrd.textContent = 'Project A wins';
-            vrd.style.color = '#1565c0';
-            var npvWinner = npvA > npvB ? 'A' : 'B';
-            insight.textContent = 'NPV favours Project ' + npvWinner + ' (' + fmtE(Math.max(npvA,npvB),0) + '), but the Annuity correctly picks A (' + fmtE(annA,0) + '/yr > ' + fmtE(annB,0) + '/yr) — Project B ties up capital ' + Bn + ' years vs. ' + An + ' years for A.';
+            insight.textContent = npvTxt + 'The annual values are practically equal: under identical repeatability, both chains create the same wealth.';
         } else {
-            vrd.textContent = 'Project B wins';
-            vrd.style.color = '#c43d00';
-            var npvWinner = npvB > npvA ? 'B' : 'A';
-            insight.textContent = 'NPV favours Project ' + npvWinner + ' (' + fmtE(Math.max(npvA,npvB),0) + '), but the Annuity correctly picks B (' + fmtE(annB,0) + '/yr > ' + fmtE(annA,0) + '/yr) — longer commitment earns more per year at this cost of capital.';
+            vrd.textContent = 'Project ' + annWinner + ' (higher d)';
+            vrd.style.color = annWinner === 'A' ? '#1565c0' : '#c43d00';
+            var tail;
+            if (annA <= 0 && annB <= 0) {
+                vrd.textContent = 'Neither (both d ≤ 0)';
+                vrd.style.color = '#555';
+                tail = 'Both annual values are negative: neither project earns its capital service, so neither should be chosen.';
+            } else if (An === Bn) {
+                tail = 'Equal lives: NPV and annual value must give the same ranking (both NPVs are multiplied by the same CRF).';
+            } else if (npvWinner === annWinner) {
+                tail = 'Both methods favour Project ' + annWinner + ': unequal lives can produce a conflict, but need not.';
+            } else {
+                tail = 'Conflict: the direct NPV comparison favours ' + npvWinner + ' (correct if the shorter project is not repeated and freed capital earns only i), the annual value favours ' + annWinner + ' (correct if the shorter project can be repeated on identical terms).';
+            }
+            insight.textContent = npvTxt + tail;
         }
 
         // ── SVG ──────────────────────────────────────────────────────────────
@@ -250,9 +259,9 @@
         // Values to show
         var bars = [
             {label:'NPV/nₐ', sub:'(naive A)', v: An>0?npvA/An:0, col:'#90aed4'},
-            {label:'Annuity A', sub: An+' yrs', v: annA, col:'#1565c0'},
+            {label:'d (A)', sub: An+' yrs', v: annA, col:'#1565c0'},
             {label:'NPV/n_b', sub:'(naive B)', v: Bn>0?npvB/Bn:0, col:'#f5c07a'},
-            {label:'Annuity B', sub: Bn+' yrs', v: annB, col:'#c43d00'}
+            {label:'d (B)', sub: Bn+' yrs', v: annB, col:'#c43d00'}
         ];
 
         var maxV = Math.max.apply(null, bars.map(function(b){return Math.abs(b.v);}));

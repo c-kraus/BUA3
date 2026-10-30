@@ -31,6 +31,20 @@ jobs:
         with:
           to: moodle-html
 
+      - name: Render tutorial PDFs (questions + solutions) into the site
+        run: |
+          set -e
+          mkdir -p _site/tutorials
+          for f in tutorials/tut_*.qmd; do
+            base=$(basename "$f" .qmd)
+            # questions-only sheet
+            quarto render "$f" --to tutorial-typst -M show_solutions:false
+            mv "tutorials/${base}.pdf" "tutorials/${base}_questions.pdf"
+            # full solutions sheet
+            quarto render "$f" --to tutorial-typst -M show_solutions:true
+          done
+          cp tutorials/*.pdf _site/tutorials/
+
       - name: Setup Pages
         uses: actions/configure-pages@v5
 

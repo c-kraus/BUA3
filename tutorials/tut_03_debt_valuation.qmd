@@ -1,0 +1,254 @@
+---
+title: "Tutorial 03: Debt and Valuation"
+subtitle: "Repayment schedules · choosing a loan type · Skonto · bond price and yield · preferred and common stock"
+lang: en
+author:
+  - name: Prof. Dr. Christian Kraus
+    email: christian.kraus@thws.de
+    role: Lecturer
+    affiliation: THWS Business & Engineering
+course: "Investment Decisions (BUA3)"
+semester: "WS 2026/27"
+sheet: "03"
+date: last-modified
+show_solutions: false
+format: tutorial-typst
+---
+
+# Tutorial 03: Debt and Valuation
+
+## Exercise 1: Three Ways to Repay a Bottling Line
+
+Hopfenwerk, a craft brewery in Bamberg, buys a bottling line for €60,000. The brewer would have preferred to pay in beer, but the bank insists on euros: a loan of €60,000 at 4% p.a. over 4 years, offered as an annuity loan, a constant-amortization loan or a bullet loan. All payments are made at the end of each year.
+
+#### Task 1: Repayment schedule of the annuity loan
+
+Compute the annual payment of the annuity loan and build the complete repayment schedule (opening balance, debt service, interest, principal, closing balance). Round interest to the cent and let the final payment absorb any rounding difference.
+
+::: {.content-visible when-meta="show_solutions"}
+**Solution:**
+
+Given: $C_0 = 60{,}000$, $i = 4\%$, $n = 4$.
+
+$$K = C_0 \cdot CRF(4\%,\,4) = 60{,}000 \cdot \frac{0.04 \cdot 1.04^4}{1.04^4 - 1} = 60{,}000 \cdot 0.275490 = 16{,}529.40$$
+
+(With the table value 0.2755: €16,530; accept this rounding.)
+
+| Year | Opening balance (€) | Debt service (€) | Interest (€) | Principal (€) | Closing balance (€) |
+|:----:|-------------------:|----------------:|------------:|-------------:|-------------------:|
+| 1 | 60,000.00 | 16,529.40 | 2,400.00 | 14,129.40 | 45,870.60 |
+| 2 | 45,870.60 | 16,529.40 | 1,834.82 | 14,694.58 | 31,176.02 |
+| 3 | 31,176.02 | 16,529.40 | 1,247.04 | 15,282.36 | 15,893.66 |
+| 4 | 15,893.66 | 16,529.41 | 635.75 | 15,893.66 | 0.00 |
+| **Total** | | **66,117.61** | **6,117.61** | **60,000.00** | |
+
+Each row: $Z_t = R_{t-1} \cdot 0.04$, $T_t = K - Z_t$, $R_t = R_{t-1} - T_t$. The last payment is one cent higher because of rounding.
+
+**Grading Notes:** Results based on the table CRF (±€1 per row) are fine as long as the closing balance in year 4 is (close to) zero.
+:::
+
+#### Task 2: Constant amortization, bullet loan and the cost comparison
+
+a) Build the repayment schedule of the constant-amortization loan and state the payments of the bullet loan.
+
+b) Compare the total interest of all three loans.
+
+c) Show that the payments of the constant-amortization loan, discounted at 4%, are worth exactly €60,000 today. What does this imply for the claim "the loan with the lowest total interest is the cheapest"?
+
+::: {.content-visible when-meta="show_solutions"}
+**Solution:**
+
+**a)** Constant amortization: $T = 60{,}000 / 4 = 15{,}000$ per year; interest falls by $15{,}000 \cdot 0.04 = 600$ each year.
+
+| Year | Opening balance (€) | Debt service (€) | Interest (€) | Principal (€) | Closing balance (€) |
+|:----:|-------------------:|----------------:|------------:|-------------:|-------------------:|
+| 1 | 60,000 | 17,400 | 2,400 | 15,000 | 45,000 |
+| 2 | 45,000 | 16,800 | 1,800 | 15,000 | 30,000 |
+| 3 | 30,000 | 16,200 | 1,200 | 15,000 | 15,000 |
+| 4 | 15,000 | 15,600 | 600 | 15,000 | 0 |
+| **Total** | | **66,000** | **6,000** | **60,000** | |
+
+Bullet loan: $Z_t = 60{,}000 \cdot 0.04 = 2{,}400$ in years 1–3; in year 4: $2{,}400 + 60{,}000 = 62{,}400$.
+
+**b)** Total interest: constant amortization €6,000 < annuity €6,117.61 < bullet $4 \cdot 2{,}400 = $ €9,600.
+
+**c)**
+
+$$\frac{17{,}400}{1.04} + \frac{16{,}800}{1.04^2} + \frac{16{,}200}{1.04^3} + \frac{15{,}600}{1.04^4} = 16{,}730.77 + 15{,}532.54 + 14{,}401.74 + 13{,}334.95 = 60{,}000.00$$
+
+The same holds for the annuity and the bullet loan: at the loan rate, every schedule has a present value equal to the amount borrowed. Every euro still owed costs 4% per year in all three cases. Total interest differs only because the borrower keeps different amounts for different lengths of time, so it is not a measure of cost. The claim is wrong; the choice must follow the cash-flow profile.
+:::
+
+#### Task 3: Transfer — which loan for which borrower?
+
+Recommend one loan type for each borrower and justify it in one sentence each.
+
+a) A property developer builds a block of flats that will be sold on completion in three years; until then the project produces no cash.
+
+b) A taxi company buys new cars that it will replace after four years of heavy use; the cars earn fares from the first day.
+
+c) A landlord buys an office building let on a long-term lease at a fixed rent.
+
+::: {.content-visible when-meta="show_solutions"}
+**Solution:**
+
+a) **Bullet loan:** the principal falls due exactly when the sale proceeds arrive; before that the developer can only afford interest.
+
+b) **Constant-amortization loan** (or an annuity loan over a short term): the cars lose value fast, so the debt should fall at least as fast as their value, and fares are available from day one to carry the high early payments.
+
+c) **Annuity loan:** a constant rent fits a constant payment, which makes planning simple over a long term.
+
+**Grading Notes:** Accept well-argued alternatives (e.g. annuity for b) if the student refers to liquidity in the first years). The justification must refer to the timing of the asset's cash flows or its loss of value, not to total interest.
+:::
+
+## Exercise 2: The Most Expensive Loan Nobody Signed
+
+An engineering office buys a 3D printer for €48,000. The invoice says: "2% cash discount within 10 days, net 40 days." The office has a credit line at its bank at 11% p.a. Use the 360-day convention.
+
+#### Task 1: Effective cost of forgoing the discount
+
+What annual interest rate does the office implicitly pay if it does not take the discount?
+
+::: {.content-visible when-meta="show_solutions"}
+**Solution:**
+
+Given: $s_k = 2$, $t_{\text{discount}} = 10$, $t_{\text{net}} = 40$.
+
+$$r_{\text{eff}} = \frac{s_k}{100 - s_k} \cdot \frac{360}{t_{\text{net}} - t_{\text{discount}}} \cdot 100 = \frac{2}{98} \cdot \frac{360}{30} \cdot 100 = 0.020408 \cdot 12 \cdot 100 = 24.49\%$$
+
+Waiting 30 extra days to pay €48,000 instead of €47,040 is a loan of €47,040 at an effective 24.49% per year.
+:::
+
+#### Task 2: The decision in euros
+
+a) Should the office take the discount and finance the payment with its credit line? Decide with the rates.
+
+b) Confirm your decision in euros: how much better off is the office (simple interest for 30 days)?
+
+c) Up to which credit-line rate would taking the discount still be worthwhile?
+
+::: {.content-visible when-meta="show_solutions"}
+**Solution:**
+
+**a)** Yes: the credit line costs 11%, forgoing the discount costs 24.49%. Pay on day 10 with the credit line.
+
+**b)** Discount: $48{,}000 \cdot 0.02 = 960$. Amount paid on day 10: $48{,}000 - 960 = 47{,}040$. Interest on the credit line for 30 days:
+
+$$47{,}040 \cdot 0.11 \cdot \frac{30}{360} = 431.20$$
+
+Net advantage: $960 - 431.20 = $ **€528.80**.
+
+**c)** Up to a credit-line rate of **24.49%**, the effective cost of forgoing the discount. Above that rate it would be cheaper to wait until day 40.
+:::
+
+## Exercise 3: Pricing Promises
+
+The treasurer of a regional savings cooperative reviews the securities in its portfolio. All payments are annual and at the end of the year.
+
+#### Task 1: Price of a bond
+
+A corporate bond has a face value of €1,000, a coupon rate of 6% and 4 years to maturity.
+
+a) Draw the bond's cash flows on a timeline from $t = 0$ to $t = 4$.
+
+b) Compute its price if comparable bonds yield 8%, and state whether it trades at a discount or a premium.
+
+c) Compute its price if the yield falls to 5%. Explain the direction of the change in one sentence.
+
+::: {.content-visible when-meta="show_solutions"}
+**Solution:**
+
+**a)** Coupon $C = 1{,}000 \cdot 0.06 = 60$.
+
+| $t$ | 0 | 1 | 2 | 3 | 4 |
+|:--|:--:|:--:|:--:|:--:|:--:|
+| Payment to investor (€) | price $P_0$ | 60 | 60 | 60 | 60 + 1,000 |
+
+All payments are discounted back (←) to $t = 0$.
+
+**b)**
+
+$$P_0 = 60 \cdot PVIFA(8\%,\,4) + 1{,}000 \cdot 1.08^{-4} = 60 \cdot 3.3121 + 735.03 = 198.73 + 735.03 = 933.76$$
+
+Price €933.76: a **discount**, because the coupon rate (6%) is below the market yield (8%).
+
+**c)**
+
+$$P_0 = 60 \cdot PVIFA(5\%,\,4) + 1{,}000 \cdot 1.05^{-4} = 60 \cdot 3.5460 + 822.70 = 212.76 + 822.70 = 1{,}035.46$$
+
+Price €1,035.46, a **premium**. When market yields fall, the fixed coupons are discounted at a lower rate and the bond's price rises (inverse price–yield relationship); now the 6% coupon exceeds the market yield.
+:::
+
+#### Task 2: Yield to maturity by interpolation
+
+Another bond has a face value of €1,000, a coupon rate of 3%, 5 years to maturity and trades at €940. Estimate its yield to maturity by linear interpolation with the trial rates 4% and 5%.
+
+::: {.content-visible when-meta="show_solutions"}
+**Solution:**
+
+Coupon $C = 30$. Prices at the trial rates:
+
+$$P(4\%) = 30 \cdot 4.4518 + 1{,}000 \cdot 1.04^{-5} = 133.55 + 821.93 = 955.48 \quad (> 940)$$
+
+$$P(5\%) = 30 \cdot 4.3295 + 1{,}000 \cdot 1.05^{-5} = 129.88 + 783.53 = 913.41 \quad (< 940)$$
+
+The trial rates bracket the market price, as required. Interpolation:
+
+$$r \approx 4\% + \frac{955.48 - 940}{955.48 - 913.41} \cdot (5\% - 4\%) = 4\% + \frac{15.48}{42.07} \cdot 1\% = 4\% + 0.368\% = 4.37\%$$
+
+The exact yield is 4.36%; the interpolation slightly overshoots because the price–yield curve is convex.
+
+**Grading Notes:** A first check is worth a point on its own: price below face value means the yield must exceed the 3% coupon rate.
+:::
+
+#### Task 3: Preferred and common stock
+
+a) A preferred share pays a fixed dividend of €4.50 per year forever. The treasurer requires 9%. What is it worth?
+
+b) A common share has just paid a dividend of €3.00. Dividends are expected to grow by 2% per year indefinitely, and the treasurer requires 8%. What is the share worth? It trades at €48.00. Is it over- or undervalued?
+
+c) Which return does a buyer at €48.00 implicitly expect?
+
+::: {.content-visible when-meta="show_solutions"}
+**Solution:**
+
+**a)** Perpetuity: $P_0 = \dfrac{Div}{r} = \dfrac{4.50}{0.09} = 50.00$, so **€50.00** per share.
+
+**b)** Gordon Growth Model with next year's dividend:
+
+$$D_1 = D_0 \cdot (1 + g) = 3.00 \cdot 1.02 = 3.06 \qquad P_0 = \frac{D_1}{r - g} = \frac{3.06}{0.08 - 0.02} = \frac{3.06}{0.06} = 51.00$$
+
+Value €51.00 against a price of €48.00: the share is **undervalued** by €3.00. (Using $D_0$ instead of $D_1$ would give $3.00 / 0.06 = 50.00$, the classic trap.)
+
+**c)** Solve the Gordon model for $r$: $r = \dfrac{D_1}{P_0} + g = \dfrac{3.06}{48.00} + 0.02 = 0.06375 + 0.02 = 8.375\%$. A buyer at €48.00 can expect about 8.4%, more than the 8% the treasurer requires, which is the same conclusion as in b).
+:::
+
+#### Task 4: Multiple choice — loans, bonds and shares
+
+Which of the following statements are **correct**? (Multiple answers possible.)
+
+a) If market yields rise, the price of an existing fixed-coupon bond falls.
+
+b) A bond whose coupon rate exceeds the market yield trades below its face value.
+
+c) The price of a zero-coupon bond is $F \cdot (1+r)^{-n}$.
+
+d) In the Gordon Growth Model, the numerator is the dividend that has just been paid.
+
+e) The Gordon Growth Model only gives a meaningful value if the growth rate is below the required return.
+
+f) Of the three loan types, the annuity loan has the lowest total interest for the same amount, rate and term.
+
+g) All statements are false.
+
+::: {.content-visible when-meta="show_solutions"}
+**Solution:** Correct are **a)**, **c)** and **e)**.
+
+- **a) Correct.** The fixed payments are discounted at a higher rate, so their present value falls.
+- **b) Incorrect.** A coupon above the market yield makes the bond more valuable: it trades at a *premium*, above face value.
+- **c) Correct.** A zero-coupon bond pays only the face value at maturity.
+- **d) Incorrect.** The numerator is next year's dividend $D_1 = D_0 \cdot (1+g)$.
+- **e) Correct.** For $g \geq r$ the denominator is zero or negative and the formula breaks down.
+- **f) Incorrect.** The constant-amortization loan has the lowest total interest, because the debt falls fastest; in present value at the loan rate, all three cost the same.
+- **g) Incorrect.**
+:::

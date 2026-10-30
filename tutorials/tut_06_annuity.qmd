@@ -1,0 +1,272 @@
+---
+title: "Tutorial 06: The Annuity Method"
+subtitle: "Annual value · mirror principle · unequal lifespans · repeatability · equivalent annual cost"
+lang: en
+author:
+  - name: Prof. Dr. Christian Kraus
+    email: christian.kraus@thws.de
+    role: Lecturer
+    affiliation: THWS Business & Engineering
+course: "Investment Decisions (BUA3)"
+semester: "WS 2026/27"
+sheet: "06"
+date: last-modified
+show_solutions: false
+format: tutorial-typst
+---
+
+# Tutorial 06: The Annuity Method
+
+## Exercise 1: From NPV to Annual Value
+
+The craft brewery *Zum Durstigen Ingenieur* in Schweinfurt wants to stop bottling by hand and buy a canning line. The line costs **€120,000**, saves **€34,000 net per year** for **5 years** and can then be sold for **€15,000**. The brewery's cost of capital is **7%**. Use the four-decimal factor tables from the Formula Collection.
+
+#### Task 1: NPV and annual value
+
+Draw the cash flows on a timeline, calculate the NPV of the canning line, and convert it into its annual value $d$.
+
+::: {.content-visible when-meta="show_solutions"}
+**Solution:**
+
+Given: $I_0 = 120{,}000$; $CF = 34{,}000$ for $t = 1, \dots, 5$; $L_5 = 15{,}000$; $i = 7\%$; $n = 5$.
+
+| $t$ | 0 | 1 | 2 | 3 | 4 | 5 |
+|:--|--:|--:|--:|--:|--:|--:|
+| Cash flow (€) | −120,000 | 34,000 | 34,000 | 34,000 | 34,000 | 34,000 + 15,000 |
+
+With $PVIFA(7\%, 5) = 4.1002$ and $1.07^{-5} = 0.7130$:
+
+$$
+NPV = -120{,}000 + 34{,}000 \cdot 4.1002 + 15{,}000 \cdot 0.7130 = -120{,}000 + 139{,}407 + 10{,}695 = 30{,}102
+$$
+
+With $CRF(7\%, 5) = 0.2439$:
+
+$$
+d = NPV \cdot CRF(7\%, 5) = 30{,}102 \cdot 0.2439 = 7{,}342
+$$
+
+The canning line creates about **€7,342 per year** above its capital service.
+
+**Grading Notes:** Results within ±€5 (rounding of factors) are fine. A common error is $d = CF \cdot CRF$ or $d = NPV / n$; both are wrong.
+:::
+
+#### Task 2: Reading the annual value
+
+The brewer asks two questions. a) How much could she pay per year for a part-time technician to maintain the line, without the investment becoming unattractive? b) To what level could the annual savings fall in every year before the investment stops earning its 7%?
+
+::: {.content-visible when-meta="show_solutions"}
+**Solution:**
+
+**a)** Up to **€7,342 per year**. An extra annual cost equal to $d$ in each of the five years has a present value equal to the NPV and reduces the NPV exactly to zero.
+
+**b)** The annual savings could fall by $d$, from €34,000 to $34{,}000 - 7{,}342 = $ **€26,658** per year. That amount is the line's capital service: it repays the investment, net of the residual value, with 7% interest. Below it, the NPV becomes negative.
+:::
+
+#### Task 3: Reverse question — the premium line
+
+A supplier offers a premium canning line with exactly the same savings, life and residual value, but at a higher price. The brewer only wants to invest if the annual value is at least **€3,000**. What is the highest price she should accept?
+
+::: {.content-visible when-meta="show_solutions"}
+**Solution:**
+
+The present value of savings and residual value is unchanged: $139{,}407 + 10{,}695 = 150{,}102$. An annual value of €3,000 corresponds to a required NPV of
+
+$$
+NPV_{\text{required}} = \frac{d}{CRF(7\%, 5)} = \frac{3{,}000}{0.2439} = 12{,}300
+$$
+
+$$
+I_0^{\max} = 150{,}102 - 12{,}300 = 137{,}802
+$$
+
+She should pay at most about **€137,800** for the premium line.
+
+**Grading Notes:** Students may also solve $d = (150{,}102 - I_0) \cdot 0.2439 = 3{,}000$ directly; same result.
+:::
+
+## Exercise 2: The Mirror Principle
+
+The outdoor swimming pool of a small Franconian town installs a solar thermal system for **€60,000**. It saves **€10,000 of gas per year** for **8 years** (no residual value). The town finances the system with an **annuity loan** of €60,000 at **4%** over 8 years, and 4% is also its cost of capital. Because the loan instalment must be exact to the cent, use factors with **seven decimals** in this exercise.
+
+#### Task 1: Loan instalment and annual surplus
+
+a) Calculate the annual loan instalment. b) Calculate the annual surplus that remains after the instalment has been paid from the savings. c) Show that this surplus equals the annual value $d = NPV \cdot CRF$ of the solar system.
+
+::: {.content-visible when-meta="show_solutions"}
+**Solution:**
+
+Given: $C_0 = I_0 = 60{,}000$; $CF = 10{,}000$; $i = 4\%$; $n = 8$; $CRF(4\%, 8) = 0.1485278$; $PVIFA(4\%, 8) = 6.7327449$.
+
+**a)** $K = 60{,}000 \cdot 0.1485278 = $ **€8,911.67 per year**.
+
+**b)**
+
+| $t$ | 0 | 1 | 2 | … | 8 |
+|:--|--:|--:|--:|:-:|--:|
+| Solar system cash flow (€) | −60,000 | 10,000.00 | 10,000.00 | … | 10,000.00 |
+| Loan instalment (€) | +60,000 | −8,911.67 | −8,911.67 | … | −8,911.67 |
+| Surplus (€) | 0 | 1,088.33 | 1,088.33 | … | 1,088.33 |
+
+The surplus is $10{,}000 - 8{,}911.67 = $ **€1,088.33 per year**.
+
+**c)**
+
+$$
+NPV = 10{,}000 \cdot 6.7327449 - 60{,}000 = 7{,}327.45
+$$
+
+$$
+d = 7{,}327.45 \cdot 0.1485278 = 1{,}088.33
+$$
+
+The annual value equals the surplus over the loan instalment. The instalment the town pays the bank is exactly the capital service the solar system owes the town; what the system earns above it is $d$.
+:::
+
+#### Task 2: Transfer — when the savings are smaller
+
+Explain in three to four sentences why, in Task 1, the annual value equals the surplus over the loan instalment. What would it mean for the town if the system saved only **€8,500** per year? Give the annual value in that case.
+
+::: {.content-visible when-meta="show_solutions"}
+**Solution:**
+
+An investment is the mirror image of a loan: the town hands €60,000 to the project at $t = 0$, just as the bank hands €60,000 to the town. The constant amount that repays €60,000 with 4% interest over 8 years is the same in both directions, $I_0 \cdot CRF(4\%, 8) = 8{,}911.67$. For a project with constant cash flows, the annual value is therefore the cash flow minus this capital service, $d = CF - I_0 \cdot CRF$. If the savings were only €8,500, then $d = 8{,}500 - 8{,}911.67 = $ **−€411.67** per year: the system could not service its own loan, the town would have to top up each instalment from its budget, and the NPV would be negative ($8{,}500 \cdot 6.7327449 - 60{,}000 = -2{,}771.67$).
+
+**Grading Notes:** Key points: (1) reversed roles of lender and borrower, (2) same CRF-based constant amount, (3) $d$ = surplus above capital service, (4) negative $d$ ⇔ negative NPV.
+:::
+
+## Exercise 3: Projects with Unequal Lifespans
+
+*Print & Pray Prototyping GmbH*, a student start-up, sells 3D-printed prototypes and must choose between two printers that are mutually exclusive (there is room for only one). The **compact printer** costs **€24,000**, earns **€11,000 net per year** and lasts **3 years**. The **industrial printer** costs **€47,000**, earns **€11,500 net per year** and lasts **6 years**. Neither has a residual value; the cost of capital is **8%**.
+
+#### Task 1: NPV versus annual value
+
+Calculate the NPV and the annual value of both printers. Which printer does a direct NPV comparison favour, and which one does the annuity method favour?
+
+::: {.content-visible when-meta="show_solutions"}
+**Solution:**
+
+With $PVIFA(8\%, 3) = 2.5771$ and $PVIFA(8\%, 6) = 4.6229$:
+
+$$
+NPV_{\text{compact}} = 11{,}000 \cdot 2.5771 - 24{,}000 = 28{,}348 - 24{,}000 = 4{,}348
+$$
+
+$$
+NPV_{\text{industrial}} = 11{,}500 \cdot 4.6229 - 47{,}000 = 53{,}163 - 47{,}000 = 6{,}163
+$$
+
+With $CRF(8\%, 3) = 0.3880$ and $CRF(8\%, 6) = 0.2163$:
+
+$$
+d_{\text{compact}} = 4{,}348 \cdot 0.3880 = 1{,}687 \qquad d_{\text{industrial}} = 6{,}163 \cdot 0.2163 = 1{,}333
+$$
+
+The direct NPV comparison favours the **industrial printer** (€6,163 > €4,348). The annuity method favours the **compact printer** (€1,687 > €1,333 per year), provided it can be replaced by an identical printer after three years.
+:::
+
+#### Task 2: Check over a common horizon
+
+Assume the compact printer can be replaced by an identical one at the end of year 3. Compare both alternatives over a common horizon of six years and show that your result confirms the annuity method.
+
+::: {.content-visible when-meta="show_solutions"}
+**Solution:**
+
+| $t$ | 0 | 1 | 2 | 3 | 4 | 5 | 6 |
+|:--|--:|--:|--:|--:|--:|--:|--:|
+| Compact chain (€) | −24,000 | 11,000 | 11,000 | 11,000 − 24,000 | 11,000 | 11,000 | 11,000 |
+
+The second compact printer has an NPV of €4,348 at $t = 3$; discount it three years with $1.08^{-3} = 0.7938$:
+
+$$
+NPV_{\text{chain}} = 4{,}348 + 4{,}348 \cdot 0.7938 = 4{,}348 + 3{,}451 = 7{,}799 > 6{,}163
+$$
+
+Over six years the chain of two compact printers beats the industrial printer by €1,636, which confirms the annuity method.
+:::
+
+#### Task 3: When the assumption fails
+
+a) The manufacturer announces that the compact printer will be discontinued. After year 3 the start-up could only invest the freed money at 8%. Which printer should it choose? b) Instead, a successor model will be available after three years, with the same cash flows, but it will cost **€27,000**. Which printer should the start-up choose now?
+
+::: {.content-visible when-meta="show_solutions"}
+**Solution:**
+
+**a)** Without a successor, the money freed after year 3 earns exactly the cost of capital, so its NPV is zero. The compact printer contributes only its own NPV of €4,348. Compare the NPVs directly: the **industrial printer** wins (€6,163 > €4,348). The annual value of the compact printer is no longer a valid yardstick.
+
+**b)** The successor's NPV at $t = 3$ is $28{,}348 - 27{,}000 = 1{,}348$:
+
+$$
+NPV_{\text{sequence}} = 4{,}348 + 1{,}348 \cdot 0.7938 = 4{,}348 + 1{,}070 = 5{,}418 < 6{,}163
+$$
+
+The **industrial printer** wins. A successor that is 12.5% dearer is enough to reverse the verdict of the annuity method. (The break-even successor price is about €26,060.)
+
+**Grading Notes:** Credit the key insight in a): with no repetition, comparing annual values overstates the compact printer, because its $d$ assumes the surplus continues in years 4 to 6.
+:::
+
+## Exercise 4: Equivalent Annual Cost and Concepts
+
+The warehouse *Lagerhaus Krummbein KG* needs a new battery for a forklift truck. Both batteries power the truck equally well, so only the costs differ. The cost of capital is **6%**.
+
+| | Lead-acid battery | Lithium-ion battery |
+|:--|--:|--:|
+| Purchase price | €6,000 | €11,000 |
+| Charging energy and maintenance per year | €2,200 | €1,300 |
+| Useful life | 4 years | 8 years |
+| Residual value at the end of the life | €0 | €1,000 |
+
+#### Task 1: Equivalent annual cost
+
+Calculate the present value of the costs of each battery over its own life and its equivalent annual cost (EAC). Which battery should the warehouse buy, and why does the comparison of the present values mislead?
+
+::: {.content-visible when-meta="show_solutions"}
+**Solution:**
+
+With $PVIFA(6\%, 4) = 3.4651$, $PVIFA(6\%, 8) = 6.2098$, $1.06^{-8} = 0.6274$, $CRF(6\%, 4) = 0.2886$ and $CRF(6\%, 8) = 0.1610$:
+
+$$
+PV_{\text{lead-acid}} = 6{,}000 + 2{,}200 \cdot 3.4651 = 6{,}000 + 7{,}623 = 13{,}623
+$$
+
+$$
+PV_{\text{lithium}} = 11{,}000 + 1{,}300 \cdot 6.2098 - 1{,}000 \cdot 0.6274 = 11{,}000 + 8{,}073 - 627 = 18{,}446
+$$
+
+$$
+EAC_{\text{lead-acid}} = 13{,}623 \cdot 0.2886 = 3{,}932 \qquad EAC_{\text{lithium}} = 18{,}446 \cdot 0.1610 = 2{,}970
+$$
+
+The **lithium-ion battery** is about €962 per year cheaper and should be bought (assuming each battery would be replaced by an identical one). The present values suggest the opposite (€13,623 < €18,446) only because the lead-acid battery's costs cover four years of operation and the lithium-ion battery's costs cover eight.
+
+**Grading Notes:** Alternative route for the lead-acid battery: $6{,}000 \cdot 0.2886 + 2{,}200 = 3{,}932$. Results within ±€5 are fine.
+:::
+
+#### Task 2: Multiple choice — what the annuity method assumes
+
+Which of the following statements are **correct**? (Multiple answers possible.)
+
+a) For two projects with the same life and the same discount rate, the NPV and the annual value always rank the projects in the same order.
+
+b) If two projects have different lives, the NPV and the annuity method always rank them differently.
+
+c) Comparing the annual values of projects with unequal lives implicitly assumes that each project can be replaced by an identical successor.
+
+d) A direct NPV comparison of projects with unequal lives implicitly assumes that, after the shorter project ends, the freed capital earns exactly the cost of capital.
+
+e) A positive annual value guarantees that the project's actual cash flow exceeds its capital service in every single year.
+
+f) The annual value equals the NPV divided by the number of years, $d = NPV / n$.
+
+g) All statements are false.
+
+::: {.content-visible when-meta="show_solutions"}
+**Solution:** Correct are **a)**, **c)** and **d)**.
+
+- **a) Correct.** Both NPVs are multiplied by the same positive $CRF(i, n)$, so the ranking cannot change.
+- **b) Incorrect.** Different lives *can* produce a conflict, but need not; a project can lead on both measures.
+- **c) Correct.** This is the repeatability assumption; only under it does the higher $d$ identify the better project.
+- **d) Correct.** This is the reinvestment assumption from Chapter 4: later investments at $i$ have an NPV of zero.
+- **e) Incorrect.** $d$ is an *equivalent* constant amount; the actual cash flow in a single year (e.g. a ramp-up year) can be below the capital service or even negative.
+- **f) Incorrect.** Simple division ignores the time value of money; the correct formula is $d = NPV \cdot CRF(i, n)$, which for $i > 0$ is always larger in absolute value than $NPV / n$, because $CRF(i, n) > 1/n$.
+:::

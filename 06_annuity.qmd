@@ -1,137 +1,380 @@
-# Periodising Success – The Annuity Method
+# Periodising Success: The Annuity Method
 
-> "Wealth is a snapshot. Income is a movie. The Annuity Method turns the snapshot into a movie."
+*From a lump of wealth to an annual value, and a fair race between a three-year and a six-year machine*
 
-Chapter 4 showed us that NPV measures the **absolute increase in wealth** a project creates today. That is powerful — but abstract. A CEO often asks: *"What does € 10,000 of NPV actually mean for my annual budget? How much can I pay a project manager? By how much could my cash flows shrink before this investment stops making sense?"*
-
-The **Annuity Method** (*Annuitätenmethode*) answers these questions. It transforms the lump-sum NPV into a constant annual "excess profit" spread evenly over the project's life. It is the strategic twin of the annuity loan from Chapter 3, just running in the opposite direction: there, the bank used the CRF to spread a loan into equal instalments; here, we use the same CRF to spread an investment's NPV into equal annual value slices.
-
-## The Mirror Principle: Loan vs. Investment
-
-| Situation | You pay today | Receives equal annual payments |
-|:----------|:-------------:|:------------------------------:|
-| **Annuity Loan** (Ch. 3) | Bank → you | Bank ← you (repayment) |
-| **Investment Annuity** | You → project | You ← project (returns) |
-
-The arithmetic is identical in both directions. We apply the **Capital Recovery Factor (CRF)** once more:
-
-$$\boxed{d = NPV \cdot \underbrace{\frac{i(1+i)^n}{(1+i)^n - 1}}_{CRF(i,\,n)}}$$
+## Opening: Higher NPV, Shorter Life
 
 ::: {.details}
-#### Why d = NPV × CRF: The Derivation
-The present value of all future cash flows equals $I_0 + NPV$ (the investment recovers itself plus creates excess value). Spreading this total as an annuity gives:
-$$\text{Annuity of total PV} = (I_0 + NPV) \cdot CRF$$
-But the annuity of the bare investment recovery is just $I_0 \cdot CRF$. Subtract it to isolate the *excess* return:
-$$d = (I_0 + NPV) \cdot CRF - I_0 \cdot CRF = NPV \cdot CRF$$
-This is why the formula reduces to the NPV alone — the investment cost cancels out.
+#### Story: The Purchasing Manager's Note
+Clara Voss had been running Vogt Antriebstechnik GmbH in Würzburg for less than a week when she opened the third dossier in her uncle's folder. It held two proposals for bringing the induction hardening of coupling shafts in-house, a job Vogt had always outsourced. The compact unit was cheap and would last three years. The industrial unit cost three times as much and would run for six. The prices, savings and lives were all there; the calculations were not.
+
+Clipped to the front was a note from the purchasing manager: *"The compact unit is cheaper but only lasts three years. The industrial unit runs for six. Do we just take the one with the higher NPV?"*
+
+Clara put the note down. Even before calculating anything, she could see the difficulty. An NPV for the compact unit would describe three years of hardening; an NPV for the industrial unit would describe six. What, exactly, would a comparison of the two numbers measure?
 :::
 
-::: {.drag-exercise}
-While the *Net Present Value* captures the total value created at $t = 0$, the *Annuity* $d$ spreads this value evenly across the project's *useful life*. A positive annuity means the project earns *more* than the minimum required return in every single year.
-:::
+The purchasing manager has found a real gap in the toolkit. Chapter 4 made the net present value (NPV) the single yardstick for value creation, and Chapter 5 showed that a percentage such as the IRR can rank projects wrongly when they differ in *size*; this chapter asks what happens when they differ in *length*. An NPV is a sum of wealth created over a project's whole life. Put a three-year NPV next to a six-year NPV and you compare two answers to two different questions: what does the firm gain in three years, and what does it gain in six? Neither number says what the compact unit's owner does in years four to six.
 
-## From Raw Cash Flows to Annual Value: A Complete Example
+The tool that settles this is not new. It is the Capital Recovery Factor from Chapter 2, the same factor a bank uses in Chapter 3 to turn a loan into equal instalments. The **annuity method** (dt. *Annuitätenmethode*) uses it to turn a project's NPV into an equal **annual value**. That annual value makes an abstract lump of wealth readable as a yearly figure, and it lets you compare projects of unequal life fairly, provided you are honest about one assumption: that the shorter project can be repeated. This chapter develops the idea, the formula and the assumption, and shows exactly when the method gives the wrong answer. Clara's own dossier is left for you to solve in the Vogt case.
 
-Rather than starting from a pre-calculated NPV, real decisions start with raw cash flows. Here is the full pipeline:
+## Theory: Wealth Today, Income Every Year
 
-**Project:** A delivery vehicle is purchased for **€ 80,000**. It generates net cash savings of **€ 25,000 per year** for **4 years**, then is sold for a residual value of **€ 10,000**. The cost of capital is **8%**.
+### A Stock That Managers Struggle to Read
 
-**Step 1 — Calculate NPV:**
+The NPV is a **stock**: the number of euros by which a project makes the owner richer, measured at $t = 0$. Most business conversations, though, are about **flows**: annual budgets, salaries, service contracts, the yearly target for a production line. Tell a plant manager that a new delivery van has an NPV of €10,153 and she will nod politely. Tell her that the van earns €3,065 *per year* more than it costs, including interest on the money tied up in it, and she can put the number next to a driver's overtime or a maintenance contract.
 
-$$NPV = -80{,}000 + 25{,}000 \cdot PVIFA(8\%,4) + 10{,}000 \cdot (1.08)^{-4}$$
-$$= -80{,}000 + 25{,}000 \times 3.3121 + 10{,}000 \times 0.7350$$
-$$= -80{,}000 + 82{,}803 + 7{,}350 = \mathbf{+\text{€}\,10{,}153}$$
+Consumers make this translation all the time. Nobody compares a 24-month phone contract with a 48-month one by the total bill. You compare the monthly price, because only the monthly price puts both contracts on the same footing. The annuity method does the same for investments, with one refinement: it uses interest-adjusted equal instalments rather than a simple division, because a euro in year four is worth less than a euro in year one (Chapter 1).
 
-**Step 2 — Calculate CRF(8%, 4):**
-
-$$CRF(8\%,4) = \frac{0.08 \times (1.08)^4}{(1.08)^4 - 1} = \frac{0.08 \times 1.3605}{0.3605} = \frac{0.1088}{0.3605} = 0.3019$$
-
-**Step 3 — Compute the Annuity:**
-
-$$d = 10{,}153 \times 0.3019 = \mathbf{\text{€}\,3{,}065 \text{ per year}}$$
-
-### Three Ways to Read the Annual Value
-
-1. **The Manager's Salary:** You could hire a project manager for € 3,065 per year. After paying that salary, the investment still earns exactly 8% — it breaks even economically.
-2. **The Safety Buffer:** The annual cash flows could fall by € 3,065 — from € 25,000 down to € 21,935 — and the project would still be acceptable ($NPV = 0$). This is the annual margin of safety in cash flow terms.
-3. **The Super-Dividend:** Distributing € 3,065 per year to shareholders leaves the company's value unchanged — the project fully self-finances its capital cost.
+Why is such a translation legitimate at all? Chapter 4's Fisher separation gives the answer. In a perfect capital market the owner can borrow and lend at the rate $i$, so she can turn the NPV into *any* pattern of consumption she likes: all of it today, all of it in year four, or equal amounts every year. The equal pattern over the project's life is the annual value $d$ (dt. *Annuität*). It contains exactly the same wealth as the NPV, spread out instead of lumped together.
 
 ::: {.flip-card}
-#### Annuity vs. Accounting Profit
-Accounting profit fluctuates with depreciation schedules and accruals. The annuity $d$ is a calculated, *constant* economic profit that includes both the return *of* capital (the depreciation equivalent) and the return *on* capital (the interest cost). It is the measure accounting cannot provide without distortion.
+#### Annual Value d
+The constant amount per year, over the project's life $n$, whose present value at the cost of capital $i$ equals the project's NPV: $d = NPV \cdot CRF(i, n)$. It is a surplus that remains *after* the project has paid back its investment and paid interest at $i$ on the capital tied up in it, so it is an economic profit per year, not an accounting profit.
 :::
 
-## The Strategic Power: Eliminating the Time Bias
+For a *single* project, the annual value adds no new verdict. The CRF is always positive, so $d$ is positive exactly when the NPV is positive. What the annual value adds is a new way of *reading* the result and, as the Method section shows, a fair way of comparing projects whose lives differ.
 
-Here is the decisive problem that only the Annuity Method solves. **NPV is biased towards longer projects** — simply because they run longer and accumulate more discounted cash flows, even if each year is less efficient.
+### The Mirror Principle: An Investment Is a Loan You Grant
 
-**The Scenario:** $i = 10\%$.
+Recall the annuity loan from Chapter 3. At $t = 0$ the bank pays you the loan amount $C_0$. In each of the following $n$ years you pay the bank a constant amount $K = C_0 \cdot CRF(i, n)$. That constant payment does two jobs at once: it pays interest on the outstanding balance, and it repays principal, so that the debt is exactly zero after the last instalment.
 
-* **Project A (Short):** $n = 3$ years, $NPV = \text{€}\,10{,}000$.
-* **Project B (Long):** $n = 6$ years, $NPV = \text{€}\,15{,}000$.
+Now turn the table around. When a firm invests $I_0$ in a project, *it* hands money over at $t = 0$, and the *project* pays money back in the following years. The payment pattern is the same; only the roles are swapped. The firm is the bank, and the project is the borrower. This is the **mirror principle**: an investment is a loan that the firm grants to its own project.
 
-Is B better? NPV says yes (€ 15k > € 10k). But B also ties up your capital for twice as long — and assumes you can **repeat the project** when it ends. If Project A can be repeated on equivalent terms after 3 years, the annual comparison matters.
+| | At $t = 0$ | In years $t = 1, \dots, n$ | The CRF calculates … |
+|:--|:--|:--|:--|
+| **Annuity loan** (Chapter 3): you are the *borrower* | Bank pays you $C_0$ | You pay the bank $K$ | the instalment $K = C_0 \cdot CRF(i, n)$ you owe |
+| **Investment**: you are the *lender* | You pay the project $I_0$ | The project pays you $CF_t$ | the **capital service** $I_0 \cdot CRF(i, n)$ the project owes you |
 
-> **The Repeatability Assumption:** The Annuity Method is only valid when the shorter project can be repeated on identical terms once it finishes. Under this assumption, compare annuities — not total NPVs.
+The **capital service** (dt. *Kapitaldienst*) is the constant annual amount a project must earn just to pay back its investment with interest at $i$. A project that earns exactly this amount is like a borrower who pays every instalment on time and not a cent more: the money comes back, with interest, and nothing else is created. Whatever the project earns *above* the capital service is the annual value $d$.
 
-**Annuity comparison:**
+The Chapter 3 loan makes this tangible. A loan of €100,000 at 5% over five years costs an instalment of €23,097.48 per year. Suppose a project also costs €100,000 and returns €25,000 at the end of each of the next five years, and the firm's cost of capital is 5%. On a timeline (discounting runs ←, from the payment back to $t = 0$):
 
-$$d_A = 10{,}000 \times CRF(10\%,\,3) = 10{,}000 \times 0.4021 = \mathbf{\text{€}\,4{,}021 \text{ / yr}}$$
-$$d_B = 15{,}000 \times CRF(10\%,\,6) = 15{,}000 \times 0.2296 = \mathbf{\text{€}\,3{,}444 \text{ / yr}}$$
+| $t$ | 0 | 1 | 2 | 3 | 4 | 5 |
+|:--|--:|--:|--:|--:|--:|--:|
+| Project cash flow (€) | −100,000 | 25,000 | 25,000 | 25,000 | 25,000 | 25,000 |
+| Capital service $I_0 \cdot CRF(5\%, 5)$ (€) | | 23,097.48 | 23,097.48 | 23,097.48 | 23,097.48 | 23,097.48 |
+| Surplus = annual value $d$ (€) | | 1,902.52 | 1,902.52 | 1,902.52 | 1,902.52 | 1,902.52 |
 
-**Verdict:** Project A generates more value *per year* (€ 4,021 > € 3,444). Choose A — and repeat it.
+Inside the capital service, the split between interest and repayment is exactly the Chapter 3 schedule: interest falls from €5,000 in year 1 to about €1,100 in year 5, repayment rises accordingly. If the firm had actually financed the project with that bank loan, the project would pay the bank every year and leave €1,902.52 in the owner's pocket. Its NPV is $25{,}000 \cdot 4.3295 - 100{,}000 \approx 8{,}237$, and spreading that over five years with $CRF(5\%, 5) = 0.2310$ gives $8{,}237 \cdot 0.2310 \approx 1{,}903$: the same surplus, up to rounding.
+
+::: {.drag-exercise}
+In an annuity loan the *borrower* pays the bank a constant instalment that covers interest and repayment. In an investment the *project* owes the firm the same kind of payment, the *capital service*, and only what it earns above that amount counts as the *annual value*.
+:::
+
+The mirror principle explains why the annuity method is often presented as the "economic profit" of an investment. Accounting profit deducts depreciation, a spreading of the purchase price that ignores interest. The capital service deducts both the return *of* capital (repayment) and the return *on* capital (interest at $i$). What is left is profit in the economist's sense: income beyond the cost of all the resources used, including the capital.
+
+::: {.quick-check}
+A project costs €100,000 and returns €25,000 a year for five years. At 5%, the capital service is €23,097.48 per year. What does the remaining €1,902.52 per year represent?
+
+- The annual interest the firm earns on its €100,000.
+- **The surplus per year after the investment has been paid back with 5% interest, i.e. the annual value $d$.**
+- The annual depreciation of the investment.
+:::
+
+## Method: The Annual Value and the Problem of Unequal Lives
+
+### From NPV to Annual Value
+
+The annual value is the constant amount $d$ that, received at the end of each of the $n$ years, has the same present value as the NPV. With the present value factor of an annuity from Chapter 2, that condition reads $d \cdot PVIFA(i, n) = NPV$. Dividing by the PVIFA, and remembering that the CRF is its reciprocal, gives the core formula of this chapter:
+
+$$
+d = NPV \cdot CRF(i, n) = NPV \cdot \frac{i \cdot (1+i)^n}{(1+i)^n - 1}
+$$ {#eq-annual-value}
+
+where $NPV$ is the project's net present value at the cost of capital $i$ (Chapter 4), $n$ is the project's useful life in years, and $CRF(i, n)$ is the Capital Recovery Factor (dt. *Annuitätenfaktor*), which you can read from the table in the Formula Collection.
+
+When the annual cash flow $CF$ is the same in every year, the mirror principle gives an equivalent and often faster route. Multiply each part of the NPV by the CRF: the inflows turn back into $CF$, the investment turns into the capital service, and a residual value $L_n$ at the end of year $n$ reduces the amount the project has to pay back:
+
+$$
+d = CF - \left( I_0 - L_n \cdot (1+i)^{-n} \right) \cdot CRF(i, n)
+$$ {#eq-capital-service}
+
+The bracket is the part of the investment that is *not* recovered by the sale at the end; the CRF turns it into the annual capital service. @eq-capital-service only works for constant cash flows; @eq-annual-value always works.
+
+**Worked example.** A delivery van costs €80,000. It saves €25,000 net per year for four years and is then sold for a residual value of €10,000. The cost of capital is 8%.
+
+| $t$ | 0 | 1 | 2 | 3 | 4 |
+|:--|--:|--:|--:|--:|--:|
+| Cash flow (€) | −80,000 | 25,000 | 25,000 | 25,000 | 25,000 + 10,000 |
+
+*Step 1 — NPV.* Discount the four savings with the PVIFA and the residual value with the discount factor:
+
+$$
+NPV = -80{,}000 + 25{,}000 \cdot 3.3121 + 10{,}000 \cdot 0.7350 = -80{,}000 + 82{,}803 + 7{,}350 = 10{,}153
+$$
+
+*Step 2 — CRF.* From the table, or by formula:
+
+$$
+CRF(8\%, 4) = \frac{0.08 \cdot 1.08^4}{1.08^4 - 1} = \frac{0.08 \cdot 1.3605}{0.3605} = 0.3019
+$$
+
+*Step 3 — Annual value.*
+
+$$
+d = 10{,}153 \cdot 0.3019 = 3{,}065
+$$
+
+The van creates €3,065 per year more than its capital service. All factors in this chapter are taken from the four-decimal tables in the Formula Collection; if you calculate with unrounded factors, your results may differ by a few euros.
+
+The annual value can be read in three ways, and each answers a question a manager actually asks:
+
+1. **Maximum extra annual cost.** The firm could pay up to €3,065 a year for something the original plan left out, such as a maintenance contract or a share of a driver's salary, and the van would still just earn its 8%.
+2. **Annual safety margin.** The yearly savings could fall from €25,000 to €21,935 in every year before the NPV drops to zero. €21,935 is exactly the van's capital service, so it is the break-even cash flow.
+3. **Owner's income.** In a perfect capital market the owner could withdraw €3,065 at the end of every year for four years and still have the whole investment paid back with 8% interest.
+
+### Equal Lifespans: The Same Ranking, Always
+
+If two mutually exclusive projects have the **same life** $n$ and are discounted at the **same rate** $i$, they share one CRF. Their annual values are then their NPVs multiplied by the same positive number:
+
+$$
+d_A - d_B = \left( NPV_A - NPV_B \right) \cdot CRF(i, n)
+$$ {#eq-equal-lives}
+
+Whichever project has the higher NPV also has the higher annual value. The two methods *always* agree on the ranking, and the annuity method is merely a translation of the NPV into annual terms. The two CNC machines in Dossier 2 of the Vogt case both run for three years, so there the annual value would add nothing to the NPV comparison. (If two projects carried different risks and were discounted at different rates, their CRFs would differ; that complication waits for Chapter 9.)
+
+### Unequal Lifespans: Comparing Like with Like
+
+Things change when lives differ. Take two mutually exclusive projects at $i = 10\%$: Project A runs for $n_A = 3$ years and has an NPV of €10,000; Project B runs for $n_B = 6$ years and has an NPV of €15,000.
+
+Comparing the NPVs directly favours B. But B covers six years and A only three, so the comparison hides a question: what does the firm do in years 4 to 6 if it chooses A? Suppose the answer is "buy another A on identical terms". Then the fair comparison is a **chain** of two A projects against one B, both covering six years. The second A starts at $t = 3$; its NPV of €10,000 is measured at its own start and has to be discounted three years back to $t = 0$:
+
+| $t$ | 0 | … | 3 | … | 6 |
+|:--|:--|:--|:--|:--|:--|
+| First A | NPV 10,000 | runs | ends | | |
+| Second A | | | NPV 10,000 at $t = 3$ (← discount: $\cdot\, 1.10^{-3}$) | runs | ends |
+| One B | NPV 15,000 | runs | runs | runs | ends |
+
+$$
+NPV_{A,\,\text{chain}} = 10{,}000 + 10{,}000 \cdot 0.7513 = 17{,}513 > 15{,}000 = NPV_B
+$$
+
+Once both alternatives cover the same six years, A wins. The annuity method reaches the same verdict without building the chain:
+
+$$
+d_A = 10{,}000 \cdot CRF(10\%, 3) = 10{,}000 \cdot 0.4021 = 4{,}021
+$$
+
+$$
+d_B = 15{,}000 \cdot CRF(10\%, 6) = 15{,}000 \cdot 0.2296 = 3{,}444
+$$
+
+A earns €4,021 per year, B only €3,444. The two routes agree because a chain of identical A projects is nothing but a constant stream of €4,021 per year: over six years it is worth $4{,}021 \cdot PVIFA(10\%, 6) = 4{,}021 \cdot 4.3553 \approx 17{,}513$, exactly the chain NPV. This works for *any* common horizon, including an endless one. If each project is repeated forever, the chain becomes a perpetuity of its annual value (Chapter 2):
+
+$$
+NPV_{\infty} = \frac{d}{i}
+$$ {#eq-chain}
+
+For A this gives $4{,}021 / 0.10 = 40{,}210$, for B $3{,}444 / 0.10 = 34{,}440$. Whatever horizon you choose, the chain with the higher annual value creates more wealth. The decision rule for unequal lives follows: **under the repeatability assumption, choose the project with the highest positive annual value $d$.**
 
 ::: {.details}
-#### The Infinite Chain Equivalence
-Comparing annuities is mathematically identical to calculating the NPV of infinitely repeating chains. If you repeat A forever and B forever, the chain with the higher annuity produces a higher total present value. Proof: an infinite annuity of $d$ has PV = $d/i$; since $d_A > d_B$, $PV_A^{\infty} > PV_B^{\infty}$. The Annuity Method is the elegant shortcut — it avoids building infinite-horizon models.
+#### Deep Dive: Why an Infinite Chain Is Worth d / i
+Repeating a project with net present value $NPV$ every $n$ years forever produces the value $NPV$ at $t = 0$, again at $t = n$, again at $t = 2n$, and so on. Discounting each to today gives a geometric series: $NPV_{\infty} = NPV \cdot \left[ 1 + (1+i)^{-n} + (1+i)^{-2n} + \dots \right] = NPV \cdot \frac{(1+i)^n}{(1+i)^n - 1}$. The fraction equals $CRF(i, n) / i$, as you can check by dividing the CRF formula by $i$. So $NPV_{\infty} = NPV \cdot CRF(i, n) / i = d / i$. This is why the annual value is the right yardstick for chains: it is the only part of the chain value that differs between the projects, because $i$ is the same for all of them. It also spares you the common-horizon table. For lives of 7 and 9 years, the shortest common horizon is 63 years; the annuity method needs two multiplications.
 :::
 
-> **Decision Rule:** When comparing projects with **different lifespans** ($n_A \neq n_B$), compare annuities — provided the projects can be repeated on equivalent terms.
+Use the widget below to see when NPV and the annuity method disagree. With the default settings both methods favour Project B, a reminder that unequal lives *can* produce a conflict but need not. Then raise Project A's annual cash flow to €16,000: A's NPV (about €9,790) is still below B's (about €10,974), but A's annual value (about €3,937) is now far above B's (about €2,520). Finally, move the cost of capital and watch the gap between the two verdicts open and close.
 
-The interactive tool below lets you adjust both projects and the cost of capital to see when NPV and the Annuity Method give different verdicts:
-
-::: {.content-visible when-format="html"}
+::: {.widget}
 <iframe src="assets/ch06/annuity_comparison.html"
-        style="width: 100%; height: 460px; border: none;"
-        loading="lazy">
+        width="100%" height="820px" frameborder="0"
+        title="Annuity Method widget: NPV versus annual value for two projects with different lifespans">
 </iframe>
 :::
 
-## The Limits: When Annuity Misleads and NPV Wins
+### Repeatability or Reinvestment: What Comes After the Short Project?
 
-The Annuity Method adds the **Repeatability Assumption** on top of NPV's reinvestment assumption. When this assumption fails, revert to NPV.
+The A-versus-B example has a twist that is easy to miss. The direct NPV comparison is not "biased" and it is not wrong. It simply makes a *different* assumption about years 4 to 6. Chapter 4 showed that NPV assumes that money flowing back from a project earns exactly the cost of capital $i$. If A ends after three years and its capital is then invested at $i$, those later investments have an NPV of zero, and A's total contribution really is €10,000. In that world, B's €15,000 is the better deal.
 
-**Counter-example (non-repeatable project):**
+So the choice between NPV and annual value is a choice between two forecasts of what follows the shorter project:
 
-* **Project A:** 3-year unique opportunity (pandemic demand, expiring patent). NPV = € 10,000.
-* **Project B:** 6-year standard investment (repeatable machinery). NPV = € 15,000.
+| What happens after the shorter project ends? | Implicit assumption | Correct comparison | Verdict for A vs. B |
+|:--|:--|:--|:--|
+| An identical successor with the same investment, cash flows and life | Repeatability | Annual values $d$ (or chain NPVs) | A: 4,021 > 3,444 |
+| No successor; the freed capital earns exactly $i$ | Reinvestment at $i$ (Chapter 4) | NPVs directly | B: 15,000 > 10,000 |
+| A known but different successor (new price, new technology) | An explicit forecast | NPV of the full sequence over a common horizon | Depends on the forecast |
 
-If Project A *cannot* be repeated — once the opportunity is gone, it's gone — the annuity comparison is meaningless for A. You compare one-time outcomes: take Project B (€ 15,000 > € 10,000).
+::: {.flip-card}
+#### Repeatability Assumption
+The assumption (dt. *identische Reinvestition*) that every project is replaced at the end of its life by an identical successor, with the same investment, cash flows, life and cost of capital, so that each alternative forms a chain over any common horizon. Only under this assumption does the higher annual value identify the better project when lives differ.
+:::
 
-> **Practical rule:**
-> * Projects that can be repeated on equivalent terms → compare **annuities**
-> * One-off strategic opportunities → compare **NPV** directly
+The annuity method therefore misleads whenever the repeatability assumption is clearly false. Four situations recur in practice:
 
-## Chapter Check
+- **A one-off opportunity.** A product for a patent that expires in three years, or a single customer order, cannot be repeated. Compare the NPVs directly, with the freed capital earning $i$ afterwards.
+- **Changing prices or technology.** If the successor machine will cost more, or a better one will be available, the "identical" chain does not exist. Model the actual sequence and compute its NPV over a common horizon. As the Practice section shows, even a small price rise can reverse the verdict.
+- **A finite need.** If a machine is needed only for the life of a five-year supply contract, an endless chain is fiction. Compare the alternatives over the five years, including what each one can be sold for at the end.
+- **Liquidity instead of value.** The annual value is an *equivalent* constant amount, not the actual pattern of cash. A project with a positive $d$ can still have a negative cash flow in year 1. For financing and liquidity planning, use the actual cash flows.
+
+The annual value also inherits a limit of the NPV: it is an absolute amount in euros. A large project can beat a small one on $d$ while using far more capital; when capital itself is scarce, Chapter 8 ranks projects per euro invested.
+
+**Procedure.** Putting the pieces together gives a short decision procedure for mutually exclusive projects:
+
+1. Compute the NPV of each project at the cost of capital $i$.
+2. If all lives are equal, rank by NPV. The annual value is useful for communication but cannot change the ranking.
+3. If lives differ, ask what will follow the shorter project, and say it explicitly.
+4. If identical replacement is plausible, compute $d = NPV \cdot CRF(i, n)$ for each project and choose the highest positive $d$. (If the service must be provided anyway, as in a pure cost comparison, choose the least negative $d$.)
+5. If it is not, compare NPVs directly (freed capital earns $i$) or value the actual sequence of projects over a common horizon.
 
 ::: {.quick-check}
-**You compare two machines. Machine X lasts 4 years (NPV = € 8,000), Machine Y lasts 8 years (NPV = € 12,000). Cost of capital = 10%. Which do you choose and why?**
+Two machines both run for five years. At 8%, Machine A has an NPV of €12,000 and Machine B an NPV of €9,000. Which statement is correct?
 
-- Machine Y — it has the higher NPV.
-- **Machine X — it has the higher annual annuity (€ 2,524/yr vs. € 2,249/yr).**
-- Cannot be determined without more information.
+- B may still have the higher annual value, depending on how its cash flows are spread over the five years.
+- **A has the higher annual value, because both NPVs are multiplied by the same CRF.**
+- The annual values cannot be compared without first checking the repeatability assumption.
+:::
 
-> Calculate: $d_X = 8{,}000 \times CRF(10\%,4) = 8{,}000 \times 0.3155 = \text{€}\,2{,}524$/yr. $d_Y = 12{,}000 \times CRF(10\%,8) = 12{,}000 \times 0.1874 = \text{€}\,2{,}249$/yr. Machine X creates more value per year — assuming it can be replaced on equivalent terms at year 4.
+## Practice: Two Decisions at Vogt Antriebstechnik
+
+The integrated Vogt case asks you to solve Clara's hardening dossier yourself. The two decisions below come from later in 2024, when Vogt's new production programme was under way. The first is a classic unequal-lives choice with a twist; the second shows the same logic when the alternatives differ only in their costs.
+
+### Case 1 — Driverless Transport Vehicles
+
+::: {.case-study}
+#### Case: Vogt Antriebstechnik — Basic or Heavy-Duty AGV?
+To move coupling housings between the welding cell and assembly, Vogt wants to buy an automated guided vehicle (AGV), a driverless transport cart (dt. *fahrerloses Transportfahrzeug*). Two offers do the same job and replace the same forklift shifts, so both save **€36,000 net per year**. The **basic AGV** costs **€100,000** and lasts **4 years**; the **heavy-duty AGV** costs **€170,000** and lasts **8 years**. Neither has a residual value. Vogt's cost of capital is **10%**. The supplier of the basic model has confirmed that it will offer an identical successor at the same price after four years.
+
+Clara's production manager wants the heavy-duty AGV: "Higher NPV, and we don't have to think about it again for eight years."
+
+**Tasks:**
+
+1. Calculate the NPV of both AGVs. Which one does a direct NPV comparison favour?
+2. Calculate the annual value of both AGVs. Which one does the annuity method favour?
+3. Verify your answer to Task 2 by comparing both alternatives over a common horizon of eight years.
+4. Two weeks later, the supplier corrects itself: the successor of the basic AGV will cost **€108,000**. Does Clara's decision change? Above which successor price does the heavy-duty AGV win?
+
+::: {.solution}
+**Solution:**
+
+**1. NPVs.** With $PVIFA(10\%, 4) = 3.1699$ and $PVIFA(10\%, 8) = 5.3349$:
+
+$$
+NPV_{\text{basic}} = 36{,}000 \cdot 3.1699 - 100{,}000 = 114{,}116 - 100{,}000 = 14{,}116
+$$
+
+$$
+NPV_{\text{heavy}} = 36{,}000 \cdot 5.3349 - 170{,}000 = 192{,}056 - 170{,}000 = 22{,}056
+$$
+
+The direct NPV comparison favours the heavy-duty AGV (€22,056 > €14,116). The production manager's first argument is correct but answers the wrong question: the two NPVs cover four and eight years respectively.
+
+**2. Annual values.** With $CRF(10\%, 4) = 0.3155$ and $CRF(10\%, 8) = 0.1874$:
+
+$$
+d_{\text{basic}} = 14{,}116 \cdot 0.3155 = 4{,}454 \qquad d_{\text{heavy}} = 22{,}056 \cdot 0.1874 = 4{,}133
+$$
+
+Under the repeatability assumption, the basic AGV creates about €320 more per year. The annuity method favours the basic AGV.
+
+**3. Common horizon of eight years.** Buy the basic AGV at $t = 0$ and its identical successor at $t = 4$. The chain's cash flows:
+
+| $t$ | 0 | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 |
+|:--|--:|--:|--:|--:|--:|--:|--:|--:|--:|
+| Basic AGV chain (€) | −100,000 | 36,000 | 36,000 | 36,000 | 36,000 − 100,000 | 36,000 | 36,000 | 36,000 | 36,000 |
+
+The second AGV's NPV of €14,116 arises at $t = 4$ and is discounted four years (← with $1.10^{-4} = 0.6830$):
+
+$$
+NPV_{\text{chain}} = 14{,}116 + 14{,}116 \cdot 0.6830 = 14{,}116 + 9{,}641 = 23{,}757 > 22{,}056
+$$
+
+Over the same eight years, the chain of two basic AGVs beats one heavy-duty AGV by about €1,700, exactly as the annual values predicted.
+
+**4. Successor at €108,000.** The repeatability assumption no longer holds, so the annual value of €4,454 is no longer a valid yardstick. Value the actual sequence instead. The successor's NPV at $t = 4$ is $114{,}116 - 108{,}000 = 6{,}116$:
+
+$$
+NPV_{\text{sequence}} = 14{,}116 + 6{,}116 \cdot 0.6830 = 14{,}116 + 4{,}177 = 18{,}293 < 22{,}056
+$$
+
+Now the heavy-duty AGV wins by almost €3,800. The break-even successor price $X$ makes both alternatives equal:
+
+$$
+14{,}116 + (114{,}116 - X) \cdot 0.6830 = 22{,}056 \quad \Longrightarrow \quad X = 114{,}116 - \frac{7{,}940}{0.6830} \approx 102{,}500
+$$
+
+A price rise of only about 2.5% on the successor is enough to reverse the annuity method's verdict. The lesson for Clara: the annuity method was correct under its assumption, but the assumption carried the whole decision. Before trusting $d$, check how robust the "identical successor" really is.
+:::
+:::
+
+### Case 2 — When Only Costs Differ: Two Compressors
+
+Many engineering choices compare machines that deliver *the same service*: two pumps, two chillers, two compressors. Their revenues are identical, so only the costs matter. The logic is unchanged: compute the present value of each machine's costs over its own life and spread it with the CRF. The result is the **equivalent annual cost** (EAC) of each machine, the annual value of a cost-only project with the sign reversed. Under the repeatability assumption, the machine with the lower EAC is the better choice.
+
+::: {.case-study}
+#### Case: Vogt Antriebstechnik — Standard or Variable-Speed Compressor?
+Vogt's compressed-air system needs a new compressor. Both offers deliver the same air volume.
+
+| | Standard compressor | Variable-speed compressor |
+|:--|--:|--:|
+| Investment $I_0$ | €40,000 | €65,000 |
+| Energy and maintenance per year | €9,000 | €5,500 |
+| Useful life | 5 years | 8 years |
+| Residual value at the end of the life | €0 | €5,000 |
+
+The cost of capital is 10%. The facility manager has calculated the present value of each machine's costs and recommends the standard compressor "because it costs €18,000 less".
+
+**Tasks:**
+
+1. Reproduce the facility manager's present values of the costs.
+2. Calculate the equivalent annual cost of both compressors and recommend one.
+3. Explain why the facility manager's comparison misleads.
+
+::: {.solution}
+**Solution:**
+
+**1. Present value of costs.** With $PVIFA(10\%, 5) = 3.7908$, $PVIFA(10\%, 8) = 5.3349$ and $1.10^{-8} = 0.4665$; the residual value reduces the costs:
+
+$$
+PV_{\text{standard}} = 40{,}000 + 9{,}000 \cdot 3.7908 = 40{,}000 + 34{,}117 = 74{,}117
+$$
+
+$$
+PV_{\text{variable}} = 65{,}000 + 5{,}500 \cdot 5.3349 - 5{,}000 \cdot 0.4665 = 65{,}000 + 29{,}342 - 2{,}333 = 92{,}009
+$$
+
+The difference is €17,892, the "€18,000" in the facility manager's argument.
+
+**2. Equivalent annual cost.** With $CRF(10\%, 5) = 0.2638$ and $CRF(10\%, 8) = 0.1874$:
+
+$$
+EAC_{\text{standard}} = 74{,}117 \cdot 0.2638 = 19{,}552 \qquad EAC_{\text{variable}} = 92{,}009 \cdot 0.1874 = 17{,}242
+$$
+
+The variable-speed compressor provides compressed air for about €2,310 less per year. Assuming each compressor would be replaced by an identical one at the end of its life, Vogt should buy the **variable-speed compressor**.
+
+**3. Why the comparison misleads.** The standard compressor's €74,117 buys five years of compressed air; the variable-speed compressor's €92,009 buys eight. Comparing the two totals compares different amounts of service, exactly the mistake from the Method section. With costs, the error runs the other way round: the shorter-lived machine looks cheaper simply because it is paid for fewer years. The NPV comparison is therefore not biased towards long *or* short projects; it is meaningless whenever the horizons differ and nobody has said what fills the gap.
+:::
+:::
+
+<!-- Widget idea: a chain timeline that draws the basic-AGV chain against the heavy-duty AGV over eight years, with a slider for the successor price that shows the break-even at about €102,500. -->
+
+::: {.quick-check}
+In Case 1, suppose the supplier announces that the basic AGV's successor will cost 10% more than the original (€110,000). What follows for Clara's decision?
+
+- Nothing changes: the basic AGV still has the higher annual value, so she should buy it.
+- **The repeatability assumption fails, so she must value the actual sequence over eight years, and the heavy-duty AGV wins.**
+- She should compare the two NPVs over each AGV's own life, because the annuity method can never handle a price change.
+:::
+
+## Conclusion: A Forecast Disguised as a Formula
+
+The annuity method looks like pure arithmetic: one multiplication, $d = NPV \cdot CRF(i, n)$. For a single project or for projects of equal life, that is all it is, a translation of a lump of wealth into an annual figure that managers can put next to a salary or a service contract. The mirror principle explains what the figure means: the project repays its investment like a borrower repays a loan, and the annual value is what is left over.
+
+The moment lives differ, though, the formula carries a forecast inside it. Choosing the higher annual value means betting that the future repeats itself, with identical machines at identical prices. Choosing the higher NPV means betting that the years after the short project only earn the cost of capital. Neither bet is right in general, and the AGV case shows how a modest price change can flip the answer. The useful question in Clara's dossier is therefore not "which number is higher?" but "what do we do in year four?". Once that question has an honest answer, the right method follows from it.
+
+::: {.quick-check}
+Machine X lasts 4 years and has an NPV of €8,000. Machine Y lasts 8 years and has an NPV of €12,000. The cost of capital is 10%, and X can be replaced by an identical machine at the end of year 4. Which machine should you choose?
+
+- Y, because its NPV is higher.
+- **X, because its annual value is higher (about €2,524 versus €2,249 per year).**
+- Y, because a longer life always means less replacement risk and therefore more value.
 :::
 
 ::: {.quick-check}
-**If the annuity $d$ is exactly € 0, what is the project's NPV?**
+A supplier can make a component for a patented product whose patent expires in three years (Project A: 3 years, NPV €10,000), or invest in a standard production line (Project B: 6 years, NPV €15,000). A cannot be repeated, and the capital it frees after three years can only earn the cost of capital. Which comparison is correct?
 
-- **€ 0**
-- Undefined
-- Negative
-
-> Correct. $d = NPV \times CRF$. Since $CRF > 0$ always, $d = 0$ implies $NPV = 0$. The project exactly covers its cost of capital — no excess return, no value destroyed.
+- Compare annual values: A wins with €4,021 versus €3,444 per year.
+- **Compare NPVs directly: B wins, because there is no identical successor for A.**
+- It does not matter: NPV and the annuity method always give the same ranking.
 :::
 
-Chapter 7 introduces the tax dimension: how corporate income taxes change cash flows and — through a striking paradox — can actually make more expensive financing preferable.
+So far, every euro of surplus has belonged to the firm. Chapter 7 introduces a silent partner who takes a share of every profit and, through the depreciation tax shield, hands some of it back. Because the partner also taxes the returns of the alternative investment, it changes both the cash flows and the discount rate, $i \cdot (1-s)$, on which the NPV and the annual value rest.

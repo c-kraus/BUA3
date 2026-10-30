@@ -1,186 +1,422 @@
-# The Percentage Trap – Internal Rate of Return (IRR)
+# The Percentage Trap: Internal Rate of Return
 
-> "Percentages are like bikinis. What they reveal is suggestive, but what they conceal is vital."
-> — *Prof. Burton Malkiel (adapted)*
+*Why one number in per cent wins every boardroom, and when it lies*
 
-Chapter 4 introduced the NPV as the gold standard of investment appraisal — an absolute euro figure. But managers love percentages. "This project has a 25% return!" sounds far more compelling than "This project has an NPV of € 4,200." Enter the **Internal Rate of Return (IRR)** (dt. *Interner Zinsfuß, r*).
-
-While NPV measures the *magnitude* of wealth creation in absolute euros, IRR measures the *efficiency* of capital employed as a relative yield. It answers: **"What is the maximum interest rate I could pay to the bank and still break even?"**
-
-## The Definition: The Break-Even Rate
-
-Mathematically, the IRR is the specific discount rate $r$ at which the Net Present Value equals exactly **zero** — the x-intercept of the NPV function from Chapter 4.
-
-$$C_0 = -I_0 + \sum_{t=1}^{n} \frac{CF_t}{(1+r)^t} = 0 \quad \text{solve for } r$$
-
-If your project's NPV equals zero when you discount at 12.5%, then **IRR = 12.5%**. The project earns exactly 12.5% on the capital tied up in it.
-
-### The Decision Rule (Hurdle Rate)
-
-You compare the project's internal yield ($r$) against the external cost of capital ($i$, the *Hurdle Rate*):
-
-| Scenario | Interpretation | Decision |
-|:---------|:---------------|:--------:|
-| **$r > i$** | The project yields more than it costs. | **INVEST** |
-| **$r = i$** | Exactly covers the cost of capital. | **Indifferent** |
-| **$r < i$** | Yields less than the market alternative. | **REJECT** |
-
-Notice the exact symmetry with the NPV rule: for a **conventional investment** (single sign change in the cash flow stream: outflow at $t=0$, inflows thereafter), $r > i$ is mathematically equivalent to $NPV > 0$. The two methods agree — as long as you compare one project in isolation against a fixed hurdle rate.
-
-::: {.drag-exercise}
-If the *Internal Rate of Return* exceeds the *hurdle rate*, the project creates value and its Net Present Value is *positive*. The two rules are *equivalent* for *conventional* investments (a single sign change in cash flows) compared against a fixed hurdle rate.
-:::
-
-## The Calculation: Iteration and Interpolation
-
-For projects lasting more than two periods, **no closed-form formula** exists to solve for $r$. You face a polynomial of degree $n$ — you must approximate numerically.
-
-### Step 1: Bracket the Root by Trial
-
-Choose two trial rates: $i_1$ must produce a **positive** NPV, $i_2$ must produce a **negative** NPV. The IRR lies between them. The narrower the bracket, the more accurate the approximation.
-
-### Step 2: Linear Interpolation (Regula Falsi)
-
-Draw a straight chord between the two trial points $(i_1, C_0(i_1))$ and $(i_2, C_0(i_2))$ and find where it crosses the x-axis. This approximates the IRR without solving the polynomial directly.
-
-$$\boxed{r \approx i_1 + \frac{C_0(i_1)}{C_0(i_1) - C_0(i_2)} \cdot (i_2 - i_1)}$$
-
-Where $C_0(i)$ denotes the NPV evaluated at discount rate $i$.
+## Opening: Two Slides, One Budget
 
 ::: {.details}
-#### Regula Falsi: A Worked Example
+#### Story: The 19.7 Per Cent Slide
 
-**Project:** $I_0 = 100$, single cash flow of 110 received at end of **Year 2**.
+Feldmann Formteile GmbH, an injection-moulding supplier with 140 employees, has one investment slot left in this year's budget. Two engineers want it. Stefan, the plant manager, proposes retrofitting the existing moulding line with servo drives and heat recovery: €100,000 today, savings of €50,000, €50,000 and €40,000 over the next three years. His last slide shows a single number in a large font: **IRR 19.7%**.
 
-**Trial rates:** choose $i_1 = 0\%$ (NPV positive) and $i_2 = 10\%$ (NPV negative):
+Mira, the process engineer, proposes replacing the line with a new all-electric machine: €300,000 today, savings that grow from €100,000 to €175,000 as the machine reaches full output. Her slide also shows a number: **IRR 14.4%**. The room goes quiet. Nineteen beats fourteen; the decision looks made.
 
-* $C_0(0\%) = -100 + 110 = +10$ ✓ positive
-* $C_0(10\%) = -100 + 110/(1.10)^2 = -100 + 90.91 = -9.09$ ✓ negative
-
-**Applying Regula Falsi:**
-$$r \approx 0\% + \frac{10}{10 - (-9.09)} \cdot (10\% - 0\%) = \frac{10}{19.09} \times 10\% \approx \mathbf{5.24\%}$$
-
-**Exact answer:** Set $-100 + 110/(1+r)^2 = 0$, so $(1+r)^2 = 1.10$, giving $r = \sqrt{1.10} - 1 = \mathbf{4.88\%}$.
-
-**Why does the approximation overshoot?** The NPV function is strictly convex (curves upward as $r$ increases). A straight chord between two points on a convex curve lies *above* the curve between those points — it crosses the x-axis to the *right* of the true root, giving 5.24% instead of 4.88%. Narrowing the bracket reduces the error.
+Then the CFO, Petra Lang, asks a question nobody had prepared for: "Feldmann pays 8% for its capital. Which of these two projects leaves us richer — and by how many euros?" Nobody in the room can answer from the slides. Both percentages are correct. Neither of them answers her question.
 :::
 
-The interactive tool below lets you drag both trial rates on the NPV curve and see the Regula Falsi chord converge on the IRR:
+The scene is fictional, the pattern is not. In the best-known survey of corporate practice, about three in four US chief financial officers said they always or almost always use the internal rate of return, slightly more than those who said the same of NPV (Graham & Harvey, 2001). The appeal is easy to understand: a percentage can be compared with a loan rate, a bond yield or last year's return on capital without any further explanation, while "an NPV of €20,917" means little to anyone who has not built the calculation.
 
-::: {.content-visible when-format="html"}
+Chapter 4 drew the NPV function $C_0(i)$ and showed that it falls as the discount rate rises until, at one particular rate, it crosses zero. This chapter is about that crossing point. We define it, learn to compute it by hand, and then test it the hard way: against reinvestment, against unusual cash-flow patterns, and against the question Petra asked. The guiding question is simple: *if a project earns 12%, is that good — and why can the percentage lie?*
+
+## Theory: The Project's Own Interest Rate
+
+### The Rate at Which the Project Breaks Even
+
+Every NPV calculation in Chapter 4 started with a discount rate $i$ chosen from outside the project: the return of the best alternative use of the money. The internal rate of return turns the question around. Instead of asking "what is the project worth at 8%?", it asks "at which rate would the project be worth exactly nothing?" That rate is a property of the cash flows alone, which is why it is called *internal*: you need no market data to compute it. Most of this chapter deals with **conventional investments**: one outflow at $t = 0$, followed only by inflows, like every project in Chapter 4.
+
+::: {.flip-card}
+#### Internal Rate of Return (IRR)
+The discount rate $r$ at which the NPV of a project's cash flows equals exactly zero (dt. *interner Zinsfuß*). Graphically, it is the point where the NPV function crosses the horizontal axis. For a conventional investment it is the interest rate the project pays on the capital that is still tied up in it.
+:::
+
+The last sentence of the card is the most useful intuition in this chapter, so let us make it concrete. A machine costs €100,000 and saves €28,000 a year for five years. Its IRR, as we will compute in the Method section, is 12.38%. Now imagine the €100,000 is a loan from the project to you, which the project repays out of its savings while paying 12.38% interest on whatever is still outstanding:
+
+| Year $t$ | Capital tied up at start (€ thousand) | Interest at 12.38% | Cash flow $CF_t$ | Capital tied up at end |
+|:---:|---:|---:|---:|---:|
+| 1 | 100.0 | 12.4 | 28.0 | 84.4 |
+| 2 | 84.4 | 10.4 | 28.0 | 66.8 |
+| 3 | 66.8 | 8.3 | 28.0 | 47.1 |
+| 4 | 47.1 | 5.8 | 28.0 | 24.9 |
+| 5 | 24.9 | 3.1 | 28.0 | 0.0 |
+
+Each year the savings first pay the interest, and the rest repays capital. After exactly five years the balance is zero: the cash flows are just enough to pay 12.38% on the capital still tied up and to return every euro of it. At any higher rate the balance would not reach zero; at any lower rate money would be left over. This is the sense in which the project "earns 12.38%". Note the subtle wording: it earns that rate on the *declining* balance of capital still in the project, not on the full €100,000 for five years. That distinction will matter when we discuss reinvestment.
+
+::: {.drag-exercise}
+The internal rate of return is the discount rate at which the NPV equals *zero*. Unlike the discount rate $i$, which comes from the *capital market*, the IRR is computed from the project's own *cash flows*.
+:::
+
+### IRR Versus the Hurdle Rate
+
+A percentage on its own is not a decision. To decide, the IRR has to be compared with the rate the money could earn elsewhere: the cost of capital $i$, which in this role is called the **hurdle rate** — the minimum return a project has to clear before it is worth doing.
+
+| Comparison | Interpretation | Decision |
+|:---|:---|:---:|
+| $r > i$ | The project pays more on its tied-up capital than the market alternative | **Accept** |
+| $r = i$ | The project exactly matches the alternative | Indifferent |
+| $r < i$ | The money would earn more in the market alternative | **Reject** |
+
+For a conventional investment this rule always agrees with the NPV rule of Chapter 4. The reason is visible in the NPV function: when every cash flow after $t = 0$ is positive, a higher discount rate shrinks every term, so $C_0(i)$ falls steadily and crosses zero exactly once. To the left of the crossing ($i < r$) the NPV is positive, to the right ($i > r$) it is negative. "IRR above the hurdle rate" and "NPV above zero" are two descriptions of the same position on the same curve.
+
+::: {.details}
+#### Deep Dive: When the Rule Flips — Financing Profiles
+
+The IRR rule assumes that money goes out first and comes back later. Reverse the order and the rule reverses too. Suppose a customer pays Feldmann €100,000 in advance today and Feldmann delivers goods costing €110,000 in one year. The cash flows are $+100{,}000$ and $-110{,}000$; the rate at which their NPV is zero is 10%. But this is a *financing* profile: Feldmann effectively borrows €100,000 at 10%. Borrowing at 10% is attractive only if the cost of capital is *higher* than 10%. For financing profiles, the rule therefore reads: accept if $r < i$. The NPV rule needs no such adjustment — at $i = 8\%$ the NPV is $100{,}000 - 110{,}000/1.08 = -1{,}852$, which correctly says "decline". This is the first hint that the percentage carries less information than the euro figure: the same number, 10%, means "good" or "bad" depending on a sign pattern the percentage does not show.
+:::
+
+### Why a Percentage Can Lie
+
+If IRR and NPV agree for a single conventional project, why do finance textbooks treat the IRR with suspicion? Because real decisions rarely involve a single conventional project judged in isolation. There are four ways the percentage can mislead, and the Method section deals with each of them.
+
+The first is **scale**. A percentage says nothing about how many euros it applies to. Fifty per cent on €1,000 is less wealth than 20% on €1,000,000; the scale problem from Chapter 4 reappears whenever projects of different size compete. The second is **timing**. A project that returns its money early can show a higher IRR than one that returns more money later, even when the late project creates more value at the firm's actual cost of capital. The third is **reinvestment**. Reading the IRR as "the return I will earn on my €100,000 over the whole life" quietly assumes that every euro the project releases can be put to work again at the same rate. The fourth is **the sign pattern** itself. When cash flows change sign more than once — a mine that must be restored, a plant that must be decommissioned — the equation that defines the IRR can have several solutions, or none at all.
+
+None of these problems touches the NPV, because the NPV is measured in euros at a rate chosen from outside the project. That is the whole argument of the chapter in one sentence; the rest is about seeing it work in numbers.
+
+::: {.quick-check}
+A conventional investment has an IRR of 11%. The firm's cost of capital is 9%. What can you say about its NPV at 9%?
+
+- Nothing — the IRR and the NPV answer unrelated questions.
+- **It is positive, because the NPV function of a conventional investment is still above zero at any rate below the IRR.**
+- It is 2% of the initial investment.
+:::
+
+## Method: Computing and Testing the IRR
+
+### Finding r: Iteration and Linear Interpolation
+
+Formally, the IRR is the rate $r$ that solves
+
+$$
+C_0(r) = -I_0 + \sum_{t=1}^{n} \frac{CF_t}{(1+r)^t} = 0
+$$ {#eq-irr}
+
+where $I_0$ is the initial investment, $CF_t$ the net cash flow in year $t$ (including any liquidation value in year $n$) and $n$ the project life. Equation @eq-irr looks harmless, but it is a polynomial of degree $n$ in the unknown $(1+r)$. For $n = 1$ it solves directly: $r = CF_1/I_0 - 1$. For $n = 2$ the quadratic formula works. From $n = 3$ onwards, closed-form solutions are either impractically long (degrees 3 and 4) or, from degree 5 onwards, no general formula exists at all. In practice, therefore, the IRR is found numerically: spreadsheets use iterative algorithms, and by hand we use a two-step procedure.
+
+**Step 1 — Bracket the IRR by trial.** Compute the NPV at a trial rate. If it is positive, the IRR lies higher; if it is negative, lower. Keep trying until you have two rates $i_1 < i_2$ with $C_0(i_1) > 0$ and $C_0(i_2) < 0$. The IRR lies between them.
+
+**Step 2 — Interpolate linearly.** Draw a straight line between the two points $(i_1, C_0(i_1))$ and $(i_2, C_0(i_2))$ and find where it crosses zero:
+
+$$
+r \approx i_1 + \frac{C_0(i_1)}{C_0(i_1) - C_0(i_2)} \cdot (i_2 - i_1)
+$$ {#eq-regula-falsi}
+
+The fraction is the share of the bracket you have to travel from $i_1$ before the line reaches zero. Because $C_0(i_2)$ is negative, the denominator is the *sum* of the two distances from the axis. This straight-line step is the method of false position, **Regula Falsi**: "false" because the line replaces the true curve. Repeating the step with a narrower bracket converges on the exact IRR.
+
+**Worked example.** The machine from the Theory section: $I_0 = 100{,}000$, $CF_t = 28{,}000$ for $t = 1, \dots, 5$, no liquidation value.
+
+| $t$ | 0 | 1 | 2 | 3 | 4 | 5 |
+|:---|---:|---:|---:|---:|---:|---:|
+| $CF_t$ (€) | −100,000 | 28,000 | 28,000 | 28,000 | 28,000 | 28,000 |
+
+Because the inflows form an annuity, each trial NPV is one multiplication with the PVIFA from Chapter 2: $C_0(i) = -100{,}000 + 28{,}000 \cdot PVIFA(i, 5)$.
+
+| Trial rate $i$ | $PVIFA(i, 5)$ | $C_0(i)$ (€) | Verdict |
+|:---:|:---:|---:|:---|
+| 10% | 3.7908 | +6,142 | IRR is higher |
+| 15% | 3.3522 | −6,140 | IRR is lower |
+| 12% | 3.6048 | +934 | IRR is higher |
+| 13% | 3.5172 | −1,518 | IRR is lower |
+
+The bracket 12% to 13% is tight enough. Interpolating:
+
+$$
+r \approx 0.12 + \frac{934}{934 - (-1{,}518)} \cdot (0.13 - 0.12) = 0.12 + \frac{934}{2{,}452} \cdot 0.01 = 0.1238
+$$
+
+The estimate is $r \approx 12.38\%$; the exact IRR is 12.376%. Had we interpolated across the wide bracket 10% to 15%, we would have obtained 12.50% — still usable, but an eighth of a percentage point too high. The error always points the same way for a conventional investment: its NPV function is convex, bending upwards, so the straight chord between two points lies *above* the curve and reaches zero slightly to the right of the true IRR. Interpolation therefore overestimates the IRR of a conventional investment, and the narrower the bracket, the smaller the overestimate.
+
+The calculator below lets you change the investment, the annual cash flow, the life and a liquidation value, then drag the two trial rates. Start with the values from the example, then widen the bracket to 5% and 25% and watch the chord's crossing point drift away from the true IRR; narrow it again and watch the error vanish.
+
+::: {.widget}
 <iframe src="assets/ch05/irr_interactive.html"
-        style="width: 100%; height: 560px; border: none;"
-        loading="lazy">
+        width="100%" height="560px" frameborder="0"
+        title="IRR calculator: bracket the IRR with two trial rates and interpolate with Regula Falsi">
 </iframe>
 :::
 
-## The Fatal Flaw: Reinvestment Reality Check
+### The Reinvestment Critique and the Modified IRR
 
-Here is the most technically dangerous hidden assumption in the IRR model: the **Reinvestment Assumption** (*Wiederanlageprämisse*).
+Go back to the table of capital tied up. The project earns 12.38% on a balance that shrinks every year, because every year it hands €28,000 back to you. What you do with those €28,000 is not part of the IRR calculation. Yet managers routinely read the IRR as "our €100,000 will grow at 12.38% a year for five years". That reading is correct only if every euro the project releases can itself be reinvested at 12.38% until year 5. That hidden condition is the **reinvestment assumption** (dt. *Wiederanlageprämisse*), and pointing it out is the **reinvestment critique** of the IRR.
 
-The geometric-series math of the IRR implicitly assumes that **every intermediate cash flow is immediately reinvested at the IRR itself** — for the entire remaining project life.
+A front-loaded project makes the point visible. Project A costs €100,000 and returns €70,000, €40,000 and €20,000; its IRR is 18.17%. If the three inflows could be reinvested at 18.17%, the investor would hold, at the end of year 3,
 
-Consider a project with IRR = 50%:
+$$
+70{,}000 \cdot 1.1817^2 + 40{,}000 \cdot 1.1817 + 20{,}000 \approx 165{,}020 \approx 100{,}000 \cdot 1.1817^3
+$$
 
-* **What the model assumes:** The cash flow from Year 1 is immediately re-deployed in a new project also yielding 50%.
-* **What actually happens:** You probably put the cash into a bank account at 5%, or repay a loan costing 6%.
+exactly what €100,000 compounding at 18.17% for three years would produce. But the firm's realistic alternative is its cost of capital, 8%. Reinvested at 8%, the same inflows grow to only
 
-> **Crucial Contrast:**
-> * **NPV** assumes reinvestment at the market rate $i$ — generally achievable and conservative.
-> * **IRR** assumes reinvestment at the internal rate $r$ — often unrealistically high for profitable projects.
->
-> IRR therefore **systematically overstates** the wealth creation of highly profitable investments.
+$$
+70{,}000 \cdot 1.08^2 + 40{,}000 \cdot 1.08 + 20{,}000 = 81{,}648 + 43{,}200 + 20{,}000 = 144{,}848
+$$
+
+and the return the investor actually earns on the €100,000 over three years is $(144{,}848/100{,}000)^{1/3} - 1 = 13.15\%$, not 18.17%. The higher the IRR lies above the cost of capital, and the earlier the cash comes back, the wider this gap becomes.
+
+The repair is the **Modified Internal Rate of Return (MIRR)**, also called the **Baldwin rate** (dt. *Baldwin-Zinssatz*) after an early version of the idea published in the Harvard Business Review (Baldwin, 1959). It replaces the hidden assumption with an explicit one: inflows are compounded forward to the end of the project at the reinvestment rate, outflows are discounted to $t = 0$, and the MIRR is the single rate that turns the second into the first:
+
+$$
+MIRR = \left( \frac{TV_n}{PV_{out}} \right)^{1/n} - 1
+\quad \text{with} \quad
+TV_n = \sum_{CF_t > 0} CF_t \cdot (1+i)^{n-t}, \quad
+PV_{out} = \sum_{CF_t < 0} |CF_t| \cdot (1+i)^{-t}
+$$ {#eq-mirr}
+
+$TV_n$ is the terminal value of all inflows at the end of year $n$, and $PV_{out}$ is the present value of all outflows; for a conventional investment it is simply $I_0$. In this chapter both are computed at the cost of capital $i$; a firm that expects a different reinvestment rate can use it for $TV_n$.
 
 ::: {.flip-card}
-#### Modified IRR (Baldwin Rate / MIRR)
-A corrected variant: all positive intermediate cash flows are compounded forward to a terminal value $TV$ at the realistic reinvestment rate $i$; then $MIRR = (TV / I_0)^{1/n} - 1$. Because $TV$ is built at rate $i \leq r$, MIRR is always at most equal to the naive IRR and better reflects what the investor can actually achieve given real reinvestment opportunities.
+#### Modified IRR (Baldwin Rate)
+The rate at which the present value of a project's outflows grows into the terminal value of its inflows, when the inflows are reinvested at the cost of capital: $MIRR = (TV_n/PV_{out})^{1/n} - 1$. For a conventional investment it lies between $i$ and the IRR; it is unique for every cash-flow pattern and lies above $i$ exactly when the NPV at $i$ is positive.
 :::
 
-## Mathematical Anomalies: When the Method Fails
+Three properties make the MIRR useful. First, for a conventional investment it lies between the cost of capital and the IRR: below the IRR when $r > i$ (the usual case, and the case of Project A: 13.15% against 18.17%), above it when $r < i$. Second, because $TV_n$ and $PV_{out}$ are single positive numbers, the MIRR always exists and is unique — the sign-pattern problems of the next section disappear. Third, when the same rate $i$ is used throughout, $MIRR > i$ holds exactly when $C_0(i) > 0$, so the MIRR never contradicts the NPV accept-or-reject decision. What it does *not* repair is scale: a 15% MIRR on €100,000 is still less wealth than a 12.5% MIRR on €300,000, as the Feldmann case will show.
 
-### Descartes' Rule of Signs
+::: {.details}
+#### Deep Dive: Does the IRR Really "Assume" Reinvestment?
 
-A **conventional investment** has exactly one sign change in its cash flows: outflow at $t=0$, inflows thereafter. This guarantees **exactly one positive IRR**.
-
-But some projects have more than one sign change:
-
-**Profile:** $t=0: -100$ (invest) $\to$ $t=1: +260$ (revenue) $\to$ $t=2: -165$ (decommissioning)
-
-The cash flow changes sign **twice** (−, +, −). By Descartes' Rule, the number of positive real IRRs is at most two — and can be zero or one as well. For this specific profile, both roots exist and can be verified:
-
-$$NPV(10\%) = -100 + \frac{260}{1.10} - \frac{165}{1.21} = -100 + 236.36 - 136.36 = 0 \quad \checkmark$$
-$$NPV(50\%) = -100 + \frac{260}{1.50} - \frac{165}{2.25} = -100 + 173.33 - 73.33 = 0 \quad \checkmark$$
-
-Two mathematically valid IRRs: 10% and 50%. Neither represents the project's unique true yield — and both are above a hurdle rate of 8%, yet NPV at 8% is negative (the project destroys value). The IRR rule gives the wrong answer either way.
-
-::: {.callout-warning}
-**Management Rule:** If your cash flow stream changes signs more than once — decommissioning costs, mid-project overhauls, reclamation obligations — **never use IRR**. Use NPV. The IRR method breaks down precisely where the business reality is most complex.
+Strictly speaking, @eq-irr assumes nothing about reinvestment: it is an equation in the project's own cash flows, and its solution does not change whatever the investor does with the money released. The assumption enters only through the *interpretation* — the moment we read the IRR as the growth rate of the initial investment over the whole life. The capital-tied-up table shows the honest interpretation: the project pays $r$ on the capital that remains in it. Many authors therefore prefer to speak of the reinvestment *critique* rather than the reinvestment *assumption*. The NPV is in the same position with one decisive difference: if intermediate cash flows are reinvested at the cost of capital $i$, the reinvestment adds exactly zero NPV, so the NPV is unaffected by what happens to the cash afterwards — and in the perfect capital market behind Fisher separation (Chapter 4), $i$ is precisely the rate available to everyone. The IRR, by contrast, presents a rate that the market need not offer as if it were the return on the whole investment.
 :::
 
-## NPV vs. IRR: The Ultimate Showdown
+### Multiple or No IRR: Descartes' Rule of Signs
 
-Both methods correctly account for the time value of money. The differences lie in what they measure and how they can mislead.
+Multiply @eq-irr by $(1+r)^n$ and write $q = 1 + r$. The search for the IRR becomes the search for the positive roots of a polynomial:
 
-| Feature | NPV | IRR |
-|:--------|:----|:----|
-| **Measures** | Absolute wealth created (€) | Relative yield (%) |
-| **Reinvestment** | At market rate $i$ — realistic | At internal rate $r$ — often optimistic |
-| **Communication** | Harder: "We add € 4,200." | Easier: "We earn 25%." |
-| **Uniqueness** | Always one solution | Can be multiple or undefined |
-| **Scale sensitivity** | Captures project size | Blind to size |
-| **Risk adjustment** | Adjust $i$ before discounting | Compare $r$ to $i$ after the fact |
+$$
+CF_0 \cdot q^n + CF_1 \cdot q^{n-1} + \dots + CF_{n-1} \cdot q + CF_n = 0, \qquad CF_0 = -I_0
+$$ {#eq-polynomial}
 
-### The Conflict Zone: Mutually Exclusive Projects
+A polynomial of degree $n$ can have up to $n$ roots, and **Descartes' rule of signs** tells us how many of them can be positive. Read the coefficients $CF_0, CF_1, \dots, CF_n$ in order, skip any zeros, and count how often the sign changes. The number of positive real roots $q$ equals the number of sign changes or is smaller than it by an even number. A positive root $q$ corresponds to an IRR $r = q - 1$ above −100%.
 
-When you must choose between two projects (not both), IRR and NPV can give contradictory signals — and IRR is wrong.
+For a **conventional investment** the sequence is $-, +, +, \dots, +$: one sign change, so exactly one positive root and exactly one IRR. That IRR is positive when the undiscounted cash flows sum to more than the investment, $C_0(0) > 0$, and negative when the project does not even return its money in nominal terms. Every additional sign change opens the door to more IRRs — but only opens it. Descartes provides a ceiling, not a count:
 
-* **Project A (Small & Fast):** Invest € 1 → receive € 1.50 at year-end. **IRR = 50%.** NPV at 10% = € 0.36.
-* **Project B (Large & Steady):** Invest € 1,000 → receive € 1,200 at year-end. **IRR = 20%.** NPV at 10% = € 90.91.
+| Cash flows $t = 0, 1, 2$ | Sign changes | IRRs | NPV at 8% |
+|:---|:---:|:---|---:|
+| −100, +260, −165 | 2 | 10% and 50% | −0.72 |
+| −100, +250, −165 | 2 | none | −9.98 |
 
-IRR says "take A" (50% > 20%). NPV says "take B" (€ 90.91 > € 0.36). The NPV verdict is correct: you cannot pay dividends with percentages.
+Take the first profile: an investment of 100, a large inflow of 260, then a clean-up cost of 165. Both 10% and 50% solve the equation:
 
-**The Differenzinvestition in numbers:** evaluate the *incremental* investment B – A directly. The increment requires an extra € 999 of capital and returns an extra € 1,198.50:
+$$
+-100 + \frac{260}{1.10} - \frac{165}{1.10^2} = -100 + 236.36 - 136.36 = 0, \qquad
+-100 + \frac{260}{1.50} - \frac{165}{1.50^2} = -100 + 173.33 - 73.33 = 0
+$$
 
-$$NPV_{B-A} = -999 + \frac{1{,}198.50}{1.10} = -999 + 1{,}089.55 = \mathbf{+\text{€}\,90.55}$$
+Which one is "the" return? Neither. The NPV function of this project starts negative at $i = 0$ (the undiscounted sum is $-5$), rises above zero between 10% and 50% and falls back below zero after 50%. At a cost of capital of 8% the NPV is $-100 + 240.74 - 141.46 = -0.72$: the project destroys value. A manager applying "IRR above hurdle rate" would see two IRRs, both above 8%, and accept — wrongly. Change the inflow to 250 and the curve never reaches zero at all: the highest NPV it attains is about −5.30, there is no IRR, and the IRR rule cannot even be stated. The NPV rule handles both profiles without hesitation: reject.
 
-Since the incremental investment creates positive NPV (and its IRR ≈ 20% > 10% hurdle), committing the extra capital to B is worthwhile. Choose B.
+Such profiles are not academic curiosities. Mines and quarries that must be restored, nuclear and offshore installations that must be decommissioned, and machines that need a major overhaul halfway through their life all produce a late outflow after years of inflows. One of the first published analyses of the problem used exactly such a case: a bigger oil pump that empties a field faster, bringing cash forward and leaving less for the final years (Lorie & Savage, 1955). The practical protocol is short: count the sign changes before you compute an IRR; if there is more than one, decide with the NPV, and if a percentage is required for communication, report the MIRR.
 
-> **Rule:** In mutually exclusive decisions, follow NPV. IRR maximises efficiency per euro invested; NPV maximises total wealth — which is what shareholders actually receive.
+In the widget below, a project costs €10,000 and earns €6,500 a year for five years, but the final year also carries a clean-up cost. Raise the clean-up cost step by step: above €6,500 the last cash flow turns negative, between about €22,600 and €23,700 the NPV curve crosses zero twice, and beyond that it never reaches zero at all.
+
+::: {.widget}
+<iframe src="assets/ch05/multiple.html"
+        width="100%" height="760px" frameborder="0"
+        title="Multiple IRRs: NPV function of a project with a clean-up cost in the final year">
+</iframe>
+:::
+
+### Mutually Exclusive Projects: Crossover Rate and Incremental Investment
+
+Projects are **mutually exclusive** when choosing one rules out the other: two machines for the same production line, two routes for the same pipeline. Here the question is no longer "does each project clear the hurdle?" but "which of the two creates more value?" — and on this question IRR and NPV can disagree even for perfectly conventional projects.
+
+Let Project A be the front-loaded project from above and Project B a back-loaded project of the same size:
+
+| $t$ | 0 | 1 | 2 | 3 | IRR | $C_0(8\%)$ |
+|:---|---:|---:|---:|---:|---:|---:|
+| Project A (€) | −100,000 | 70,000 | 40,000 | 20,000 | 18.17% | 14,985 |
+| Project B (€) | −100,000 | 10,000 | 30,000 | 110,000 | 16.61% | 22,301 |
+| Increment B − A (€) | 0 | −60,000 | −10,000 | 90,000 | 14.42% | 7,316 |
+
+The IRR favours A, the NPV at 8% favours B. Both projects cost the same, so this is not a scale effect; it is timing. B's large inflow arrives in year 3. At low discount rates that late money is worth a lot, and B wins. At high discount rates it is discounted heavily, and A, whose money comes back early, wins. The two NPV functions therefore cross. The rate at which they cross is the **crossover rate**, also called the **Fisher intersection**; here it is 14.42%. Below it B has the higher NPV, above it A does. The IRR comparison effectively judges both projects at rates above the crossover — at their own IRRs — while the firm's capital costs 8%.
+
+<!-- Widget idea: two NPV functions on one chart (Projects A and B), a draggable cost-of-capital line and the crossover rate marked; the ranking label flips when the line passes 14.42%. -->
+
+The way out is to look at what you get *in addition* if you pick B instead of A. This is the **incremental investment** (dt. *Differenzinvestition*): the cash flows of B minus those of A, year by year, shown in the last row of the table.
+
+$$
+\Delta CF_t = CF_t^{B} - CF_t^{A}, \qquad C_0^{\Delta}(i) = \sum_{t=0}^{n} \frac{\Delta CF_t}{(1+i)^t} = C_0^{B}(i) - C_0^{A}(i)
+$$ {#eq-incremental}
+
+Choosing B over A means giving up €60,000 in year 1 and €10,000 in year 2 to receive €90,000 more in year 3. That increment is itself an investment, and it can be judged like any other:
+
+$$
+C_0^{\Delta}(8\%) = -\frac{60{,}000}{1.08} - \frac{10{,}000}{1.08^2} + \frac{90{,}000}{1.08^3} = -55{,}556 - 8{,}573 + 71{,}445 = 7{,}316
+$$
+
+The increment's NPV is positive, so the move from A to B creates €7,316 of additional value; equivalently, the increment's own IRR of 14.42% — the crossover rate — clears the 8% hurdle. Choose B. The procedure for any pair of mutually exclusive projects:
+
+1. Check that each project is acceptable on its own ($C_0 > 0$); a project that fails on its own is out.
+2. Form the incremental cash flows $\Delta CF_t$, subtracting the smaller (or earlier-paying) project from the other.
+3. Compute the NPV of the increment at $i$, or its IRR $r_\Delta$ and compare it with $i$. If $C_0^{\Delta} > 0$ (equivalently $r_\Delta > i$, provided the increment has one sign change), choose the project you subtracted *from*; otherwise choose the other.
+
+The identity in @eq-incremental shows why this always reproduces the NPV ranking: the NPV of the difference *is* the difference of the NPVs. The incremental investment is the IRR method's way of asking the NPV question. It also explains the MIRR result: with equal investment and equal life, the MIRR ranking matches the NPV ranking — B's MIRR is 15.50%, A's only 13.15%.
 
 ::: {.drag-exercise}
-While the *Internal Rate of Return* is easier to communicate to management, *Net Present Value* is theoretically superior because it captures absolute *wealth* creation and applies a realistic *reinvestment* rate. When the two methods conflict, always follow the *NPV*.
-:::
-
-## Chapter Check
-
-::: {.quick-check}
-**Project A has an IRR of 25%. Project B has an IRR of 15%. The cost of capital is 10%. Can we automatically conclude that Project A is better?**
-
-- Yes — 25% is clearly higher than 15%.
-- **No — we must also check NPV (scale effect).**
-- No — because Project A might have higher risk.
-
-> No. If Project A is tiny (invest € 1) and Project B is large (invest € 1 million), Project B creates far more absolute wealth despite its lower percentage return. Always check NPV for mutually exclusive choices — or apply the Differenzinvestition to the incremental investment.
+Two NPV functions intersect at the *crossover rate*, which equals the IRR of the *incremental investment*. If the cost of capital lies *below* this rate, the project with the later and larger cash flows has the higher NPV, even though its IRR may be *lower*.
 :::
 
 ::: {.quick-check}
-**Why do we use Regula Falsi instead of solving the IRR equation directly?**
+A project has the cash flows −500, +900, −300, +200 at $t = 0, 1, 2, 3$. What does Descartes' rule of signs tell you?
 
-- To correct the reinvestment assumption.
-- To avoid using a calculator.
-- **Because there is no closed-form algebraic solution for $r$ when $n > 2$.**
+- It has exactly three IRRs.
+- **It has three sign changes, so it has either three IRRs or one.**
+- It has no IRR, because one of the later cash flows is negative.
+:::
 
-> For polynomials of degree $n > 2$, no general formula exists. Linear interpolation finds a close numerical approximation by treating the NPV curve as locally linear between two bracketing rates. Narrowing the bracket reduces the approximation error.
+## Practice: Two Decisions on the Shop Floor
+
+The two cases below apply the toolkit to the decisions that make the IRR dangerous. The first resolves the Feldmann board meeting from the opening; it combines interpolation, the incremental investment and the MIRR. The second is a project with a clean-up obligation and two IRRs. The integrated Vogt case (Dossier 2) asks you to run the same analysis for two CNC machines of very different scale.
+
+::: {.case-study}
+#### Case: Feldmann Formteile GmbH — Retrofit or New Machine?
+
+Feldmann can do only one of the two projects; the moulding line is either retrofitted or replaced. Its cost of capital is 8%, and the additional €200,000 for the new machine can be financed at that rate.
+
+| $t$ | 0 | 1 | 2 | 3 |
+|:---|---:|---:|---:|---:|
+| A: Retrofit (€) | −100,000 | 50,000 | 50,000 | 40,000 |
+| B: New machine (€) | −300,000 | 100,000 | 125,000 | 175,000 |
+
+**Tasks:**
+
+1. Compute the NPV of both projects at 8%.
+2. Verify the two IRRs on the slides by linear interpolation (A between 19% and 20%, B between 14% and 15%).
+3. Form the incremental investment B − A. Compute its NPV at 8% and its IRR (between 12% and 13%). Which project should Feldmann choose?
+4. Compute the MIRR of both projects at 8%. Does the MIRR resolve the conflict?
+5. Petra Lang's bank raises the cost of capital to 13%. Does the decision change?
+
+::: {.solution}
+**Solution:**
+
+**1. NPV at 8%.** Discounting each cash flow with $(1.08)^{-t}$:
+
+| $t$ | Discount factor | PV of A (€) | PV of B (€) |
+|:---:|:---:|---:|---:|
+| 0 | 1.0000 | −100,000 | −300,000 |
+| 1 | 0.9259 | 46,296 | 92,593 |
+| 2 | 0.8573 | 42,867 | 107,167 |
+| 3 | 0.7938 | 31,753 | 138,921 |
+| | **NPV** | **20,917** | **38,681** |
+
+(Present values rounded to whole euros; the NPVs are computed before rounding.) Both projects are acceptable on their own. B creates €17,764 more value.
+
+**2. IRRs by interpolation.**
+
+Project A: $C_0(19\%) = 1{,}062$ and $C_0(20\%) = -463$, so
+
+$$
+r_A \approx 0.19 + \frac{1{,}062}{1{,}062 + 463} \cdot 0.01 = 0.1970
+$$
+
+Project B: $C_0(14\%) = 2{,}023$ and $C_0(15\%) = -3{,}460$, so
+
+$$
+r_B \approx 0.14 + \frac{2{,}023}{2{,}023 + 3{,}460} \cdot 0.01 = 0.1437
+$$
+
+The slides were right: 19.7% and 14.4% (exact values 19.69% and 14.37%). The IRR ranking (A before B) contradicts the NPV ranking (B before A).
+
+**3. Incremental investment B − A.**
+
+| $t$ | 0 | 1 | 2 | 3 |
+|:---|---:|---:|---:|---:|
+| $\Delta CF_t$ (€) | −200,000 | 50,000 | 75,000 | 135,000 |
+
+$$
+C_0^{\Delta}(8\%) = -200{,}000 + \frac{50{,}000}{1.08} + \frac{75{,}000}{1.08^2} + \frac{135{,}000}{1.08^3} = -200{,}000 + 46{,}296.30 + 64{,}300.41 + 107{,}167.35 = 17{,}764.06
+$$
+
+This equals $38{,}680.59 - 20{,}916.53 = 17{,}764.06$, as @eq-incremental requires. For the increment's IRR: $C_0^{\Delta}(12\%) = 523$ and $C_0^{\Delta}(13\%) = -3{,}454$, so
+
+$$
+r_\Delta \approx 0.12 + \frac{523}{523 + 3{,}454} \cdot 0.01 = 0.1213
+$$
+
+The additional €200,000 earns 12.13% — more than the 8% it costs. **Feldmann should choose B, the new machine.** The crossover rate of the two NPV functions is 12.13%.
+
+**4. MIRR at 8%.** Terminal values of the inflows at $t = 3$:
+
+$$
+TV_3^{A} = 50{,}000 \cdot 1.08^2 + 50{,}000 \cdot 1.08 + 40{,}000 = 152{,}320, \qquad MIRR_A = \left(\frac{152{,}320}{100{,}000}\right)^{1/3} - 1 = 15.06\%
+$$
+
+$$
+TV_3^{B} = 100{,}000 \cdot 1.08^2 + 125{,}000 \cdot 1.08 + 175{,}000 = 426{,}640, \qquad MIRR_B = \left(\frac{426{,}640}{300{,}000}\right)^{1/3} - 1 = 12.46\%
+$$
+
+Both MIRRs lie between 8% and the respective IRR, and both are above 8%, consistent with positive NPVs. But A still ranks first. The MIRR removes the reinvestment distortion, not the **scale** difference: 15.06% on €100,000 is less wealth than 12.46% on €300,000. Only the NPV or the incremental investment answers Petra's question.
+
+**5. Cost of capital 13%.** Now $i = 13\%$ lies above the crossover rate of 12.13%, so the increment no longer pays: $C_0^{\Delta}(13\%) = -3{,}454$. Directly: $C_0^{A}(13\%) = 11{,}127$ and $C_0^{B}(13\%) = 7{,}673$. **The decision flips to A.** The IRRs did not change at all — which shows that they could never have made this decision on their own.
+:::
+:::
+
+::: {.case-study}
+#### Case: Lindenau Kieswerk GmbH — A Gravel Pit With Two Returns
+
+Lindenau Kieswerk GmbH can open a gravel pit for €1,000,000. Extraction yields net cash flows of €1,300,000 in each of years 1 and 2. In year 3 the licence requires the pit to be restored as a lake and wetland, at a cost of €1,650,000. The cost of capital is 10%. The managing director's analyst reports: "The IRR is 6.3%, below our 10% hurdle — reject." A second analyst insists: "No, the IRR is 37% — accept."
+
+| $t$ | 0 | 1 | 2 | 3 |
+|:---|---:|---:|---:|---:|
+| $CF_t$ (€) | −1,000,000 | 1,300,000 | 1,300,000 | −1,650,000 |
+
+**Tasks:**
+
+1. How many IRRs can this project have? Show that both analysts' figures are IRRs.
+2. Decide with the NPV at 10%.
+3. Compute the MIRR at 10% and interpret it.
+
+::: {.solution}
+**Solution:**
+
+**1. Sign changes.** The sequence is $-, +, +, -$: two sign changes, so by Descartes' rule there are two positive roots $q$ or none. Both analysts are right about the arithmetic. Interpolating between 6% and 7%: $C_0(6\%) = -1{,}961$ and $C_0(7\%) = 3{,}532$, so $r_1 \approx 0.06 + \frac{1{,}961}{1{,}961 + 3{,}532} \cdot 0.01 = 6.36\%$ (exact 6.34%). Between 36% and 37%: $C_0(36\%) = 2{,}792$ and $C_0(37\%) = -149$, so $r_2 \approx 36.95\%$. There is no reason to prefer one IRR over the other; the IRR rule is unusable.
+
+**2. NPV at 10%.**
+
+$$
+C_0 = -1{,}000{,}000 + \frac{1{,}300{,}000}{1.10} + \frac{1{,}300{,}000}{1.10^2} - \frac{1{,}650{,}000}{1.10^3}
+= -1{,}000{,}000 + 1{,}181{,}818 + 1{,}074{,}380 - 1{,}239{,}669 = 16{,}529
+$$
+
+The NPV is positive: **accept** at 10%. The first analyst's rejection was wrong; the second analyst reached the right answer for the wrong reason. The NPV is positive only for discount rates between the two IRRs, 6.34% and 36.95%: at 5% it is −8,098, and undiscounted the project even loses €50,000.
+
+**3. MIRR at 10%.** Inflows compounded to $t = 3$, outflows discounted to $t = 0$:
+
+$$
+TV_3 = 1{,}300{,}000 \cdot 1.10^2 + 1{,}300{,}000 \cdot 1.10 = 3{,}003{,}000, \qquad
+PV_{out} = 1{,}000{,}000 + \frac{1{,}650{,}000}{1.10^3} = 2{,}239{,}669
+$$
+
+$$
+MIRR = \left(\frac{3{,}003{,}000}{2{,}239{,}669}\right)^{1/3} - 1 = 10.27\%
+$$
+
+The MIRR is unique and lies just above 10%, in line with the small positive NPV. Note what drives the result: the restoration cost is the largest single cash flow, yet discounting over three years shrinks it by a quarter. The further into the future an obligation lies, the cheaper it looks today — a point Chapter 10 returns to when it asks whose future the discount rate devalues.
+:::
 :::
 
 ::: {.quick-check}
-**A project has cash flows: t=0: −€100k, t=1: +€260k, t=2: −€165k. Cost of capital is 8%. Should you apply the IRR method?**
+In the Feldmann case, the engineers find that the new machine's year-3 saving will be €195,000 instead of €175,000. What happens to the crossover rate between A and B?
 
-- Yes — both resulting IRRs exceed the 8% hurdle rate, so the project is acceptable.
-- **No — two sign changes make IRR unreliable; evaluate with NPV instead.**
-- Only if you use the lower of the two IRRs as the decision criterion.
-
-> Correct. The cash flow changes sign twice (−, +, −), producing two IRRs: 10% and 50%. Both exceed the 8% hurdle — yet NPV at 8% = −€0.73k (the project destroys value at this cost of capital). Applying the "r > i" rule to either IRR gives the wrong answer. Use NPV.
+- It stays at 12.13%, because the crossover rate depends only on the cost of capital.
+- **It rises, because the increment B − A now has a larger late inflow and therefore a higher IRR.**
+- It falls, because B's IRR rises and moves closer to A's.
 :::
 
-Chapter 6 moves from *which* project to choose to *how long* the project should run — the annuity method and the optimal investment horizon.
+## Conclusion: A Percentage Is an Answer to a Different Question
+
+The IRR is not wrong. It answers a precise question — at which rate does this project exactly break even? — and for a single conventional project its verdict always matches the NPV. It goes wrong when it is asked a different question: which of two projects creates more value, how much an investor will really accumulate, or what a project with a clean-up bill at the end is worth. For all three, the euro figure at the firm's own cost of capital is the answer, and the incremental investment and the MIRR are ways of making the percentage tell the same story. Petra Lang's question at Feldmann was the right one: percentages do not pay salaries, euros do.
+
+::: {.quick-check}
+Project X has an IRR of 25%, Project Y an IRR of 15%. The cost of capital is 10% and the projects are mutually exclusive. What do you conclude?
+
+- Choose X, because its IRR is higher.
+- **Nothing yet — compare the NPVs at 10% or evaluate the incremental investment.**
+- Choose X only if its MIRR is also higher than Y's.
+:::
+
+::: {.quick-check}
+An analyst presents an IRR of 30% for a project whose cash flows are reinvested at the 8% cost of capital. Which statement about its MIRR at 8% is correct?
+
+- The MIRR equals 30%, because the cash flows are the same.
+- The MIRR is above 30%, because compounding adds interest.
+- **The MIRR lies between 8% and 30%, because the released cash earns only 8% after it leaves the project.**
+:::
+
+Even the NPV, however, has a blind spot when two machines do not live equally long. Chapter 6 converts the NPV into an equal annual amount with the Capital Recovery Factor, the tool that makes a three-year machine and a six-year machine comparable.

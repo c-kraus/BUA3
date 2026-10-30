@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dean Model: Capital Rationing & Profitability Index</title>
+    <title>Capital Rationing: Profitability Index Selection</title>
     <style>
         * { box-sizing: border-box; margin: 0; padding: 0; }
         body {
@@ -68,14 +68,14 @@
 </head>
 <body>
 <div class="card">
-    <div class="card-title">Dean Model — Capital Rationing & Profitability Index</div>
+    <div class="card-title">Capital Rationing — Selection by Profitability Index</div>
     <div class="card-sub">
         Projects are ranked by Profitability Index (PI = PV of CFs / I₀). Drag the budget slider to see which
         projects are selected. Compare the PI selection to a naive "highest NPV first" approach.
     </div>
 
     <div class="budget-row">
-        <label>Capital Budget (B) <span class="val" id="bval">$ 200M</span></label>
+        <label>Capital Budget (B) <span class="val" id="bval">€200 million</span></label>
         <input type="range" id="bsl" min="20" max="320" step="10" value="200">
     </div>
 
@@ -83,8 +83,8 @@
         <thead>
             <tr>
                 <th style="text-align:left">Project</th>
-                <th>Investment ($M)</th>
-                <th>NPV ($M)</th>
+                <th>Investment (€ million)</th>
+                <th>NPV (€ million)</th>
                 <th>PI</th>
                 <th style="text-align:left">PI Rank</th>
                 <th>Status</th>
@@ -100,18 +100,18 @@
     <div class="summary-row">
         <div class="sbox budget">
             <div class="rl">Budget Used</div>
-            <div class="rf" id="rfBudget">of $ 200M</div>
-            <div class="rv" id="rvBudget">$ 0M</div>
+            <div class="rf" id="rfBudget">of €200 million</div>
+            <div class="rv" id="rvBudget">€0 million</div>
         </div>
         <div class="sbox npv">
             <div class="rl">Total NPV (PI method)</div>
             <div class="rf">PI-ranked selection</div>
-            <div class="rv" id="rvNPV">$ 0M</div>
+            <div class="rv" id="rvNPV">€0 million</div>
         </div>
         <div class="sbox vs">
             <div class="rl">NPV gain vs. naive</div>
             <div class="rf" id="rfVs">vs. highest-NPV-first</div>
-            <div class="rv" id="rvVs">$ 0M</div>
+            <div class="rv" id="rvVs">€0 million</div>
         </div>
     </div>
     <div class="insight" id="insightBox"></div>
@@ -161,7 +161,7 @@
 
     function draw() {
         var B = parseInt(bsl.value);
-        document.getElementById('bval').textContent = '$ '+B+'M';
+        document.getElementById('bval').textContent = '€'+B+' million';
 
         var piResult  = selectByStrategy(B, byPI);
         var npvResult = selectByStrategy(B, byNPV);
@@ -180,8 +180,8 @@
             var piBarPct = ((p.pi - 1) / (byPI[0].pi - 1) * 100).toFixed(0);
             tr.innerHTML =
                 '<td class="proj-name">'+ p.name +'</td>'+
-                '<td>$'+ p.inv +'M</td>'+
-                '<td>$'+ p.npv +'M</td>'+
+                '<td>'+ p.inv +'</td>'+
+                '<td>'+ p.npv +'</td>'+
                 '<td>'+ p.pi.toFixed(2) +'</td>'+
                 '<td><div class="pi-bar">'+
                     '<div class="pi-fill '+(isSel?'sel':'rej')+'" style="width:'+Math.max(4,piBarPct*0.6)+'px"></div>'+
@@ -193,24 +193,24 @@
         });
 
         // Summary
-        document.getElementById('rfBudget').textContent = 'of $ '+B+'M';
-        document.getElementById('rvBudget').textContent = '$ '+piResult.inv+'M';
-        document.getElementById('rvNPV').textContent = '$ '+piResult.npv+'M';
+        document.getElementById('rfBudget').textContent = 'of €'+B+' million';
+        document.getElementById('rvBudget').textContent = '€'+piResult.inv+' million';
+        document.getElementById('rvNPV').textContent = '€'+piResult.npv+' million';
         var gain = piResult.npv - npvResult.npv;
-        document.getElementById('rvVs').textContent = (gain>=0?'+':'')+'$ '+gain+'M';
+        document.getElementById('rvVs').textContent = (gain>=0?'+':'−')+'€'+Math.abs(gain)+' million';
         document.getElementById('rfVs').textContent = 'naive selects: ' + npvResult.names.join(', ') +
-            ' (NPV $' + npvResult.npv + 'M)';
+            ' (NPV €' + npvResult.npv + ' million)';
 
         var insight = document.getElementById('insightBox');
         if (gain > 0) {
             insight.textContent = 'PI method selects: ' + piResult.names.join(', ') +
-                ' for a total NPV of $' + piResult.npv +
-                'M — $' + gain + 'M better than choosing highest-NPV projects first (' + npvResult.names.join(', ') + ').';
+                ' for a total NPV of €' + piResult.npv +
+                ' million — €' + gain + ' million better than choosing highest-NPV projects first (' + npvResult.names.join(', ') + ').';
         } else if (gain < 0) {
-            insight.textContent = 'At this budget level, highest-NPV selection happens to outperform PI ranking by $' + Math.abs(gain) +
-                'M. This is unusual and occurs when projects fit the budget constraint perfectly in NPV order.';
+            insight.textContent = 'At this budget level, highest-NPV selection outperforms the PI ranking by €' + Math.abs(gain) +
+                ' million. With indivisible projects this is a normal case, not an anomaly: the PI ranking leaves part of the budget idle that a combination of larger projects fills better. Idle capital is the signal to check the margin.';
         } else {
-            insight.textContent = 'At this budget level, both strategies produce the same portfolio and the same total NPV of $' + piResult.npv + 'M.';
+            insight.textContent = 'At this budget level, both strategies reach the same total NPV of €' + piResult.npv + ' million.';
         }
 
         // ── SVG: staircase chart ──────────────────────────────────────────────
@@ -251,7 +251,7 @@
         var yl=mkEl('text',{x:13,y:MT+cH/2,'text-anchor':'middle','font-size':'9.5',fill:'#666',
             'font-family':"'Inter',sans-serif",transform:'rotate(-90,13,'+(MT+cH/2)+')'});
         yl.textContent='Profitability Index (PI)'; svg.appendChild(yl);
-        svg.appendChild(mkTxt(ML+cW/2,MT+cH+30,'Cumulative Investment Volume ($M)',{fill:'#666','font-size':'9.5'}));
+        svg.appendChild(mkTxt(ML+cW/2,MT+cH+30,'Cumulative Investment Volume (€ million)',{fill:'#666','font-size':'9.5'}));
 
         // Project staircase bars
         var cumInv = 0;
@@ -271,7 +271,7 @@
                 svg.appendChild(mkTxt((x0+x1)/2, yPi-5, p.name,
                     {fill:isSel?'#1b5e20':'#888','font-size':'9.5','font-weight':'700'}));
             }
-            svg.appendChild(mkTxt((x0+x1)/2, axY+15, '$'+p.inv+'M',
+            svg.appendChild(mkTxt((x0+x1)/2, axY+15, ''+p.inv,
                 {fill:'#888','font-size':'8.5'}));
             cumInv += p.inv;
         });
@@ -281,7 +281,7 @@
             var xB = toX(B);
             svg.appendChild(mkEl('line',{x1:xB,y1:MT,x2:xB,y2:MT+cH,
                 stroke:'#ff6a00','stroke-width':'2','stroke-dasharray':'6,3'}));
-            svg.appendChild(mkTxt(xB, MT-10, 'Budget $'+B+'M',
+            svg.appendChild(mkTxt(xB, MT-10, 'Budget €'+B+' million',
                 {fill:'#ff6a00','font-size':'9','font-weight':'700'}));
         }
 

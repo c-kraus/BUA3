@@ -11,6 +11,8 @@ This digital script serves as the intellectual backbone for our course. It is no
 
 We operate here at the precise intersection of **Time** and **Money**. The goal of this text is not the mindless memorization of formulas, but the deep understanding of the economic *ratio* behind them. Whether we are discounting cash flows or evaluating multi-million Euro projects, the central question remains: *Does this decision create value?*
 
+The book follows that question in four steps. **Part I** builds the time-value toolkit — interest, annuities, loans, bonds and stocks. **Part II** turns it into the three core appraisal methods: net present value, internal rate of return and the annuity method. **Part III** adds the complications of the real world — taxes, scarce capital and an uncertain future. **Part IV** asks who writes the numbers, who bears the costs they leave out, and whose future the discount rate weighs. Every chapter comes with an exercise sheet in the appendix.
+
 ## A Living Document (Beta)
 
 This "book" is—much like the markets we analyze—dynamic and evolving. It is currently in a **Beta State**.

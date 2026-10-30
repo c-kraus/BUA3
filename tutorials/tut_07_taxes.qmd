@@ -1,0 +1,222 @@
+---
+title: "Tutorial 07: The Silent Partner — Taxes"
+subtitle: "After-tax cash flows · after-tax discount rate · volume and interest effect · tax paradox"
+lang: en
+author:
+  - name: Prof. Dr. Christian Kraus
+    email: christian.kraus@thws.de
+    role: Lecturer
+    affiliation: THWS Business & Engineering
+course: "Investment Decisions (BUA3)"
+semester: "WS 2026/27"
+sheet: "07"
+date: last-modified
+show_solutions: false
+format: tutorial-typst
+---
+
+# Tutorial 07: The Silent Partner — Taxes
+
+## Exercise 1: After-Tax Cash Flows and the Two Effects
+
+Röstwerk Hofmann, a small coffee roaster, wants to buy a second roasting drum for **€60,000**. It is used for three years and depreciated straight-line to zero. The owner calculates with a pre-tax market rate of **10%** and a profit tax rate of **30%**, and is surprised to learn that the tax office wants a share of the aroma too.
+
+| | $t = 0$ | $t = 1$ | $t = 2$ | $t = 3$ |
+|:--|--:|--:|--:|--:|
+| Pre-tax cash flow (€) | −60,000 | 30,000 | 28,000 | 26,000 |
+
+#### Task 1: Tax payments and after-tax cash flows
+
+Extend the timeline by depreciation, taxable profit, tax payment and after-tax cash flow for $t = 0, \dots, 3$.
+
+::: {.content-visible when-meta="show_solutions"}
+**Solution:**
+
+Given: $I_0 = 60{,}000$; $n = 3$; $s = 0.30$; $D_t = 60{,}000 / 3 = 20{,}000$.
+
+Tax: $\text{Tax}_t = s \cdot (CF_{before,t} - D_t)$; after-tax cash flow: $CF_{after,t} = CF_{before,t} \cdot (1-s) + s \cdot D_t$.
+
+| | $t = 0$ | $t = 1$ | $t = 2$ | $t = 3$ |
+|:--|--:|--:|--:|--:|
+| Pre-tax cash flow | −60,000 | 30,000 | 28,000 | 26,000 |
+| Depreciation $D_t$ | — | 20,000 | 20,000 | 20,000 |
+| Taxable profit | — | 10,000 | 8,000 | 6,000 |
+| Tax (30%) | — | 3,000 | 2,400 | 1,800 |
+| **After-tax cash flow** | **−60,000** | **27,000** | **25,600** | **24,200** |
+
+Check for $t = 1$ with the shortcut formula: $30{,}000 \cdot 0.70 + 0.30 \cdot 20{,}000 = 21{,}000 + 6{,}000 = 27{,}000$.
+
+**Grading Notes:** The investment at $t = 0$ stays at −60,000 — it is not tax-deductible at purchase; it enters only through depreciation.
+:::
+
+#### Task 2: NPV before and after taxes
+
+Compute the after-tax discount rate, the NPV before taxes and the NPV after taxes. Does Hofmann buy the drum?
+
+::: {.content-visible when-meta="show_solutions"}
+**Solution:**
+
+After-tax rate: $i_{after} = 10\% \cdot (1 - 0.30) = 7\%$.
+
+Before taxes (at 10%):
+
+$$
+C_0^{before} = -60{,}000 + \frac{30{,}000}{1.10} + \frac{28{,}000}{1.10^2} + \frac{26{,}000}{1.10^3} = -60{,}000 + 27{,}273 + 23{,}140 + 19{,}534 = 9{,}947
+$$
+
+After taxes (after-tax cash flows at 7%):
+
+$$
+C_0^{after} = -60{,}000 + \frac{27{,}000}{1.07} + \frac{25{,}600}{1.07^2} + \frac{24{,}200}{1.07^3} = -60{,}000 + 25{,}234 + 22{,}360 + 19{,}754 = 7{,}348
+$$
+
+Both NPVs are positive: Hofmann buys the drum. Taxes reduce the NPV by $9{,}947 - 7{,}348 = 2{,}599$ — the normal case.
+
+**Grading Notes:** Accept results within ±2 euros from rounding of the discount factors.
+:::
+
+#### Task 3: Volume effect and interest effect
+
+Split the change in NPV into volume effect and interest effect and check that they add up to the total.
+
+::: {.content-visible when-meta="show_solutions"}
+**Solution:**
+
+**Volume effect** — after-tax instead of pre-tax cash flows, still discounted at 10% (the difference per year is minus the tax payment):
+
+$$
+\text{VE} = -\left(\frac{3{,}000}{1.10} + \frac{2{,}400}{1.10^2} + \frac{1{,}800}{1.10^3}\right) = -(2{,}727 + 1{,}983 + 1{,}352) = -6{,}063
+$$
+
+**Interest effect** — after-tax cash flows at 7% instead of 10%:
+
+$$
+\text{IE} = C_0^{after} - (C_0^{before} + \text{VE}) = 7{,}348 - (9{,}947 - 6{,}063) = 7{,}348 - 3{,}884 = 3{,}464
+$$
+
+Check: $-6{,}063 + 3{,}464 = -2{,}599 = C_0^{after} - C_0^{before}$. The volume effect dominates; the interest effect recovers more than half of the loss.
+
+**Grading Notes:** The interest effect may also be computed directly as $\sum CF_{after,t} \cdot [(1.07)^{-t} - (1.10)^{-t}]$; same result.
+:::
+
+## Exercise 2: The Tax Paradox
+
+Kranich Logistik GmbH evaluates an automated pallet store: investment **€120,000**, pre-tax cash flow **€36,000** per year for **six years**, no residual value, straight-line depreciation. The owners demand **20%** before taxes; the tax rate is **30%**. The managing director has already written "reject" on the file.
+
+Use $PVIFA(20\%,6) = 3.3255$ and $PVIFA(14\%,6) = 3.8887$.
+
+#### Task 1: Does the decision change?
+
+Compute the NPV before and after taxes. Is the managing director right?
+
+::: {.content-visible when-meta="show_solutions"}
+**Solution:**
+
+Given: $I_0 = 120{,}000$; $CF_{before} = 36{,}000$; $n = 6$; $D = 120{,}000 / 6 = 20{,}000$; $i = 20\%$; $s = 0.30$.
+
+$$
+C_0^{before} = -120{,}000 + 36{,}000 \cdot 3.3255 = -120{,}000 + 119{,}718 = -282
+$$
+
+$$
+CF_{after} = 36{,}000 \cdot 0.70 + 0.30 \cdot 20{,}000 = 25{,}200 + 6{,}000 = 31{,}200, \qquad i_{after} = 20\% \cdot 0.70 = 14\%
+$$
+
+$$
+C_0^{after} = -120{,}000 + 31{,}200 \cdot 3.8887 = -120{,}000 + 121{,}327 = +1{,}327
+$$
+
+Before taxes the project is rejected, after taxes accepted: the **tax paradox** reverses the decision. The managing director decided on the wrong (pre-tax) numbers.
+
+**Grading Notes:** With unrounded factors $C_0^{after} = 1{,}326$; accept 1,326–1,327.
+:::
+
+#### Task 2: Why does the tax help?
+
+a) Split the change in NPV into volume effect and interest effect.
+
+b) How much tax does Kranich pay over the six years in total?
+
+::: {.content-visible when-meta="show_solutions"}
+**Solution:**
+
+**a)** Tax per year: $0.30 \cdot (36{,}000 - 20{,}000) = 4{,}800$.
+
+$$
+\text{VE} = -4{,}800 \cdot 3.3255 = -15{,}962
+$$
+
+$$
+\text{IE} = 31{,}200 \cdot (3.8887 - 3.3255) = 31{,}200 \cdot 0.5632 = 17{,}572
+$$
+
+$\text{VE} + \text{IE} = 1{,}610$, which matches $1{,}327 - (-282) = 1{,}609$ up to rounding. The interest effect outweighs the volume effect.
+
+**b)** $6 \cdot 4{,}800 = 28{,}800$, i.e. 30% of the project's total surplus $6 \cdot 36{,}000 - 120{,}000 = 96{,}000$. The state does not collect less because of the paradox; straight-line depreciation only shifts the tax payments later than the asset's economic loss of value would justify, and at a high interest rate that deferral is worth a lot.
+
+**Grading Notes:** Accept VE + IE between 1,608 and 1,610 (rounding).
+:::
+
+#### Task 3: Immediate expensing
+
+Suppose the tax office allowed Kranich to deduct the full €120,000 at $t = 0$ (with immediate loss offset, as in the standard model). Compute the after-tax cash flows and the after-tax NPV, and compare with Task 1.
+
+::: {.content-visible when-meta="show_solutions"}
+**Solution:**
+
+At $t = 0$: taxable profit $= -120{,}000$, tax $= 0.30 \cdot (-120{,}000) = -36{,}000$ (refund), so $CF_{after,0} = -120{,}000 + 36{,}000 = -84{,}000$.
+
+Years 1–6: no depreciation left, so the tax is $0.30 \cdot 36{,}000 = 10{,}800$ and $CF_{after} = 36{,}000 \cdot 0.70 = 25{,}200$.
+
+$$
+C_0^{after} = -84{,}000 + 25{,}200 \cdot 3.8887 = -84{,}000 + 97{,}995 = +13{,}995
+$$
+
+The NPV rises from €1,327 (straight-line) to €13,995, although the total tax is unchanged: $-36{,}000 + 6 \cdot 10{,}800 = 28{,}800$. Immediate expensing makes the state pay its 30% share of the investment on day one, so every after-tax cash flow is exactly 70% of the pre-tax one: the after-tax IRR equals the pre-tax IRR (about 19.9%), which now only has to beat 14% instead of 20%.
+
+**Grading Notes:** Full marks require the observation that the total tax is identical and only its timing differs.
+:::
+
+## Exercise 3: Concepts
+
+#### Task 1: Multiple choice — the standard model
+
+Which of the following statements about the standard model of investment appraisal with taxes are **correct**? (Multiple answers possible.)
+
+a) The after-tax discount rate $i \cdot (1-s)$ applies only if the project is financed entirely with debt.
+
+b) Under straight-line depreciation, the initial investment at $t = 0$ is reduced by $s \cdot I_0$.
+
+c) The depreciation tax shield of period $t$ equals $s \cdot D_t$.
+
+d) With a constant tax rate and no residual value, the total tax paid over the project's life is the same under every depreciation schedule.
+
+e) The volume effect equals minus the present value of all tax payments, discounted at the pre-tax rate.
+
+f) If tax depreciation equalled economic depreciation, the tax paradox would be at its strongest.
+
+g) All statements are false.
+
+::: {.content-visible when-meta="show_solutions"}
+**Solution:** Correct are **c)**, **d)** and **e)**.
+
+- **a) Incorrect.** The rate falls because the interest on the *alternative* investment is taxed; the standard model is financing-neutral.
+- **b) Incorrect.** The investment is not deductible at purchase; it enters the tax calculation only through the depreciation of later periods.
+- **c) Correct.** Each euro of depreciation lowers taxable profit by one euro and the tax by $s$ euros.
+- **d) Correct.** Total depreciation always equals $I_0$, so total taxable profit is $\sum CF_t - I_0$ under every schedule; only the timing differs.
+- **e) Correct.** $CF_{after,t} - CF_{before,t} = -\text{Tax}_t$, discounted at $i$.
+- **f) Incorrect.** With economic depreciation, the after-tax IRR is exactly $r \cdot (1-s)$ and the decision cannot flip; the paradox needs depreciation that runs ahead of economic depreciation.
+- **g) Incorrect.**
+:::
+
+#### Task 2: Transfer — the finance minister's two proposals
+
+A finance ministry discusses two reforms: (1) allowing firms a declining-balance write-off of 30% instead of straight-line depreciation; (2) forcing firms to depreciate machines over twice their useful life. Explain, without calculation, how each reform affects the after-tax NPV of a marginal project like Kranich's pallet store, and which of the two could turn a "yes" before taxes into a "no" after taxes.
+
+::: {.content-visible when-meta="show_solutions"}
+**Solution:**
+
+Neither reform changes the total tax over a project's life; both change its *timing*. Reform (1) brings depreciation forward, so taxes are deferred even more than under straight-line: the state grants a larger interest-free loan, the after-tax NPV rises and the zone in which the tax paradox reverses a "no" into a "yes" widens. Reform (2) pushes depreciation behind the asset's economic loss of value: the firm pays taxes earlier than its true profits justify, the after-tax return falls below $r \cdot (1-s)$, and a project that just passes before taxes ($r$ slightly above $i$) can fail after taxes. Only reform (2) can therefore turn a pre-tax "yes" into an after-tax "no". The general lesson: tax depreciation that deviates from economic depreciation steers investment decisions, in either direction.
+
+**Grading Notes:** Key points — total tax unchanged; timing (deferral = interest-free loan); direction of each reform; reform (2) is the one that can reverse a "yes".
+:::

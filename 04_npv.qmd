@@ -1,182 +1,384 @@
-# The North Star – Net Present Value (NPV)
+# The North Star: Net Present Value
 
-> "Profit is an opinion. Cash is a fact. Net Present Value is the truth."
+*Why "When do I get my money back?" is the wrong question, and which question to ask instead*
 
-Building on the valuation principle from Chapter 3 — **Value = Present Value of future cash flows** — we now apply that logic not to marketable securities but to real investment decisions: machines, factories, product launches. The framework is identical. Only the inputs change.
+## Opening: Three Years or Nothing
 
-If you only remember one concept from this entire university course, let it be this one. The **Net Present Value (NPV)** (dt. *Kapitalwert*, symbol $C_0$ or $KW$) is not just a formula; it is the operating system of capitalism. Accounting looks backwards to measure what happened. NPV looks forward to calculate what *value* a decision creates **today**.
+::: {.details}
+#### Story: Werner's Rule
+Werner Vogt founded Vogt Antriebstechnik GmbH in Würzburg in 1986 and approved investments the way he shook hands: quickly, and by one rule. *"A machine has to pay for itself within three years. Everything after that is a gift."* For decades the rule served him well enough. It was simple, nobody could game it, and it kept the company liquid.
 
-## The Philosophy: Fisher Separation
+One spring, two proposals of €120,000 each landed on his desk. The first was a deburring cell for a product line that customers were already phasing out: €60,000 of savings in each of the first two years, €20,000 in the third, then the cell would be scrapped. The second was an automated inspection cell for the core coupling range: a slow start with €30,000 in each of the first two years while the team learned to trust it, then €40,000 a year for four more years.
 
-Before we touch a calculator, we must answer a philosophical question that plagued economists for centuries:
-*"How can a manager make a decision that satisfies **all** shareholders, even if one shareholder wants to save for retirement and another wants to buy a Ferrari today?"*
+Werner did the arithmetic on the back of an envelope. The deburring cell had its money back after exactly two years, so it was approved. The inspection cell needed three and a half years, so it was rejected. "Come back when it is faster," he wrote on the cover sheet.
 
-The answer came from **Irving Fisher (1930)**. It is the foundation of modern corporate finance — and it rests on three conditions: no taxes, no transaction costs, and investors can borrow and lend freely at the same market rate.
+Years later his daughter Clara Voss, now running the company, found that cover sheet. She ran the same two proposals through a different calculation. The project Werner approved had made the company slightly *poorer*. The one he rejected would have made it almost €37,000 richer in today's money.
+:::
 
-### The Theorem
+Werner was not careless. He asked the question almost every manager asks first: *how quickly do I get my money back?* This chapter shows how to compute the answer. But it is the wrong question to base a decision on, because it sees only part of the cash flows and treats money arriving at different times as if it were all the same. The right question is how much richer the project makes the owners *today*, and the tool that answers it is the **net present value** (dt. *Kapitalwert*).
 
-In a perfect capital market, the **investment decision** (how a firm produces wealth) is completely separate from the **consumption decision** (when owners spend wealth).
+You already know the principle behind it. Chapter 3 valued bonds and shares as the present value of the cash flows they promise. This chapter applies the same logic to real investments: machines, production lines, product launches. The coupon stream becomes an operating cash-flow stream, and the investor's required return becomes the firm's cost of capital. We start with the payback period, take apart its blind spots, and then build the NPV as the rule that repairs them.
 
-1. **The Manager's Job:** Maximise the Present Value of the firm ($PV$). Ignore shareholders' personal time preferences. Just make the pie as big as possible.
-2. **The Capital Market's Job:** Act as a "Time Machine."
-   * The "Ferrari-Shareholder" borrows money against his future dividends to spend now.
-   * The "Retirement-Shareholder" reinvests his dividends for later.
+## Theory: From "Money Back" to "Value Created"
 
-**Conclusion:** As long as the manager maximises NPV, *every* shareholder is better off, regardless of their personal plans.
+### The Intuitive Question: When Do I Get My Money Back?
+
+The **payback period** (dt. *Amortisationsdauer*) measures how long it takes until the cumulative cash inflows of a project equal the initial investment. Its appeal is obvious. It needs no interest rate and no forecast beyond the first few years, and it gives an answer anyone in the room understands: "two years", "three and a half years". It also speaks to a real worry. A firm that is short of cash, or that operates in a market where products become obsolete quickly, cares about how long its money is at risk.
+
+That popularity is not a thing of the past. In a widely cited survey of 392 US chief financial officers, more than half said they always or almost always use payback, alongside the NPV and the internal rate of return of Chapter 5 (Graham & Harvey, 2001). Payback survives because it is easy to explain, not because it is right.
+
+Payback belongs to the family of **static methods** (dt. *statische Verfahren*): they add up euros from different years as if they had the same value. **Dynamic methods** (dt. *dynamische Verfahren*), such as the NPV, first move every cash flow to a common point in time by discounting, using the arithmetic of Chapters 1 and 2. Werner's story shows that the difference decides which machine gets bought.
+
+### The Better Question: How Much Richer Does This Make Us?
+
+An investment ties up money that could have earned a return elsewhere. The **discount rate** $i$, also called the **cost of capital** (dt. *Kalkulationszinssatz*), is that forgone return: the rate the firm could earn on the best alternative it gives up, or the rate it pays on the money it borrows. Against this benchmark, a project is worth doing only if its future cash flows, translated into today's euros, exceed what it costs today. The surplus is the net present value: the increase in the owners' wealth, measured at $t = 0$, compared with simply putting the money into the capital market at $i$.
+
+This turns the question around. Payback asks *when* the money comes back; the NPV asks *how much more* comes back than the capital market would have delivered, and it counts every cash flow, early or late, at its present value.
+
+::: {.flip-card}
+#### Net Present Value (NPV)
+The NPV (symbol $C_0$) is the sum of all cash flows of a project, each discounted to $t = 0$ at the discount rate $i$, minus the initial investment. It measures in euros how much richer the project makes its owners today compared with investing the same money at $i$. A positive NPV means the project beats the capital market; a negative NPV means the capital market would have done better.
+:::
+
+### Fisher Separation: Why One Rule Serves Every Owner
+
+A firm usually has more than one owner, and owners differ. One wants cash now to buy a house; another is saving for retirement and would gladly wait. Should a manager pick projects that pay early for the first owner and late for the second? The economist Irving Fisher showed that, under certain conditions, the manager does not need to know or care (Fisher, 1930; formalised by Hirshleifer, 1958).
+
+Consider a firm with two equal owners, Anna and Ben. The firm can either pay out €100,000 to each owner today or invest that money in a project that returns €115,500 per owner in one year. Both can borrow and lend at the market rate $i = 5\%$.
+
+- **Anna wants to consume today.** Without the project she receives €100,000. With the project she can borrow against next year's €115,500 at 5% and spend $115{,}500 / 1.05 = 110{,}000$ euros today. She is €10,000 better off.
+- **Ben wants to consume next year.** Without the project he receives €100,000 and invests it at 5%, which gives him €105,000 next year. With the project he receives €115,500. He is €10,500 better off, which is exactly €10,000 compounded for one year.
+
+Both owners gain, and both gain exactly the project's NPV, measured at the point in time they care about:
+
+$$C_0 = -100{,}000 + \frac{115{,}500}{1.05} = 10{,}000$$
+
+The capital market acts as a time machine. It lets each owner shift the project's payoff to whenever they want to spend it. The manager's only job is to make the payoff as large as possible in present-value terms, and both owners will agree. This is the **Fisher separation theorem**: in a perfect capital market, the investment decision is separate from the owners' consumption decisions.
 
 ::: {.flip-card}
 #### Fisher Separation Theorem
-In a perfect capital market (no taxes, no transaction costs, free borrowing and lending), a firm's investment decisions are independent of owners' consumption preferences. The capital market interest rate bridges production and consumption, letting each shareholder adjust the timing of their own cash flows.
+In a perfect capital market, a firm's best investment decision does not depend on its owners' preferences about when to consume. The manager accepts every project with a positive NPV; each owner then uses borrowing or lending at the market rate to move the resulting wealth to the time they prefer. Maximising NPV therefore makes every owner better off, which is why NPV can serve as the single decision rule.
 :::
 
-## The Formula: Calculating Wealth
-
-The NPV measures the **absolute increase in wealth** generated by a project at time $t=0$.
-
-$$\boxed{NPV = -I_0 + \sum_{t=1}^{n} \frac{CF_t}{(1+i)^t} + \frac{L_n}{(1+i)^n}}$$
-
-* **$I_0$ (Investment):** The initial cash outflow at $t=0$. The price tag of the project.
-* **$CF_t$ (Cash Flows):** Net cash inflows in year $t$ (Einzahlungsüberschüsse). Not "Profit" — Cash!
-* **$L_n$ (Liquidation Value):** Scrap or resale value at the end of the project.
-* **$i$ (Discount Rate):** The **Opportunity Cost** — the return of the next-best alternative you forgo by investing here.
+The theorem rests on demanding conditions, and they matter for the rest of this book. Fisher's perfect capital market means that everyone can borrow and lend any amount at one and the same rate $i$; that there are no transaction costs and no taxes; that no single participant can move the interest rate; and that the future cash flows of the project are known. Part III of this book relaxes these conditions one at a time: taxes in Chapter 7, limited capital in Chapter 8, and uncertain cash flows in Chapter 9.
 
 ::: {.details}
-#### Deep Dive: Origin of the Discount Rate
-$i$ is not just a random number chosen by management. It is the return of the **next best alternative**. If you calculate with $i = 10\%$, you are asking: *"Does this project beat an alternative investment that yields 10%?"* A positive NPV means yes — you beat the alternative. A negative NPV means you would have been better off in the capital market.
+#### Deep Dive: When Separation Breaks
+Suppose Ben can still lend at 5%, but Anna can borrow only at 18%, because banks charge private borrowers more than they pay savers. Ben's calculation does not change: he still prefers €115,500 next year to €105,000. Anna's does. Borrowing against €115,500 at 18% gives her only $115{,}500 / 1.18 = 97{,}881$ euros today, which is €2,119 *less* than the €100,000 payout. Anna now votes against the project and Ben votes for it. The unanimity is gone, and the manager can no longer serve both owners with one number.
+
+Once the borrowing rate differs from the lending rate, the "right" discount rate depends on who the owner is and what they want to do with the money. For most firms the gap is small enough that the NPV remains the best available rule, but the rule has premises.
 :::
-
-**A Simple Example:** A project requires € 10,000 today and generates € 4,000 per year for 3 years. The discount rate is 8%.
-
-$$NPV = -10{,}000 + \frac{4{,}000}{1.08} + \frac{4{,}000}{1.08^2} + \frac{4{,}000}{1.08^3}$$
-$$= -10{,}000 + 3{,}703.70 + 3{,}429.36 + 3{,}175.33 = \mathbf{+308.39}$$
-
-The NPV is positive: the project creates € 308 of value above and beyond the 8% target return. **Invest.**
 
 ::: {.drag-exercise}
-The Net Present Value compares the *internal return* of a project with the *opportunity cost* of the capital market. If the NPV is *positive*, the project yields more than the required minimum rate of return.
+According to the Fisher separation theorem, the manager should maximise the *net present value* of the firm's investments, while each owner uses the *capital market* to shift the resulting wealth to the time they want to *consume*. The theorem requires that borrowing and lending take place at the *same interest rate*.
 :::
 
-## The Decision Rule: Binary Clarity
+::: {.quick-check}
+Why can a manager maximise NPV without asking the owners when they want their money?
 
-The beauty of NPV is its binary clarity. Unlike "strategic fit" or "gut feeling," NPV gives orders.
+- Because owners who want money early can always be paid a higher dividend later.
+- **Because in a perfect capital market each owner can borrow or lend at $i$ to move the NPV gain to the time they prefer.**
+- Because the NPV already includes each owner's personal time preference in the discount rate.
+:::
 
-| NPV Result | Interpretation | Action |
-|:-----------|:---------------|:------:|
-| **$NPV > 0$** | The project returns **more** than the cost of capital. You are creating value above the market. | **INVEST** |
-| **$NPV = 0$** | The project returns **exactly** the cost of capital. You are compensated for your risk, no more. | **Indifferent** |
-| **$NPV < 0$** | The project returns **less** than the alternative. You are destroying value relative to the market. | **REJECT** |
+## Method: Payback, NPV and Their Behaviour
 
-> **Critical Concept:** A manager rejects a project with $NPV = -100$. Does this mean the project makes a loss? **No.** It means the project might still make an accounting profit, but *less* than the market alternative. In economics, earning less than the market is an economic loss.
+### The Payback Period
 
-## The Hidden Axiom: The Reinvestment Assumption
+The static payback period adds up the undiscounted cash flows year by year until they cover the investment. If the annual cash flow is constant, the calculation is a single division, $PP = I_0 / CF$. With uneven cash flows, find the last full year $T$ in which the cumulative cash flow is still below $I_0$, and then interpolate within the following year:
 
-Most managers overlook the NPV model's most important hidden assumption. When your project generates a cash flow of € 50,000 in Year 1, what happens to that money?
+$$PP = T + \frac{I_0 - \sum_{t=1}^{T} CF_t}{CF_{T+1}}$$ {#eq-payback}
 
-**The model assumes:** every euro flowing back is immediately reinvested at exactly the discount rate $i$ (the cost of capital) for the remainder of the project's life.
+Here $PP$ is the payback period in years, $I_0$ the initial investment, $CF_t$ the net cash flow of year $t$, and the fraction is the share of year $T+1$ needed to recover the remaining amount. The interpolation assumes that the cash flow of year $T+1$ arrives evenly during that year. The decision rule compares $PP$ with a maximum period set by management: accept if $PP$ is at most the cut-off, reject otherwise.
 
-* **Advantage:** This is a conservative assumption — the market rate $i$ is generally achievable.
-* **Contrast with IRR:** The Internal Rate of Return (introduced in Chapter 5) assumes intermediate cash flows are reinvested at the *project's own IRR* — which is often unrealistically high. This makes NPV the safer metric for decision making.
+Werner's two proposals look like this on a timeline (all figures in euros):
+
+| | $t = 0$ | $t = 1$ | $t = 2$ | $t = 3$ | $t = 4$ | $t = 5$ | $t = 6$ |
+|:--|--:|--:|--:|--:|--:|--:|--:|
+| A: deburring cell | −120,000 | 60,000 | 60,000 | 20,000 | | | |
+| cumulative | −120,000 | −60,000 | **0** | 20,000 | | | |
+| B: inspection cell | −120,000 | 30,000 | 30,000 | 40,000 | 40,000 | 40,000 | 40,000 |
+| cumulative | −120,000 | −90,000 | −60,000 | −20,000 | **20,000** | 60,000 | 100,000 |
+
+Project A recovers its €120,000 at the end of year 2, so $PP_A = 2.0$ years. Project B still has €20,000 outstanding after year 3, which the €40,000 of year 4 covers halfway through the year:
+
+$$PP_B = 3 + \frac{120{,}000 - 100{,}000}{40{,}000} = 3.5 \text{ years}$$
+
+Under a three-year cut-off, A passes and B fails. The table hints at what went wrong: payback has three blind spots.
+
+**Blind spot 1: timing within the payback period.** Payback treats a euro in year 2 exactly like a euro in year 1. Imagine a variant A′ of the deburring cell with €20,000 in year 1, €100,000 in year 2 and €20,000 in year 3. It also pays back after exactly 2.0 years, so payback ranks A and A′ as equal. Yet A′ delivers its money later, and at $i = 10\%$ its NPV is €3,306 lower than A's.
+
+**Blind spot 2: everything after the cut-off.** Once a project has paid back, payback stops looking. Project B's best years, four years of €40,000, lie largely after the cut-off. Over its life B returns €100,000 more than it costs; A returns only €20,000 more. Payback cannot see this difference, so it systematically favours short-lived projects over long-lived ones.
+
+**Blind spot 3: an arbitrary cut-off.** Why three years and not four? The cut-off is not derived from the cost of capital or from any measure of value. It is a rule of thumb, and changing it changes the decision.
+
+None of this makes payback useless: it indicates how long capital is at risk and how soon a project frees cash, which matters for a firm close to its credit limit. But it measures *liquidity*, not *value*.
+
+::: {.flip-card}
+#### Payback Period
+The time until the cumulative undiscounted cash inflows of a project equal its initial investment. It is a static measure of how quickly capital is recovered. It ignores the time value of money within the payback period and all cash flows after it, so a short payback does not imply that a project creates value.
+:::
 
 ::: {.details}
-#### Deep Dive: When the Reinvestment Assumption Fails
-If the market rate drops after Year 1, or if the firm simply leaves cash in a 0% bank account, the actual return will be lower than the NPV predicted. The calculated NPV was too optimistic. In practice, firms try to match the timing of cash inflows with new investment opportunities to honour this assumption. For a single project evaluation, the NPV remains the gold standard — just be aware that its precision depends on the reinvestment assumption holding to maturity.
+#### Deep Dive: The Discounted Payback Period
+A partial repair is the **discounted payback period**: the same calculation as @eq-payback, but with each cash flow first discounted to $t = 0$. For project B at $i = 10\%$, the discounted cash flows are €27,273, €24,793, €30,053, €27,321, €24,837 and €22,579. Their cumulative sum reaches €109,439 after year 4, so the discounted payback is
+
+$$PP_{disc,B} = 4 + \frac{120{,}000 - 109{,}439}{24{,}837} = 4.43 \text{ years}$$
+
+For project A the cumulative discounted cash flows reach only €119,159 by the end of year 3; A *never* pays back in present-value terms. That is the same message as a negative NPV, and it is no coincidence: for a project with an outflow followed only by inflows, the discounted payback is reached within the project's life exactly when the NPV is not negative. The discounted version fixes blind spot 1. It still ignores everything after the cut-off, and it still needs an arbitrary cut-off, so it remains a liquidity measure.
 :::
 
-## Visualising Truth: The NPV Function
+### The NPV Formula and Decision Rule
 
-There is a systematic relationship between interest rates and project value — the **NPV Function** $NPV(i)$.
+The NPV collects every cash flow of the project, discounts each one to $t = 0$, and subtracts the investment:
 
-It is a downward-sloping curve. Why? Higher interest rates apply heavier discounting to future cash flows, shrinking their present value.
+$$C_0 = -I_0 + \sum_{t=1}^{n} \frac{CF_t}{(1+i)^t} + \frac{L_n}{(1+i)^n}$$ {#eq-npv}
 
-### The Anatomy of the Curve
+In @eq-npv, $C_0$ is the NPV, $I_0$ the initial investment at $t = 0$, $CF_t$ the net cash flow (cash inflows minus cash outflows) at the end of year $t$, $L_n$ the liquidation value (scrap or resale value) at the end of the project's life $n$, and $i$ the discount rate. Two details deserve emphasis. The formula uses **cash flows**, not accounting profits: depreciation is not a payment, while the purchase price is, in full, at $t = 0$. And $i$ is not a number management picks to taste but the return on the best alternative given up; for a risky project, that alternative must carry comparable risk (Chapter 9).
 
-1. **The Y-Intercept ($i = 0\%$):** If money costs nothing, NPV equals the raw sum of all cash flows minus investment — the undiscounted surplus.
-$$NPV_{max} = \sum CF_t + L_n - I_0$$
+A simple example: a project costs €10,000 today and returns €4,000 at the end of each of the next three years; the discount rate is 8%.
 
-2. **The Slope:** Long-term projects (power plants, infrastructure) have a steep curve — they are highly sensitive to interest rate changes. Short-term projects are flatter.
+$$C_0 = -10{,}000 + \frac{4{,}000}{1.08} + \frac{4{,}000}{1.08^2} + \frac{4{,}000}{1.08^3} = -10{,}000 + 3{,}703.70 + 3{,}429.36 + 3{,}175.33 = 308.39$$
 
-3. **The X-Intercept ($NPV = 0$):** The specific rate where the curve crosses zero is the **Internal Rate of Return (IRR)** — the project's own internal yield.
+Because the three cash flows are equal, the annuity factor from Chapter 2 gives the same result in one step: $C_0 = -10{,}000 + 4{,}000 \cdot PVIFA(8\%, 3) = -10{,}000 + 4{,}000 \cdot 2.5771 = 308.4$. The project creates €308 of value beyond what an 8% investment in the capital market would have earned.
 
-::: {.content-visible when-format="html"}
+The decision rule follows directly:
+
+| $C_0$ | Interpretation | Decision |
+|:--|:--|:--:|
+| $C_0 > 0$ | The project earns more than the rate $i$ of the best alternative; it increases the owners' wealth. | **Accept** |
+| $C_0 = 0$ | The project earns exactly $i$; the owners are as well off as with the alternative. | Indifferent |
+| $C_0 < 0$ | The project earns less than $i$; the alternative would have made the owners richer. | **Reject** |
+
+Applied to Werner's proposals at Vogt's cost of capital of 10%, the NPV reverses his decision:
+
+$$C_{0,A} = -120{,}000 + \frac{60{,}000}{1.1} + \frac{60{,}000}{1.1^2} + \frac{20{,}000}{1.1^3} = -841$$
+
+$$C_{0,B} = -120{,}000 + \frac{30{,}000}{1.1} + \frac{30{,}000}{1.1^2} + \frac{40{,}000}{1.1^3} + \dots + \frac{40{,}000}{1.1^6} = 36{,}855$$
+
+The fast-payback project destroys a little value; the slow-payback project creates almost €37,000 of it.
+
+A negative NPV is easily misread. It does not necessarily mean that the project loses money. A project with a negative NPV may return more euros than it costs and show an accounting profit in every year; it simply returns less than the same money would have earned at $i$. Werner's deburring cell is the perfect example: it returned €140,000 for €120,000 and still has a negative NPV.
+
+### The Reinvestment Assumption
+
+What happens to the €4,000 the simple example pays out at the end of year 1? The NPV formula does not say so explicitly, but it implies an answer: each cash inflow can be put to work at the rate $i$ until the end of the project, either by investing it or by repaying debt that costs $i$. To see this, compare the owner's wealth at the end of year 3 under two strategies.
+
+- **Invest in the project and reinvest every inflow at 8%:** $4{,}000 \cdot 1.08^2 + 4{,}000 \cdot 1.08 + 4{,}000 = 4{,}665.60 + 4{,}320.00 + 4{,}000 = 12{,}985.60$ euros.
+- **Invest the €10,000 in the capital market at 8% instead:** $10{,}000 \cdot 1.08^3 = 12{,}597.12$ euros.
+
+The project leaves the owner €388.48 richer at $t = 3$. Discount that surplus back to today and you get exactly the NPV: $388.48 / 1.08^3 = 308.39$. In general,
+
+$$\sum_{t=1}^{n} CF_t \cdot (1+i)^{n-t} - I_0 \cdot (1+i)^n = C_0 \cdot (1+i)^n$$ {#eq-terminal}
+
+The left-hand side is the surplus in **terminal value** (dt. *Endwert*): the extra wealth at the end of the project if every inflow is reinvested at $i$, compared with investing $I_0$ at $i$; the right-hand side is the NPV compounded to the same date. The NPV is therefore correct *if* intermediate cash flows earn $i$. Under the Fisher conditions this is not an extra assumption at all: $i$ is, by definition, the rate at which money can be invested and borrowed. Any further investment at $i$ has an NPV of zero, so the NPV of the project does not depend on what the firm does with its cash afterwards, as long as it earns at least $i$.
+
+::: {.drag-exercise}
+The NPV implicitly assumes that every intermediate cash flow is *reinvested* at the *discount rate* $i$ until the end of the project. Compounding the NPV to the final year gives the *terminal value* surplus over the capital-market alternative.
+:::
+
+Chapter 5 shows that the NPV's rival, the internal rate of return (IRR), is often read as implicitly assuming reinvestment at the project's *own* rate of return, which may be far above anything the firm can actually earn. Reinvestment at the cost of capital is the more modest premise.
+
+::: {.details}
+#### Deep Dive: What If the Cash Sits Idle?
+Suppose the firm can only park its inflows in an account paying 3%. The terminal wealth from the project then becomes $4{,}000 \cdot 1.03^2 + 4{,}000 \cdot 1.03 + 4{,}000 = 12{,}363.60$ euros, which is €233.52 *less* than the €12,597.12 of the capital-market alternative. Has the NPV lied?
+
+Not quite. The scenario assumes that the firm can invest €10,000 at 8% for three years today, but not €4,000 at 8% a year from now. That is only consistent if rates are expected to fall, and then a single rate $i$ was the wrong input from the start; the remedy is a separate discount rate for each period. Otherwise the firm is *choosing* to leave cash idle at 3% when 8% is available, a second, value-destroying decision that should not be blamed on the project. In practice most firms use surplus cash to repay credit lines or fund other projects, which earns at least their borrowing rate.
+:::
+
+### The NPV Function and Its Zero Crossing
+
+The NPV of a project is not one number but a function of the discount rate: the **NPV function** $C_0(i)$. For the simple example (€10,000 today, €4,000 for three years) it takes these values:
+
+| $i$ | 0% | 4% | 8% | 10% | 12% | 20% | 50% |
+|:--|--:|--:|--:|--:|--:|--:|--:|
+| $C_0(i)$ | 2,000 | 1,100 | 308 | −53 | −393 | −1,574 | −4,370 |
+
+Four features of the curve are worth reading carefully. For a **conventional investment**, which means one outflow at the start followed only by inflows, all four hold:
+
+1. **The intercept at $i = 0$:** without discounting, the NPV is the plain sum of all cash flows, $C_0(0) = \sum CF_t + L_n - I_0$, here $12{,}000 - 10{,}000 = 2{,}000$. This is the largest value the NPV can take for non-negative rates.
+2. **The slope:** the curve falls as $i$ rises, because a higher rate shrinks the present value of every future inflow while $I_0$ stays fixed. The later the cash flows arrive, the steeper the curve: long-lived projects such as power plants are far more sensitive to interest rates than a machine that pays back within two years.
+3. **The shape and the limit:** the curve is convex, falling steeply at first and then flattening. As $i$ grows very large, the future inflows become worthless today and $C_0(i)$ approaches $-I_0$, here −10,000.
+4. **The zero crossing:** somewhere between 8% and 10% the curve crosses the horizontal axis; for this project at about 9.7%. Below that rate the project creates value, above it the project destroys value. This critical rate is the project's **internal rate of return**, the subject of Chapter 5.
+
+The widget below draws the NPV function for a project with equal annual cash flows. Set the investment to €100,000, the cash flow to €40,000 and the periods to 3: this is the simple example scaled up by ten, so the intercept reads €20,000 and the curve crosses zero near 9.7%. Then move the red discount-rate slider and watch the NPV at the current rate change sign. Finally, raise the number of periods: the cash flows stretch further into the future and the curve becomes steeper.
+
+::: {.widget}
 <iframe src="assets/ch04/npv_function.html"
-        style="width: 100%; height: 520px; border: none;"
-        loading="lazy">
+        width="100%" height="640px" frameborder="0"
+        title="NPV function: net present value of a project as a function of the discount rate, with its zero crossing">
 </iframe>
 :::
 
-## Strategic Conflict: The Scale Problem
+<!-- Widget idea: payback vs. NPV comparator — two projects side by side, cumulative undiscounted and discounted cash-flow bars on a shared timeline, adjustable cut-off and discount rate; shows how payback and NPV rankings diverge (Werner's A vs. B as default). -->
 
-Sometimes NPV disagrees with intuitive "Return on Investment" thinking.
+::: {.quick-check}
+The central bank raises interest rates, and with them the firm's discount rate rises from 6% to 9%. What happens to the NPV of a conventional investment?
 
-**The Choice:**
+- It stays the same, because the project's cash flows have not changed.
+- **It falls, because every future inflow is discounted more heavily while the investment at $t = 0$ is unaffected.**
+- It rises, because the firm can now earn more on reinvested cash flows.
+:::
 
-* **Project A:** Invest € 1,000 → Return € 1,500 next year. (50% return)
-* **Project B:** Invest € 1,000,000 → Return € 1,200,000 next year. (20% return)
+### The Scale Problem with Mutually Exclusive Projects
 
-With a cost of capital of 10%:
+Projects are **mutually exclusive** when choosing one rules out the other: two machines for the same floor space, two designs for the same product. Here the NPV can collide with intuition. Consider two one-year projects at $i = 10\%$:
 
-$$NPV_A = -1{,}000 + \frac{1{,}500}{1.10} = \mathbf{\text{€}\,363}$$
-$$NPV_B = -1{,}000{,}000 + \frac{1{,}200{,}000}{1.10} = \mathbf{\text{€}\,90{,}909}$$
+- **Project S (small):** invest €100,000, receive €130,000 after one year, a return of 30%.
+- **Project L (large):** invest €500,000, receive €600,000 after one year, a return of 20%.
 
-Project A is more *efficient*, but Project B makes you rich. Since you cannot buy anything with percentages, **NPV wins**. It measures the absolute increase in wealth — the only thing that matters for shareholders.
+$$C_{0,S} = -100{,}000 + \frac{130{,}000}{1.1} = 18{,}182 \qquad C_{0,L} = -500{,}000 + \frac{600{,}000}{1.1} = 45{,}455$$
 
-The correct comparison for mutually exclusive projects (A or B, not both) requires the **Differenzinvestition** (incremental analysis): compute the NPV of (B minus A) — the extra € 999,000 invested in B — and check whether that marginal investment also clears the hurdle rate. If NPV(B−A) > 0, choose B regardless of the lower percentage return.
+S is more *efficient*: every euro invested earns more. L creates more *value*: it makes the owners €27,273 richer than S does. Which should the firm choose? The NPV answer is L, and the reason becomes clear once you look at the difference between the two projects. Choosing L instead of S means investing an extra €400,000 to receive an extra €470,000, a return of 17.5% on the additional capital. That beats the 10% alternative, and the NPV of this difference project is exactly the difference between the two NPVs:
 
-> **Management Rule:** In mutually exclusive decisions (*Entweder-Oder*), always choose the project with the higher NPV, not the higher percentage return.
+$$C_{0,L-S} = -400{,}000 + \frac{470{,}000}{1.1} = 27{,}273 = C_{0,L} - C_{0,S}$$
 
-## Case Study: Cylindrical Grinding Machine
+The hidden premise is again the perfect capital market. If the firm chooses S, it does not lose the €400,000 it saves; that money earns 10% elsewhere, with an NPV of zero. So the true comparison is "S plus €400,000 at 10%" against "L", and L wins. Percentages and payback favour the small, quick project; the NPV deliberately ignores scale, because in Fisher's world capital is never scarce. Euros, not percentages, end up in the owners' pockets.
 
-A cylindrical grinding machine for a municipal depot costs € 500,000. Operating it in-house saves € 250,000 per year in external costs. Annual operating and maintenance outflows start at € 100,000 in Year 1 and increase by 10% per year. After 5 years, the machine is scrapped for € 30,000.
+The objection that a large project ties up more capital becomes valid exactly when the Fisher conditions fail. If the budget is fixed and the €400,000 cannot be raised, the firm must ask how much value each scarce euro creates, which leads to the profitability index of Chapter 8. If the larger project is also riskier, the discount rate must reflect that, which is a topic for Chapter 9. And when the percentage measure of Chapter 5, the IRR, ranks two projects differently from the NPV, the same difference project settles the conflict: Chapter 5 develops it as the **incremental investment** (dt. *Differenzinvestition*).
 
-Is the investment worthwhile at a discount rate of 8% p.a.?
+::: {.quick-check}
+Two mutually exclusive projects: X has an NPV of €40,000 and a return of 25% on a €200,000 investment; Y has an NPV of €60,000 and a return of 15% on a €900,000 investment. The firm can borrow any amount at its cost of capital. Which project should it choose?
+
+- X, because it earns the higher return on each euro invested.
+- **Y, because it adds €20,000 more to the owners' wealth, and the capital X would leave unused earns only the cost of capital.**
+- Neither can be chosen until both projects have the same scale.
+:::
+
+## Practice: Two Decisions at Vogt Antriebstechnik
+
+Both cases are set at Vogt Antriebstechnik GmbH, the coupling manufacturer of the integrated Vogt case, which works with a cost of capital of 10% p.a.: a full NPV appraisal set against the payback rule, and a choice between two mutually exclusive projects of different size.
+
+### Case Study 1: The Cylindrical Grinding Machine
 
 ::: {.case-study}
-#### Solution
+#### Case: Vogt Antriebstechnik GmbH — Grinding Coupling Shafts In-House
+Vogt has its coupling shafts ground by an outside contractor. Clara Voss is considering a cylindrical grinding machine that would bring the work in-house. The machine costs **€500,000**, payable at $t = 0$, and would save **€250,000** per year in contractor fees. Operating and maintenance costs for the machine are **€100,000** in year 1 and are expected to rise by **10% per year** as the machine ages. After **five years** the machine is sold for scrap at **€30,000**. Vogt's cost of capital is **10% p.a.** All cash flows occur at the end of each year.
 
-**Parameters:** $I_0 = 500{,}000$, $i = 8\%$, $n = 5$, $L_5 = 30{,}000$
+**Tasks:**
 
-First, compute annual net cash flows (savings minus operating costs) and add $L_5$ in Year 5:
+1. Calculate the net cash flow of each year and the **payback period**. Would the machine pass Werner's three-year rule?
+2. Calculate the **NPV** at 10% and state the decision.
+3. The bank hints that Vogt's cost of capital could rise to **12%**. Recalculate the NPV and explain what the result tells you about the NPV function of this machine.
 
-| Year | Savings (€) | Op. Costs (€) | Net CF (€) | Discount Factor | PV (€) |
-|:----:|------------:|--------------:|-----------:|:---------------:|-------:|
-| 1 | 250,000 | 100,000 | **150,000** | $(1.08)^{-1}$ | 138,889 |
-| 2 | 250,000 | 110,000 | **140,000** | $(1.08)^{-2}$ | 120,027 |
-| 3 | 250,000 | 121,000 | **129,000** | $(1.08)^{-3}$ | 102,404 |
-| 4 | 250,000 | 133,100 | **116,900** | $(1.08)^{-4}$ | 85,925 |
-| 5 | 250,000 | 146,410 | **133,590**\* | $(1.08)^{-5}$ | 90,920 |
-| | | | | **Sum of PVs** | **538,165** |
+::: {.solution}
+**Solution:**
 
-\* Year 5 includes liquidation value: 250,000 − 146,410 + 30,000 = 133,590
+**Given:** $I_0 = 500{,}000$; $i = 10\%$; $n = 5$; $L_5 = 30{,}000$; savings 250,000 per year; operating costs $100{,}000 \cdot 1.1^{t-1}$.
 
-$$NPV = 538{,}165 - 500{,}000 = \mathbf{+38{,}165 \text{ EUR}}$$
+**1. Net cash flows and payback period**
 
-**Conclusion:** NPV > 0 → The investment is worthwhile. The project generates € 38,165 of value above the 8% cost of capital.
+| Year $t$ | Savings (€) | Operating costs (€) | Net cash flow $CF_t$ (€) | Cumulative (€) |
+|:--:|--:|--:|--:|--:|
+| 0 | | | −500,000 | −500,000 |
+| 1 | 250,000 | 100,000 | 150,000 | −350,000 |
+| 2 | 250,000 | 110,000 | 140,000 | −210,000 |
+| 3 | 250,000 | 121,000 | 129,000 | −81,000 |
+| 4 | 250,000 | 133,100 | 116,900 | 35,900 |
+| 5 | 250,000 | 146,410 | 103,590 + 30,000 = 133,590 | 169,490 |
+
+After year 3, €81,000 is still unrecovered; year 4 brings €116,900. With @eq-payback:
+
+$$PP = 3 + \frac{500{,}000 - 419{,}000}{116{,}900} = 3 + 0.693 = 3.69 \text{ years}$$
+
+That is about 3 years and 8 months. Under Werner's three-year rule the machine would be **rejected**, and the rule would never look at the year-5 cash flow of €133,590.
+
+**2. NPV at 10%** (@eq-npv; the liquidation value is included in the year-5 cash flow)
+
+| Year $t$ | $CF_t$ (€) | Discount factor $1.1^{-t}$ | Present value (€) |
+|:--:|--:|:--:|--:|
+| 1 | 150,000 | 0.9091 | 136,364 |
+| 2 | 140,000 | 0.8264 | 115,702 |
+| 3 | 129,000 | 0.7513 | 96,920 |
+| 4 | 116,900 | 0.6830 | 79,844 |
+| 5 | 133,590 | 0.6209 | 82,949 |
+| | | **Sum of present values** | **511,779** |
+
+$$C_0 = -500{,}000 + 511{,}779 = 11{,}779$$
+
+The NPV is positive: the machine makes Vogt's owners €11,779 richer in today's money than leaving the €500,000 in an alternative that earns 10%. **Accept.** The payback rule and the NPV rule disagree, and the NPV rule is the one that counts every cash flow at its present value.
+
+**3. NPV at 12%**
+
+With discount factors $1.12^{-t}$ (0.8929, 0.7972, 0.7118, 0.6355, 0.5674) the present values are €133,929, €111,607, €91,820, €74,292 and €75,803, which sum to €487,450 (unrounded; the rounded figures add up to €487,451):
+
+$$C_0(12\%) = -500{,}000 + 487{,}450 = -12{,}550$$
+
+A two-point rise in the discount rate turns accept into reject: the machine's NPV function crosses zero between 10% and 12%, and the margin of safety is thin. Clara should ask how firm the 10% is. Chapter 5 locates the zero crossing precisely as the IRR.
+:::
 :::
 
-## Chapter Check
+### Case Study 2: Small Retrofit or Large System?
+
+::: {.case-study}
+#### Case: Vogt Antriebstechnik GmbH — Compressed Air for the Assembly Hall
+The compressed-air supply of Vogt's assembly hall wastes energy. Facility manager Jonas Brandt presents two mutually exclusive options, both with a useful life of **six years** and no residual value:
+
+| | Option S: retrofit existing compressors | Option L: new variable-speed system with heat recovery |
+|:--|--:|--:|
+| Investment at $t = 0$ | €40,000 | €200,000 |
+| Annual energy savings, years 1–6 | €12,000 | €52,000 |
+
+Jonas favours S: "It pays back faster, and every euro we put in earns more." Vogt can finance either option at its cost of capital of 10% p.a.
+
+**Tasks:**
+
+1. Calculate the payback period and the NPV of both options. Use $PVIFA(10\%, 6) = 4.3553$ from the Formula Collection.
+2. Which option should Vogt choose? Support your answer with the incremental investment L − S.
+3. How would your answer change if the bank capped Vogt's total investment budget for the year at €40,000?
+
+::: {.solution}
+**Solution:**
+
+**1. Payback and NPV.** The savings are constant, so $PP = I_0 / CF$ and the present value of the savings is $CF \cdot PVIFA(10\%, 6)$:
+
+| | Option S | Option L |
+|:--|--:|--:|
+| Payback period | $40{,}000 / 12{,}000 = 3.33$ years | $200{,}000 / 52{,}000 = 3.85$ years |
+| PV of savings | $12{,}000 \cdot 4.3553 = 52{,}264$ | $52{,}000 \cdot 4.3553 = 226{,}476$ |
+| NPV $C_0$ | $52{,}264 - 40{,}000 = 12{,}264$ | $226{,}476 - 200{,}000 = 26{,}476$ |
+| NPV per euro invested | $12{,}264 / 40{,}000 = 0.31$ | $26{,}476 / 200{,}000 = 0.13$ |
+
+Jonas is right on both points: S pays back faster and creates more value per euro. Both options are acceptable on their own (NPV > 0), but only one can be chosen.
+
+**2. Decision and incremental investment.** Choosing L instead of S means investing an extra €160,000 to save an extra €40,000 per year:
+
+$$C_{0,L-S} = -160{,}000 + 40{,}000 \cdot 4.3553 = -160{,}000 + 174{,}212 = 14{,}212$$
+
+This equals $C_{0,L} - C_{0,S} = 26{,}476 - 12{,}264 = 14{,}212$. The additional €160,000 earns more than the 10% it costs, so **Vogt should choose L**: it leaves the owners €14,212 richer than S. Had Vogt chosen S, the €160,000 saved would earn only 10% elsewhere, adding nothing to the NPV. The faster payback and higher value per euro of S are the scale problem in action: they reward efficiency, while owners are paid in euros.
+
+**3. Budget capped at €40,000.** Now the Fisher condition of unlimited borrowing at $i$ fails. L cannot be financed, and the choice is between S and doing nothing. S has a positive NPV, so Vogt should carry it out. With a binding budget the relevant question becomes how much value each scarce euro creates, which is exactly what "NPV per euro invested" measures. Chapter 8 develops this into the profitability index.
+:::
+:::
 
 ::: {.quick-check}
-**What happens to the NPV of a standard investment if the central bank raises interest rates?**
+In Case Study 1, Clara learns that the scrap value of the grinding machine will be €0 instead of €30,000. What happens to the payback period and to the NPV at 10%?
 
-- It increases.
-- It stays constant (because cash flows are fixed).
-- **It decreases.**
+- Both stay the same, because the scrap value is only an accounting estimate.
+- The payback period gets longer and the NPV falls by €30,000.
+- **The payback period does not change, but the NPV falls by about €18,600 and turns negative.**
+:::
 
-> Correct. Higher $i$ means the denominator $(1+i)^t$ grows, shrinking the present value of future cash flows.
+## Conclusion: Ask How Much, Not How Soon
+
+Werner's rule was not foolish; it answered a real question about liquidity. Its flaw was that it answered *only* that question and then let the answer decide. The NPV replaces "how soon do we get our money back?" with "how much richer does this make us, compared with the best thing we could do instead?" It counts every cash flow, early and late, at its value today. It needs no arbitrary cut-off, only a discount rate that reflects the alternative. And in a perfect capital market it is the one number all owners can agree on, whatever they plan to do with their money.
+
+That last condition is the price of the NPV's authority. The rule assumes a single rate for borrowing and lending, reinvestment at that rate, and enough capital to fund every project with a positive NPV. Most of the remaining chapters of this book are about what to do when one of these premises bends. A manager who knows where the North Star stands can still navigate when clouds cover part of the sky.
+
+::: {.quick-check}
+Project P pays back in 2 years and has an NPV of €−5,000. Project Q pays back in 5 years and has an NPV of €+30,000. Both cost the same, and the firm has no liquidity problems. Which statement is correct?
+
+- P is better, because a shorter payback means lower risk and therefore more value.
+- **Q is better, because it increases the owners' wealth while P reduces it, despite P's faster payback.**
+- Neither can be judged until the discounted payback periods are known.
 :::
 
 ::: {.quick-check}
-**You calculate an NPV of € −5,000. Your boss says: "So we lose 5,000 euros?" How do you correct him?**
+Your manager says: "This project has an NPV of €−5,000, so it will lose us €5,000." What is the most precise correction?
 
-- "Yes, exactly."
-- **"No. We earn back our investment, but we miss our target return by € 5,000 relative to the market alternative."**
-- "No, it's just a tax effect."
-
-> Correct. A negative NPV means you are destroying value *relative* to the capital market alternative. You might still make an accounting profit, but it's an economic loss.
+- "Yes, the project's cash inflows will fall €5,000 short of its investment."
+- "No, a negative NPV only means that the accounting profit is lower than planned."
+- **"Not necessarily. The project may well return more than it costs, but it leaves us €5,000 poorer in today's money than investing the same amount at our cost of capital."**
 :::
 
-::: {.drag-exercise}
-The Net Present Value assumes that all intermediate cash flows are *reinvested* at the *discount rate i*. This is more *conservative* than the IRR assumption, which requires reinvestment at the project's own internal rate.
-:::
-
-Chapter 5 keeps the same project but asks a different question: instead of "does this project pass a given hurdle rate?", it asks "what *is* the project's own internal yield?" — the Internal Rate of Return, and when it conflicts with NPV.
+The NPV tells us whether a project beats a given discount rate; Chapter 5 turns the question around and asks which rate the project itself earns, the internal rate of return, and why that percentage can mislead.

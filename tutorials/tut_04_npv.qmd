@@ -1,0 +1,225 @@
+---
+title: "Tutorial 04: Net Present Value and Payback"
+subtitle: "Payback and its blind spots · NPV and decision rule · reinvestment · NPV function · scale problem · Fisher separation"
+lang: en
+author:
+  - name: Prof. Dr. Christian Kraus
+    email: christian.kraus@thws.de
+    role: Lecturer
+    affiliation: THWS Business & Engineering
+course: "Investment Decisions (BUA3)"
+semester: "WS 2026/27"
+sheet: "04"
+date: last-modified
+show_solutions: false
+format: tutorial-typst
+---
+
+# Tutorial 04: Net Present Value and Payback
+
+## Exercise 1: Payback Versus Value
+
+Bäckerei Krume GmbH needs a new oven and has two offers, each costing **€80,000** at $t = 0$. The owner's rule, inherited from his grandfather together with the sourdough culture, is: "Every machine must pay for itself within three years." The cost of capital is **8% p.a.**; all cash flows arrive at the end of each year.
+
+| Year | $t = 0$ | $t = 1$ | $t = 2$ | $t = 3$ | $t = 4$ | $t = 5$ |
+|:--|--:|--:|--:|--:|--:|--:|
+| Oven X (€) | −80,000 | 30,000 | 30,000 | 30,000 | | |
+| Oven Y (€) | −80,000 | 15,000 | 25,000 | 30,000 | 30,000 | 30,000 |
+
+#### Task 1: Static payback period
+
+Calculate the static payback period of both ovens (assume cash flows arrive evenly within a year). Which oven passes the three-year rule?
+
+::: {.content-visible when-meta="show_solutions"}
+**Solution:**
+
+**Oven X** has constant cash flows: $PP_X = I_0 / CF = 80{,}000 / 30{,}000 = 2.67$ years (about 2 years and 8 months).
+
+**Oven Y:** cumulative cash flows are 15,000; 40,000; 70,000; 100,000. After year 3, €10,000 is still unrecovered; year 4 brings €30,000:
+
+$$PP_Y = 3 + \frac{80{,}000 - 70{,}000}{30{,}000} = 3.33 \text{ years}$$
+
+Only **Oven X** passes the three-year rule.
+:::
+
+#### Task 2: NPV and decision
+
+Calculate the NPV of both ovens at 8%. Use $PVIFA(8\%, 3) = 2.5771$ for Oven X. Compare the NPV decision with the payback decision and name the blind spot of payback that explains the difference.
+
+::: {.content-visible when-meta="show_solutions"}
+**Solution:**
+
+**Oven X:** $C_{0,X} = -80{,}000 + 30{,}000 \cdot 2.5771 = -80{,}000 + 77{,}313 = -2{,}687$
+
+**Oven Y:**
+
+| $t$ | $CF_t$ (€) | $1.08^{-t}$ | PV (€) |
+|:--:|--:|:--:|--:|
+| 1 | 15,000 | 0.9259 | 13,889 |
+| 2 | 25,000 | 0.8573 | 21,433 |
+| 3 | 30,000 | 0.7938 | 23,815 |
+| 4 | 30,000 | 0.7350 | 22,051 |
+| 5 | 30,000 | 0.6806 | 20,417 |
+| | | **Sum** (unrounded) | **101,606** |
+
+$C_{0,Y} = -80{,}000 + 101{,}606 = 21{,}606$ (unrounded: 21,605.72).
+
+The NPV rule **rejects X** (it earns less than 8%) and **accepts Y**, the opposite of the payback rule. Payback ignores **all cash flows after the cut-off**: Y's years 4 and 5 (€60,000) are invisible to it, although they are worth €42,468 today. It also ignores the time value of money within the payback period: X's €90,000 of inflows are worth only €77,313 today.
+
+**Grading Notes:** NPV of X between −2,686 and −2,688 (factor rounding) is correct.
+:::
+
+#### Task 3: Discounted payback
+
+Calculate the discounted payback period of Oven Y at 8%. What does the discounted payback of Oven X tell you?
+
+::: {.content-visible when-meta="show_solutions"}
+**Solution:**
+
+Cumulative present values of Y (from Task 2): 13,889; 35,322; 59,137; 81,188; 101,606. The investment of €80,000 is covered during year 4:
+
+$$PP_{disc,Y} = 3 + \frac{80{,}000 - 59{,}137}{22{,}051} = 3 + 0.946 = 3.95 \text{ years}$$
+
+For **Oven X** the cumulative present values reach only €77,313 at the end of its life: X **never** pays back in present-value terms. This matches its negative NPV: the discounted payback is reached within the project's life exactly when the NPV is not negative.
+:::
+
+## Exercise 2: NPV, NPV Function and Reinvestment
+
+Laserwerk Mainfranken GmbH considers a laser marking system for **€250,000** at $t = 0$. Expected net cash flows are €70,000, €80,000, €90,000 and €60,000 in years 1 to 4; at the end of year 4 the system can be sold for **€20,000**. The cost of capital is **9% p.a.**
+
+#### Task 1: NPV with a timeline
+
+Set out the cash flows on a timeline and calculate the NPV at 9%. Should the firm invest?
+
+::: {.content-visible when-meta="show_solutions"}
+**Solution:**
+
+Given: $I_0 = 250{,}000$; $i = 9\%$; $n = 4$; $L_4 = 20{,}000$, added to the year-4 cash flow ($60{,}000 + 20{,}000 = 80{,}000$).
+
+| $t$ | 0 | 1 | 2 | 3 | 4 |
+|:--|--:|--:|--:|--:|--:|
+| $CF_t$ (€) | −250,000 | 70,000 | 80,000 | 90,000 | 80,000 |
+| $1.09^{-t}$ | 1 | 0.9174 | 0.8417 | 0.7722 | 0.7084 |
+| PV (€) | −250,000 | 64,220 | 67,334 | 69,497 | 56,674 |
+
+$$C_0 = -250{,}000 + 64{,}220 + 67{,}334 + 69{,}497 + 56{,}674 = 7{,}725$$
+
+$C_0 > 0$: **invest.** The system makes the owners €7,725 richer today than an alternative earning 9%.
+:::
+
+#### Task 2: Reading the NPV function
+
+Calculate the NPV at **0%** and at **12%**. Sketch the NPV function through the three points you know and state between which two rates it crosses zero. What is this rate called?
+
+::: {.content-visible when-meta="show_solutions"}
+**Solution:**
+
+**At 0%:** $C_0(0) = 70{,}000 + 80{,}000 + 90{,}000 + 80{,}000 - 250{,}000 = 70{,}000$ (the undiscounted surplus, the intercept of the curve).
+
+**At 12%:** discount factors 0.8929, 0.7972, 0.7118, 0.6355; present values 62,500; 63,776; 64,060; 50,841; sum 241,177.
+
+$$C_0(12\%) = -250{,}000 + 241{,}177 = -8{,}823$$
+
+The sketch is a falling, convex curve through (0%; 70,000), (9%; 7,725) and (12%; −8,823), approaching −250,000 for very high rates. It crosses zero **between 9% and 12%** (in fact at about 10.4%). This rate is the project's **internal rate of return (IRR)**, the subject of Chapter 5. Above it the project destroys value.
+:::
+
+#### Task 3: The reinvestment assumption
+
+Show that the NPV from Task 1 of this exercise, compounded to the end of year 4, equals the terminal-value surplus of the project if every cash inflow is reinvested at 9% until $t = 4$. Use $1.09^4 = 1.41158161$.
+
+::: {.content-visible when-meta="show_solutions"}
+**Solution:**
+
+**NPV compounded:** $7{,}725.11 \cdot 1.41158161 = 10{,}904.63$ (with the unrounded NPV).
+
+**Terminal value of the inflows at 9%:**
+
+$$70{,}000 \cdot 1.09^3 + 80{,}000 \cdot 1.09^2 + 90{,}000 \cdot 1.09 + 80{,}000 = 90{,}652.03 + 95{,}048.00 + 98{,}100.00 + 80{,}000 = 363{,}800.03$$
+
+**Alternative:** investing the €250,000 at 9% for four years gives $250{,}000 \cdot 1.41158161 = 352{,}895.40$.
+
+**Surplus:** $363{,}800.03 - 352{,}895.40 = 10{,}904.63$, exactly the compounded NPV. The NPV is therefore correct if the intermediate cash flows can be reinvested (or used to repay debt) at the discount rate $i$.
+
+**Grading Notes:** Using the rounded NPV of 7,725 gives 10,904.47; accept.
+:::
+
+## Exercise 3: Scale, Concepts and Owners
+
+Two mutually exclusive projects compete for the same floor space at Laserwerk Mainfranken. Both run for **four years** with no residual value; the cost of capital is **10% p.a.** and the firm can raise any amount at that rate. $PVIFA(10\%, 4) = 3.1699$.
+
+| | Project P | Project Q |
+|:--|--:|--:|
+| Investment at $t = 0$ | €50,000 | €150,000 |
+| Annual net cash flow, years 1–4 | €20,000 | €56,000 |
+
+#### Task 1: The scale problem
+
+a) Calculate the payback period, the NPV and the NPV per euro invested for both projects.
+
+b) Which project should the firm choose? Justify your answer with the incremental investment Q − P.
+
+::: {.content-visible when-meta="show_solutions"}
+**Solution:**
+
+**a)**
+
+| | Project P | Project Q |
+|:--|--:|--:|
+| Payback period | $50{,}000 / 20{,}000 = 2.50$ years | $150{,}000 / 56{,}000 = 2.68$ years |
+| NPV | $20{,}000 \cdot 3.1699 - 50{,}000 = 13{,}398$ | $56{,}000 \cdot 3.1699 - 150{,}000 = 27{,}514$ |
+| NPV per euro invested | $13{,}398 / 50{,}000 = 0.27$ | $27{,}514 / 150{,}000 = 0.18$ |
+
+**b)** Payback and NPV per euro favour P, the NPV favours Q. The incremental investment Q − P costs an extra €100,000 and brings an extra €36,000 per year:
+
+$$C_{0,Q-P} = -100{,}000 + 36{,}000 \cdot 3.1699 = 14{,}116 = 27{,}514 - 13{,}398$$
+
+The additional €100,000 earns more than 10%, so the firm should **choose Q**. If it chose P, the €100,000 saved would earn only the cost of capital elsewhere (NPV of zero). Efficiency per euro matters only if capital is limited (profitability index, Chapter 8).
+:::
+
+#### Task 2: Multiple choice
+
+Which of the following statements are **correct**? (Multiple answers possible.)
+
+a) Of two projects with the same investment, the one with the shorter payback period always has the higher NPV.
+
+b) The static payback period ignores all cash flows that arrive after the payback period.
+
+c) For a conventional investment, the discounted payback period is reached within the project's life exactly when the NPV is not negative.
+
+d) A negative NPV means that the undiscounted cash inflows of the project are smaller than its investment.
+
+e) The NPV implicitly assumes that intermediate cash flows can be reinvested at the discount rate $i$.
+
+f) If the discount rate rises, the NPV of a conventional investment rises, because reinvested cash flows earn more.
+
+g) All statements are false.
+
+::: {.content-visible when-meta="show_solutions"}
+**Solution:** Correct are **b)**, **c)** and **e)**.
+
+- a) Incorrect. Payback ignores later cash flows and timing; Oven X in Exercise 1 pays back faster than Y and has the lower NPV.
+- **b) Correct.** This is blind spot 2 of the payback period.
+- **c) Correct.** The cumulative present values exceed $I_0$ within the life exactly when $C_0 \geq 0$.
+- d) Incorrect. A project can return more euros than it costs and still have a negative NPV (Oven X: €90,000 for €80,000, NPV −2,687); it earns less than $i$.
+- **e) Correct.** Compounding the NPV to $t = n$ gives the terminal-value surplus under reinvestment at $i$.
+- f) Incorrect. A higher rate discounts every future inflow more heavily; the NPV function falls.
+- g) Incorrect, since b), c) and e) are correct.
+:::
+
+#### Task 3: Transfer — one owner wants cash now
+
+Laserwerk belongs to two equal owners. Lena wants to buy a house and asks for a dividend of €50,000 today. The manager proposes instead to invest that money in a project that pays Lena €56,000 in one year. The market rate for borrowing and lending is **6%**.
+
+a) Show that Lena is better off with the project even though she wants to spend the money today.
+
+b) Lena's bank charges her **15%** for a private loan, while she could still only earn 6% on savings. Does your answer change? Which condition of the Fisher separation theorem is violated?
+
+::: {.content-visible when-meta="show_solutions"}
+**Solution:**
+
+**a)** Lena borrows against next year's €56,000 at 6% and can spend $56{,}000 / 1.06 = 52{,}830$ euros today, €2,830 more than the dividend. That gain is the project's NPV per owner: $C_0 = -50{,}000 + 56{,}000 / 1.06 = 2{,}830$. The manager does not need to know when Lena wants to consume; maximising NPV makes her (and a saving co-owner) better off.
+
+**b)** Borrowing at 15% gives her only $56{,}000 / 1.15 = 48{,}696$ euros today, less than the €50,000 dividend; Lena now prefers the dividend, while a co-owner who saves at 6% still prefers the project (€56,000 instead of $50{,}000 \cdot 1.06 = 53{,}000$). The owners no longer agree. The violated condition is that **everyone can borrow and lend at the same interest rate** in a perfect capital market; without it, investment and consumption decisions are no longer separable.
+
+**Grading Notes:** Full marks for b) require both the numerical comparison and naming the identical borrowing and lending rate as the failing condition.
+:::

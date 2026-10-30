@@ -222,14 +222,14 @@
         <div class="controls">
             <div class="control-group">
                 <div class="control-header">
-                    <label for="inp-rate">Interest Rate ($r$)</label>
-                    <span id="disp-rate" class="control-value">5.0%</span>
+                    <label for="inp-rate">Interest rate (<em>i</em>)</label>
+                    <span id="disp-rate" class="control-value">8.0%</span>
                 </div>
                 <input type="range" id="inp-rate" min="1" max="15" step="0.5" value="8.0">
             </div>
             <div class="control-group">
                 <div class="control-header">
-                    <label for="inp-time">Duration ($t$)</label>
+                    <label for="inp-time">Duration (<em>n</em>)</label>
                     <span id="disp-time" class="control-value">30 years</span>
                 </div>
                 <input type="range" id="inp-time" min="5" max="50" step="1" value="30">
@@ -293,7 +293,7 @@
             yTitle.setAttribute("x", margin.left);
             yTitle.setAttribute("y", margin.top - 15);
             yTitle.setAttribute("class", "axis-title");
-            yTitle.textContent = "Capital (K)";
+            yTitle.textContent = "Capital (€)";
             gridLayer.appendChild(yTitle);
 
             const xTitle = document.createElementNS("http://www.w3.org/2000/svg", "text");
