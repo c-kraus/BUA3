@@ -16,19 +16,36 @@ After completing this case, students should be able to:
 2. Estimate the IRR using the Regula Falsi interpolation method, identify a scale-induced NPV/IRR conflict, and resolve it through the incremental investment approach.
 3. Apply the Annuity Method to compare projects of unequal duration and state the repeatability condition that makes the comparison valid.
 4. Apply the Kruschwitz Standard Tax Model to adjust after-tax cash flows and the after-tax discount rate, and recognise the Tax Paradox when it occurs.
+5. Test the robustness of an NPV with break-even, scenario and expected-value analysis (extension, Task 5).
+6. Debias a forecast against a reference class and assess the transparency of an appraisal process (extension, Task 6).
 
 # Synopsis
 
-Clara Voss takes over Vogt Antriebstechnik GmbH in Würzburg under time pressure: a lucrative five-year supply contract with an EV manufacturer is contingent on a production capacity commitment within five weeks. Her predecessor left four unfinished investment dossiers. Each dossier introduces one capital budgeting method — NPV, IRR, Annuity Method, and the Standard Tax Model — in a context where the method's specific advantage over simpler alternatives is directly apparent.
+Clara Voss takes over Vogt Antriebstechnik GmbH in Würzburg under time pressure: a lucrative five-year framework contract with Solaris Drive Systems, a supplier of battery assembly lines for three German EV manufacturers, is contingent on a production capacity commitment within five weeks. Her uncle Klaus left four unfinished investment dossiers. Each dossier introduces one capital budgeting method — NPV, IRR, Annuity Method, and the Standard Tax Model — in a context where the method's specific advantage over simpler alternatives is directly apparent. Two extension tasks return to the welding cell of Dossier 1: the board asks how robust its NPV is (Task 5), and Clara asks who wrote the forecast (Task 6).
 
 # Theoretical Framework
 
-The case spans four methods presented in Chapters 4–7:
+The case spans the methods presented in Chapters 4–7, with two extension tasks for Chapters 9 and 10:
 
 - **Chapter 4 (Task 1):** Net Present Value as the primary decision criterion; payback period as a foil.
 - **Chapter 5 (Task 2):** IRR and its Regula Falsi estimation; the scale problem and the incremental investment (*Differenzinvestition*) resolution.
 - **Chapter 6 (Task 3):** The Annuity Method for projects with unequal lifespans; the repeatability assumption.
 - **Chapter 7 (Task 4):** The Kruschwitz Standard Tax Model — Volume Effect and Interest Effect; the Tax Paradox (*Steuerparadoxon*).
+- **Chapter 9 (Task 5, extension):** break-even value and margin of safety, scenario analysis, expected NPV.
+- **Chapter 10 (Task 6, extension):** debiased NPV with cost uplift and benefit haircut; transparency checklist.
+
+## The Vogt Story in the Book
+
+The chapters continue the Vogt storyline beyond the four dossiers. Instructors should know which episodes the students have already seen solved in the text, so that the case does not repeat them:
+
+| Chapter | Vogt episode in the chapter | Relation to the case |
+|:--------|:----------------------------|:---------------------|
+| 4 | Werner's three-year payback rule (deburring vs. inspection cell); grinding machine for coupling shafts; compressed air for the assembly hall (facility manager Jonas Brandt) | New episodes; Dossier 1 is deliberately not solved |
+| 5 | — (uses a different company) | Points to Dossier 2 for the scale conflict |
+| 6 | Opening story: Clara opens Dossier 3 (left unsolved); later in 2024: AGVs (4 vs. 8 years), compressors (equivalent annual cost) | New episodes |
+| 7 | Points to Task 4 as the worked application | — |
+| 9 | Mid-April 2024 board meeting, Werner's question "And if Solaris only takes twelve thousand?"; the Solaris line (€1.5 M, expected NPV, tornado, scenarios, break-even); Solaris' minimum-volume offer; solar roof vs. Solaris line | The capacity investment behind the Solaris contract; Task 5 applies the same tools to Dossier 1 |
+| 10 | Autumn 2026: heat pump vs. gas boiler with a carbon price; January 2027: post-investment audit of the welding cell (Dossier 1 forecast, NPV +€23,331 exact) | Task 6 is the *ex-ante* view of the same forecast; the Chapter 10 audit shows the *ex-post* result |
 
 ---
 
@@ -69,7 +86,7 @@ $$= -300{,}000 + 303{,}264 + 4{,}545 + 15{,}523 = \mathbf{+€\,23{,}332}$$
 
 Both methods yield the same result. Method 2 is the more efficient path in exam conditions whenever the cash flow stream is uniform or near-uniform.
 
-NPV > 0 → The investment is worthwhile. The welding cell generates €23,332 of value above the 10% required return.
+NPV > 0 → The investment is worthwhile. The welding cell generates €23,332 of value above the 10% required return. (With unrounded present values the NPV is €23,331.43; Chapter 10 quotes the exact €23,331. Accept both.)
 
 **Part b) — Payback Period**
 
@@ -150,7 +167,7 @@ Summary:
 
 **Conflict:** IRR favours A (23.4% > 12.8%); NPV favours B (€45,022 > €36,517).
 
-This conflict arises systematically when project scale differs: IRR measures *efficiency* (return per euro invested) and favours small, lean projects; NPV measures *absolute wealth created* and favours large projects when the incremental capital also clears the hurdle rate.
+Here the conflict comes from scale: IRR measures *efficiency* (return per euro invested) and favours small, lean projects; NPV measures *absolute wealth created* and favours the larger project whenever the incremental capital also clears the hurdle rate. (Chapter 5 shows that a conflict can also arise from timing alone, between projects of equal size.)
 
 **Part e) — Incremental Investment**
 
@@ -167,13 +184,13 @@ Note for instructor: NPV(B − A) = NPV(B) − NPV(A) = 45,022 − 36,517 = 8,50
 
 **Common errors:** Students often stop at part (d) and conclude "Machine A wins because its IRR is higher." The incremental analysis step is the critical insight. Also: students sometimes interpret the Regula Falsi result as exact. Emphasise it is an approximation — the true IRR of A is 23.38%, the approximation gives 23.4%.
 
-**Discussion prompts:** "If Machine B's IRR is only 12.8% and our cost of capital is 10%, does that mean B barely earns its keep?" (No — it earns 12.8%, well above 10%, on €900k.) "When would IRR and NPV give the same ranking?" (When both projects have the same scale, or when comparing a project against the hurdle rate in isolation.)
+**Discussion prompts:** "If Machine B's IRR is only 12.8% and our cost of capital is 10%, does that mean B barely earns its keep?" (No — it earns 12.8%, well above 10%, on €900k.) "When would IRR and NPV give the same ranking?" (Always for a single project judged against the hurdle rate in isolation. For mutually exclusive projects only if the cost of capital lies above their crossover rate — equal scale alone is not enough, because different timing can also make the NPV functions cross.)
 
 **Time allocation:** approx. 25 minutes.
 
 ---
 
-## Task 3 — Annuity Method and Optimal Investment Horizon
+## Task 3 — Annuity Method and Unequal Lifespans
 
 **Part a) — NPV Comparison**
 
@@ -204,11 +221,11 @@ $$d_Y = NPV_Y \times CRF(10\%,6) = 100{,}688 \times 0.2296 = \mathbf{€\,23{,}1
 
 NPV favours Y; Annuity Method favours X.
 
-The divergence occurs because Unit Y runs for twice as long, naturally accumulating more total present value. However, this does not mean Y creates *more value per year*. The IH-35, replaceable every 3 years, generates €24,789 of excess return annually — more than the €23,118 of the IH-120. Under the repeatability assumption, the IH-35 chain creates more total value over any common horizon. **Recommendation: choose Unit X (IH-35).**
+The divergence occurs because the two NPVs describe different periods: three years of hardening for X, six for Y. Comparing them directly implicitly assumes that after Year 3 the capital freed by X earns exactly the 10% cost of capital and nothing more. The annual value instead assumes that each unit is replaced by an identical successor. The IH-35, replaced every 3 years, generates €24,789 of surplus annually — more than the €23,118 of the IH-120. Under the repeatability assumption, the IH-35 chain creates more total value over any common horizon (over six years: 61,649 × (1 + 1.10⁻³) = €107,967 > €100,688). **Recommendation: choose Unit X (IH-35).**
 
 **Part d) — Validity Condition**
 
-The Annuity Method is valid only when the *shorter project can be repeated on identical terms* at the end of its useful life — same investment cost, same cash flows, same useful life (the repeatability assumption). If the IH-35 cannot be replaced on equivalent terms in Year 4 (e.g., the supplier discontinues the model, or input costs rise), the comparison is invalid. In that case, a direct NPV comparison is appropriate — treating each project as a one-time, non-repeatable opportunity.
+The Annuity Method is valid when *both alternatives can be repeated on identical terms* at the end of their useful lives — same investment cost, same cash flows, same useful life (the repeatability assumption). If the IH-35 cannot be replaced on equivalent terms in Year 4 (e.g., the supplier discontinues the model, or its price rises), the comparison is invalid. A direct NPV comparison is appropriate when neither project will be repeated and the freed capital can only earn the cost of capital; if the successor projects are known but different, value the actual sequence over a common horizon.
 
 **Common errors:** Students sometimes calculate $d = CF \times CRF$ instead of $d = NPV \times CRF$. The annuity *d* is the spread of the *excess* NPV, not the total cash flows. Also: students may not state the repeatability assumption explicitly and simply assert that X is better — the condition is an examinable point.
 
@@ -238,7 +255,7 @@ The €50,000 annual depreciation generates a *Depreciation Tax Shield* of €20
 **Interest Effect — adjusting the discount rate:**
 $$i_{after} = 25\% \times (1-0.40) = 25\% \times 0.60 = \mathbf{15\%}$$
 
-The 40% tax rate makes debt financing cheaper: of every €1 of interest paid, the state effectively subsidises €0.40 by forgoing tax revenue on that amount.
+The benchmark is the family's alternative investment at 25%. Its returns are taxed at 40% too, so after tax the alternative yields only 15% — the opportunity cost falls. This is a property of the alternative, not of debt financing: the standard model is financing-neutral.
 
 **Part c) — After-Tax NPV**
 
@@ -253,17 +270,95 @@ $$NPV_{after} = 101{,}000 \times 5.0188 - 500{,}000 = 506{,}899 - 500{,}000 = \m
 Two effects act in opposite directions:
 
 - **Volume Effect**: Taxes reduce after-tax cash flows (from €135,000 to €101,000), shrinking the NPV numerator and pulling NPV *down*.
-- **Interest Effect**: Tax-deductible interest reduces the effective discount rate (from 25% to 15%), inflating the present value of every future cash flow and pushing NPV *up*.
+- **Interest Effect**: Taxing the alternative investment lowers the discount rate (from 25% to 15%), inflating the present value of every future cash flow and pushing NPV *up*.
 
-In this case, the pre-tax discount rate is high (25%), creating a large Interest Tax Shield base. The ten-year project life allows this lower discount rate to compound across many periods. The Interest Effect dominates, converting a negative pre-tax NPV into a positive after-tax NPV.
+Why does the interest effect dominate here? The root cause is the depreciation schedule. The project's pre-tax IRR is 23.81%; at that rate its economic depreciation (the fall in its value) is only €15,951 in Year 1 and rises to €109,038 in Year 10. The tax office allows €50,000 every year — far ahead of economic depreciation in the early years. The state therefore defers part of its tax claim, which works like an interest-free loan to the firm. The high rate (25%) and the long life (ten years) widen this effect but are not its cause; if tax depreciation equalled economic depreciation, taxes could not turn the decision around (Samuelson, 1964). The interest effect dominates, converting a negative pre-tax NPV into a positive after-tax NPV.
 
 This is the **Tax Paradox** (*Steuerparadoxon*): a project that destroys value before taxes creates value because of them.
 
 **Common errors:** Students frequently forget to add the Depreciation Tax Shield ($D_t \cdot s$) to the after-tax cash flow — they calculate only $CF \times (1-s)$. This is the single most common numerical error in this topic. Also: students sometimes apply the tax adjustment to the NPV itself rather than to the cash flows and discount rate separately.
 
-**Discussion prompts:** "Does this mean Klaus was wrong?" (He applied the correct method but incomplete inputs — a common failure in practice.) "What would a manager do with this result — simply invest because NPV_after > 0?" (Ideally, yes — but they should also verify the 40% effective rate assumption is accurate, since the result is sensitive to it.) "What happens to the Tax Paradox if the tax rate rises?" (The Interest Effect grows, making the paradox more likely — higher s → lower $i_{after}$ → larger denominator effect.)
+**Discussion prompts:** "Does this mean Klaus was wrong?" (He applied the correct method but incomplete inputs — a common failure in practice.) "What would a manager do with this result — simply invest because NPV_after > 0?" (Ideally, yes — but they should also verify the 40% effective rate assumption is accurate, since the result is sensitive to it.) "What happens if the tax rate rises?" (Both effects grow with $s$, so there is no general answer. For this project the after-tax NPV rises with the tax rate: −€17,982 at 0%, +€977 at 30%, +€6,896 at 40%, +€12,120 at 50% — the strong form of the paradox. Let students recompute one of these values.)
 
 **Time allocation:** approx. 20 minutes.
+
+---
+
+## Task 5 — Risk Analysis of the Welding Cell (Extension, Chapter 9)
+
+**Part a) — Break-even cash inflow for Years 2–5**
+
+With Year 1 (€85,000) and the residual value (€25,000) fixed, the NPV is zero when
+
+$$-300{,}000 + 85{,}000 \cdot 1.10^{-1} + X \cdot \sum_{t=2}^{5} 1.10^{-t} + 25{,}000 \cdot 1.10^{-5} = 0$$
+
+$$\sum_{t=2}^{5} 1.10^{-t} = PVIFA(10\%,5) - 1.10^{-1} = 3.7908 - 0.9091 = 2.8817$$
+
+$$X^* = \frac{300{,}000 - 77{,}273 - 15{,}523}{2.8817} = \frac{207{,}204}{2.8817} \approx \mathbf{71{,}904}$$
+
+Margin of safety: $(80{,}000 - 71{,}904) / 80{,}000 \approx \mathbf{10.1\%}$. A shortfall of about €8,100 a year from Year 2 onwards is enough to wipe out the value.
+
+**Part b) — Scenario NPVs** (exact discount factors, present values rounded to the euro)
+
+| Year | Factor | Worst case CF | PV | Best case CF | PV |
+|:----:|:------:|-------:|-------:|-------:|-------:|
+| 1 | 0.9091 | 60,000 | 54,545 | 85,000 | 77,273 |
+| 2 | 0.8264 | 70,000 | 57,851 | 90,000 | 74,380 |
+| 3 | 0.7513 | 70,000 | 52,592 | 90,000 | 67,618 |
+| 4 | 0.6830 | 70,000 | 47,811 | 90,000 | 61,471 |
+| 5 | 0.6209 | 70,000 | 43,464 | 90,000 | 55,883 |
+| 5 (L₅) | 0.6209 | 10,000 | 6,209 | 25,000 | 15,523 |
+| | | **Total PV** | **262,472** | | **352,148** |
+
+$$C_0^{worst} = 262{,}472 - 300{,}000 \approx \mathbf{-37{,}527} \qquad C_0^{best} = 352{,}148 - 300{,}000 = \mathbf{+52{,}148}$$
+
+(The rounded present values of the worst case sum to −37,528; the exact value is −37,526.62.)
+
+**Part c) — Expected NPV**
+
+$$E(C_0) = 0.25 \cdot (-37{,}527) + 0.50 \cdot 23{,}331 + 0.25 \cdot 52{,}148 = -9{,}382 + 11{,}666 + 13{,}037 \approx \mathbf{+15{,}321}$$
+
+The expected NPV is about a third lower than the base case. The scenarios are asymmetric: the worst case lies €60,858 below the base case, the best case only €28,817 above it, because the ramp-up risk and the residual-value risk only work downwards.
+
+**Part d) — Recommendation**
+
+The welding cell still creates value in expectation (+€15,321), but the margin of safety is thin and one scenario in four destroys value. Clara should buy it only with the ramp-up under control — a fixed-price installation contract or a performance guarantee for Year 1 — and monitor the Year 2–5 cash inflow most closely, because a shortfall of about 10% there is enough to turn the NPV negative.
+
+**Common errors:** Students apply the 25/50/25 weights to the cash flows of one year only, or average the three scenarios with equal weights. Some compute the break-even for all five years including Year 1; accept it if clearly stated (break-even level for Years 1–5: about €75,000).
+
+**Time allocation:** approx. 20 minutes.
+
+---
+
+## Task 6 — Debiasing the Forecast (Extension, Chapter 10)
+
+**Part a) — Debiased NPV**
+
+Present value of the operating cash inflows (Years 1–5) at 10%: €307,808; present value of the residual value: €15,523.
+
+$$C_0^{adj} = -300{,}000 \cdot 1.10 + 307{,}808 \cdot 0.90 + 15{,}523 = -330{,}000 + 277{,}028 + 15{,}523 = \mathbf{-37{,}449}$$
+
+The benchmark turns a positive NPV of €23,331 into a clearly negative one. The cost overrun alone costs €30,000, the haircut alone €30,781 — each is larger than the original NPV.
+
+**Part b) — Break-even haircut**
+
+With the budget holding ($u = 0$):
+
+$$h^* = \frac{23{,}331}{307{,}808} \approx \mathbf{7.6\%}$$
+
+The forecast may be no more than about 7.6% too optimistic before the welding cell destroys value — the benchmark says comparable projects missed by 10%. (Equivalently, a cost overrun of $23{,}331 / 300{,}000 \approx 7.8\%$ alone would wipe out the NPV.)
+
+**Part c) — Transparency**
+
+Expected points: the welding forecast was prepared by an interested party and signed by nobody; the CNC and hardening figures are supplier sales figures; Klaus's notes are unsigned and undocumented; no forecast was compared with a reference class; no project has a scheduled post-investment audit; externalities and the choice of discount rate (10% vs. the 25% family hurdle in Dossier 4) are not discussed. Good process changes: an internal sign-off of every forecast by the person responsible for the result; a standard debiasing step against a reference class (internal audits once available); a documented assumptions sheet; a post-investment audit after two years for every project above a threshold.
+
+**Part d) — Reject?**
+
+Not automatically. A negative debiased NPV shifts the burden of proof: the production manager must show why this project should beat the reference class (e.g. a fixed-price contract with Kuka, a proven integration partner), or the terms must change until the debiased NPV is positive. Approving on the original forecast without such evidence would repeat exactly the bias the benchmark documents.
+
+**Link to Chapter 10:** In the book, Clara approved the welding cell on the production manager's original forecast. The audit of January 2027 shows a 12% cost overrun and a ramp-up year 28% below plan; the revised NPV is −€62,499. Task 6 shows that the evidence to see this coming was available in 2024 — a powerful closing point for the discussion.
+
+**Time allocation:** approx. 25 minutes.
 
 ---
 
@@ -280,6 +375,15 @@ This is the **Tax Paradox** (*Steuerparadoxon*): a project that destroys value b
 | **Total** | | **100 min** |
 
 *Note: With a fast cohort, Task 1 can be shortened to 10 minutes, giving a 90-minute total. With a slower cohort, Task 2 is the one to compress — parts b) and c) can be demonstrated rather than discussed.*
+
+**Extension session (45 minutes, after Chapters 9 and 10):**
+
+| Phase | Content | Duration |
+|:------|:--------|--------:|
+| Re-entry | "The board approved the welding cell at +€23,331. How sure were they?" | 5 min |
+| Task 5 | Break-even and margin of safety; scenarios; expected NPV; class vote: still buy? | 20 min |
+| Task 6 | Debiased NPV; break-even haircut vs. benchmark; transparency checklist on the four dossiers | 15 min |
+| Close | Reveal the Chapter 10 audit result (−€62,499): what should Vogt change in its process? | 5 min |
 
 ---
 
@@ -313,7 +417,7 @@ Task 2 — IRR & Scale
 
 1. **Task 2, part e) is the intellectual centrepiece** — many students will answer "Machine A" after computing the IRRs and consider the task done. Resist the urge to correct them immediately; let the class argue it out. The incremental analysis only makes sense if students first feel the pull of the higher-percentage argument.
 
-2. **Task 3 requires the repeatability assumption to be stated, not just assumed** — if a student concludes "choose X" without explicitly noting the condition, push back: "What if Kuka discontinues the IH-35?" Examinable in written assessments.
+2. **Task 3 requires the repeatability assumption to be stated, not just assumed** — if a student concludes "choose X" without explicitly noting the condition, push back: "What if the supplier discontinues the IH-35?" Examinable in written assessments.
 
 3. **Task 4's most common numerical trap** — the Depreciation Tax Shield ($D_t \times s = 50,000 \times 0.4 = €20,000$) is additive to the after-tax operating cash flow. Students who only compute $CF \times (1-s) = €81,000$ will obtain a negative after-tax NPV and miss the Tax Paradox entirely. Worth flagging before the exercise.
 

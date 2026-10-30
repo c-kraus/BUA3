@@ -1,6 +1,6 @@
 ---
 title: "Five Weeks to Decide"
-subtitle: "Investment Appraisal — Integrated Case Study (Chapters 4–7)"
+subtitle: "Investment Appraisal — Integrated Case Study (Chapters 4–7, continued in Chapters 9–10)"
 author: "BUA3 — Business Finance, THWS"
 date: last-modified
 lang: en
@@ -12,7 +12,7 @@ format:
 
 It was a grey Monday morning in March 2024 when Clara Voss sat down for the first time at her uncle's desk. The chair was still adjusted for him — he was taller than she was. The factory was running; through the glass partition she could see the familiar machines cycling coupling housings through the assembly station, just as she had watched them as a child. Klaus Vogt had been in hospital for three weeks following a cardiac event. The supervisory board — her father Werner and her mother — had asked her to step in immediately. She had handed in her notice at Bosch the same day.
 
-**Vogt Antriebstechnik GmbH** in Würzburg had been founded by her father in 1986. The company manufactured flexible disc couplings and torque limiters for industrial drive systems — wind turbines, machine tools, automotive test rigs. One hundred and twenty employees, roughly €18 million in annual revenue, profitable for almost four decades. Her father had run it on intuition and handshake relationships; Klaus had continued in the same style. A formal capital budgeting process had never existed at Vogt.
+**Vogt Antriebstechnik GmbH** in Würzburg had been founded by her father in 1986. The company manufactured flexible disc couplings and torque limiters for industrial drive systems — wind turbines, machine tools, automotive test rigs. One hundred and twenty employees, roughly €18 million in annual revenue, profitable for almost four decades. Her father had run it on intuition and handshake relationships and on a single investment rule: *"A machine has to pay for itself within three years."* Klaus had continued in the same style. A formal capital budgeting process had never existed at Vogt.
 
 On her second day, a phone call changed everything. Solaris Drive Systems GmbH, a Munich-based supplier to battery assembly lines for three German EV manufacturers, wanted to place a five-year framework contract for 18,000 coupling units per year — roughly €4.2 million in annual revenue. The condition: written confirmation of sufficient production capacity by the end of April. The supervisory board meeting at which the investment programme had to be approved was in five weeks.
 
@@ -68,7 +68,7 @@ b) Estimate the **IRR of the Mazak HD-200** using linear interpolation (Regula F
 
 c) Estimate the **IRR of the DMG Mori HL-800** using linear interpolation with trial rates of **i₁ = 12%** and **i₂ = 13%**. Show all steps.
 
-d) Is there a conflict between the NPV and the IRR criterion? Explain in one sentence why this conflict arises **systematically** when comparing projects of different **scale**.
+d) Is there a conflict between the NPV and the IRR criterion? Explain in one sentence why such a conflict can arise when two projects differ in **scale**.
 
 e) Resolve the conflict using the **incremental investment approach** (*Differenzinvestitionsmethode*): calculate the NPV of the additional investment (HL-800 minus HD-200). Which machine should Clara recommend, and why?
 
@@ -90,9 +90,9 @@ Clara raised an eyebrow. That was precisely the question where a straight NPV co
 | Residual value | €0 | €0 |
 | Cost of capital | 10% p.a. | 10% p.a. |
 
-*Assumption: the IH-35 can be replaced at the end of Year 3 by an identical successor unit on equivalent terms.*
+*Assumption: each unit can be replaced at the end of its life by an identical successor on equivalent terms (the IH-35 after three years, the IH-120 after six).*
 
-## Task 3 — Annuity Method and Optimal Investment Horizon
+## Task 3 — Annuity Method and Unequal Lifespans
 
 a) Calculate the **NPV of both units** at i = 10%. Which unit does a naive NPV comparison favour?
 
@@ -108,7 +108,7 @@ d) State in **two sentences** the critical condition under which the Annuity Met
 
 At the very bottom of the folder was a sheet stamped *"On hold — not worthwhile."* In the summer of 2023, Klaus had reviewed a proposal for a plasma cutting system that would allow Vogt to cut steel plates for coupling flanges in-house rather than outsourcing. His note read: *"NPV negative at 25% — do not pursue."*
 
-Clara looked back at the calculation. The 25% discount rate was correct — the Vogt family had access to alternative investments yielding returns at that level. But one line in Klaus's analysis was missing: the tax dimension. Vogt GmbH applied a combined effective tax rate of **s = 40%**, comprising corporate income tax, solidarity surcharge, trade tax, and the proportionate income tax burden at shareholder level. Depreciation and interest were tax-deductible. The **Kruschwitz Standard Tax Model** required two adjustments: one to the cash flows, and one to the discount rate.
+Clara looked back at the calculation. The 25% discount rate was correct — the Vogt family had access to alternative investments yielding returns at that level. But one line in Klaus's analysis was missing: the tax dimension. Vogt GmbH applied a combined effective tax rate of **s = 40%**, comprising corporate income tax, solidarity surcharge, trade tax, and the proportionate income tax burden at shareholder level. Depreciation was tax-deductible, and the returns on the family's alternative investments were taxed at the same rate. The **Kruschwitz Standard Tax Model** required two adjustments: one to the cash flows, and one to the discount rate.
 
 Perhaps Klaus had filed away the wrong answer.
 
@@ -129,8 +129,8 @@ Perhaps Klaus had filed away the wrong answer.
 a) Calculate the **pre-tax NPV** at i = 25%. Confirm Klaus's assessment.
 
 b) Apply the **Kruschwitz Standard Tax Model** to adjust the inputs:
-   - Calculate the **after-tax cash flow** ($CF_{after} = CF_{before} \cdot (1-s) + D_t \cdot s$).
-   - Calculate the **after-tax discount rate** ($i_{after} = i_{before} \cdot (1-s)$).
+   - Calculate the **after-tax cash flow** ($CF_{after,t} = CF_{before,t} \cdot (1-s) + s \cdot D_t$).
+   - Calculate the **after-tax discount rate** ($i_{after} = i \cdot (1-s)$).
 
 c) Calculate the **after-tax NPV**. Has the investment recommendation changed?
 
@@ -143,3 +143,57 @@ Clara set down her pen and looked at the four stacks of paper spread across the 
 Five weeks. Four decisions. All the numbers were there.
 
 She reached for her calculator.
+
+---
+
+## Mid-April 2024 — The Board Meeting
+
+Five weeks later, Clara presented her verdicts to the supervisory board. Her slides were immaculate, one number per proposal, each in bold green or red. Her father looked at the welding-cell slide for a long time. Then he asked the question he would ask again an hour later about the Solaris contract: *"And if it turns out worse?"*
+
+The production manager admitted that his forecast for the welding cell was "a sensible middle". The ramp-up could take longer, he said, and the second-hand market for welding robots was thin. If everything went well, the cell would save more from Year 2 onwards. He sketched three scenarios on a flip chart.
+
+**Exhibit 5: Welding Cell KR-280 — Scenarios (€, cost of capital 10% p.a., investment €300,000 in every scenario)**
+
+| Scenario | Probability | Net cash inflow Year 1 | Net cash inflow Years 2–5 | Residual value (end of Year 5) |
+|:---------|:-----------:|----------:|----------:|----------:|
+| Worst case | 25% | 60,000 | 70,000 p.a. | 10,000 |
+| Base case (Exhibit 1) | 50% | 85,000 | 80,000 p.a. | 25,000 |
+| Best case | 25% | 85,000 | 90,000 p.a. | 25,000 |
+
+## Task 5 — Risk Analysis of the Welding Cell
+
+*Extension task — requires Chapter 9.*
+
+a) Keeping Year 1 and the residual value at their base-case values, calculate the **break-even net cash inflow** for Years 2–5 at which the NPV is exactly zero. What is the **margin of safety** relative to the forecast of €80,000?
+
+b) Calculate the NPV of the **worst case** and the **best case**.
+
+c) Using the probabilities in Exhibit 5, calculate the **expected NPV**. Compare it with the base-case NPV from Task 1.
+
+d) Write two sentences for the board: should Vogt still buy the welding cell, and which input should Clara monitor most closely after the decision?
+
+---
+
+## April 2024 — Whose Forecast?
+
+After the meeting, Clara read the four dossiers again, this time looking at who had written what. The welding-cell forecast came from the production manager, who had wanted the cell for years; the cash-flow figures in Dossiers 2 and 3 came from the machine suppliers' sales documents; Klaus's notes were unsigned. None of the forecasts had been compared with what similar projects had actually delivered.
+
+Vogt's house bank sent her a benchmarking study of automation projects at mid-sized German suppliers. On average, such projects had cost **10% more** than budgeted, and their net cash inflows had come in **10% below** the forecasts.
+
+## Task 6 — Debiasing the Forecast
+
+*Extension task — requires Chapter 10.*
+
+a) Apply the benchmark to the welding cell: raise the initial investment by 10% and lower every operating cash inflow (Years 1–5) by 10%; leave the residual value unchanged. Calculate the **debiased NPV**.
+
+b) Assume the investment budget holds. By what percentage could the operating cash inflows fall short of the forecast before the NPV becomes zero? Compare your result with the benchmark.
+
+c) Use the transparency questions from Chapter 10 (who prepared and who signs the forecast, documented assumptions, reference class, post-investment audit) to assess the four dossiers. Name **two** concrete changes Clara should make to Vogt's appraisal process.
+
+d) Should Clara now reject the welding cell? Justify your answer in no more than four sentences.
+
+---
+
+## Epilogue — What Happened Next
+
+The board approved the investment programme, and Vogt confirmed its capacity to Solaris in time; how Clara analysed the Solaris line itself, and the minimum-volume offer Solaris made a week later, is the story of Chapter 9. The welding cell went live on 1 January 2025. Later in 2024, Vogt decided on an in-house grinding machine, a new compressed-air supply and its first driverless transport carts (Chapters 4 and 6). In autumn 2026, with the plant's gas boiler at the end of its life, Clara faced a decision in which the numbers alone were no longer enough — and in January 2027 she asked for the first post-investment audit in the company's history, of the welding cell (Chapter 10).

@@ -232,7 +232,7 @@ BUA3/
 │   └── _extensions -> ../_extensions
 ├── assets/ch01 … ch08/               [✅ widgets; ch05 also holds multiple.html (multiple IRRs)]
 ├── fallstudie_hartmann_2024.qmd      [✅ case for Ch. 1–3]
-├── fallstudie_vogt_2024.qmd          [✅ case for Ch. 4–7, continued in Ch. 9–10]
+├── fallstudie_vogt_2024.qmd          [✅ case for Ch. 4–7 + extension Tasks 5–6 for Ch. 9–10]
 ├── teaching_note_hartmann_2024.qmd   [✅]
 ├── teaching_note_vogt_2024.qmd       [✅]
 ├── Formula Collection Investment Finance.qmd   [✅ updated for the new edition]
@@ -247,7 +247,7 @@ BUA3/
 
 - **Ch. 10 vs. Doughnut:** confirm with the colleague where the Doughnut Economics unit sits and what it assumes from Chapter 10 (Ch. 10 ends with a one-sentence bridge only).
 - **Hartmann case:** assumes average CPI inflation of 5.5% for 2019–2024 and a 4% deposit rate in 2019 — both look too high for Germany; check.
-- **Vogt case:** Chapters 4, 6, 9 and 10 add episodes to the Vogt story (Werner's payback rule, AGVs/compressors, the Solaris contract, the welding-cell post-audit); case file and teaching note do not mention them yet.
+- **Vogt case:** extended 2026-10-30 — Tasks 5 (risk, Ch. 9) and 6 (debiasing, Ch. 10) on the welding cell, epilogue linking the chapter episodes; teaching note lists which Vogt episodes the chapters already solve. Old tax-shield explanation in Task 4 corrected.
 - **Exam question bank:** 10 questions, Ch. 1–5 only; Ch. 6–10 have none yet.
 - **Reference list:** chapters cite author–year (Fisher 1930, Samuelson 1964, Flyvbjerg …) but the book has no bibliography.
 - **Programme name:** the previous curriculum said "Bachelor International Business"; the Modulhandbuch says BESE (Business & Engineering Science). Confirm which to print on the title page.
