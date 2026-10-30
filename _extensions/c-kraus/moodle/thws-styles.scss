@@ -36,18 +36,12 @@ $_teal:       #005564;
 $_dark:       #343a40;
 $_light-grey: #e7e7e7;
 
-// Sidebars must sit below the fixed THWS header — set via JS custom property
-#quarto-sidebar,
-#quarto-margin-sidebar {
-  top: var(--sidebar-top, 85px) !important;
-}
-
 // Header Bar
 #custom-header {
   position: fixed;
   top: 0;
   right: 0;
-  z-index: 1031;
+  z-index: 1000;
   background-color: $_teal;
   width: 100vw;
   padding: 0.5em;
@@ -55,7 +49,6 @@ $_light-grey: #e7e7e7;
   transition: all 0.2s ease-in-out;
 }
 
-#custom-header img,
 #custom-header svg {
   height: 4em;
   width: auto;
@@ -68,19 +61,17 @@ $_light-grey: #e7e7e7;
   padding: 0.2em;
 }
 
-#custom-header.shrink img,
 #custom-header.shrink svg {
   transform: scale(0.8);
   margin-top: -0.5em;
 }
 
+#quarto-margin-sidebar.scrollmargin {
+  padding-top: 4em;
+}
 
 body {
   margin-top: 6em;
-}
-
-html {
-  scroll-padding-top: 7em;
 }
 
 .quarto-title-block {
@@ -88,7 +79,7 @@ html {
 }
 
 @media screen and (max-width: 600px) {
-  .custom-header img {
+  #custom-header svg {
     height: 3em;
     width: auto;
     margin-left: 1.5em;

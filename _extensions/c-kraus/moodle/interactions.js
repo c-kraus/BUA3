@@ -265,18 +265,15 @@ const logoContainer = document.createElement('div');
 } catch (e) {console.error("Error in Sidebar Logo Module:", e); }
 });
 
-// --- iframe auto-resize ---
-// Widgets send postMessage({iframeHeight: n}) — this listener resizes the iframe accordingly.
-window.addEventListener('message', function(e) {
-  if (e.data && typeof e.data.iframeHeight === 'number') {
-    var frames = document.querySelectorAll('iframe');
-    frames.forEach(function(f) {
-      try {
-        if (f.contentWindow === e.source) {
-          f.style.height = (e.data.iframeHeight + 16) + 'px';
-        }
-      } catch (err) {}
-    });
-  }
+// --- MODUL 6: Widget iFrame Auto-Resize ---
+window.addEventListener('message', function(event) {
+  if (!event.data || typeof event.data.iframeHeight !== 'number') return;
+  document.querySelectorAll('iframe').forEach(function(iframe) {
+    try {
+      if (iframe.contentWindow === event.source) {
+        iframe.style.height = event.data.iframeHeight + 'px';
+      }
+    } catch(e) {}
+  });
 });
     </script>
